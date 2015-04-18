@@ -17,5 +17,5 @@ class IconoCerrar implements Icon {
 	  }
 	  public int getIconHeight() {
 	    return 17;
-	  }
+	  } 
 	}
