@@ -17,7 +17,12 @@ public class ConfiguracionPestania extends JPanel implements ActionListener {
 	public ConfiguracionPestania(JTabbedPane pestanias, String nombrePestania, Integer posPestania, String toolTip){
 	
 		this.pestanias = pestanias;		
-	
+		
+		
+		
+		
+		
+		System.out.println();
 		setOpaque(false);
 	    add(new JLabel(	pestanias.getTitleAt(posPestania), pestanias.getIconAt(posPestania), JLabel.LEFT));
 		
