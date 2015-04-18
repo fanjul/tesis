@@ -23,7 +23,7 @@ public class ConfiguracionPestania extends JPanel implements ActionListener {
 		
 	    Icon closeIcon = new IconoCerrar();
 	    JButton btClose = new JButton(closeIcon);
-		
+		 
 	    btClose.setPreferredSize(new Dimension(closeIcon.getIconWidth(), closeIcon.getIconHeight()));
 	    btClose.setToolTipText("Cerrar");
 	   
