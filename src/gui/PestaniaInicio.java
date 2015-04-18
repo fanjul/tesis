@@ -28,6 +28,7 @@ public class PestaniaInicio extends JPanel {
 		JPanel pestaniaInicio = new JPanel();
 		pestaniaInicio.setLayout(null);
 		pestaniaInicio.setOpaque(false);
+		
 		ImageIcon btnCerar = new ImageIcon(getClass().getClassLoader().getResource("C:\\Users\\Mariel\Desktop\Facultad\Tesis\HerramientaTesis\Imagenclose_icon.png"));
 	 	ImageIcon btnCerarTamanio = new ImageIcon(btnCerar.getImage().getScaledInstance(15, 15, 1));
 		pestanias.addTab("Incio",btnCerarTamanio, pestaniaInicio);
