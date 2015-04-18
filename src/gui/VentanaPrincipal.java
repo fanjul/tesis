@@ -10,6 +10,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.border.EmptyBorder;
+import java.awt.Toolkit;
 
 @SuppressWarnings("serial")
 public class VentanaPrincipal extends JFrame {
@@ -28,7 +29,7 @@ public class VentanaPrincipal extends JFrame {
 		contentPane.setLayout(null);
 		
 		JMenuBar menuBar = new JMenuBar();
-		menuBar.setBounds(0, 0, 652, 21);
+		menuBar.setBounds(0, 0, 615, 21);
 		contentPane.add(menuBar);
 		
 		JMenu mnPrueba = new JMenu("Archivo");
@@ -43,16 +44,11 @@ public class VentanaPrincipal extends JFrame {
 		mnPrueba.add(mntmAbrir);
 		
 		JTabbedPane pestanias = new JTabbedPane(JTabbedPane.TOP);
-		pestanias.setBounds(0, 21, 652, 350);
-		
+		pestanias.setBounds(0, 22, 652, 349);
 		contentPane.add(pestanias);
 		
 		@SuppressWarnings("unused")
-		PestaniaInicio pestaniaInicio = new PestaniaInicio(pestanias);
-		
-		
-		
-		
+		JPanel pestaniaInicio = new PestaniaInicio(pestanias);
 	
 		
 	}

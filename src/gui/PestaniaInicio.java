@@ -1,38 +1,23 @@
 package gui;
 
-import java.awt.FlowLayout;
-import java.awt.FontMetrics;
-import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.BorderFactory;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
-import javax.swing.SwingConstants;
-import javax.swing.plaf.basic.BasicTabbedPaneUI;
 
-//import com.jgoodies.looks.common.RGBGrayFilter;
-
+@SuppressWarnings("serial")
 public class PestaniaInicio extends JPanel {
 
 	public PestaniaInicio(JTabbedPane pestanias) {
+
 		JPanel pestaniaInicio = new JPanel();
+		pestanias.addTab("Inicio ", null, pestaniaInicio, "Ventana principal");
 		pestaniaInicio.setLayout(null);
-		pestaniaInicio.setOpaque(false);
-		
-		ImageIcon btnCerar = new ImageIcon(getClass().getClassLoader().getResource("C:\\Users\\Mariel\Desktop\Facultad\Tesis\HerramientaTesis\Imagenclose_icon.png"));
-	 	ImageIcon btnCerarTamanio = new ImageIcon(btnCerar.getImage().getScaledInstance(15, 15, 1));
-		pestanias.addTab("Incio",btnCerarTamanio, pestaniaInicio);
-				
+
 		JComboBox comboBoxSeleccionarIndicador = new JComboBox();
 		comboBoxSeleccionarIndicador.setBounds(263, 55, 320, 20);
 		pestaniaInicio.add(comboBoxSeleccionarIndicador);
@@ -69,8 +54,5 @@ public class PestaniaInicio extends JPanel {
 		btnNuevoMetodoMatematico.setBounds(440, 154, 168, 23);
 		pestaniaInicio.add(btnNuevoMetodoMatematico);
 		
-		
-	 	
 	}
-
 }

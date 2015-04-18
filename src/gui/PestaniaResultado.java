@@ -11,7 +11,7 @@ public class PestaniaResultado extends JPanel {
 
 	public PestaniaResultado(JTabbedPane pestanias) {
 		JPanel pestaniaResultados = new JPanel();
-		pestanias.addTab("Resultados   ", null, pestaniaResultados, null);
+		pestanias.addTab(null, pestaniaResultados);
 		pestanias.setSelectedIndex(pestanias.getTabCount() - 1);
 		pestaniaResultados.setLayout(null);
 		JButton btnCompararResultados = new JButton("Comparar Resultados");
@@ -29,6 +29,9 @@ public class PestaniaResultado extends JPanel {
 		JPanel panelGrafico = new JPanel();
 		panelGrafico.setBounds(10, 11, 464, 225);
 		pestaniaResultados.add(panelGrafico);
+		
+		
+		
+		ConfiguracionPestania configuracionPestania = new ConfiguracionPestania(pestanias, "Resultados", pestanias.getTabCount()-1, "Resultados obtenidos");
 	}
-
 }
