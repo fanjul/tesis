@@ -4,13 +4,16 @@ import gui.VentanaPrincipal;
 
 import java.awt.EventQueue;
 
+import javax.swing.JFrame;
+
 public class Main {
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					VentanaPrincipal frame = new VentanaPrincipal();
+					JFrame frame = new VentanaPrincipal();
+					frame.pack();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();

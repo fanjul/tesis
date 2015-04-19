@@ -1,5 +1,13 @@
 package gui;
 
+import java.awt.BorderLayout;
+import java.awt.CardLayout;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -15,29 +23,70 @@ public class PestaniaInicio extends JPanel {
 	public PestaniaInicio(JTabbedPane pestanias) {
 
 		JPanel pestaniaInicio = new JPanel();
+		GridBagConstraints gbc = new GridBagConstraints();
 		pestanias.addTab("Inicio ", null, pestaniaInicio, "Ventana principal");
-		pestaniaInicio.setLayout(null);
-
-		JComboBox comboBoxSeleccionarIndicador = new JComboBox();
-		comboBoxSeleccionarIndicador.setBounds(263, 55, 320, 20);
-		pestaniaInicio.add(comboBoxSeleccionarIndicador);
-
-		JComboBox comboBoxSeleccionarMetodoMatematico = new JComboBox();
-		comboBoxSeleccionarMetodoMatematico.setBounds(263, 111, 320, 20);
-		pestaniaInicio.add(comboBoxSeleccionarMetodoMatematico);
-
-		JButton btnVerResultadosPrevios = new JButton("Ver resultados previos");
-		btnVerResultadosPrevios.setBounds(55, 265, 139, 23);
-		pestaniaInicio.add(btnVerResultadosPrevios);
-
+		pestaniaInicio.setLayout(new GridBagLayout());
+		
+		
 		JLabel lblSeleccionarIndicador = new JLabel("Seleccionar indicador");
-		lblSeleccionarIndicador.setBounds(55, 58, 158, 17);
-		pestaniaInicio.add(lblSeleccionarIndicador);
+		gbc.gridx = 0 ;
+		gbc.gridy = 0;
+		gbc.gridheight = 1 ;
+		gbc.gridwidth = 1 ;
+		gbc.anchor = GridBagConstraints.WEST;
+		gbc.insets = new Insets(50, 50, 50, 60);
+		pestaniaInicio.add(lblSeleccionarIndicador,gbc);
+
+
+		
+		JComboBox comboBoxSeleccionarIndicador = new JComboBox();
+//		comboBoxSeleccionarIndicador.setBounds(263, 55, 320, 20);
+		gbc.gridx = 1;
+		gbc.gridy = 0;
+		gbc.gridwidth = 4 ;
+		gbc.gridheight = 1;
+		gbc.weightx = 0.5;
+		gbc.fill = GridBagConstraints.HORIZONTAL;
+		gbc.anchor = GridBagConstraints.NORTH;
+		gbc.insets = new Insets(50, 10, 50, 60);
+		gbc.ipady = 3;
+		pestaniaInicio.add(comboBoxSeleccionarIndicador,gbc);
+		gbc.weightx = 0.0;
+		gbc.ipady = 0;
 
 		JLabel lblSeleccionarMetodoMatematico = new JLabel(
 				"Seleccionar m\u00E9todo matem\u00E1tico");
-		lblSeleccionarMetodoMatematico.setBounds(55, 114, 158, 14);
-		pestaniaInicio.add(lblSeleccionarMetodoMatematico);
+		gbc.gridx = 0 ;
+		gbc.gridy = 1;	
+		gbc.gridheight = 1 ;
+		gbc.gridwidth = 1 ;
+		gbc.weightx = 1.0;
+		pestaniaInicio.add(lblSeleccionarMetodoMatematico,gbc);
+		gbc.weightx = 0.0;
+
+		JComboBox comboBoxSeleccionarMetodoMatematico = new JComboBox();
+		gbc.gridx = 1;
+		gbc.gridy = 1;		
+		gbc.gridwidth = 4 ;
+		gbc.gridheight = 1;
+		pestaniaInicio.add(comboBoxSeleccionarMetodoMatematico,gbc);
+
+		JButton btnNuevoMetodoMatematico = new JButton(
+				"Nuevo m\u00E9todo matem\u00E1tico");
+		
+		gbc.gridx = 2;
+		gbc.gridy = 2;
+		gbc.gridwidth = 1;
+		gbc.gridheight = 1;
+		pestaniaInicio.add(btnNuevoMetodoMatematico,gbc);
+		
+		
+		JButton btnVerResultadosPrevios = new JButton("Ver resultados previos");
+		gbc.gridx = 0;
+		gbc.gridy = 3;
+		gbc.gridwidth = 1;
+		gbc.gridheight = 1;
+		pestaniaInicio.add(btnVerResultadosPrevios,gbc);
 
 		JButton btnCalcularResultados = new JButton("Calcular resultados");
 		btnCalcularResultados.addActionListener(new ActionListener() {
@@ -46,13 +95,15 @@ public class PestaniaInicio extends JPanel {
 
 			}
 		});
-		btnCalcularResultados.setBounds(484, 287, 139, 23);
-		pestaniaInicio.add(btnCalcularResultados);
 
-		JButton btnNuevoMetodoMatematico = new JButton(
-				"Nuevo m\u00E9todo matem\u00E1tico");
-		btnNuevoMetodoMatematico.setBounds(440, 154, 168, 23);
-		pestaniaInicio.add(btnNuevoMetodoMatematico);
+		gbc.gridx = 1;
+		gbc.gridy = 3;
+		gbc.gridwidth = 2;
+		gbc.gridheight = 1;
+		gbc.weightx = 1.0;
+		pestaniaInicio.add(btnCalcularResultados,gbc);
+		gbc.weightx = 0.0;
+
 		
 	}
 }
