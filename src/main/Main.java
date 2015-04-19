@@ -14,6 +14,7 @@ public class Main {
 				try {
 					JFrame frame = new VentanaPrincipal();
 					frame.pack();
+					frame.setLocationRelativeTo(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
