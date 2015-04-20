@@ -1,5 +1,9 @@
 package gui;
 
+import java.awt.CardLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -13,9 +17,14 @@ public class PestaniaResultado extends JPanel {
 		JPanel pestaniaResultados = new JPanel();
 		pestanias.addTab(null, pestaniaResultados);
 		pestanias.setSelectedIndex(pestanias.getTabCount() - 1);
-		pestaniaResultados.setLayout(null);
+		pestaniaResultados.setLayout(new GridBagLayout());
+		
+		GridBagConstraints gbc = new GridBagConstraints();
+		
+		
+		
 		JButton btnCompararResultados = new JButton("Comparar Resultados");
-		btnCompararResultados.setBounds(488, 287, 135, 23);
+		btnCompararResultados.setBounds(488, 287, 135, 36);
 		pestaniaResultados.add(btnCompararResultados);
 
 		JComboBox comboBoxNuevoGrafico = new JComboBox();

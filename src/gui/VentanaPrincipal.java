@@ -53,7 +53,6 @@ public class VentanaPrincipal extends JFrame {
 		@SuppressWarnings("unused")
 		JPanel pestaniaInicio = new PestaniaInicio(pestanias);
 
-	
 	}
 	
 	

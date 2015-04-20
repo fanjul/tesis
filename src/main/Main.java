@@ -15,6 +15,7 @@ public class Main {
 					JFrame frame = new VentanaPrincipal();
 					frame.pack();
 					frame.setLocationRelativeTo(null);
+					frame.setMinimumSize(frame.getSize());
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();

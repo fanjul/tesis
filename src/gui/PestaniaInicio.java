@@ -85,7 +85,7 @@ public class PestaniaInicio extends JPanel {
 		gbc.gridheight = 1;
 		gbc.anchor = GridBagConstraints.NORTH;
 		gbc.fill = GridBagConstraints.NORTH;
-		gbc.insets = new Insets(0, 0, 20, 160);
+		gbc.insets = new Insets(50, 0, 20, 100);
 		pestaniaInicio.add(btnNuevoMetodoMatematico,gbc);
 
 		
