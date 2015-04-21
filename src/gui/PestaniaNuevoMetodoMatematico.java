@@ -1,31 +1,21 @@
 package gui;
 
+import java.awt.Color;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+
+import javax.swing.JButton;
+import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
+import javax.swing.UIManager;
+
 import syntax.JEditTextArea;
 import syntax.JavaTokenMarker;
 import syntax.SyntaxStyle;
 import syntax.SyntaxUtilities;
 import syntax.Token;
 
-import java.awt.Color;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
-import java.io.IOException;
-import java.io.StringReader;
-
-import javax.swing.JButton;
-import javax.swing.JEditorPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTabbedPane;
-import javax.swing.JTextArea;
-import javax.swing.UIManager;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
-import javax.swing.text.DefaultHighlighter.DefaultHighlightPainter;
-import javax.swing.text.EditorKit;
-import javax.swing.text.Element;
-import javax.swing.text.Highlighter;
 
 public class PestaniaNuevoMetodoMatematico extends JPanel implements Pestania {
 
@@ -45,10 +35,11 @@ public class PestaniaNuevoMetodoMatematico extends JPanel implements Pestania {
 		this.setLayout(gridBagLayout);
 
 		//JEditorPane editorTexto = new JEditorPane();
-		JTextArea areaNumeroLineas = new JTextArea();
+	//	JTextArea areaNumeroLineas = new JTextArea();
 		//JScrollPane scrollEditor = new JScrollPane(editorTexto);
 
 	
+
 		
 		JEditTextArea textArea = new JEditTextArea();
 		
