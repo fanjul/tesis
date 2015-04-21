@@ -1,63 +1,53 @@
 package gui;
 
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+
 import javax.swing.JButton;
 import javax.swing.JEditorPane;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
-import javax.swing.JTextPane;
-import javax.swing.text.Style;
-import javax.swing.text.StyleConstants;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.GridBagConstraints;
-import java.awt.TextArea;
-
+@SuppressWarnings("serial")
 public class PestaniaNuevoMetodoMatematico extends JPanel {
 
-	/**
-	 * Create the panel.
-	 */
 	public PestaniaNuevoMetodoMatematico(JTabbedPane pestanias) {
-		JPanel pestaniaNuevoMetodoMatematico= new JPanel();
+
+		JPanel pestaniaNuevoMetodoMatematico = new JPanel();
+		GridBagLayout gridBagLayout = new GridBagLayout();
+		gridBagLayout.columnWidths = new int[] { 0, 0 };
+		gridBagLayout.rowHeights = new int[] { 0 };
+		gridBagLayout.columnWeights = new double[] { 1.0, 1.0 };
+		gridBagLayout.rowWeights = new double[] { 1.0 };
+		pestaniaNuevoMetodoMatematico.setLayout(gridBagLayout);
+
+		JTextArea editorPane = new JTextArea(20,20);
+		JScrollPane scrollEditor = new JScrollPane(editorPane);
+		
+		GridBagConstraints gbc_editorPane = new GridBagConstraints();
+		gbc_editorPane.weightx = 1.0;
+		gbc_editorPane.anchor = GridBagConstraints.WEST;
+		gbc_editorPane.insets = new Insets(0, 0, 50, 100);
+		gbc_editorPane.fill = GridBagConstraints.BOTH;
+		gbc_editorPane.gridx = 0;
+		gbc_editorPane.gridy = 0;
+		pestaniaNuevoMetodoMatematico.add(scrollEditor, gbc_editorPane);
+
+		JButton btnEjecutar = new JButton("Ejecutar");
+		GridBagConstraints gbc_btnEjecutar = new GridBagConstraints();
+		gbc_btnEjecutar.insets = new Insets(0, 0, 0, 142);
+		gbc_btnEjecutar.gridx = 1;
+		gbc_btnEjecutar.gridy = 0;
+		pestaniaNuevoMetodoMatematico.add(btnEjecutar, gbc_btnEjecutar);
+
 		pestanias.addTab(null, pestaniaNuevoMetodoMatematico);
 		pestanias.setSelectedIndex(pestanias.getTabCount() - 1);
-		
 
-		JEditorPane areaTexto = new JEditorPane();
-		GridBagConstraints constraints = new GridBagConstraints();
-		constraints.gridx = 0; // El área de texto empieza en la columna cero.
-		constraints.gridy = 0; // El área de texto empieza en la fila cero
-		constraints.gridwidth = 1; // El área de texto ocupa dos columnas.
-		constraints.gridheight = 1; // El área de texto ocupa 2 filas.
-	
-		constraints.fill = GridBagConstraints.CENTER;
-		constraints.anchor = GridBagConstraints.BOTH;
-		pestaniaNuevoMetodoMatematico.add (areaTexto, constraints);
-		constraints.weightx = 0.0;
-		constraints.weighty = 0.0;
-		
-		JButton boton1 = new JButton ("Boton 1"); 
-		constraints.gridx = 1;
-		constraints.gridy = 0;
-		constraints.gridwidth = 1;
-		constraints.gridheight = 1;
-		pestaniaNuevoMetodoMatematico.add (boton1, constraints);
-
-		  
-		/*JTextArea areaTextoNuevoMetodo = new JTextArea(25,80);
-		JScrollPane scroll = new JScrollPane();
-		scroll.setViewportView(areaTextoNuevoMetodo);
-		// Para que el partido se haga respetando las palabras. Sólo se parte la
-		// línea en los espacios entre palabras.
-		areaTextoNuevoMetodo.setWrapStyleWord(true);
-		areaTextoNuevoMetodo.setLineWrap(true);
-		//add(scroll, BorderLayout.CENTER);pestanias.getContentPane().add(scroll, BorderLayout.CENTER);
-		*/
-		new ConfiguracionPestania(pestanias, "Nuevo Método Matemático", pestanias.getTabCount()-1, "Resultados obtenidos");
+		new ConfiguracionPestania(pestanias, "Nuevo Método Matemático",
+				pestanias.getTabCount() - 1, "Resultados obtenidos");
 	}
 
 }
