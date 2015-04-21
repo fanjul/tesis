@@ -77,15 +77,21 @@ public class PestaniaInicio extends JPanel {
 		pestaniaInicio.add(comboBoxSeleccionarMetodoMatematico,gbc);
 
 
-		JButton btnNuevoMetodoMatematico = new JButton(
-				"Nuevo m\u00E9todo matem\u00E1tico");
+		JButton btnNuevoMetodoMatematico = new JButton("Nuevo m\u00E9todo matem\u00E1tico");
+		btnNuevoMetodoMatematico.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				new PestaniaNuevoMetodoMatematico(pestanias); 
+
+			}
+		}); 
+		
 		gbc.gridx = 3;
 		gbc.gridy = 2;
 		gbc.gridwidth = 1;
 		gbc.gridheight = 1;
 		gbc.anchor = GridBagConstraints.NORTH;
 		gbc.fill = GridBagConstraints.NORTH;
-		gbc.insets = new Insets(50, 0, 20, 100);
+		gbc.insets = new Insets(0, 0, 20, 160);
 		pestaniaInicio.add(btnNuevoMetodoMatematico,gbc);
 
 		
