@@ -17,6 +17,9 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.ImageIcon;
 
+
+//TODO hay que arreglar cuando se toca "Archivo" o "Edicion"
+
 @SuppressWarnings("serial")
 public class VentanaPrincipal extends JFrame {
 

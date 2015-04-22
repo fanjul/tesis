@@ -1,5 +1,6 @@
 package gui;
 
+import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -10,6 +11,9 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.text.Element;
 
 @SuppressWarnings("serial")
 public class PestaniaNuevoMetodoMatematico extends JPanel {
@@ -24,9 +28,16 @@ public class PestaniaNuevoMetodoMatematico extends JPanel {
 		gridBagLayout.rowWeights = new double[] { 1.0 };
 		pestaniaNuevoMetodoMatematico.setLayout(gridBagLayout);
 
-		JTextArea editorPane = new JTextArea(20,20);
-		JScrollPane scrollEditor = new JScrollPane(editorPane);
+		JTextArea editorTexto = new JTextArea();
+		JTextArea areaNumeroLineas = new JTextArea();
+		JScrollPane scrollEditor = new JScrollPane(editorTexto);
+		/////
 		
+		
+		NumeroDeLineaEditor nroLinea = new NumeroDeLineaEditor(editorTexto,areaNumeroLineas,scrollEditor);
+		nroLinea.createAndShowGUI();
+	
+		/////
 		GridBagConstraints gbc_editorPane = new GridBagConstraints();
 		gbc_editorPane.weightx = 1.0;
 		gbc_editorPane.anchor = GridBagConstraints.WEST;
