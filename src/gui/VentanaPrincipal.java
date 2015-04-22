@@ -15,6 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.border.EmptyBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.ImageIcon;
 
 @SuppressWarnings("serial")
 public class VentanaPrincipal extends JFrame {
@@ -43,6 +44,7 @@ public class VentanaPrincipal extends JFrame {
 		
 		
 		JMenuItem mntmAbrir = new JMenuItem("Abrir Base de Datos");
+		mntmAbrir.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/Imagenes/abrirBaseDeDatos2.png")));
 		mntmAbrir.addActionListener(new ActionListener() {
 				//Abre el dialogo para abrir una BD
 				@Override
@@ -52,6 +54,25 @@ public class VentanaPrincipal extends JFrame {
 				}	
 		});
 		mnArchivo.add(mntmAbrir);
+		
+		JMenuItem mntmAbrirArchivo = new JMenuItem("Abrir Archivo");
+		mntmAbrirArchivo.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/Imagenes/abrir.png")));
+		mnArchivo.add(mntmAbrirArchivo);
+		
+		JMenu mnEdicion = new JMenu("Edici\u00F3n");
+		menuBar.add(mnEdicion);
+		
+		JMenuItem mntmCortar = new JMenuItem("Cortar");
+		mntmCortar.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/com/sun/javafx/scene/web/skin/Cut_16x16_JFX.png")));
+		mnEdicion.add(mntmCortar);
+		
+		JMenuItem mntmCopiar = new JMenuItem("Copiar");
+		mntmCopiar.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/com/sun/javafx/scene/web/skin/Copy_16x16_JFX.png")));
+		mnEdicion.add(mntmCopiar);
+		
+		JMenuItem mntmPegar = new JMenuItem("Pegar");
+		mntmPegar.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/com/sun/javafx/scene/web/skin/Paste_16x16_JFX.png")));
+		mnEdicion.add(mntmPegar);
 		
 		JTabbedPane pestanias = new JTabbedPane(JTabbedPane.TOP);
 		getContentPane().add(pestanias,BorderLayout.PAGE_START);
