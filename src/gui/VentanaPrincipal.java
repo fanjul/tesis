@@ -46,22 +46,30 @@ public class VentanaPrincipal extends JFrame {
 		menuBar.add(mnArchivo); 
 		
 		
-		JMenuItem mntmAbrir = new JMenuItem("Abrir Base de Datos");
-		mntmAbrir.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/Imagenes/abrirBaseDeDatos2.png")));
-		mntmAbrir.addActionListener(new ActionListener() {
+		JMenuItem mntmAbrirBaseDeDatos = new JMenuItem("Abrir Base de Datos");
+		mntmAbrirBaseDeDatos.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/Imagenes/abrirBaseDeDatos2.png")));
+		mntmAbrirBaseDeDatos.addActionListener(new ActionListener() {
 				//Abre el dialogo para abrir una BD
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					ManejadorArchivos manejadorArchivos = new ManejadorArchivos(VentanaPrincipal.this);
-					manejadorArchivos.abrirArchivo();
+					manejadorArchivos.abrirBaseDeDatos();
 				}	
 		});
-		mnArchivo.add(mntmAbrir);
-		
+		mnArchivo.add(mntmAbrirBaseDeDatos);
+
 		JMenuItem mntmAbrirArchivo = new JMenuItem("Abrir Archivo");
 		mntmAbrirArchivo.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/Imagenes/abrir.png")));
+		mntmAbrirArchivo.addActionListener(new ActionListener() {
+			// Abre el dialogo para abrir un archivo .txt o .java
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ManejadorArchivos manejadorArchivos = new ManejadorArchivos(VentanaPrincipal.this);
+				manejadorArchivos.abrirArchivo();
+			}
+		});
 		mnArchivo.add(mntmAbrirArchivo);
-		
+
 		JMenu mnEdicion = new JMenu("Edici\u00F3n");
 		menuBar.add(mnEdicion);
 		

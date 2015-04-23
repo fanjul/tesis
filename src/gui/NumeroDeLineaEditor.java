@@ -4,11 +4,14 @@ import java.awt.Color;
  
 
 
+import java.awt.Font;
+
 import javax.swing.JEditorPane;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.border.Border;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.Element;
@@ -20,18 +23,18 @@ public class NumeroDeLineaEditor extends JFrame{
 	private JTextArea areaNumeroLineas;
 	private JScrollPane scrollEditor;
  
-	public NumeroDeLineaEditor(JEditorPane editorTexto, JTextArea lines, JScrollPane scrollEditor){
+	public NumeroDeLineaEditor(JEditorPane editorTexto, JTextArea areaNumeroLineas, JScrollPane scrollEditor){
 		this.editorTexto = editorTexto;
 		this.scrollEditor = scrollEditor;
-		this.areaNumeroLineas =lines;
+		this.areaNumeroLineas = areaNumeroLineas;
 	}
  
-	public  void createAndShowGUI(){
+	public void mostrarNumeroDeLinea(){
 	
 		editorTexto = new JEditorPane();
 		areaNumeroLineas = new JTextArea("1");
  
-		areaNumeroLineas.setBackground(Color.LIGHT_GRAY);
+		areaNumeroLineas.setBackground(Color.CYAN);
 		areaNumeroLineas.setEditable(false);
  
 		editorTexto.getDocument().addDocumentListener(new DocumentListener(){
@@ -64,11 +67,8 @@ public class NumeroDeLineaEditor extends JFrame{
 		scrollEditor.getViewport().add(editorTexto);
 		scrollEditor.setRowHeaderView(areaNumeroLineas);
 		scrollEditor.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
- 
-	
 	}
- 
-
+	
 }
 
 

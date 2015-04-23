@@ -39,7 +39,7 @@ public class PestaniaNuevoMetodoMatematico extends JPanel {
 		JScrollPane scrollEditor = new JScrollPane(editorTexto);
 
 		NumeroDeLineaEditor nroLinea = new NumeroDeLineaEditor(editorTexto,areaNumeroLineas,scrollEditor);
-		nroLinea.createAndShowGUI();
+		nroLinea.mostrarNumeroDeLinea();
 
 		GridBagConstraints gbc_editorPane = new GridBagConstraints();
 		gbc_editorPane.weightx = 1.0;

@@ -22,10 +22,22 @@ public class ManejadorArchivos extends JFrame{
 		this.ventana = ventana;
 	}
 		
+	public void abrirBaseDeDatos(){
+		JFileChooser seleccion = new JFileChooser();
+		FileNameExtensionFilter filter = new FileNameExtensionFilter("*.mdb , *.accdb", "mdb", "accdb");
+		seleccion.setFileFilter(filter);
+		seleccion.setCurrentDirectory(new File("./"));
+		if (seleccion.showOpenDialog(ventana) == JFileChooser.APPROVE_OPTION) {}
+		//	comboBox.setModel(new DefaultComboBoxModel<>(
+		//			new String[] { "Cargando datos..." }));
+			cargarDatos(seleccion.getSelectedFile());
+
+		
+	}
+	
 	public void abrirArchivo(){
 		JFileChooser seleccion = new JFileChooser();
-		FileNameExtensionFilter filter = new FileNameExtensionFilter(
-				"*.mdb , *.accdb", "mdb", "accdb");
+		FileNameExtensionFilter filter = new FileNameExtensionFilter("Archivos", "java", "txt");
 		seleccion.setFileFilter(filter);
 		seleccion.setCurrentDirectory(new File("./"));
 		if (seleccion.showOpenDialog(ventana) == JFileChooser.APPROVE_OPTION) {}
