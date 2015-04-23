@@ -13,7 +13,13 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.text.DefaultHighlighter.DefaultHighlightPainter;
+import javax.swing.text.EditorKit;
 import javax.swing.text.Element;
+import javax.swing.text.Highlighter;
+
+import com.Ostermiller.Syntax.HighlightedDocument;
+import com.Ostermiller.Syntax.Lexer.JavaScriptLexer;
 
 @SuppressWarnings("serial")
 public class PestaniaNuevoMetodoMatematico extends JPanel {
@@ -28,16 +34,13 @@ public class PestaniaNuevoMetodoMatematico extends JPanel {
 		gridBagLayout.rowWeights = new double[] { 1.0 };
 		pestaniaNuevoMetodoMatematico.setLayout(gridBagLayout);
 
-		JTextArea editorTexto = new JTextArea();
+		JEditorPane editorTexto = new JEditorPane();
 		JTextArea areaNumeroLineas = new JTextArea();
 		JScrollPane scrollEditor = new JScrollPane(editorTexto);
-		/////
-		
-		
+
 		NumeroDeLineaEditor nroLinea = new NumeroDeLineaEditor(editorTexto,areaNumeroLineas,scrollEditor);
 		nroLinea.createAndShowGUI();
-	
-		/////
+
 		GridBagConstraints gbc_editorPane = new GridBagConstraints();
 		gbc_editorPane.weightx = 1.0;
 		gbc_editorPane.anchor = GridBagConstraints.WEST;
@@ -57,8 +60,7 @@ public class PestaniaNuevoMetodoMatematico extends JPanel {
 		pestanias.addTab(null, pestaniaNuevoMetodoMatematico);
 		pestanias.setSelectedIndex(pestanias.getTabCount() - 1);
 
-		new ConfiguracionPestania(pestanias, "Nuevo Método Matemático",
-				pestanias.getTabCount() - 1, "Resultados obtenidos");
+		new ConfiguracionPestania(pestanias, "Nuevo Método Matemático",	pestanias.getTabCount() - 1, "Agregue un muevo metodo matemático");
 	}
 
 }

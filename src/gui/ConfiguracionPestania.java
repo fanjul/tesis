@@ -14,6 +14,7 @@ import javax.swing.JTabbedPane;
 public class ConfiguracionPestania extends JPanel implements ActionListener {
 	private JTabbedPane pestanias;
 
+//TODO tratar de hacerla SINGLETON	
 	public ConfiguracionPestania(JTabbedPane pestanias, String nombrePestania, Integer posPestania, String toolTip) {
 
 		this.pestanias = pestanias;

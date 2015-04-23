@@ -3,6 +3,8 @@ package gui;
 import java.awt.Color;
  
 
+
+import javax.swing.JEditorPane;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -11,12 +13,14 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.Element;
  
+//TODO tratar de hacerla SINGLETON
+
 public class NumeroDeLineaEditor extends JFrame{
-	private JTextArea editorTexto;
+	private JEditorPane editorTexto;
 	private JTextArea areaNumeroLineas;
 	private JScrollPane scrollEditor;
  
-	public NumeroDeLineaEditor(JTextArea editorTexto, JTextArea lines, JScrollPane scrollEditor){
+	public NumeroDeLineaEditor(JEditorPane editorTexto, JTextArea lines, JScrollPane scrollEditor){
 		this.editorTexto = editorTexto;
 		this.scrollEditor = scrollEditor;
 		this.areaNumeroLineas =lines;
@@ -24,7 +28,7 @@ public class NumeroDeLineaEditor extends JFrame{
  
 	public  void createAndShowGUI(){
 	
-		editorTexto = new JTextArea();
+		editorTexto = new JEditorPane();
 		areaNumeroLineas = new JTextArea("1");
  
 		areaNumeroLineas.setBackground(Color.LIGHT_GRAY);

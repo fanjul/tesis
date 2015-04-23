@@ -38,7 +38,7 @@ public class VentanaPrincipal extends JFrame {
 		getContentPane().add(contentPane,BorderLayout.PAGE_START);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
-	
+//TODO arreglar lo de la barra de menu
 		JMenuBar menuBar = new JMenuBar();	
 		setJMenuBar(menuBar);
 
