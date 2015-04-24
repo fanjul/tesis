@@ -15,15 +15,17 @@ import javax.swing.border.Border;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.Element;
+
+import syntax.JEditTextArea;
  
 //TODO tratar de hacerla SINGLETON
-
+/*
 public class NumeroDeLineaEditor extends JFrame{
-	private JEditorPane editorTexto;
+	private JEditTextArea editorTexto;
 	private JTextArea areaNumeroLineas;
 	private JScrollPane scrollEditor;
  
-	public NumeroDeLineaEditor(JEditorPane editorTexto, JTextArea areaNumeroLineas, JScrollPane scrollEditor){
+	public NumeroDeLineaEditor(JEditTextArea editorTexto, JTextArea areaNumeroLineas){
 		this.editorTexto = editorTexto;
 		this.scrollEditor = scrollEditor;
 		this.areaNumeroLineas = areaNumeroLineas;
@@ -31,7 +33,7 @@ public class NumeroDeLineaEditor extends JFrame{
  
 	public void mostrarNumeroDeLinea(){
 	
-		editorTexto = new JEditorPane();
+		editorTexto = new JEditTextArea();
 		areaNumeroLineas = new JTextArea("1");
  
 		areaNumeroLineas.setBackground(Color.CYAN);
@@ -71,5 +73,5 @@ public class NumeroDeLineaEditor extends JFrame{
 	
 }
 
-
+*/
  
