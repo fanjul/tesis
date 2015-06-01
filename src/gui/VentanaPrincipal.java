@@ -16,6 +16,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.border.EmptyBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.ImageIcon;
+import java.awt.Toolkit;
 
 
 //TODO hay que arreglar cuando se toca "Archivo" o "Edicion"
@@ -31,6 +32,7 @@ public class VentanaPrincipal extends JFrame {
 	 */
 	public VentanaPrincipal() {
 		super(NOMBRE);
+		setIconImage(Toolkit.getDefaultToolkit().getImage(VentanaPrincipal.class.getResource("/Imagenes/Icono.jpg")));
 		setAlwaysOnTop(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 768, 409);
@@ -59,7 +61,6 @@ public class VentanaPrincipal extends JFrame {
 		mnArchivo.add(mntmAbrirBaseDeDatos);
 
 		JMenuItem mntmAbrirArchivo = new JMenuItem("Abrir Archivo");
-		mntmAbrirArchivo.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/Imagenes/abrir.png")));
 		mntmAbrirArchivo.addActionListener(new ActionListener() {
 			// Abre el dialogo para abrir un archivo .txt o .java
 			@Override
