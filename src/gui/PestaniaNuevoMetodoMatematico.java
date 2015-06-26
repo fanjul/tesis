@@ -27,11 +27,16 @@ import javax.swing.text.EditorKit;
 import javax.swing.text.Element;
 import javax.swing.text.Highlighter;
 
-@SuppressWarnings("serial")
-public class PestaniaNuevoMetodoMatematico extends JPanel {
+public class PestaniaNuevoMetodoMatematico extends JPanel implements Pestania {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	public PestaniaNuevoMetodoMatematico(JTabbedPane pestanias) {
 
+		
 		JPanel pestaniaNuevoMetodoMatematico = new JPanel();
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[] { 0, 0 };
@@ -88,8 +93,24 @@ public class PestaniaNuevoMetodoMatematico extends JPanel {
 
 		pestanias.addTab(null, pestaniaNuevoMetodoMatematico);
 		pestanias.setSelectedIndex(pestanias.getTabCount() - 1);
-
+		
+		this.setEnableAbrirArchivo();
+		this.setEnableAbrirBaseDeDatos();
+		
 		new ConfiguracionPestania(pestanias, "Nuevo Método Matemático",	pestanias.getTabCount() - 1, "Agregue un muevo metodo matemático");
 	}
+
+	@Override
+	public void setEnableAbrirArchivo() {
+		VentanaPrincipal.getInstance().setEnableAbrirArchivo(true);
+	}
+
+	@Override
+	public void setEnableAbrirBaseDeDatos() {
+		VentanaPrincipal.getInstance().setEnableAbrirBaseDeDatos(false);
+		
+	}
+	
+
 
 }

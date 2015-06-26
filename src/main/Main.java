@@ -1,10 +1,14 @@
 package main;
 
+import gui.PestaniaInicio;
 import gui.VentanaPrincipal;
 
+import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
 
 public class Main {
 	
@@ -12,7 +16,10 @@ public class Main {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					JFrame frame = new VentanaPrincipal();
+					JFrame frame = VentanaPrincipal.getInstance();
+					VentanaPrincipal.getInstance().getContentPane().add(VentanaPrincipal.getInstance().getPestanias(), BorderLayout.PAGE_START);
+					JPanel pestaniaInicio = new PestaniaInicio(VentanaPrincipal.getInstance().getPestanias());
+
 					frame.pack();
 					frame.setLocationRelativeTo(null);
 					frame.setMinimumSize(frame.getSize());

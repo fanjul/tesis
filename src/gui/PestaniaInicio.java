@@ -12,12 +12,14 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
-@SuppressWarnings("serial")
-public class PestaniaInicio extends JPanel {
+public class PestaniaInicio extends JPanel implements Pestania {
 
-	@SuppressWarnings("rawtypes")
+	
+	private static final long serialVersionUID = 1L;
+
 	public PestaniaInicio(JTabbedPane pestanias) {
-
+		
+	
 		JPanel pestaniaInicio = new JPanel();
 		GridBagConstraints gbc = new GridBagConstraints();
 		pestanias.addTab("Inicio ", null, pestaniaInicio, "Ventana principal");
@@ -112,7 +114,6 @@ public class PestaniaInicio extends JPanel {
 		btnCalcularResultados.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				new PestaniaResultado(pestanias);
-
 			}
 		});
 
@@ -126,7 +127,22 @@ public class PestaniaInicio extends JPanel {
 		gbc.insets = new Insets(200, 300, 50, 0);
 		pestaniaInicio.add(btnCalcularResultados,gbc);
 		gbc.weightx = 0.0;
+		
+		this.setEnableAbrirArchivo();
+		this.setEnableAbrirBaseDeDatos();
 
 		
 	}
+
+	@Override
+	public void setEnableAbrirArchivo() {
+		VentanaPrincipal.getInstance().setEnableAbrirArchivo(false);
+	}
+
+	@Override
+	public void setEnableAbrirBaseDeDatos() {
+		VentanaPrincipal.getInstance().setEnableAbrirBaseDeDatos(true);
+	}
+
+	
 }

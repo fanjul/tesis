@@ -9,12 +9,16 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
-@SuppressWarnings("serial")
 public class ConfiguracionPestania extends JPanel implements ActionListener {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JTabbedPane pestanias;
 
-//TODO tratar de hacerla SINGLETON	
 	public ConfiguracionPestania(JTabbedPane pestanias, String nombrePestania, Integer posPestania, String toolTip) {
 
 		this.pestanias = pestanias;
@@ -23,7 +27,9 @@ public class ConfiguracionPestania extends JPanel implements ActionListener {
 		add(new JLabel(pestanias.getTitleAt(posPestania),
 				pestanias.getIconAt(posPestania), JLabel.LEFT));
 
+
 		Icon closeIcon = new IconoCerrar();
+		
 		JButton btClose = new JButton(closeIcon);
 
 		btClose.setPreferredSize(new Dimension(closeIcon.getIconWidth(),
@@ -46,6 +52,7 @@ public class ConfiguracionPestania extends JPanel implements ActionListener {
 		int i = pestanias.indexOfTabComponent(this);
 		if (i != -1) {
 			pestanias.remove(i);
+
 		}
 	}
 }

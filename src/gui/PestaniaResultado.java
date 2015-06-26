@@ -10,11 +10,16 @@ import javax.swing.JEditorPane;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-@SuppressWarnings("serial")
-public class PestaniaResultado extends JPanel {
+public class PestaniaResultado extends JPanel implements Pestania {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	public PestaniaResultado(JTabbedPane pestanias) {
 		JPanel pestaniaResultados = new JPanel();
@@ -137,9 +142,21 @@ public class PestaniaResultado extends JPanel {
 	
 */
 
-		
-		
+		this.setEnableAbrirArchivo();
+		this.setEnableAbrirBaseDeDatos();
 		
 		ConfiguracionPestania configuracionPestania = new ConfiguracionPestania(pestanias, "Resultados", pestanias.getTabCount()-1, "Resultados obtenidos");
+	}
+
+	@Override
+	public void setEnableAbrirArchivo() {
+		VentanaPrincipal.getInstance().setEnableAbrirArchivo(false);
+		
+	}
+
+	@Override
+	public void setEnableAbrirBaseDeDatos() {
+		VentanaPrincipal.getInstance().setEnableAbrirBaseDeDatos(false);
+		
 	}
 }
