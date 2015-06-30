@@ -65,6 +65,7 @@ public class PestaniaNuevoMetodoMatematico extends JPanel implements Pestania {
         textArea.getPainter().setStyles(styles);
       //  pestaniaNuevoMetodoMatematico.add(textArea);
 
+
 		GridBagConstraints gbc_editorPane = new GridBagConstraints();
 		gbc_editorPane.weightx = 1.0;
 		gbc_editorPane.anchor = GridBagConstraints.WEST;
