@@ -10,20 +10,25 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
-@SuppressWarnings("serial")
 public class ConfiguracionPestania extends JPanel implements ActionListener {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JTabbedPane pestanias;
 
-//TODO tratar de hacerla SINGLETON	
-	public ConfiguracionPestania(JTabbedPane pestanias, String nombrePestania, Integer posPestania, String toolTip, boolean ponerBoton) {
 
-		this.pestanias = pestanias;
+	public ConfiguracionPestania(String nombrePestania, Integer posPestania, String toolTip) {
+
+		this.pestanias = VentanaPrincipal.getInstance().getPestanias();
 
 		setOpaque(false);
 		add(new JLabel(pestanias.getTitleAt(posPestania),
 				pestanias.getIconAt(posPestania), JLabel.LEFT));
 
+
 		Icon closeIcon = new IconoCerrar();
+		
 		JButton btClose = new JButton(closeIcon);
 
 		btClose.setPreferredSize(new Dimension(closeIcon.getIconWidth(),
@@ -33,7 +38,6 @@ public class ConfiguracionPestania extends JPanel implements ActionListener {
 		JLabel lblTitulo = new JLabel();
 		lblTitulo.setText(nombrePestania);
 		add(lblTitulo);
-		if(ponerBoton)
 		add(btClose);
 
 		btClose.addActionListener(this);
@@ -47,6 +51,9 @@ public class ConfiguracionPestania extends JPanel implements ActionListener {
 		int i = pestanias.indexOfTabComponent(this);
 		if (i != -1) {
 			pestanias.remove(i);
+			((Pestania) pestanias.getComponentAt(i-1)).setEnableAbrirArchivo();
+			((Pestania) pestanias.getComponentAt(i-1)).setEnableAbrirBaseDeDatos();
+
 		}
 	}
 }

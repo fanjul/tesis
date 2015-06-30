@@ -71,6 +71,7 @@ public class ManejadorArchivos extends JFrame{
 	}
 	
 	public void abrirArchivo(){
+		
 		JFileChooser seleccion = new JFileChooser();
 		FileNameExtensionFilter filter = new FileNameExtensionFilter("Archivos", "java", "txt");
 		seleccion.setFileFilter(filter);
