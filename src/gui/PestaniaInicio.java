@@ -19,11 +19,10 @@ public class PestaniaInicio extends JPanel implements Pestania {
 
 	public PestaniaInicio(JTabbedPane pestanias) {
 		
-	
-		JPanel pestaniaInicio = new JPanel();
+		super();
 		GridBagConstraints gbc = new GridBagConstraints();
-		pestanias.addTab("Inicio ", null, pestaniaInicio, "Ventana principal");
-		pestaniaInicio.setLayout(new GridBagLayout());
+		pestanias.addTab("Inicio ", null, this, "Ventana principal");
+		this.setLayout(new GridBagLayout());
 		
 		
 		JLabel lblSeleccionarIndicador = new JLabel("Seleccionar indicador");
@@ -35,7 +34,7 @@ public class PestaniaInicio extends JPanel implements Pestania {
 		gbc.insets = new Insets(75, 100, 20, 60);
 		gbc.weightx = 1.0;
 		gbc.ipadx = 100;
-		pestaniaInicio.add(lblSeleccionarIndicador,gbc);
+		this.add(lblSeleccionarIndicador,gbc);
 		gbc.weightx = 0.0;
 		gbc.ipadx = 0;
 
@@ -52,7 +51,7 @@ public class PestaniaInicio extends JPanel implements Pestania {
 		gbc.insets = new Insets(75, 50, 20, 0);
 		gbc.ipady = 2;
 		gbc.ipadx = 100;
-		pestaniaInicio.add(comboBoxSeleccionarIndicador,gbc);
+		this.add(comboBoxSeleccionarIndicador,gbc);
 		gbc.weightx = 0.0;
 		gbc.ipady = 0;
 		gbc.ipadx = 0;
@@ -65,7 +64,7 @@ public class PestaniaInicio extends JPanel implements Pestania {
 		gbc.gridheight = 1 ;
 		gbc.gridwidth = 1 ;
 		gbc.insets = new Insets(75, 100, 20, 60);
-		pestaniaInicio.add(lblSeleccionarMetodoMatematico,gbc);
+		this.add(lblSeleccionarMetodoMatematico,gbc);
 
 		JComboBox comboBoxSeleccionarMetodoMatematico = new JComboBox();
 		gbc.gridx = 1;
@@ -76,7 +75,7 @@ public class PestaniaInicio extends JPanel implements Pestania {
 		gbc.ipady = 2;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.anchor = GridBagConstraints.NORTH;	
-		pestaniaInicio.add(comboBoxSeleccionarMetodoMatematico,gbc);
+		this.add(comboBoxSeleccionarMetodoMatematico,gbc);
 
 
 		JButton btnNuevoMetodoMatematico = new JButton("Nuevo m\u00E9todo matem\u00E1tico");
@@ -94,7 +93,7 @@ public class PestaniaInicio extends JPanel implements Pestania {
 		gbc.anchor = GridBagConstraints.NORTH;
 		gbc.fill = GridBagConstraints.NORTH;
 		gbc.insets = new Insets(0, 0, 20, 160);
-		pestaniaInicio.add(btnNuevoMetodoMatematico,gbc);
+		this.add(btnNuevoMetodoMatematico,gbc);
 
 		
 		JButton btnVerResultadosPrevios = new JButton("Ver resultados previos");
@@ -106,7 +105,7 @@ public class PestaniaInicio extends JPanel implements Pestania {
 		gbc.fill = GridBagConstraints.NONE;
 		gbc.weighty = 1.0;
 		gbc.insets = new Insets(200, 100, 50, 60);
-		pestaniaInicio.add(btnVerResultadosPrevios,gbc);
+		this.add(btnVerResultadosPrevios,gbc);
 		gbc.weighty = 0.0;
 
 		
@@ -125,7 +124,7 @@ public class PestaniaInicio extends JPanel implements Pestania {
 		gbc.anchor = GridBagConstraints.SOUTHEAST;
 		gbc.fill = GridBagConstraints.NONE;
 		gbc.insets = new Insets(200, 300, 50, 0);
-		pestaniaInicio.add(btnCalcularResultados,gbc);
+		this.add(btnCalcularResultados,gbc);
 		gbc.weightx = 0.0;
 		
 		this.setEnableAbrirArchivo();

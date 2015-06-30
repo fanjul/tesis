@@ -52,6 +52,8 @@ public class ConfiguracionPestania extends JPanel implements ActionListener {
 		int i = pestanias.indexOfTabComponent(this);
 		if (i != -1) {
 			pestanias.remove(i);
+			((Pestania) pestanias.getComponentAt(i-1)).setEnableAbrirArchivo();
+			((Pestania) pestanias.getComponentAt(i-1)).setEnableAbrirBaseDeDatos();
 
 		}
 	}

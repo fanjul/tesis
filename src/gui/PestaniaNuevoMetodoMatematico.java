@@ -36,14 +36,13 @@ public class PestaniaNuevoMetodoMatematico extends JPanel implements Pestania {
 
 	public PestaniaNuevoMetodoMatematico(JTabbedPane pestanias) {
 
-		
-		JPanel pestaniaNuevoMetodoMatematico = new JPanel();
+		super();
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[] { 0, 0 };
 		gridBagLayout.rowHeights = new int[] { 0 };
 		gridBagLayout.columnWeights = new double[] { 1.0, 1.0 };
 		gridBagLayout.rowWeights = new double[] { 1.0 };
-		pestaniaNuevoMetodoMatematico.setLayout(gridBagLayout);
+		this.setLayout(gridBagLayout);
 
 		//JEditorPane editorTexto = new JEditorPane();
 		JTextArea areaNumeroLineas = new JTextArea();
@@ -82,16 +81,16 @@ public class PestaniaNuevoMetodoMatematico extends JPanel implements Pestania {
 		gbc_editorPane.fill = GridBagConstraints.BOTH;
 		gbc_editorPane.gridx = 0;
 		gbc_editorPane.gridy = 0;
-		pestaniaNuevoMetodoMatematico.add(textArea, gbc_editorPane);
+		this.add(textArea, gbc_editorPane);
 
 		JButton btnEjecutar = new JButton("Ejecutar");
 		GridBagConstraints gbc_btnEjecutar = new GridBagConstraints();
 		gbc_btnEjecutar.insets = new Insets(0, 0, 0, 142);
 		gbc_btnEjecutar.gridx = 1;
 		gbc_btnEjecutar.gridy = 0;
-		pestaniaNuevoMetodoMatematico.add(btnEjecutar, gbc_btnEjecutar);
+		this.add(btnEjecutar, gbc_btnEjecutar);
 
-		pestanias.addTab(null, pestaniaNuevoMetodoMatematico);
+		pestanias.addTab(null, this);
 		pestanias.setSelectedIndex(pestanias.getTabCount() - 1);
 		
 		this.setEnableAbrirArchivo();

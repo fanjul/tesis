@@ -22,8 +22,8 @@ public class PestaniaResultado extends JPanel implements Pestania {
 	private static final long serialVersionUID = 1L;
 
 	public PestaniaResultado(JTabbedPane pestanias) {
-		JPanel pestaniaResultados = new JPanel();
-		pestanias.addTab(null, pestaniaResultados);
+		super();
+		pestanias.addTab(null, this);
 		
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{290, 250, 72};
@@ -31,7 +31,7 @@ public class PestaniaResultado extends JPanel implements Pestania {
 		gridBagLayout.rowWeights = new double[]{1.0, 0.0};
 		gridBagLayout.columnWeights = new double[]{1.0, 0.0, 0.0};
 		
-		pestaniaResultados.setLayout(gridBagLayout);
+		this.setLayout(gridBagLayout);
 		
 		JEditorPane editorPane = new JEditorPane();
 		GridBagConstraints gbc_editorPane = new GridBagConstraints();
@@ -40,7 +40,7 @@ public class PestaniaResultado extends JPanel implements Pestania {
 		gbc_editorPane.fill = GridBagConstraints.BOTH;
 		gbc_editorPane.gridx = 0;
 		gbc_editorPane.gridy = 0;
-		pestaniaResultados.add(editorPane, gbc_editorPane);
+		this.add(editorPane, gbc_editorPane);
 		
 		JEditorPane editorPane_1 = new JEditorPane();
 		GridBagConstraints gbc_editorPane_1 = new GridBagConstraints();
@@ -49,7 +49,7 @@ public class PestaniaResultado extends JPanel implements Pestania {
 		gbc_editorPane_1.insets = new Insets(10, 10, 10, 10);
 		gbc_editorPane_1.gridx = 1;
 		gbc_editorPane_1.gridy = 0;
-		pestaniaResultados.add(editorPane_1, gbc_editorPane_1);
+		this.add(editorPane_1, gbc_editorPane_1);
 		
 		JButton btnCompararResultados = new JButton("Comparar resultados");
 		btnCompararResultados.addActionListener(new ActionListener() {
@@ -61,14 +61,14 @@ public class PestaniaResultado extends JPanel implements Pestania {
 		gbc_btnCompararResultados.insets = new Insets(30, 0, 40, 5);
 		gbc_btnCompararResultados.gridx = 0;
 		gbc_btnCompararResultados.gridy = 1;
-		pestaniaResultados.add(btnCompararResultados, gbc_btnCompararResultados);
+		this.add(btnCompararResultados, gbc_btnCompararResultados);
 		
 		JLabel lblSeleccionarGrafico = new JLabel("Seleccionar Gr\u00E1fico");
 		GridBagConstraints gbc_lblSeleccionarGrafico = new GridBagConstraints();
 		gbc_lblSeleccionarGrafico.insets = new Insets(0, 20, 10, 5);
 		gbc_lblSeleccionarGrafico.gridx = 1;
 		gbc_lblSeleccionarGrafico.gridy = 1;
-		pestaniaResultados.add(lblSeleccionarGrafico, gbc_lblSeleccionarGrafico);
+		this.add(lblSeleccionarGrafico, gbc_lblSeleccionarGrafico);
 		
 		JComboBox comboBoxSeleccionar = new JComboBox();
 		GridBagConstraints gbc_comboBoxSeleccionar = new GridBagConstraints();
@@ -77,7 +77,7 @@ public class PestaniaResultado extends JPanel implements Pestania {
 		gbc_comboBoxSeleccionar.weightx = 1.0;
 		gbc_comboBoxSeleccionar.gridx = 2;
 		gbc_comboBoxSeleccionar.gridy = 1;
-		pestaniaResultados.add(comboBoxSeleccionar, gbc_comboBoxSeleccionar);
+		this.add(comboBoxSeleccionar, gbc_comboBoxSeleccionar);
 
 
 		pestanias.setSelectedIndex(pestanias.getTabCount() - 1);

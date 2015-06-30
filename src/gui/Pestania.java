@@ -1,7 +1,7 @@
 package gui;
 
 
-interface Pestania  {
+interface Pestania {
 	
 	
 	abstract void setEnableAbrirArchivo();
