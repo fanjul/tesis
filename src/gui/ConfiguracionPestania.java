@@ -15,7 +15,7 @@ public class ConfiguracionPestania extends JPanel implements ActionListener {
 	private JTabbedPane pestanias;
 
 //TODO tratar de hacerla SINGLETON	
-	public ConfiguracionPestania(JTabbedPane pestanias, String nombrePestania, Integer posPestania, String toolTip) {
+	public ConfiguracionPestania(JTabbedPane pestanias, String nombrePestania, Integer posPestania, String toolTip, boolean ponerBoton) {
 
 		this.pestanias = pestanias;
 
@@ -33,6 +33,7 @@ public class ConfiguracionPestania extends JPanel implements ActionListener {
 		JLabel lblTitulo = new JLabel();
 		lblTitulo.setText(nombrePestania);
 		add(lblTitulo);
+		if(ponerBoton)
 		add(btClose);
 
 		btClose.addActionListener(this);

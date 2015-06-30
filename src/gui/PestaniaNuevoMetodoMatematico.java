@@ -13,6 +13,7 @@ import java.awt.Insets;
 import java.io.IOException;
 import java.io.StringReader;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JEditorPane;
 import javax.swing.JPanel;
@@ -80,8 +81,9 @@ public class PestaniaNuevoMetodoMatematico extends JPanel {
 		pestaniaNuevoMetodoMatematico.add(textArea, gbc_editorPane);
 
 		JButton btnEjecutar = new JButton("Ejecutar");
+		btnEjecutar.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/Imagenes/ejecutar.png")));
 		GridBagConstraints gbc_btnEjecutar = new GridBagConstraints();
-		gbc_btnEjecutar.insets = new Insets(0, 0, 0, 142);
+		gbc_btnEjecutar.insets = new Insets(0, 0, 0, 0);
 		gbc_btnEjecutar.gridx = 1;
 		gbc_btnEjecutar.gridy = 0;
 		pestaniaNuevoMetodoMatematico.add(btnEjecutar, gbc_btnEjecutar);
@@ -89,7 +91,7 @@ public class PestaniaNuevoMetodoMatematico extends JPanel {
 		pestanias.addTab(null, pestaniaNuevoMetodoMatematico);
 		pestanias.setSelectedIndex(pestanias.getTabCount() - 1);
 
-		new ConfiguracionPestania(pestanias, "Nuevo Método Matemático",	pestanias.getTabCount() - 1, "Agregue un muevo metodo matemático");
+		new ConfiguracionPestania(pestanias, "Nuevo Método Matemático",	pestanias.getTabCount() - 1, "Agregue un muevo metodo matemático",true);
 	}
 
 }

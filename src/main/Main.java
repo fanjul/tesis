@@ -12,11 +12,19 @@ public class Main {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					JFrame frame = new VentanaPrincipal();
+					JFrame frame = VentanaPrincipal.getInstance();
 					frame.pack();
 					frame.setLocationRelativeTo(null);
 					frame.setMinimumSize(frame.getSize());
 					frame.setVisible(true);
+					
+					//////
+					
+					
+				
+					
+					//////
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

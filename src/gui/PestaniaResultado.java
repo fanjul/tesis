@@ -4,12 +4,14 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JEditorPane;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -47,6 +49,7 @@ public class PestaniaResultado extends JPanel {
 		pestaniaResultados.add(editorPane_1, gbc_editorPane_1);
 		
 		JButton btnCompararResultados = new JButton("Comparar resultados");
+		btnCompararResultados.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/Imagenes/comparar.png")));
 		btnCompararResultados.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				//TODO
@@ -140,6 +143,6 @@ public class PestaniaResultado extends JPanel {
 		
 		
 		
-		ConfiguracionPestania configuracionPestania = new ConfiguracionPestania(pestanias, "Resultados", pestanias.getTabCount()-1, "Resultados obtenidos");
+		ConfiguracionPestania configuracionPestania = new ConfiguracionPestania(pestanias, "Resultados", pestanias.getTabCount()-1, "Resultados obtenidos", true);
 	}
 }
