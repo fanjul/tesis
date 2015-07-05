@@ -12,6 +12,8 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 public class VentanaPrincipal extends JFrame {
 
@@ -49,21 +51,28 @@ public class VentanaPrincipal extends JFrame {
 
 		getContentPane().add(pestanias, BorderLayout.PAGE_START);
 
-		{// Menu Archivo
-			setJMenuBar(menuBar);
-			menuBar.add(mnArchivo);
+		// Menu Archivo
+		setJMenuBar(menuBar);
+		menuBar.add(mnArchivo);
 
-			// abrir BD
-			mntmAbrirBaseDeDatos.setIcon(new ImageIcon(VentanaPrincipal.class
-					.getResource("/imagenes/abrirBaseDeDatos2.png")));
-			mnArchivo.add(mntmAbrirBaseDeDatos);
+		// abrir BD
+		mntmAbrirBaseDeDatos.setIcon(new ImageIcon(VentanaPrincipal.class
+				.getResource("/imagenes/abrirBaseDeDatos2.png")));
+		mnArchivo.add(mntmAbrirBaseDeDatos);
 
-			// abrir archivo txt/java
-			mntmAbrirArchivo.setIcon(new ImageIcon(VentanaPrincipal.class
-					.getResource("/imagenes/abrirArchivo.png")));
-			mnArchivo.add(mntmAbrirArchivo);
+		// abrir archivo txt/java
+		mntmAbrirArchivo.setIcon(new ImageIcon(VentanaPrincipal.class
+				.getResource("/imagenes/abrirArchivo.png")));
+		mnArchivo.add(mntmAbrirArchivo);
 
-		}
+		pestanias.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
+				VentanaPrincipal.getInstance().getPestaniaActual()
+						.setEnableAbrirArchivo();
+				VentanaPrincipal.getInstance().getPestaniaActual()
+						.setEnableAbrirBaseDeDatos();
+			}
+		});
 
 	}
 
@@ -84,7 +93,6 @@ public class VentanaPrincipal extends JFrame {
 		return mntmAbrirArchivo;
 	}
 
-
 	public JTabbedPane getPestanias() {
 		return pestanias;
 	}
@@ -96,8 +104,13 @@ public class VentanaPrincipal extends JFrame {
 	public void setEnableAbrirBaseDeDatos(boolean disponible) {
 		this.mntmAbrirBaseDeDatos.setEnabled(disponible);
 	}
-	
+
 	public void addPestania(Pestania p) {
 		this.pestanias.addTab(p.getNombre(), null, p, p.getTooltip());
+	}
+
+	public Pestania getPestaniaActual() {
+		return (Pestania) pestanias
+				.getComponentAt(pestanias.getSelectedIndex());
 	}
 }
