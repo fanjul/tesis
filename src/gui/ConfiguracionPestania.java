@@ -12,7 +12,7 @@ import javax.swing.JTabbedPane;
 
 public class ConfiguracionPestania extends JPanel implements ActionListener {
 	
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 2238586550033832359L;
 	private JTabbedPane pestanias;
 
 
@@ -44,9 +44,6 @@ public class ConfiguracionPestania extends JPanel implements ActionListener {
 		int i = pestanias.indexOfTabComponent(this);
 		if (i != -1) {
 			pestanias.remove(i);
-			((Pestania) pestanias.getComponentAt(i-1)).setEnableAbrirArchivo();
-			((Pestania) pestanias.getComponentAt(i-1)).setEnableAbrirBaseDeDatos();
-
 		}
 	}
 }
