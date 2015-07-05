@@ -1,19 +1,19 @@
 package gui;
 
+import gui.archivos.AbrirBaseDeDatos;
+import gui.archivos.ManejadorArchivos;
+
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 
 import org.joda.time.LocalDate;
@@ -22,7 +22,7 @@ import baseDatos.Periodo;
 
 public class PestaniaInicio extends Pestania {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -7812418974938642333L;
 	// Componentes
 	private GridBagConstraints gbc;
 	private JLabel lblSeleccionarIndicador;
@@ -38,6 +38,7 @@ public class PestaniaInicio extends Pestania {
 	private JTextField txtFechaFin;
 	private JLabel lblPeriodoMuestras;
 	private JComboBox comboBoxPeriodo;
+	private ManejadorArchivos manejadorArchivos;
 
 	private LocalDate fechaInicio;
 	private LocalDate fechaFin;
@@ -52,10 +53,6 @@ public class PestaniaInicio extends Pestania {
 		VentanaPrincipal.getInstance().getMntmAbrirBaseDeDatos().addActionListener(new ActionListener() {
 			// Abre el dialogo para abrir una BD
 			public void actionPerformed(ActionEvent e) {
-				ManejadorArchivos manejadorArchivos = new ManejadorArchivos(
-						fechaInicio, fechaFin,
-						comboBoxSeleccionarIndicador, txtFechaInicio,
-						txtFechaFin, comboBoxPeriodo);
 				manejadorArchivos.abrirBaseDeDatos();
 			}
 		});
@@ -92,6 +89,8 @@ public class PestaniaInicio extends Pestania {
 		txtFechaFin = new JTextField();
 		lblPeriodoMuestras = new JLabel();
 		comboBoxPeriodo = new JComboBox();
+		manejadorArchivos = new AbrirBaseDeDatos(fechaInicio, fechaFin, comboBoxSeleccionarIndicador, txtFechaInicio,
+				txtFechaFin, comboBoxPeriodo);
 	}
 
 	private void setLayoutConstraints() {
@@ -158,7 +157,7 @@ public class PestaniaInicio extends Pestania {
 			gbc.insets = new Insets(60, 0, 20, 20);
 			btnNuevoMetodoMatematico.setIcon(new ImageIcon(
 					VentanaPrincipal.class
-							.getResource("/Imagenes/nuevoMetodo.png")));
+							.getResource("/imagenes/nuevoMetodo.png")));
 			this.add(btnNuevoMetodoMatematico, gbc);
 		}
 
@@ -261,7 +260,7 @@ public class PestaniaInicio extends Pestania {
 			gbc.gridy = 3;
 			gbc.insets = new Insets(200, 0, 50, 0);
 			btnCalcularResultados.setIcon(new ImageIcon(VentanaPrincipal.class
-					.getResource("/Imagenes/calcularResultados.png")));
+					.getResource("/imagenes/calcularResultados.png")));
 			this.add(btnCalcularResultados, gbc);
 		}
 
@@ -273,7 +272,7 @@ public class PestaniaInicio extends Pestania {
 			gbc.insets = new Insets(200, 100, 50, 60);
 			btnVerResultadosPrevios.setIcon(new ImageIcon(
 					VentanaPrincipal.class
-							.getResource("/Imagenes/resultadosPrevios.png")));
+							.getResource("/imagenes/resultadosPrevios.png")));
 			this.add(btnVerResultadosPrevios, gbc);
 		}
 
