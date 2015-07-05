@@ -84,9 +84,6 @@ public class VentanaPrincipal extends JFrame {
 		return mntmAbrirArchivo;
 	}
 
-	public Integer getPestaniaActual() {
-		return this.pestanias.getSelectedIndex();
-	}
 
 	public JTabbedPane getPestanias() {
 		return pestanias;
@@ -98,6 +95,9 @@ public class VentanaPrincipal extends JFrame {
 
 	public void setEnableAbrirBaseDeDatos(boolean disponible) {
 		this.mntmAbrirBaseDeDatos.setEnabled(disponible);
-
+	}
+	
+	public void addPestania(Pestania p) {
+		this.pestanias.addTab(p.getNombre(), null, p, p.getTooltip());
 	}
 }

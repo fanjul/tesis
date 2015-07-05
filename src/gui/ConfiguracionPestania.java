@@ -11,14 +11,12 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
 public class ConfiguracionPestania extends JPanel implements ActionListener {
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 1L;
 	private JTabbedPane pestanias;
 
 
-	public ConfiguracionPestania(String nombrePestania, Integer posPestania, String toolTip) {
+	public ConfiguracionPestania(Integer posPestania) {
 
 		this.pestanias = VentanaPrincipal.getInstance().getPestanias();
 
@@ -26,23 +24,18 @@ public class ConfiguracionPestania extends JPanel implements ActionListener {
 		add(new JLabel(pestanias.getTitleAt(posPestania),
 				pestanias.getIconAt(posPestania), JLabel.LEFT));
 
-
 		Icon closeIcon = new IconoCerrar();
-		
 		JButton btClose = new JButton(closeIcon);
-
 		btClose.setPreferredSize(new Dimension(closeIcon.getIconWidth(),
 				closeIcon.getIconHeight()));
 		btClose.setToolTipText("Cerrar");
 
 		JLabel lblTitulo = new JLabel();
-		lblTitulo.setText(nombrePestania);
 		add(lblTitulo);
 		add(btClose);
 
 		btClose.addActionListener(this);
 		pestanias.setTabComponentAt(posPestania, this);
-		pestanias.setToolTipTextAt(posPestania, toolTip);
 
 	}
 
