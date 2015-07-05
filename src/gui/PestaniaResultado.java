@@ -73,7 +73,7 @@ public class PestaniaResultado extends Pestania {
 
 		JButton btnCompararResultados = new JButton("Comparar resultados");
 		btnCompararResultados.setIcon(new ImageIcon(VentanaPrincipal.class
-				.getResource("/Imagenes/comparar.png")));
+				.getResource("/imagenes/comparar.png")));
 		btnCompararResultados.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO

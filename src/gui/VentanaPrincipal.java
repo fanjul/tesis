@@ -38,7 +38,7 @@ public class VentanaPrincipal extends JFrame {
 		inicializarVariables();
 		setIconImage(Toolkit.getDefaultToolkit().getImage(
 				VentanaPrincipal.class
-						.getResource("/Imagenes/IconoHerramienta.jpg")));
+						.getResource("/imagenes/IconoHerramienta.jpg")));
 		setAlwaysOnTop(true);
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -55,12 +55,12 @@ public class VentanaPrincipal extends JFrame {
 
 			// abrir BD
 			mntmAbrirBaseDeDatos.setIcon(new ImageIcon(VentanaPrincipal.class
-					.getResource("/Imagenes/abrirBaseDeDatos2.png")));
+					.getResource("/imagenes/abrirBaseDeDatos2.png")));
 			mnArchivo.add(mntmAbrirBaseDeDatos);
 
 			// abrir archivo txt/java
 			mntmAbrirArchivo.setIcon(new ImageIcon(VentanaPrincipal.class
-					.getResource("/Imagenes/abrirArchivo.png")));
+					.getResource("/imagenes/abrirArchivo.png")));
 			mnArchivo.add(mntmAbrirArchivo);
 
 		}

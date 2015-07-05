@@ -90,7 +90,7 @@ public class PestaniaNuevoMetodoMatematico extends Pestania {
 
 		JButton btnEjecutar = new JButton("Ejecutar");
 		btnEjecutar.setIcon(new ImageIcon(VentanaPrincipal.class
-				.getResource("/Imagenes/ejecutar.png")));
+				.getResource("/imagenes/ejecutar.png")));
 		GridBagConstraints gbc_btnEjecutar = new GridBagConstraints();
 		gbc_btnEjecutar.insets = new Insets(0, 0, 0, 0);
 		gbc_btnEjecutar.gridx = 1;
