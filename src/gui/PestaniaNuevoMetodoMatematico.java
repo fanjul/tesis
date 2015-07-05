@@ -17,13 +17,16 @@ import syntax.SyntaxStyle;
 import syntax.SyntaxUtilities;
 import syntax.Token;
 
-public class PestaniaNuevoMetodoMatematico extends JPanel implements Pestania {
+public class PestaniaNuevoMetodoMatematico extends Pestania {
 
 	private static final long serialVersionUID = 1L;
-
+	private JEditTextArea textArea;
+	
 	public PestaniaNuevoMetodoMatematico() {
 
 		super();
+		this.inicializarVariables();
+		
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[] { 0, 0 };
 		gridBagLayout.rowHeights = new int[] { 0 };
@@ -31,8 +34,21 @@ public class PestaniaNuevoMetodoMatematico extends JPanel implements Pestania {
 		gridBagLayout.rowWeights = new double[] { 1.0 };
 		this.setLayout(gridBagLayout);
 
-		JEditTextArea textArea = new JEditTextArea();
+		this.setTextArea();
+		this.setLayoutConstraint();
+		
+		// pestaniaNuevoMetodoMatematico.add(textArea);
 
+		VentanaPrincipal.getInstance().addPestania(this);
+		VentanaPrincipal.getInstance().getPestanias().setSelectedIndex(VentanaPrincipal.getInstance().getPestanias().getTabCount() - 1);
+
+		this.setEnableAbrirArchivo();
+		this.setEnableAbrirBaseDeDatos();
+
+		new ConfiguracionPestania(VentanaPrincipal.getInstance().getPestanias().getTabCount() - 1);
+	}
+	
+	private void setTextArea(){
 		textArea.setTokenMarker(new JavaTokenMarker());
 		textArea.recalculateVisibleLines();
 		textArea.setFirstLine(0);
@@ -54,8 +70,15 @@ public class PestaniaNuevoMetodoMatematico extends JPanel implements Pestania {
 				true);
 
 		textArea.getPainter().setStyles(styles);
-		// pestaniaNuevoMetodoMatematico.add(textArea);
-
+	}
+	
+	private void inicializarVariables() {
+		this.nombre = "Nuevo Método Matemático";
+		this.tooltip = "Agregue un muevo metodo matemático";
+		this.textArea = new JEditTextArea();
+	}
+	
+	private void setLayoutConstraint(){
 		GridBagConstraints gbc_editorPane = new GridBagConstraints();
 		gbc_editorPane.weightx = 1.0;
 		gbc_editorPane.anchor = GridBagConstraints.WEST;
@@ -73,18 +96,8 @@ public class PestaniaNuevoMetodoMatematico extends JPanel implements Pestania {
 		gbc_btnEjecutar.gridx = 1;
 		gbc_btnEjecutar.gridy = 0;
 		this.add(btnEjecutar, gbc_btnEjecutar);
-
-		VentanaPrincipal.getInstance().getPestanias().addTab(null, this);
-		VentanaPrincipal.getInstance().getPestanias().setSelectedIndex(VentanaPrincipal.getInstance().getPestanias().getTabCount() - 1);
-
-		this.setEnableAbrirArchivo();
-		this.setEnableAbrirBaseDeDatos();
-
-		new ConfiguracionPestania( "Nuevo Método Matemático",
-				VentanaPrincipal.getInstance().getPestanias().getTabCount() - 1,
-				"Agregue un muevo metodo matemático");
 	}
-
+	
 	@Override
 	public void setEnableAbrirArchivo() {
 		VentanaPrincipal.getInstance().setEnableAbrirArchivo(true);

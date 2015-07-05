@@ -23,7 +23,8 @@ import baseDatos.Item;
 
 
 public class ManejadorArchivos extends JFrame{
-	
+
+	private static final long serialVersionUID = 1L;
 	private JLabel lblSeleccionarIndicador;
 	private JComboBox comboBoxSeleccionarIndicador;
 	private JLabel lblSeleccionarMetodoMatematico;
@@ -40,13 +41,8 @@ public class ManejadorArchivos extends JFrame{
 	
 	private LocalDate fechaInicio;
 	private LocalDate fechaFin;
-	
-	
-	public ManejadorArchivos(){
-	}
-	
+
 	public ManejadorArchivos( LocalDate fechaInicio, LocalDate fechaFin, JComboBox comboBoxSeleccionarIndicador, JTextField txtFechaInicio, JTextField txtFechaFin, JComboBox comboBoxPeriodo){
-		
 		
 		this.fechaInicio = fechaInicio;
 		this.fechaFin = fechaFin;

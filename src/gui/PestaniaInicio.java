@@ -20,7 +20,7 @@ import org.joda.time.LocalDate;
 
 import baseDatos.Periodo;
 
-public class PestaniaInicio extends JPanel implements Pestania {
+public class PestaniaInicio extends Pestania {
 
 	private static final long serialVersionUID = 1L;
 	// Componentes
@@ -47,8 +47,7 @@ public class PestaniaInicio extends JPanel implements Pestania {
 		super();
 		this.inicializarVariables();
 		this.setLayout(new GridBagLayout());
-		VentanaPrincipal.getInstance().getPestanias().addTab("Inicio ", null, this, "Ventana principal");
-		this.layoutComboBox();
+		this.setLayoutConstraints();
 		
 		VentanaPrincipal.getInstance().getMntmAbrirBaseDeDatos().addActionListener(new ActionListener() {
 			// Abre el dialogo para abrir una BD
@@ -75,6 +74,8 @@ public class PestaniaInicio extends JPanel implements Pestania {
 	}
 
 	private void inicializarVariables() {
+		this.nombre = "Inicio";
+		this.tooltip = "Ventana Principal";
 		gbc = new GridBagConstraints();
 		lblSeleccionarIndicador = new JLabel("Seleccionar indicador");
 		comboBoxSeleccionarIndicador = new JComboBox();
@@ -93,7 +94,7 @@ public class PestaniaInicio extends JPanel implements Pestania {
 		comboBoxPeriodo = new JComboBox();
 	}
 
-	private void layoutComboBox() {
+	private void setLayoutConstraints() {
 		{// Agrega label Seleccionar indicador
 			gbc.gridx = 0;
 			gbc.gridy = 0;
