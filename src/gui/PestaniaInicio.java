@@ -98,52 +98,147 @@ public class PestaniaInicio extends Pestania {
 			gbc.gridx = 0;
 			gbc.gridy = 0;
 			gbc.gridheight = 1;
-			gbc.gridwidth = 2;
-			gbc.ipadx = 100;
+			gbc.gridwidth = 1;
+			gbc.ipadx = 1;
+			gbc.weightx = 1.0;
+			gbc.weighty = 1.0;
+			gbc.anchor = GridBagConstraints.CENTER;
 			gbc.insets = new Insets(75, 10, 20, 10);
 			this.add(lblSeleccionarIndicador, gbc);
 			gbc.ipadx = 0;
 		}
+		
+		{// Agrega Label Seleccionar Metodo Matematico
+			gbc.gridx = 0;
+			gbc.gridy = 1;
+			gbc.gridheight = 1;
+			gbc.gridwidth = 1;
+			gbc.ipadx = 10;
+			gbc.insets = new Insets(75, 10, 20, 60);
+			this.add(lblSeleccionarMetodoMatematico, gbc);
+			gbc.ipadx = 0;
+		}
+		
+		{// Agrega Label Fecha inicio
+			lblFechaInicioPeriodo.setText("Fecha inicio periodo:");
+			gbc.gridx = 0;
+			gbc.gridy = 2;
+			gbc.gridheight = 1;
+			gbc.gridwidth = 1;
+			gbc.insets = new Insets(100, 50, 76, 0);
+			gbc.anchor = GridBagConstraints.EAST;
+			this.add(lblFechaInicioPeriodo, gbc);
+			gbc.ipadx = 0;
+		}
+		
+	
+		{// Agrega Boton Resultados previos
+			gbc.gridx = 0;
+			gbc.gridy = 3;
+			gbc.gridwidth = 1;
+			gbc.gridheight = 1;
+			gbc.insets = new Insets(50, 50, 50, 60);
+			btnVerResultadosPrevios.setIcon(new ImageIcon(
+					VentanaPrincipal.class
+							.getResource("/imagenes/resultadosPrevios.png")));
+			this.add(btnVerResultadosPrevios, gbc);
+			gbc.weightx = 0.0;
+			gbc.weighty = 0.0;
+		}
+
 
 		{// Agrega ComboBoxSeleccionarIndicador
 			gbc.gridx = 1;
 			gbc.gridy = 0;
-			gbc.gridwidth = 2;
+			gbc.gridwidth = 3;
 			gbc.gridheight = 1;
 			gbc.insets = new Insets(75, 0, 20, 10);
-			gbc.ipadx = 100;
+			gbc.ipadx = 0;
 			gbc.fill = GridBagConstraints.HORIZONTAL;
+			gbc.weightx = 11.0;
+			gbc.weighty = 1.0;
 			this.add(comboBoxSeleccionarIndicador, gbc);
 			gbc.fill = GridBagConstraints.NONE;
 			gbc.ipadx = 0;
 		}
 
-		{// Agrega Label Seleccionar Metodo Matematico
-			gbc.gridx = 0;
-			gbc.gridy = 1;
-			gbc.gridheight = 1;
-			gbc.gridwidth = 2;
-			gbc.ipadx = 100;
-			gbc.insets = new Insets(75, 10, 20, 60);
-			this.add(lblSeleccionarMetodoMatematico, gbc);
-			gbc.ipadx = 0;
-		}
-
+		
 		{// Agrega comboBoxSeleccionarMetodoMatematico
 			gbc.gridx = 1;
 			gbc.gridy = 1;
-			gbc.gridwidth = 2;
+			gbc.gridwidth = 3;
 			gbc.gridheight = 1;
 			gbc.insets = new Insets(75, 0, 20, 10);
 			gbc.ipady = 2;
-			gbc.ipadx = 100;
+			gbc.ipadx = 0;
 			gbc.fill = GridBagConstraints.HORIZONTAL;
 			this.add(comboBoxSeleccionarMetodoMatematico, gbc);
 			gbc.ipady = 0;
 			gbc.ipadx = 0;
+			gbc.weightx = 0.0;
+			gbc.weighty = 0.0;
 			gbc.fill = GridBagConstraints.NONE;
 		}
+		
+		{// Agrega Area de Texto fecha inicio
+			gbc.gridx = 1;
+			gbc.gridy = 2;
+			gbc.gridheight = 1;
+			gbc.gridwidth = 1;
+			gbc.anchor = GridBagConstraints.WEST;
+			gbc.insets = new Insets(100, 10, 76, 12);
+			gbc.ipadx = 100;
+			this.add(txtFechaInicio, gbc);
+			gbc.weightx = 0.0;
+			gbc.weighty = 0.0;
+			gbc.ipadx = 0;
+		}
 
+		{// Agrega Label Fecha Fin
+			lblFechaFinPeriodo.setText("Fecha fin periodo:");
+			gbc.gridx = 2;
+			gbc.gridy = 2;
+			gbc.gridheight = 1;
+			gbc.gridwidth = 1;
+			gbc.insets = new Insets(100, 0, 76, 0);
+			gbc.weightx = 1.0;
+			gbc.weighty = 1.0;
+			gbc.ipadx = 10;
+			this.add(lblFechaFinPeriodo, gbc);
+			gbc.weightx = 0.0;
+			gbc.weighty = 0.0;
+			gbc.ipadx = 0;
+		}
+
+		{// Agrega Area de Texto fecha fin
+			gbc.gridx = 3;
+			gbc.gridy = 2;
+			gbc.gridheight = 1;
+			gbc.gridwidth = 1;
+			gbc.insets = new Insets(100, 10, 76, 12);
+			gbc.weightx = 1.0;
+			gbc.weighty = 1.0;
+			gbc.ipadx = 100;
+			this.add(txtFechaFin, gbc);
+			gbc.weightx = 0.0;
+			gbc.weighty = 0.0;
+			gbc.ipadx = 0;
+		}
+
+		{// Agrega Label Periodo
+			lblPeriodoMuestras.setText("Periodo:");
+			gbc.gridx = 4;
+			gbc.gridy = 2;
+			gbc.gridheight = 1;
+			gbc.gridwidth = 1;
+			gbc.insets = new Insets(100, 10, 76, 24);
+			gbc.weightx = 1.0;
+			gbc.weighty = 1.0;
+			this.add(lblPeriodoMuestras, gbc);
+			gbc.weightx = 0.0;
+			gbc.weighty = 0.0;
+		}
+		
 		{// Agrega Boton Nuevo Metodo Matematico
 			btnNuevoMetodoMatematico.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
@@ -155,100 +250,31 @@ public class PestaniaInicio extends Pestania {
 			gbc.gridwidth = 2;
 			gbc.gridheight = 1;
 			gbc.insets = new Insets(60, 0, 20, 20);
+			gbc.weightx = 1.0;
+			gbc.weighty = 1.0;
 			btnNuevoMetodoMatematico.setIcon(new ImageIcon(
 					VentanaPrincipal.class
 							.getResource("/imagenes/nuevoMetodo.png")));
 			this.add(btnNuevoMetodoMatematico, gbc);
 		}
-
-		{// Agrega Label Fecha inicio
-			lblFechaInicioPeriodo.setText("Fecha inicio periodo:");
-			gbc.gridx = 0;
-			gbc.gridy = 3;
-			gbc.gridwidth = 2;
-			gbc.insets = new Insets(50, 50, 76, 25);
-			gbc.ipadx = 100;
-			gbc.anchor = GridBagConstraints.CENTER;
-			this.add(lblFechaInicioPeriodo, gbc);
-			gbc.ipadx = 0;
-		}
-
-		{// Agrega Area de Texto fecha inicio
-			gbc.gridx = 1;
-			gbc.gridy = 3;
-			gbc.gridheight = 1;
-			gbc.gridwidth = 1;
-			gbc.anchor = GridBagConstraints.WEST;
-			gbc.insets = new Insets(50, -160, 76, 12);
-			// gbc.weightx = 1.0;
-			gbc.ipadx = 100;
-			this.add(txtFechaInicio, gbc);
-			// gbc.weightx = 0.0;
-			gbc.ipadx = 0;
-		}
-
-		{// Agrega Label Fecha Fin
-			lblFechaFinPeriodo.setText("Fecha fin periodo:");
-			gbc.gridx = 2;
-			gbc.gridy = 3;
-			gbc.gridheight = 1;
-			gbc.gridwidth = 1;
-			// gbc.anchor = GridBagConstraints.EAST;
-			gbc.insets = new Insets(50, -35, 76, -90);
-			// gbc.weightx = 1.0;
-			gbc.ipadx = 100;
-			this.add(lblFechaFinPeriodo, gbc);
-			// gbc.weightx = 0.0;
-			gbc.ipadx = 0;
-		}
-
-		{// Agrega Area de Texto fecha fin
-			gbc.gridx = 3;
-			gbc.gridy = 3;
-			gbc.gridheight = 1;
-			gbc.gridwidth = 1;
-			// gbc.anchor = GridBagConstraints.WEST;
-			gbc.insets = new Insets(50, -70, 76, 12);
-			// gbc.weightx = 1.0;
-			gbc.ipadx = 100;
-			this.add(txtFechaFin, gbc);
-			// gbc.weightx = 0.0;
-			gbc.ipadx = 0;
-		}
-
-		{// Agrega Label Periodo
-			lblPeriodoMuestras.setText("Periodo:");
-			gbc.gridx = 4;
-			gbc.gridy = 3;
-			gbc.gridheight = 1;
-			gbc.gridwidth = 1;
-			// gbc.anchor = GridBagConstraints.WEST;
-			gbc.insets = new Insets(50, 10, 76, 24);
-			// gbc.weightx = 1.0;
-			gbc.ipadx = 100;
-			this.add(lblPeriodoMuestras, gbc);
-			// gbc.weightx = 0.0;
-			gbc.ipadx = 0;
-		}
-
+		
+		
 		{// Agrega ComboBox Periodo
 			comboBoxPeriodo.setModel(new DefaultComboBoxModel(Periodo.values()));
-			comboBoxPeriodo.setEnabled(false);
+			comboBoxPeriodo.setEnabled(true);
 			comboBoxPeriodo.setEditable(true);
 			comboBoxPeriodo.setSelectedIndex(2);
 			gbc.gridx = 5;
-			gbc.gridy = 3;
+			gbc.gridy = 2;
 			gbc.gridheight = 1;
 			gbc.gridwidth = 1;
 			gbc.anchor = GridBagConstraints.WEST;
-			gbc.insets = new Insets(50, -110, 76, 24);
-			// gbc.weightx = 1.0;
+			gbc.insets = new Insets(100, 0, 76, 24);
 			gbc.ipadx = 30;
 			this.add(comboBoxPeriodo, gbc);
-			// gbc.weightx = 0.0;
 			gbc.ipadx = 0;
 		}
-
+		
 		{// Agrega Boton Calcular resultados
 			btnCalcularResultados = new JButton("Calcular resultados");
 			btnCalcularResultados.addActionListener(new ActionListener() {
@@ -258,24 +284,21 @@ public class PestaniaInicio extends Pestania {
 			});
 			gbc.gridx = 5;
 			gbc.gridy = 3;
-			gbc.insets = new Insets(200, 0, 50, 0);
+			gbc.insets = new Insets(10, 0, 50, 0);
 			btnCalcularResultados.setIcon(new ImageIcon(VentanaPrincipal.class
 					.getResource("/imagenes/calcularResultados.png")));
 			this.add(btnCalcularResultados, gbc);
-		}
+			gbc.weightx = 0.0;
+			gbc.weighty = 0.0;
+		}	
 
-		{// Agrega Boton Resultados previos
-			gbc.gridx = 0;
-			gbc.gridy = 3;
-			gbc.gridwidth = 1;
-			gbc.gridheight = 1;
-			gbc.insets = new Insets(200, 100, 50, 60);
-			btnVerResultadosPrevios.setIcon(new ImageIcon(
-					VentanaPrincipal.class
-							.getResource("/imagenes/resultadosPrevios.png")));
-			this.add(btnVerResultadosPrevios, gbc);
-		}
 
+
+		
+
+	
+
+			
 	}
 
 }
