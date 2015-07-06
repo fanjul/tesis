@@ -38,7 +38,6 @@ public class PestaniaInicio extends Pestania {
 	private JTextField txtFechaFin;
 	private JLabel lblPeriodoMuestras;
 	private JComboBox comboBoxPeriodo;
-	private ManejadorArchivos manejadorArchivos;
 
 	private LocalDate fechaInicio;
 	private LocalDate fechaFin;

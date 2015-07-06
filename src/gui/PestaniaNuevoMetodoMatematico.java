@@ -1,9 +1,15 @@
 package gui;
 
+import gui.archivos.AbrirCodigo;
+import gui.archivos.ManejadorArchivos;
+
 import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -35,13 +41,23 @@ public class PestaniaNuevoMetodoMatematico extends Pestania {
 		this.setLayout(gridBagLayout);
 
 		this.setTextArea();
+		manejadorArchivos = new AbrirCodigo(textArea);
 		this.setLayoutConstraint();
-		
-		// pestaniaNuevoMetodoMatematico.add(textArea);
-
+	
 		VentanaPrincipal.getInstance().addPestania(this);
 		VentanaPrincipal.getInstance().getPestanias().setSelectedIndex(VentanaPrincipal.getInstance().getPestanias().getTabCount() - 1);
-
+		VentanaPrincipal.getInstance().getMntmAbrirArchivo().addActionListener(new ActionListener() {			
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					manejadorArchivos.abrirArchivo();
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+				
+			}
+		});
 		this.setEnableAbrirArchivo();
 		this.setEnableAbrirBaseDeDatos();
 
