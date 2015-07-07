@@ -16,8 +16,11 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
+import org.hsqldb.DatabaseManager;
 import org.joda.time.LocalDate;
 
+import baseDatos.DBManager;
+import baseDatos.Item;
 import baseDatos.Periodo;
 
 public class PestaniaInicio extends Pestania {
@@ -41,6 +44,7 @@ public class PestaniaInicio extends Pestania {
 
 	private LocalDate fechaInicio;
 	private LocalDate fechaFin;
+	private boolean abiertaBD = false;
 
 	public PestaniaInicio() {
 
@@ -48,13 +52,21 @@ public class PestaniaInicio extends Pestania {
 		this.inicializarVariables();
 		this.setLayout(new GridBagLayout());
 		this.setLayoutConstraints();
-		
-		VentanaPrincipal.getInstance().getMntmAbrirBaseDeDatos().addActionListener(new ActionListener() {
-			// Abre el dialogo para abrir una BD
-			public void actionPerformed(ActionEvent e) {
-				manejadorArchivos.abrirBaseDeDatos();
-			}
-		});
+
+		VentanaPrincipal.getInstance().getMntmAbrirBaseDeDatos()
+				.addActionListener(new ActionListener() {
+					// Abre el dialogo para abrir una BD
+					public void actionPerformed(ActionEvent e) {
+						if (abiertaBD) {
+							DBManager.instance().finalize();
+							
+						} 
+						
+						manejadorArchivos.abrirBaseDeDatos();
+						abiertaBD = true;
+
+					}
+				});
 		this.setEnableAbrirArchivo();
 		this.setEnableAbrirBaseDeDatos();
 	}
@@ -74,7 +86,7 @@ public class PestaniaInicio extends Pestania {
 		this.tooltip = "Ventana Principal";
 		gbc = new GridBagConstraints();
 		lblSeleccionarIndicador = new JLabel("Seleccionar indicador");
-		comboBoxSeleccionarIndicador = new JComboBox();
+		comboBoxSeleccionarIndicador = new JComboBox<>();
 		lblSeleccionarMetodoMatematico = new JLabel(
 				"Seleccionar m\u00E9todo matem\u00E1tico");
 		comboBoxSeleccionarMetodoMatematico = new JComboBox();
@@ -88,8 +100,9 @@ public class PestaniaInicio extends Pestania {
 		txtFechaFin = new JTextField();
 		lblPeriodoMuestras = new JLabel();
 		comboBoxPeriodo = new JComboBox();
-		manejadorArchivos = new AbrirBaseDeDatos(fechaInicio, fechaFin, comboBoxSeleccionarIndicador, txtFechaInicio,
-				txtFechaFin, comboBoxPeriodo);
+		manejadorArchivos = new AbrirBaseDeDatos(fechaInicio, fechaFin,
+				comboBoxSeleccionarIndicador, txtFechaInicio, txtFechaFin,
+				comboBoxPeriodo);
 	}
 
 	private void setLayoutConstraints() {
@@ -106,7 +119,7 @@ public class PestaniaInicio extends Pestania {
 			this.add(lblSeleccionarIndicador, gbc);
 			gbc.ipadx = 0;
 		}
-		
+
 		{// Agrega Label Seleccionar Metodo Matematico
 			gbc.gridx = 0;
 			gbc.gridy = 1;
@@ -117,7 +130,7 @@ public class PestaniaInicio extends Pestania {
 			this.add(lblSeleccionarMetodoMatematico, gbc);
 			gbc.ipadx = 0;
 		}
-		
+
 		{// Agrega Label Fecha inicio
 			lblFechaInicioPeriodo.setText("Fecha inicio periodo:");
 			gbc.gridx = 0;
@@ -129,8 +142,7 @@ public class PestaniaInicio extends Pestania {
 			this.add(lblFechaInicioPeriodo, gbc);
 			gbc.ipadx = 0;
 		}
-		
-	
+
 		{// Agrega Boton Resultados previos
 			gbc.gridx = 0;
 			gbc.gridy = 3;
@@ -144,7 +156,6 @@ public class PestaniaInicio extends Pestania {
 			gbc.weightx = 0.0;
 			gbc.weighty = 0.0;
 		}
-
 
 		{// Agrega ComboBoxSeleccionarIndicador
 			gbc.gridx = 1;
@@ -161,7 +172,6 @@ public class PestaniaInicio extends Pestania {
 			gbc.ipadx = 0;
 		}
 
-		
 		{// Agrega comboBoxSeleccionarMetodoMatematico
 			gbc.gridx = 1;
 			gbc.gridy = 1;
@@ -178,7 +188,7 @@ public class PestaniaInicio extends Pestania {
 			gbc.weighty = 0.0;
 			gbc.fill = GridBagConstraints.NONE;
 		}
-		
+
 		{// Agrega Area de Texto fecha inicio
 			gbc.gridx = 1;
 			gbc.gridy = 2;
@@ -237,7 +247,7 @@ public class PestaniaInicio extends Pestania {
 			gbc.weightx = 0.0;
 			gbc.weighty = 0.0;
 		}
-		
+
 		{// Agrega Boton Nuevo Metodo Matematico
 			btnNuevoMetodoMatematico.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
@@ -256,10 +266,10 @@ public class PestaniaInicio extends Pestania {
 							.getResource("/imagenes/nuevoMetodo.png")));
 			this.add(btnNuevoMetodoMatematico, gbc);
 		}
-		
-		
+
 		{// Agrega ComboBox Periodo
-			comboBoxPeriodo.setModel(new DefaultComboBoxModel(Periodo.values()));
+			comboBoxPeriodo
+					.setModel(new DefaultComboBoxModel(Periodo.values()));
 			comboBoxPeriodo.setEnabled(true);
 			comboBoxPeriodo.setEditable(true);
 			comboBoxPeriodo.setSelectedIndex(2);
@@ -273,7 +283,7 @@ public class PestaniaInicio extends Pestania {
 			this.add(comboBoxPeriodo, gbc);
 			gbc.ipadx = 0;
 		}
-		
+
 		{// Agrega Boton Calcular resultados
 			btnCalcularResultados = new JButton("Calcular resultados");
 			btnCalcularResultados.addActionListener(new ActionListener() {
@@ -289,15 +299,8 @@ public class PestaniaInicio extends Pestania {
 			this.add(btnCalcularResultados, gbc);
 			gbc.weightx = 0.0;
 			gbc.weighty = 0.0;
-		}	
+		}
 
-
-
-		
-
-	
-
-			
 	}
 
 }

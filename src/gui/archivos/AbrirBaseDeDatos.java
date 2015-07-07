@@ -81,8 +81,8 @@ public class AbrirBaseDeDatos extends ManejadorArchivos {
 				try {
 					comboBoxSeleccionarIndicador
 							.setModel(new DefaultComboBoxModel<>(get()));
-					AutoCompleteDecorator
-							.decorate(comboBoxSeleccionarIndicador);
+					//AutoCompleteDecorator
+						//	.decorate(comboBoxSeleccionarIndicador);
 				} catch (InterruptedException | ExecutionException e) {
 					e.printStackTrace();
 				}

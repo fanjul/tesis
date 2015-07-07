@@ -1,25 +1,14 @@
 package gui.archivos;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.concurrent.ExecutionException;
 
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
-import javax.swing.SwingWorker;
 
-import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 import org.joda.time.LocalDate;
-
-import properties.Parameters;
-import properties.PropertyManager;
-import baseDatos.DBIndicador;
-import baseDatos.DBValorIndicador;
-import baseDatos.Item;
 
 public abstract class ManejadorArchivos extends JFrame {
 

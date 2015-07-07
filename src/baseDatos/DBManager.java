@@ -1,6 +1,6 @@
 package baseDatos;
 
-import java.sql.Connection; 
+import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,6 +12,7 @@ import properties.PropertyManager;
 public class DBManager {
 
 	private static DBManager dbManager = null;
+
 	private Connection conexion;
 
 	private DBManager() {
@@ -19,7 +20,8 @@ public class DBManager {
 			PropertyManager pManager = PropertyManager.instance();
 			Class.forName(pManager.getProperty(Parameters.DB_DRIVER.toString()));
 			try {
-				conexion = DriverManager.getConnection(pManager.getProperty(Parameters.DB_NAME.toString()));
+				conexion = DriverManager.getConnection(pManager
+						.getProperty(Parameters.DB_NAME.toString()));
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -33,7 +35,7 @@ public class DBManager {
 	public Connection getConnection() {
 		return conexion;
 	}
-	
+
 	public static DBManager instance() {
 
 		if (dbManager == null) {
@@ -66,8 +68,6 @@ public class DBManager {
 			e.printStackTrace();
 		}
 	}
-	
-	
 
 	public void insert(String insertStatement) {
 		Statement statement;
@@ -83,7 +83,10 @@ public class DBManager {
 	@Override
 	public void finalize() {
 		try {
-			conexion.close();
+			if (conexion != null) {
+				conexion.close();
+				dbManager = null;
+			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
