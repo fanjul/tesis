@@ -1,20 +1,19 @@
-package baseDatos.hibernate;
+package baseDatos.hibernate.tablas;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.math.BigDecimal;
+import java.sql.Timestamp;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="indicador")
+@Table(name="Indicador")
 public class Indicador implements Serializable {
 	
 	private static final long serialVersionUID = -8612794918676028856L;
-	private Integer id;
+	private BigDecimal id;
 	private String codigo;
 	private String nombre;
 	private Integer idUnidadDeMedida;
@@ -25,7 +24,7 @@ public class Indicador implements Serializable {
 	private Integer idResponsable;
 	private String frecuencia;
 	private String periodo;
-	private Date fechaUltimaActualizacion;
+	private Timestamp fechaUltimaActualizacion;
 	private Integer idTipoIndicador;
 	private String observaciones;
 	
@@ -34,11 +33,10 @@ public class Indicador implements Serializable {
 	}
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	public Integer getId() {
+	public BigDecimal getId() {
 		return id;
 	}
-	public void setId(Integer id) {
+	public void setId(BigDecimal id) {
 		this.id = id;
 	}
 	public String getCodigo() {
@@ -101,10 +99,10 @@ public class Indicador implements Serializable {
 	public void setPeriodo(String periodo) {
 		this.periodo = periodo;
 	}
-	public Date getFechaUltimaActualizacion() {
+	public Timestamp getFechaUltimaActualizacion() {
 		return fechaUltimaActualizacion;
 	}
-	public void setFechaUltimaActualizacion(Date fechaUltimaActualizacion) {
+	public void setFechaUltimaActualizacion(Timestamp fechaUltimaActualizacion) {
 		this.fechaUltimaActualizacion = fechaUltimaActualizacion;
 	}
 	public Integer getIdTipoIndicador() {

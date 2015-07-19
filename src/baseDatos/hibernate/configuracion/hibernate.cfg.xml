@@ -2,7 +2,7 @@
 <!DOCTYPE hibernate-configuration PUBLIC
  "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
  "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
- 
+
 <hibernate-configuration>
 	<session-factory>
 		<!-- Database connection settings -->
@@ -23,10 +23,20 @@
 		<!-- Drop and re-create the database schema on startup -->
 		<property name="hbm2ddl.auto">update</property>
 		<property name="format_sql">true</property>
-		
+
 		<!-- Mapping files -->
-		<mapping class="baseDatos.hibernate.Indicador" />
-		<mapping class="baseDatos.hibernate.TipoIndicador" />
-		
+		<mapping class="baseDatos.hibernate.tablas.EstadosXTipoIndicador" />
+		<mapping class="baseDatos.hibernate.tablas.Grafico" />
+		<mapping class="baseDatos.hibernate.tablas.HSTumbralesXEstadosXIndicador" />
+		<mapping class="baseDatos.hibernate.tablas.Indicador" />
+		<mapping class="baseDatos.hibernate.tablas.Persona" />
+		<mapping class="baseDatos.hibernate.tablas.TipoIndicador" />
+		<mapping class="baseDatos.hibernate.tablas.UmbralesXEstadosXIndicador" />
+		<mapping class="baseDatos.hibernate.tablas.UnidadesDeMedida" />
+		<mapping class="baseDatos.hibernate.tablas.ValorIndicador" />
+
+
+
+
 	</session-factory>
 </hibernate-configuration>
