@@ -2,15 +2,13 @@ package baseDatos.hibernate.consultas;
 
 import org.hibernate.HibernateException;
 
-import baseDatos.hibernate.tablas.Indicador;
+import baseDatos.hibernate.tablas.Persona;
 
-
-public class IndicadorDAO extends DAO {
-
-	public void guardar(Indicador indicador) {
+public class PersonaDAO extends DAO {
+	public void guardar(Persona persona) {
 		try {
 			iniciaOperacion();
-			sesion.save(indicador);
+			sesion.save(persona);
 			tx.commit();
 		} catch (HibernateException he) {
 			manejaExcepcion(he);
@@ -21,10 +19,10 @@ public class IndicadorDAO extends DAO {
 		
 	}
 
-	public void actualizar(Indicador indicador) {
+	public void actualizar(Persona persona) {
 		try {
 			iniciaOperacion();
-			sesion.update(indicador);
+			sesion.update(persona);
 			tx.commit();
 		} catch (HibernateException he) {
 			manejaExcepcion(he);
@@ -34,10 +32,10 @@ public class IndicadorDAO extends DAO {
 		}
 	}
 	
-	public void eliminar(Indicador indicador) {
+	public void eliminar(Persona persona) {
 		try {
 			iniciaOperacion();
-			sesion.delete(indicador);
+			sesion.delete(persona);
 			tx.commit();
 		} catch (HibernateException he) {
 			manejaExcepcion(he);

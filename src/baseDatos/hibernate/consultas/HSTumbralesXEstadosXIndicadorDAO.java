@@ -2,15 +2,14 @@ package baseDatos.hibernate.consultas;
 
 import org.hibernate.HibernateException;
 
-import baseDatos.hibernate.tablas.Indicador;
+import baseDatos.hibernate.tablas.HSTumbralesXEstadosXIndicador;
 
-
-public class IndicadorDAO extends DAO {
-
-	public void guardar(Indicador indicador) {
+public class HSTumbralesXEstadosXIndicadorDAO extends DAO {
+	
+	public void guardar(HSTumbralesXEstadosXIndicador hstUmbrales) {
 		try {
 			iniciaOperacion();
-			sesion.save(indicador);
+			sesion.save(hstUmbrales);
 			tx.commit();
 		} catch (HibernateException he) {
 			manejaExcepcion(he);
@@ -21,10 +20,10 @@ public class IndicadorDAO extends DAO {
 		
 	}
 
-	public void actualizar(Indicador indicador) {
+	public void actualizar(HSTumbralesXEstadosXIndicador hstUmbrales) {
 		try {
 			iniciaOperacion();
-			sesion.update(indicador);
+			sesion.update(hstUmbrales);
 			tx.commit();
 		} catch (HibernateException he) {
 			manejaExcepcion(he);
@@ -34,10 +33,10 @@ public class IndicadorDAO extends DAO {
 		}
 	}
 	
-	public void eliminar(Indicador indicador) {
+	public void eliminar(HSTumbralesXEstadosXIndicador hstUmbrales) {
 		try {
 			iniciaOperacion();
-			sesion.delete(indicador);
+			sesion.delete(hstUmbrales);
 			tx.commit();
 		} catch (HibernateException he) {
 			manejaExcepcion(he);
@@ -46,4 +45,5 @@ public class IndicadorDAO extends DAO {
 			sesion.close();
 		}
 	}
+
 }

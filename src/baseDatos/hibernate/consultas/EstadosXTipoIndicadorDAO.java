@@ -2,15 +2,14 @@ package baseDatos.hibernate.consultas;
 
 import org.hibernate.HibernateException;
 
-import baseDatos.hibernate.tablas.Indicador;
+import baseDatos.hibernate.tablas.EstadosXTipoIndicador;
 
-
-public class IndicadorDAO extends DAO {
-
-	public void guardar(Indicador indicador) {
+public class EstadosXTipoIndicadorDAO extends DAO {
+	
+	public void guardar(EstadosXTipoIndicador estadosX) {
 		try {
 			iniciaOperacion();
-			sesion.save(indicador);
+			sesion.save(estadosX);
 			tx.commit();
 		} catch (HibernateException he) {
 			manejaExcepcion(he);
@@ -21,10 +20,10 @@ public class IndicadorDAO extends DAO {
 		
 	}
 
-	public void actualizar(Indicador indicador) {
+	public void actualizar(EstadosXTipoIndicador estadosX) {
 		try {
 			iniciaOperacion();
-			sesion.update(indicador);
+			sesion.update(estadosX);
 			tx.commit();
 		} catch (HibernateException he) {
 			manejaExcepcion(he);
@@ -34,10 +33,10 @@ public class IndicadorDAO extends DAO {
 		}
 	}
 	
-	public void eliminar(Indicador indicador) {
+	public void eliminar(EstadosXTipoIndicador estadosX) {
 		try {
 			iniciaOperacion();
-			sesion.delete(indicador);
+			sesion.delete(estadosX);
 			tx.commit();
 		} catch (HibernateException he) {
 			manejaExcepcion(he);
@@ -46,4 +45,5 @@ public class IndicadorDAO extends DAO {
 			sesion.close();
 		}
 	}
+
 }

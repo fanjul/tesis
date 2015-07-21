@@ -6,7 +6,7 @@ import org.hibernate.Transaction;
 
 import baseDatos.hibernate.configuracion.HibernateUtil;
 
-public class DAOConexion {
+public class DAO {
 	protected Session sesion;
 	protected Transaction tx;
 
@@ -23,6 +23,8 @@ public class DAOConexion {
 		throw new HibernateException(
 				"Ocurrió un error en la capa de acceso a datos", he);
 	}
+	
+	
 	
 	
 }
