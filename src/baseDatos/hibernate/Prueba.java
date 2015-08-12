@@ -24,8 +24,8 @@ import baseDatos.hibernate.tablas.ValorIndicador;
 
 public class Prueba {
 
-	public static void main(String[] args) {
-		
+	
+	public static void main(String[] args) {		
 		EstadosXTipoIndicador estados = new EstadosXTipoIndicador();
 		Grafico grafico = new Grafico();
 		HSTumbralesXEstadosXIndicador hst = new HSTumbralesXEstadosXIndicador();
@@ -35,9 +35,9 @@ public class Prueba {
 		UmbralesXEstadosXIndicador umbral = new UmbralesXEstadosXIndicador();
 		UnidadesDeMedida unidad = new UnidadesDeMedida();
 		ValorIndicador valor = new ValorIndicador();
-		
-		
-		
+
+
+
 		EstadosXTipoIndicadorDAO estadosDao = new EstadosXTipoIndicadorDAO();
 		GraficoDAO graficoDao = new GraficoDAO();
 		HSTumbralesXEstadosXIndicadorDAO hstDao = new HSTumbralesXEstadosXIndicadorDAO();
@@ -47,36 +47,40 @@ public class Prueba {
 		UmbralesXEstadosXIndicadorDAO umbralDao = new UmbralesXEstadosXIndicadorDAO();
 		UnidadesDeMedidaDAO unidadDao = new UnidadesDeMedidaDAO();
 		ValorIndicadorDAO valorDao = new ValorIndicadorDAO();
-		
-		
+
+
 		//setear datos en las tablas
 		estados.setIdEstado(3);
 		estados.setIdTipoIndicador(4);
 		
+
 		grafico.setObservaciones("joya");
 		
 		hst.setIdIndicador(40);
 		hst.setIdEstadoTipoIndicador(40);
+
 		hst.setInicioUmbral(new Timestamp(0));
 		hst.setFinUmbral(new Timestamp(0));
-		
+
 		indicador.setCodigo("asd");
 		indicador.setId(new BigDecimal(4));
-		
+
 		persona.setApellido("Corvi");
-		
+
 		tipoIndicador.setId(2);
 		tipoIndicador.setObservaciones("el corvi no entiende nada. Fanjul menos... Guille Z");
 		tipoIndicador.setTipo("De la vida");
-		
+
 		umbral.setFinUmbral(new Timestamp(0));
 		umbral.setIdEstadoTipoIndicador(3);
 		umbral.setIdIndicador(3);
-		
+
 		unidad.setUnidadDeMedida("centimetro");
+
 		
 		valor.setIdIndicador(10);
 		valor.setFecha(new Timestamp(0));
+
 
 		//realizar las consultas de las tablas: GUARDAR
 		estadosDao.guardar(estados);
@@ -88,7 +92,7 @@ public class Prueba {
 		umbralDao.guardar(umbral);
 		unidadDao.guardar(unidad);
 		valorDao.guardar(valor);
-		
+
 		//ELIMINAR
 		estadosDao.eliminar(estados);
 		graficoDao.eliminar(grafico);
@@ -99,7 +103,7 @@ public class Prueba {
 		umbralDao.eliminar(umbral);
 		unidadDao.eliminar(unidad);
 		valorDao.eliminar(valor);
-		
+
 	}
 
 }
