@@ -50,13 +50,13 @@ public class Prueba {
 		
 		
 		//setear datos en las tablas
-		estados.setIdEstado(2);
-		estados.setIdTipoIndicador(2);
+		estados.setIdEstado(3);
+		estados.setIdTipoIndicador(4);
 		
 		grafico.setObservaciones("joya");
 		
-		hst.setIdIndicador(2);
-		hst.setIdEstadoTipoIndicador(2);
+		hst.setIdIndicador(40);
+		hst.setIdEstadoTipoIndicador(40);
 		hst.setInicioUmbral(new Timestamp(0));
 		hst.setFinUmbral(new Timestamp(0));
 		
@@ -75,8 +75,8 @@ public class Prueba {
 		
 		unidad.setUnidadDeMedida("centimetro");
 		
-		valor.setIdIndicador(3);
-		valor.setFecha(new Timestamp(1));
+		valor.setIdIndicador(10);
+		valor.setFecha(new Timestamp(0));
 
 		//realizar las consultas de las tablas: GUARDAR
 		estadosDao.guardar(estados);
