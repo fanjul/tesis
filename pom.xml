@@ -90,7 +90,21 @@
 			<artifactId>swingx</artifactId>
 			<version>1.6.1</version>
 		</dependency>
-
+		<dependency>
+			<groupId>org.nuiton.thirdparty</groupId>
+			<artifactId>JRI</artifactId>
+			<version>0.9-6</version>
+		</dependency>
+		<dependency>
+		  	<groupId>com.github.lucarosellini.rJava</groupId>
+		  	<artifactId>JRIEngine</artifactId>
+		  	<version>0.9-7</version>
+		</dependency>
+		<dependency>
+			<groupId>org.nuiton.thirdparty</groupId>
+		 	<artifactId>REngine</artifactId>
+		 	<version>1.7-3</version>
+		</dependency>
 
 	</dependencies>
 
