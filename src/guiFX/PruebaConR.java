@@ -26,7 +26,7 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-public class JavaFX extends Application {
+public class PruebaConR extends Application {
 	
 	private Desktop desktop = Desktop.getDesktop();
 	private String contenidoArchivo = "";
