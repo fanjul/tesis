@@ -1,6 +1,5 @@
 package guiFX;
 
-import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
@@ -18,9 +17,8 @@ public class VentanaPrincipal extends BorderPane{
 		this.setLeft(((BarraMenu) barraMenu).getBarraDeslizable());
 		this.setTop(((BarraMenu) barraMenu).getBarraDeslizable().getBotonMenu());
 		
-		TextArea editorTexto = new TextArea();
-	//	this.setRight(editorTexto);
+//		TextArea editorTexto = new TextArea();
+//		this.setRight(editorTexto);
 		
-
 	}
 }

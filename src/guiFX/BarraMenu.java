@@ -1,17 +1,12 @@
 package guiFX;
 
 import java.io.File;
-import java.sql.Timestamp;
 import java.util.List;
 
-import org.rosuda.JRI.Rengine;
-
-import baseDatos.hibernate.Prueba;
 import baseDatos.hibernate.consultas.ValorIndicadorDAO;
 import baseDatos.hibernate.tablas.ValorIndicador;
 import javafx.collections.FXCollections;
 import javafx.event.EventHandler;
-import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.Tooltip;
@@ -31,6 +26,7 @@ public class BarraMenu extends VBox {
 	private final TextField texto = new TextField();
 	private BaseDeDatos baseDeDatos;
 	private VentanaPrincipal ventana;
+
 	public BarraMenu(Stage primaryStage, VentanaPrincipal ventana) {
 		super();
 		this.stage = primaryStage;
@@ -54,22 +50,21 @@ public class BarraMenu extends VBox {
 			@Override
 			public void handle(MouseEvent event) {
 				baseDeDatos = new BaseDeDatos();
-				baseDeDatos.setData(FXCollections.observableArrayList()) ;
-				
-			//	Prueba.main(null);
-//				ValorIndicador valor = new ValorIndicador();
-//				ValorIndicadorDAO asd = new ValorIndicadorDAO();
-//				valor.setIdIndicador(11);
-//				valor.setFecha(new Timestamp(0));
-//				asd.guardar(valor);
+				baseDeDatos.setData(FXCollections.observableArrayList());
+
+				// Prueba.main(null);
+				// ValorIndicador valor = new ValorIndicador();
+				// ValorIndicadorDAO asd = new ValorIndicadorDAO();
+				// valor.setIdIndicador(11);
+				// valor.setFecha(new Timestamp(0));
+				// asd.guardar(valor);
 				List<ValorIndicador> lista = new ValorIndicadorDAO().getTodos();
-				for(ValorIndicador vi : lista){
+				for (ValorIndicador vi : lista) {
 					baseDeDatos.getData().add(vi);
 
 				}
 				baseDeDatos.getTablaValorIndicador().setItems(baseDeDatos.getData());
-				List a = baseDeDatos.getTablaValorIndicador().getColumns();
-				ventana.setCenter(baseDeDatos);
+				ventana.setCenter(baseDeDatos.getTablaValorIndicador());
 			}
 		});
 
@@ -88,11 +83,7 @@ public class BarraMenu extends VBox {
 		});
 
 		this.getChildren().add(toggleButtonAbrirBaseDeDatos);
-		
-	}
 
-	public BarraMenuDeslizable getBarraDeslizable() {
-		return barraDeslizable;
 	}
 
 	private void configurarMenuAbrirArchivo() {
@@ -110,7 +101,6 @@ public class BarraMenu extends VBox {
 			public void handle(MouseEvent event) {
 				abrirAbrirArchivo.onMousePressedProperty();
 
-				
 			}
 		});
 
@@ -130,10 +120,20 @@ public class BarraMenu extends VBox {
 		// Agrego el boton abrir archivo
 		this.getChildren().add(toggleButtonAbrirArchivo);
 	}
-	
+
 	private static void configurarElegirArchivo(final FileChooser fileChooser) {
 		fileChooser.setTitle("View Pictures");
 		fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
 	}
+
+	public BaseDeDatos getBaseDeDatos() {
+		return baseDeDatos;
+	}
+
+	public BarraMenuDeslizable getBarraDeslizable() {
+		return barraDeslizable;
+	}
 	
+	
+
 }
