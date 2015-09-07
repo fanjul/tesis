@@ -6,11 +6,12 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
 
 public class BarraMenuDeslizable extends AnchorPane {
-	private static final int EXPANDIR_ANCHO = 100;
+	private static final int EXPANDIR_ANCHO = 150;
 	private Button botonMenu;
 
 	public BarraMenuDeslizable(Node nodo) {
@@ -20,7 +21,7 @@ public class BarraMenuDeslizable extends AnchorPane {
 
 		this.getChildren().add(nodo);
 		
-		  botonMenu = new Button("Menu");
+		  botonMenu = new Button("Cerrar Menu");
 
 	      // apply the animations when the button is pressed.
 	      botonMenu.setOnAction(new EventHandler<ActionEvent>() {
@@ -37,8 +38,9 @@ public class BarraMenuDeslizable extends AnchorPane {
 	          hideSidebar.onFinishedProperty().set(new EventHandler<ActionEvent>() {
 	            @Override public void handle(ActionEvent actionEvent) {
 	              setVisible(false);
-	         
-	            }
+	              botonMenu.setText("Mostrar Menu");
+	            }		              
+
 	          });
 	  
 	          // create an animation to show a sidebar.
@@ -52,7 +54,8 @@ public class BarraMenuDeslizable extends AnchorPane {
 	          };
 	          showSidebar.onFinishedProperty().set(new EventHandler<ActionEvent>() {
 	            @Override public void handle(ActionEvent actionEvent) {
-	 
+		              botonMenu.setText("Cerrar Menu");
+
 	            }
 	          });
 	  

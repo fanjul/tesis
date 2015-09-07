@@ -21,7 +21,7 @@ public static void main(String[] args) {
 	  cuadroPrincipal.setPrefHeight(VENTANA_HEIGHT);
 	  cuadroPrincipal.setPrefWidth(VENTANA_WIDTH);
 	  
-	  BorderPane ventana = new VentanaPrincipal(VENTANA_HEIGHT,VENTANA_WIDTH);
+	  BorderPane ventana = new VentanaPrincipal(VENTANA_HEIGHT,VENTANA_WIDTH,primaryStage);
 	  
 	  cuadroPrincipal.getChildren().add(ventana);
 	  

@@ -50,59 +50,59 @@ public class Prueba {
 
 
 		//setear datos en las tablas
-		estados.setIdEstado(3);
-		estados.setIdTipoIndicador(4);
-		
-
-		grafico.setObservaciones("joya");
-		
-		hst.setIdIndicador(40);
-		hst.setIdEstadoTipoIndicador(40);
-
-		hst.setInicioUmbral(new Timestamp(0));
-		hst.setFinUmbral(new Timestamp(0));
-
-		indicador.setCodigo("asd");
-		indicador.setId(new BigDecimal(4));
-
-		persona.setApellido("Corvi");
-
-		tipoIndicador.setId(2);
-		tipoIndicador.setObservaciones("el corvi no entiende nada. Fanjul menos... Guille Z");
-		tipoIndicador.setTipo("De la vida");
-
-		umbral.setFinUmbral(new Timestamp(0));
-		umbral.setIdEstadoTipoIndicador(3);
-		umbral.setIdIndicador(3);
-
-		unidad.setUnidadDeMedida("centimetro");
-
-		
-		valor.setIdIndicador(10);
-		valor.setFecha(new Timestamp(0));
-
-
-		//realizar las consultas de las tablas: GUARDAR
-		estadosDao.guardar(estados);
-		graficoDao.guardar(grafico);
-		hstDao.guardar(hst);	
-		indicadorDao.guardar(indicador);
-		personaDao.guardar(persona);
-		tipoIndicadorDao.guardar(tipoIndicador);
-		umbralDao.guardar(umbral);
-		unidadDao.guardar(unidad);
-		valorDao.guardar(valor);
+//		estados.setIdEstado(3);
+//		estados.setIdTipoIndicador(4);
+//		
+//
+//		grafico.setObservaciones("joya");
+//		
+//		hst.setIdIndicador(40);
+//		hst.setIdEstadoTipoIndicador(40);
+//
+//		hst.setInicioUmbral(new Timestamp(0));
+//		hst.setFinUmbral(new Timestamp(0));
+//
+//		indicador.setCodigo("asd");
+//		indicador.setId(new BigDecimal(4));
+//
+//		persona.setApellido("Corvi");
+//
+//		tipoIndicador.setId(2);
+//		tipoIndicador.setObservaciones("el corvi no entiende nada. Fanjul menos... Guille Z");
+//		tipoIndicador.setTipo("De la vida");
+//
+//		umbral.setFinUmbral(new Timestamp(0));
+//		umbral.setIdEstadoTipoIndicador(3);
+//		umbral.setIdIndicador(3);
+//
+//		unidad.setUnidadDeMedida("centimetro");
+//
+//		
+//		valor.setIdIndicador(10);
+//		valor.setFecha(new Timestamp(0));
+//
+//
+//		//realizar las consultas de las tablas: GUARDAR
+//		estadosDao.guardar(estados);
+//		graficoDao.guardar(grafico);
+//		hstDao.guardar(hst);	
+//		indicadorDao.guardar(indicador);
+//		personaDao.guardar(persona);
+//		tipoIndicadorDao.guardar(tipoIndicador);
+//		umbralDao.guardar(umbral);
+//		unidadDao.guardar(unidad);
+//		valorDao.guardar(valor);
 
 		//ELIMINAR
-		estadosDao.eliminar(estados);
-		graficoDao.eliminar(grafico);
-		hstDao.eliminar(hst);	
-		indicadorDao.eliminar(indicador);
-		personaDao.eliminar(persona);
-		tipoIndicadorDao.eliminar(tipoIndicador);
-		umbralDao.eliminar(umbral);
-		unidadDao.eliminar(unidad);
-		valorDao.eliminar(valor);
+//		estadosDao.eliminar(estados);
+//		graficoDao.eliminar(grafico);
+//		hstDao.eliminar(hst);	
+//		indicadorDao.eliminar(indicador);
+//		personaDao.eliminar(persona);
+//		tipoIndicadorDao.eliminar(tipoIndicador);
+//		umbralDao.eliminar(umbral);
+//		unidadDao.eliminar(unidad);
+//		valorDao.eliminar(valor);
 
 	}
 
