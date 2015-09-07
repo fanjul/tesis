@@ -169,7 +169,7 @@ public class SlideOut extends Application {
 		toggleButtonAbrirArchivo.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 			final FileChooser fileChooser = new FileChooser();
 
-			@Override
+			@Override 
 			public void handle(MouseEvent event) {
 				abrirAbrirArchivo.onMousePressedProperty();
 
