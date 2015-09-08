@@ -21,7 +21,7 @@ public class MainFx extends Application {
 		cuadroPrincipal.setPrefHeight(VENTANA_HEIGHT);
 		cuadroPrincipal.setPrefWidth(VENTANA_WIDTH);
 
-		BorderPane ventana = new VentanaPrincipal(VENTANA_HEIGHT, VENTANA_WIDTH, primaryStage);
+		BorderPane ventana = new VentanaPrincipal(VENTANA_HEIGHT, VENTANA_WIDTH);
 
 		cuadroPrincipal.getChildren().add(ventana);
 

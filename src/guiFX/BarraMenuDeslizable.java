@@ -21,8 +21,8 @@ public class BarraMenuDeslizable extends AnchorPane {
 
 		this.getChildren().add(nodo);
 		
-		  botonMenu = new Button("Cerrar Menu");
-
+		  botonMenu = new Button("Mostrar Menu");
+		  setVisible(false);
 	      // apply the animations when the button is pressed.
 	      botonMenu.setOnAction(new EventHandler<ActionEvent>() {
 	        @Override public void handle(ActionEvent actionEvent) {

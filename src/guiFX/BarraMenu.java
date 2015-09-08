@@ -16,20 +16,17 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 
 public class BarraMenu extends VBox {
 
 	private BarraMenuDeslizable barraDeslizable;
 	private DropShadow shadow = new DropShadow();
-	private Stage stage;
 	private final TextField texto = new TextField();
 	private BaseDeDatos baseDeDatos;
 	private VentanaPrincipal ventana;
 
-	public BarraMenu(Stage primaryStage, VentanaPrincipal ventana) {
+	public BarraMenu( VentanaPrincipal ventana) {
 		super();
-		this.stage = primaryStage;
 		this.ventana = ventana;
 		barraDeslizable = new BarraMenuDeslizable(this);
 		VBox.setVgrow(this, Priority.ALWAYS);
@@ -133,7 +130,4 @@ public class BarraMenu extends VBox {
 	public BarraMenuDeslizable getBarraDeslizable() {
 		return barraDeslizable;
 	}
-	
-	
-
 }
