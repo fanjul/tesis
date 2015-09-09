@@ -1,4 +1,4 @@
-package guiFX;
+package guiFX.BaseDeDatosGUI;
 
 import java.sql.Timestamp;
 
@@ -9,7 +9,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 
-public class BaseDeDatos extends TableView<ValorIndicador> {
+public class ValorIndicadorGUI extends TableView<ValorIndicador> {
 
 	private TableView<ValorIndicador> tablaValorIndicador;
 	private TableColumn<ValorIndicador,Integer> columnaIdIndicador;
@@ -23,7 +23,7 @@ public class BaseDeDatos extends TableView<ValorIndicador> {
 	private ObservableList<ValorIndicador> data; 
 
 	@SuppressWarnings("unchecked")
-	public BaseDeDatos(){
+	public ValorIndicadorGUI(){
 		super();
 		tablaValorIndicador = new TableView<ValorIndicador>();
 
@@ -49,7 +49,6 @@ public class BaseDeDatos extends TableView<ValorIndicador> {
 		columnaObservaciones.setCellValueFactory(new PropertyValueFactory<ValorIndicador, String>("observaciones"));
 
 		tablaValorIndicador.getColumns().addAll(columnaIdIndicador,columnaFecha,columnaValor,columnaEstado,columnaVariacion,columnaSignoVariacion,columnaObservaciones);
-		tablaValorIndicador.setVisible(true);
 
 	}
 

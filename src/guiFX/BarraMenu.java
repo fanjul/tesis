@@ -5,6 +5,7 @@ import java.util.List;
 
 import baseDatos.hibernate.consultas.ValorIndicadorDAO;
 import baseDatos.hibernate.tablas.ValorIndicador;
+import guiFX.BaseDeDatosGUI.ValorIndicadorGUI;
 import javafx.collections.FXCollections;
 import javafx.event.EventHandler;
 import javafx.scene.control.TextField;
@@ -22,7 +23,7 @@ public class BarraMenu extends VBox {
 	private BarraMenuDeslizable barraDeslizable;
 	private DropShadow shadow = new DropShadow();
 	private final TextField texto = new TextField();
-	private BaseDeDatos baseDeDatos;
+	private ValorIndicadorGUI baseDeDatos;
 	private VentanaPrincipal ventana;
 
 	public BarraMenu( VentanaPrincipal ventana) {
@@ -46,7 +47,7 @@ public class BarraMenu extends VBox {
 
 			@Override
 			public void handle(MouseEvent event) {
-				baseDeDatos = new BaseDeDatos();
+				baseDeDatos = new ValorIndicadorGUI();
 				baseDeDatos.setData(FXCollections.observableArrayList());
 
 				// Prueba.main(null);
@@ -123,7 +124,7 @@ public class BarraMenu extends VBox {
 		fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
 	}
 
-	public BaseDeDatos getBaseDeDatos() {
+	public ValorIndicadorGUI getBaseDeDatos() {
 		return baseDeDatos;
 	}
 
