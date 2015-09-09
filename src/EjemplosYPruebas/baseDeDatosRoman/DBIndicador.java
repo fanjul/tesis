@@ -1,4 +1,4 @@
-package baseDatos;
+package EjemplosYPruebas.baseDeDatosRoman;
 
 import java.sql.PreparedStatement; 
 import java.sql.ResultSet;

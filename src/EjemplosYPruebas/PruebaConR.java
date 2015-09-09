@@ -1,4 +1,4 @@
-package guiFX;
+package EjemplosYPruebas;
 
 import java.awt.Desktop;	
 import java.io.BufferedReader;

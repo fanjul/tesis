@@ -1,4 +1,4 @@
-package baseDatos;
+package EjemplosYPruebas.baseDeDatosRoman;
 
 public class TablaResultados {
 	

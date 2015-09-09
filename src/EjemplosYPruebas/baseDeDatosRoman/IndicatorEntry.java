@@ -1,4 +1,4 @@
-package baseDatos;
+package EjemplosYPruebas.baseDeDatosRoman;
 
 import org.joda.time.LocalDate;
 

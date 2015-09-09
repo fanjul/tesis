@@ -6,7 +6,6 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
 
@@ -17,7 +16,6 @@ public class BarraMenuDeslizable extends AnchorPane {
 	public BarraMenuDeslizable(Node nodo) {
 		this.setWidth(EXPANDIR_ANCHO);
 		this.setMinWidth(0);
-	    //this.setAlignment(Pos.CENTER);
 
 		this.getChildren().add(nodo);
 		

@@ -8,6 +8,7 @@ import baseDatos.hibernate.tablas.ValorIndicador;
 import guiFX.BaseDeDatosGUI.ValorIndicadorGUI;
 import javafx.collections.FXCollections;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.Tooltip;
