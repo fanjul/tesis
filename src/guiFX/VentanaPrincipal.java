@@ -1,14 +1,20 @@
 package guiFX;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+import javax.swing.JOptionPane;
+
 import org.apache.commons.io.FilenameUtils;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -30,12 +36,14 @@ public class VentanaPrincipal extends BorderPane {
 	private VBox barraMenu;
 	private Button botonGuardarMetodoMatematico;
 	private TextField textFieldNombreArchivo;
-	private HBox hBox;
+	private HBox hBoxAbajoDelVBox;
+	private VBox vBoxDerechaDelBorderPane;
 	private ComboBox comboBoxSeleccionarMetodo;
 
 	static final String RUTA_METODOS = System.getProperty("user.dir") + "\\" + "Metodos Matematicos";
 	static final String EXTENSION_ARCHIVOS = "met";
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public VentanaPrincipal(Double alto, Double ancho) {
 		super();
 		this.setPrefHeight(alto);
@@ -48,13 +56,15 @@ public class VentanaPrincipal extends BorderPane {
 
 		editorTexto = new TextArea();
 		configuracionEditorTexto();
-		this.setRight(editorTexto);
+		//this.setRight(editorTexto);
 
+
+		
 		botonGuardarMetodoMatematico = new Button("Guardar metodo");
 		// this.setBottom(botonGuardarMetodoMatematico);
 
-		hBox = new HBox();
-		this.setBottom(hBox);
+		hBoxAbajoDelVBox = new HBox();
+		this.setBottom(hBoxAbajoDelVBox);
 		textFieldNombreArchivo = new TextField();
 
 		// this.setRight(textFieldNombreArchivo);
@@ -73,8 +83,57 @@ public class VentanaPrincipal extends BorderPane {
 
 		comboBoxSeleccionarMetodo = new ComboBox(getMetodosMatematicosYaCreados());
 
-		hBox.getChildren().addAll(botonGuardarMetodoMatematico, textFieldNombreArchivo, comboBoxSeleccionarMetodo);
-		hBox.setSpacing(120);
+		//Para copiar el contenido del archivo en el editor de texto
+		comboBoxSeleccionarMetodo.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
+			@SuppressWarnings("rawtypes")
+			@Override
+			public void changed(ObservableValue arg0, Object old_val, Object new_val) {
+				editorTexto.setText((String) new_val);
+				copiarContenidoArchivoEnEditorTexto();
+			}
+		});
+
+		hBoxAbajoDelVBox.getChildren().addAll(botonGuardarMetodoMatematico, textFieldNombreArchivo, comboBoxSeleccionarMetodo);
+		
+		vBoxDerechaDelBorderPane = new VBox(2);
+		vBoxDerechaDelBorderPane.getChildren().addAll(editorTexto);
+		this.setRight(vBoxDerechaDelBorderPane);
+		
+		
+		
+		hBoxAbajoDelVBox.setSpacing(120);
+	}
+
+	private void copiarContenidoArchivoEnEditorTexto() {
+		File archivo;
+		FileReader leerArchivo = null;
+
+		try {
+
+			archivo = new File(
+					RUTA_METODOS + "\\" + comboBoxSeleccionarMetodo.getSelectionModel().getSelectedItem().toString()
+							+ "." + EXTENSION_ARCHIVOS);
+			leerArchivo = new FileReader(archivo);
+			BufferedReader memoriaParaLectura = new BufferedReader(leerArchivo);
+
+			String linea = null;
+
+			editorTexto.setText("");
+			while ((linea = memoriaParaLectura.readLine()) != null) {
+				editorTexto.appendText(linea);
+				editorTexto.appendText("\n");
+			}
+		} catch (Exception ex) {
+			JOptionPane.showMessageDialog(null, ex.getMessage());
+		} finally {
+			try {
+				if (null != leerArchivo) {
+					leerArchivo.close();
+				}
+			} catch (Exception ex1) {
+				JOptionPane.showMessageDialog(null, ex1.getMessage());
+			}
+		}
 	}
 
 	@SuppressWarnings("rawtypes")
@@ -129,34 +188,21 @@ public class VentanaPrincipal extends BorderPane {
 		}
 	}
 
-	/* METODO PARA GUARDAR DONDE QUIERA
-	private void guardarMetodoMatematicoDondeQuiero(Stage primaryStage) {
-		// TODO agregar por defecto la extension del archivo
-		FileChooser fileChooser = new FileChooser();
-		File file = fileChooser.showSaveDialog(primaryStage);
-		if (file != null) {
-			FileWriter fw = null;
-			BufferedWriter bw = null;
-			try {
-				// EL segundo parametro es un boolean
-				// En true escribe al final
-				// En false escribe al inicio
-				fw = new FileWriter(file, false);
-				bw = new BufferedWriter(fw);
-
-				String texto = editorTexto.getText();
-				bw.write(texto, 0, texto.length());
-			} catch (Exception e) {
-				editorTexto.appendText(e.toString());
-			} finally {
-				try {
-					bw.close();
-				} catch (Exception e2) {
-					editorTexto.appendText(e2.toString());
-				}
-			}
-		}
-	}*/
+	/*
+	 * METODO PARA GUARDAR DONDE QUIERA private void
+	 * guardarMetodoMatematicoDondeQuiero(Stage primaryStage) { // TODO agregar
+	 * por defecto la extension del archivo FileChooser fileChooser = new
+	 * FileChooser(); File file = fileChooser.showSaveDialog(primaryStage); if
+	 * (file != null) { FileWriter fw = null; BufferedWriter bw = null; try { //
+	 * EL segundo parametro es un boolean // En true escribe al final // En
+	 * false escribe al inicio fw = new FileWriter(file, false); bw = new
+	 * BufferedWriter(fw);
+	 * 
+	 * String texto = editorTexto.getText(); bw.write(texto, 0, texto.length());
+	 * } catch (Exception e) { editorTexto.appendText(e.toString()); } finally {
+	 * try { bw.close(); } catch (Exception e2) {
+	 * editorTexto.appendText(e2.toString()); } } } }
+	 */
 
 	// Drag & Drop en el area de texto
 	private void configuracionEditorTexto() {
