@@ -1,33 +1,41 @@
 package guiFX.BaseDeDatosGUI;
 
 import java.sql.Timestamp;
+import java.util.HashSet;
+import java.util.Set;
 
 import baseDatos.hibernate.tablas.ValorIndicador;
+import guiFX.EditorTexto;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-
+import javafx.scene.input.Clipboard;
+import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.MouseEvent;
 
 public class ValorIndicadorGUI extends TableView<ValorIndicador> {
 
 	private TableView<ValorIndicador> tablaValorIndicador;
-	private TableColumn<ValorIndicador,Integer> columnaIdIndicador;
-	private TableColumn<ValorIndicador,Timestamp> columnaFecha;
-	private TableColumn<ValorIndicador,Double> columnaValor;
-	private TableColumn<ValorIndicador,String> columnaEstado;
-	private TableColumn<ValorIndicador,Double> columnaVariacion;
-	private TableColumn<ValorIndicador,Integer> columnaSignoVariacion;
-	private TableColumn<ValorIndicador,String> columnaObservaciones;
+	private TableColumn<ValorIndicador, Integer> columnaIdIndicador;
+	private TableColumn<ValorIndicador, Timestamp> columnaFecha;
+	private TableColumn<ValorIndicador, Double> columnaValor;
+	private TableColumn<ValorIndicador, String> columnaEstado;
+	private TableColumn<ValorIndicador, Double> columnaVariacion;
+	private TableColumn<ValorIndicador, Integer> columnaSignoVariacion;
+	private TableColumn<ValorIndicador, String> columnaObservaciones;
 
-	private ObservableList<ValorIndicador> data; 
+	private ObservableList<ValorIndicador> data;
+	private Clipboard clipboard;
 
-	@SuppressWarnings("unchecked")
-	public ValorIndicadorGUI(){
+	@SuppressWarnings({ "unchecked" })
+	public ValorIndicadorGUI() {
 		super();
 		tablaValorIndicador = new TableView<ValorIndicador>();
 
-		columnaIdIndicador = new TableColumn<ValorIndicador,Integer>("Id Indicador");
+		columnaIdIndicador = new TableColumn<ValorIndicador, Integer>("Id Indicador");
 		columnaIdIndicador.setCellValueFactory(new PropertyValueFactory<ValorIndicador, Integer>("idIndicador"));
 
 		columnaFecha = new TableColumn<ValorIndicador, Timestamp>("Fecha");
@@ -48,8 +56,14 @@ public class ValorIndicadorGUI extends TableView<ValorIndicador> {
 		columnaObservaciones = new TableColumn<ValorIndicador, String>("Observaciones");
 		columnaObservaciones.setCellValueFactory(new PropertyValueFactory<ValorIndicador, String>("observaciones"));
 
-		tablaValorIndicador.getColumns().addAll(columnaIdIndicador,columnaFecha,columnaValor,columnaEstado,columnaVariacion,columnaSignoVariacion,columnaObservaciones);
-
+		tablaValorIndicador.getColumns().addAll(columnaIdIndicador, columnaFecha, columnaValor, columnaEstado,
+				columnaVariacion, columnaSignoVariacion, columnaObservaciones);
+	
+		this.agregarListenerEvent();
+	}
+	
+	public Clipboard getClipboard() {
+		return this.clipboard;
 	}
 
 	public TableView<ValorIndicador> getTablaValorIndicador() {
@@ -88,8 +102,42 @@ public class ValorIndicadorGUI extends TableView<ValorIndicador> {
 		return data;
 	}
 
-	public void setData(ObservableList<ValorIndicador> data){
+	public void setData(ObservableList<ValorIndicador> data) {
 		this.data = data;
 
+	}
+
+	
+	private void agregarListenerEvent(){
+		//logica para cuando se selecciona algo de la tabla y se pega en el editor.
+
+		this.tablaValorIndicador.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        @Override
+        public void handle(MouseEvent event) {
+        	tablaValorIndicador.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+    		clipboard = Clipboard.getSystemClipboard();
+			ClipboardContent content = new ClipboardContent();
+
+        	Set<ValorIndicador> selec = new HashSet<ValorIndicador>(tablaValorIndicador.getSelectionModel().getSelectedItems());
+        	
+        	String selected = "";
+        	
+        	Object[] arr = selec.toArray();
+        	
+        	for(int i =0; i<arr.length;i++){
+        		selected += (((ValorIndicador)arr[i]).getIdIndicador().toString());
+        		selected += " ";
+
+        	}
+    		content.putString(selected);
+
+        	clipboard.setContent( content );
+			EditorTexto.getInstance().getEditorTexto().appendText(clipboard.getString());
+
+        }
+    });
+		
+
+		
 	}
 }
