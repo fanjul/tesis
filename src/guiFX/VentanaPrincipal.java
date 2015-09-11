@@ -6,8 +6,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 
 import javax.swing.JOptionPane;
 
@@ -21,23 +19,18 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.input.DragEvent;
-import javafx.scene.input.Dragboard;
-import javafx.scene.input.TransferMode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 public class VentanaPrincipal extends BorderPane {
 
-	private TextArea editorTexto;
 	private VBox barraMenu;
 	private Button botonGuardarMetodoMatematico;
 	private TextField textFieldNombreArchivo;
 	private HBox hBoxAbajoDelVBox;
-	private VBox vBoxDerechaDelBorderPane;
+	private VBox editorTexto;
 	private ComboBox comboBoxSeleccionarMetodo;
 
 	static final String RUTA_METODOS = System.getProperty("user.dir") + "\\" + "Metodos Matematicos";
@@ -54,20 +47,11 @@ public class VentanaPrincipal extends BorderPane {
 		this.setLeft(((BarraMenu) barraMenu).getBarraDeslizable());
 		this.setTop(((BarraMenu) barraMenu).getBarraDeslizable().getBotonMenu());
 
-		editorTexto = new TextArea();
-		configuracionEditorTexto();
-		//this.setRight(editorTexto);
-
-
-		
 		botonGuardarMetodoMatematico = new Button("Guardar metodo");
-		// this.setBottom(botonGuardarMetodoMatematico);
 
 		hBoxAbajoDelVBox = new HBox();
 		this.setBottom(hBoxAbajoDelVBox);
 		textFieldNombreArchivo = new TextField();
-
-		// this.setRight(textFieldNombreArchivo);
 
 		botonGuardarMetodoMatematico.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
@@ -85,19 +69,17 @@ public class VentanaPrincipal extends BorderPane {
 
 		//Para copiar el contenido del archivo en el editor de texto
 		comboBoxSeleccionarMetodo.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
-			@SuppressWarnings("rawtypes")
 			@Override
 			public void changed(ObservableValue arg0, Object old_val, Object new_val) {
-				editorTexto.setText((String) new_val);
+				((EditorTexto)editorTexto).getEditorTexto().setText((String) new_val);
 				copiarContenidoArchivoEnEditorTexto();
 			}
 		});
 
 		hBoxAbajoDelVBox.getChildren().addAll(botonGuardarMetodoMatematico, textFieldNombreArchivo, comboBoxSeleccionarMetodo);
 		
-		vBoxDerechaDelBorderPane = new VBox(2);
-		vBoxDerechaDelBorderPane.getChildren().addAll(editorTexto);
-		this.setRight(vBoxDerechaDelBorderPane);
+		editorTexto = EditorTexto.getInstance();
+		this.setRight(editorTexto);
 		
 		
 		
@@ -118,11 +100,12 @@ public class VentanaPrincipal extends BorderPane {
 
 			String linea = null;
 
-			editorTexto.setText("");
+			((EditorTexto)editorTexto).getEditorTexto().setText("");
 			while ((linea = memoriaParaLectura.readLine()) != null) {
-				editorTexto.appendText(linea);
-				editorTexto.appendText("\n");
+				((EditorTexto)editorTexto).getEditorTexto().appendText(linea);
+				((EditorTexto)editorTexto).getEditorTexto().appendText(System.lineSeparator());
 			}
+			memoriaParaLectura.close();
 		} catch (Exception ex) {
 			JOptionPane.showMessageDialog(null, ex.getMessage());
 		} finally {
@@ -133,6 +116,7 @@ public class VentanaPrincipal extends BorderPane {
 			} catch (Exception ex1) {
 				JOptionPane.showMessageDialog(null, ex1.getMessage());
 			}
+			
 		}
 	}
 
@@ -177,13 +161,12 @@ public class VentanaPrincipal extends BorderPane {
 
 				fw = new FileWriter(archivo, false);
 				bw = new BufferedWriter(fw);
-				String texto = editorTexto.getText();
+				String texto = 				((EditorTexto)editorTexto).getEditorTexto().getText();
 				bw.write(texto, 0, texto.length());
 			}
 			bw.close();
 
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -204,35 +187,5 @@ public class VentanaPrincipal extends BorderPane {
 	 * editorTexto.appendText(e2.toString()); } } } }
 	 */
 
-	// Drag & Drop en el area de texto
-	private void configuracionEditorTexto() {
-
-		editorTexto.setOnDragOver(new EventHandler<DragEvent>() {
-
-			@Override
-			public void handle(DragEvent event) {
-				if (event.getDragboard().hasFiles()) {
-					event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
-				}
-			}
-		});
-
-		editorTexto.setOnDragDropped(new EventHandler<DragEvent>() {
-
-			@Override
-			public void handle(DragEvent event) {
-				final Dragboard dragboard = event.getDragboard();
-				if (dragboard.hasFiles()) {
-					Path file = dragboard.getFiles().get(0).toPath();
-					try {
-						editorTexto.setText(new String(Files.readAllBytes(file)));
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-				}
-			}
-
-		});
-
-	}
+	
 }
