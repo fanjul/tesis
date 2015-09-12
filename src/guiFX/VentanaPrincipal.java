@@ -81,8 +81,6 @@ public class VentanaPrincipal extends BorderPane {
 		editorTexto = EditorTexto.getInstance();
 		this.setRight(editorTexto);
 		
-		
-		
 		hBoxAbajoDelVBox.setSpacing(120);
 	}
 

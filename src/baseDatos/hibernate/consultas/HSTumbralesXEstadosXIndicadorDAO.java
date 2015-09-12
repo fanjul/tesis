@@ -1,6 +1,9 @@
 package baseDatos.hibernate.consultas;
 
+import java.util.List;
+
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 
 import baseDatos.hibernate.tablas.HSTumbralesXEstadosXIndicador;
 
@@ -46,4 +49,18 @@ public class HSTumbralesXEstadosXIndicadorDAO extends DAO {
 		}
 	}
 
+	public List<HSTumbralesXEstadosXIndicador> getTodos() {
+		try {
+			this.iniciaOperacion();
+			String hql = "FROM HSTumbralesXEstadosXIndicador hstu";
+			Query query = sesion.createQuery(hql);
+			List<HSTumbralesXEstadosXIndicador> results = query.list();
+			return results;
+		} catch (HibernateException he) {
+			manejaExcepcion(he);
+			throw he;
+		} finally {
+			sesion.close();
+		}
+	}
 }
