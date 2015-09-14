@@ -30,7 +30,7 @@ public class VentanaPrincipal extends BorderPane {
 	private Button botonGuardarMetodoMatematico;
 	private TextField textFieldNombreArchivo;
 	private HBox hBoxAbajoDelVBox;
-	private VBox editorTexto;
+	private VBox panelDerecho;
 	private ComboBox comboBoxSeleccionarMetodo;
 
 	static final String RUTA_METODOS = System.getProperty("user.dir") + "\\" + "Metodos Matematicos";
@@ -71,15 +71,15 @@ public class VentanaPrincipal extends BorderPane {
 		comboBoxSeleccionarMetodo.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
 			@Override
 			public void changed(ObservableValue arg0, Object old_val, Object new_val) {
-				((EditorTexto)editorTexto).getEditorTexto().setText((String) new_val);
+				((PanelDerecho)panelDerecho).getEditorTexto().setText((String) new_val);
 				copiarContenidoArchivoEnEditorTexto();
 			}
 		});
 
 		hBoxAbajoDelVBox.getChildren().addAll(botonGuardarMetodoMatematico, textFieldNombreArchivo, comboBoxSeleccionarMetodo);
 		
-		editorTexto = EditorTexto.getInstance();
-		this.setRight(editorTexto);
+		panelDerecho = PanelDerecho.getInstance();
+		this.setRight(panelDerecho);
 		
 		hBoxAbajoDelVBox.setSpacing(120);
 	}
@@ -98,10 +98,10 @@ public class VentanaPrincipal extends BorderPane {
 
 			String linea = null;
 
-			((EditorTexto)editorTexto).getEditorTexto().setText("");
+			((PanelDerecho)panelDerecho).getEditorTexto().setText("");
 			while ((linea = memoriaParaLectura.readLine()) != null) {
-				((EditorTexto)editorTexto).getEditorTexto().appendText(linea);
-				((EditorTexto)editorTexto).getEditorTexto().appendText(System.lineSeparator());
+				((PanelDerecho)panelDerecho).getEditorTexto().appendText(linea);
+				((PanelDerecho)panelDerecho).getEditorTexto().appendText(System.lineSeparator());
 			}
 			memoriaParaLectura.close();
 		} catch (Exception ex) {
@@ -159,7 +159,7 @@ public class VentanaPrincipal extends BorderPane {
 
 				fw = new FileWriter(archivo, false);
 				bw = new BufferedWriter(fw);
-				String texto = 				((EditorTexto)editorTexto).getEditorTexto().getText();
+				String texto = 				((PanelDerecho)panelDerecho).getEditorTexto().getText();
 				bw.write(texto, 0, texto.length());
 			}
 			bw.close();

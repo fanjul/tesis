@@ -11,23 +11,23 @@ import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.VBox;
 
-public class EditorTexto extends VBox{
+public class PanelDerecho extends VBox{
 	
-	private static EditorTexto instance = null;
+	private static PanelDerecho instance = null;
 	private TextArea editorTexto;
 	
 	
 	
-	private EditorTexto() {
-		super(2);
+	private PanelDerecho() {
+		super();
 		editorTexto = new TextArea();
 		configuracionEditorTexto();
 		this.getChildren().addAll(editorTexto); 
 	}
 
-	public static EditorTexto getInstance(){
+	public static PanelDerecho getInstance(){
 		if(instance == null){
-			instance = new EditorTexto();
+			instance = new PanelDerecho();
 		}
 		return instance;
 	}

@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import baseDatos.hibernate.tablas.ValorIndicador;
-import guiFX.EditorTexto;
+import guiFX.PanelDerecho;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.scene.control.SelectionMode;
@@ -14,7 +14,10 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.TransferMode;
 
 public class ValorIndicadorGUI extends TableView<ValorIndicador> {
 
@@ -108,36 +111,86 @@ public class ValorIndicadorGUI extends TableView<ValorIndicador> {
 	}
 
 	
-	private void agregarListenerEvent(){
-		//logica para cuando se selecciona algo de la tabla y se pega en el editor.
+	private void agregarListenerEvent() {
+		// Para que se pueda seleccionar varias rows de la tabla
+		tablaValorIndicador.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+       
+		// Drag & Drop de tabla al editor. Si queres pone el cursor donde quieras y arrastras.
+		tablaValorIndicador.setOnDragDetected(new EventHandler<MouseEvent>() {
+             @Override public void handle(final MouseEvent me) {
+                  log("setOnDragDetected("+me+")");
+                  final Dragboard db = tablaValorIndicador.startDragAndDrop(TransferMode.COPY);
+                  final ClipboardContent content = new ClipboardContent();
+                  
+                  String selected = "";
+  				Set<ValorIndicador> selec = new HashSet<ValorIndicador>(
+  						tablaValorIndicador.getSelectionModel().getSelectedItems());
+  				Object[] arr = selec.toArray();
+  				
+  				for (int i = 0; i < arr.length; i++) {
+  					selected += (((ValorIndicador) arr[i]).getIdIndicador().toString());
+  					selected += " ";
 
-		this.tablaValorIndicador.setOnMouseClicked(new EventHandler<MouseEvent>() {
-        @Override
-        public void handle(MouseEvent event) {
-        	tablaValorIndicador.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-    		clipboard = Clipboard.getSystemClipboard();
-			ClipboardContent content = new ClipboardContent();
-
-        	Set<ValorIndicador> selec = new HashSet<ValorIndicador>(tablaValorIndicador.getSelectionModel().getSelectedItems());
-        	
-        	String selected = "";
-        	
-        	Object[] arr = selec.toArray();
-        	
-        	for(int i =0; i<arr.length;i++){
-        		selected += (((ValorIndicador)arr[i]).getIdIndicador().toString());
-        		selected += " ";
-
-        	}
-    		content.putString(selected);
-
-        	clipboard.setContent( content );
-			EditorTexto.getInstance().getEditorTexto().appendText(clipboard.getString());
-
-        }
-    });
+  				}
+  				content.putString(selected.toString());
+  				
+                //  content.putString("Drag Me!");
+                  db.setContent(content);
+                  me.consume();
+             }
+        });
+		tablaValorIndicador.setOnDragEntered(new EventHandler<DragEvent>() {
+             @Override public void handle(final DragEvent de) {
+            	
+             }
+        });
+        
+		tablaValorIndicador.setOnDragOver(new EventHandler<DragEvent>() {
+             @Override public void handle(final DragEvent de) {
+                  de.acceptTransferModes(TransferMode.COPY);
+                  de.consume();
+             }
+        });
 		
+		PanelDerecho.getInstance().getEditorTexto().setOnDragOver(new EventHandler<DragEvent>() {
 
+			@Override
+			public void handle(DragEvent event) {
+				if (event.getDragboard().hasString()) {
+					event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+				}
+			}
+		});
 		
+		PanelDerecho.getInstance().getEditorTexto().setOnDragDropped(new EventHandler<DragEvent>() {
+
+			@Override
+			public void handle(DragEvent event) {
+				clipboard = Clipboard.getSystemClipboard();
+				ClipboardContent content = new ClipboardContent();
+				
+				String selected = "";
+				Set<ValorIndicador> selec = new HashSet<ValorIndicador>(
+						tablaValorIndicador.getSelectionModel().getSelectedItems());
+				Object[] arr = selec.toArray();
+				
+				for (int i = 0; i < arr.length; i++) {
+					selected += (((ValorIndicador) arr[i]).getIdIndicador().toString());
+					selected += " ";
+
+				}
+				content.putString(selected);
+
+				clipboard.setContent(content);
+				
+				PanelDerecho.getInstance().getEditorTexto().insertText(
+						PanelDerecho.getInstance().getEditorTexto().getCaretPosition(), clipboard.getString());
+			}
+
+		});
+
 	}
+	private static void log(Object o) {
+        System.out.println(""+o);
+   }
 }
