@@ -154,9 +154,10 @@ public class BarraMenu extends VBox {
 		centroSuperior = new HBox();
 		centroInferior = new AnchorPane();
 		centroSuperior.setSpacing(50);
-		centroSuperior.setMaxHeight(100);
-		centroSuperior.setMinHeight(0.0);
-		
+		centroSuperior.setMaxHeight(50);
+		centroSuperior.setMinHeight(50);
+		centroSuperior.setMaxWidth(750);
+		centroSuperior.setMinWidth(750);
 		
 		ObservableList<String> data = FXCollections.observableArrayList();
 		List<String> listaTodasTablas = new DAO().getAllTables();
@@ -169,6 +170,10 @@ public class BarraMenu extends VBox {
 		comboBoxTablas = new ComboBox<String>();
 		comboBoxTablas.setItems(data);
 		
+		centroInferior.setMinHeight(550);
+		centroInferior.setMinWidth(750);
+		centroInferior.setMaxHeight(550);
+		centroInferior.setMaxWidth(750);
 		comboBoxTablas.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
 			@Override
 			public void changed(ObservableValue arg0, Object old_val, Object new_val) {
@@ -193,7 +198,7 @@ public class BarraMenu extends VBox {
 
 		ObservableList<SplitPane.Divider> dividers = dividirCentro.getDividers();
 		for (int i = 0; i < dividers.size(); i++) {
-			dividers.get(i).setPosition((i + 1.5) / 10);
+			dividers.get(i).setPosition((i + 1.3) / 10);
 		}
 		
 		ventana.setCenter(dividirCentro);

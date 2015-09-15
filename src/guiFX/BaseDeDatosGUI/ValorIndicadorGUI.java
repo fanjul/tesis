@@ -43,6 +43,7 @@ public class ValorIndicadorGUI extends TableView<ValorIndicador> implements Abst
 	public ValorIndicadorGUI() {
 		super();
 	}
+
 	@SuppressWarnings({ "unchecked" })
 	public void mostrarTabla() {
 		tablaValorIndicador = new TableView<ValorIndicador>();
@@ -72,10 +73,9 @@ public class ValorIndicadorGUI extends TableView<ValorIndicador> implements Abst
 				columnaVariacion, columnaSignoVariacion, columnaObservaciones);
 		
 		tablaValorIndicador.getStyleClass().add("tablas");
-	
 		this.agregarListenerEvent();
 	}
-	
+
 	public Clipboard getClipboard() {
 		return this.clipboard;
 	}
@@ -121,50 +121,51 @@ public class ValorIndicadorGUI extends TableView<ValorIndicador> implements Abst
 
 	}
 
-	
 	private void agregarListenerEvent() {
 		// Para que se pueda seleccionar varias rows de la tabla
 		tablaValorIndicador.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-       
-		// Drag & Drop de tabla al editor. Si queres pone el cursor donde quieras y arrastras.
-		tablaValorIndicador.setOnDragDetected(new EventHandler<MouseEvent>() {
-             @Override public void handle(final MouseEvent me) {
-                  log("setOnDragDetected("+me+")");
-                  final Dragboard db = tablaValorIndicador.startDragAndDrop(TransferMode.COPY);
-                  final ClipboardContent content = new ClipboardContent();
-                  
-                  String selected = "";
-  				Set<ValorIndicador> selec = new HashSet<ValorIndicador>(
-  						tablaValorIndicador.getSelectionModel().getSelectedItems());
-  				Object[] arr = selec.toArray();
-  				
-  				for (int i = 0; i < arr.length; i++) {
-  					selected += (((ValorIndicador) arr[i]).getIdIndicador().toString());
-  					selected += " ";
 
-  				}
-  				content.putString(selected.toString());
-  				
-                //  content.putString("Drag Me!");
-                  db.setContent(content);
-                  me.consume();
-             }
-        });
+		// Drag & Drop de tabla al editor. Si queres pone el cursor donde
+		// quieras y arrastras.
+		tablaValorIndicador.setOnDragDetected(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(final MouseEvent me) {
+				final Dragboard db = tablaValorIndicador.startDragAndDrop(TransferMode.COPY);
+				final ClipboardContent content = new ClipboardContent();
+
+				String selected = "";
+				Set<ValorIndicador> selec = new HashSet<ValorIndicador>(
+						tablaValorIndicador.getSelectionModel().getSelectedItems());
+				Object[] arr = selec.toArray();
+
+				for (int i = 0; i < arr.length; i++) {
+					selected += (((ValorIndicador) arr[i]).getIdIndicador().toString());
+					selected += " ";
+
+				}
+				content.putString(selected.toString());
+
+				// content.putString("Drag Me!");
+				db.setContent(content);
+				me.consume();
+			}
+		});
 		tablaValorIndicador.setOnDragEntered(new EventHandler<DragEvent>() {
-             @Override public void handle(final DragEvent de) {
-            	
-             }
-        });
-        
+			@Override
+			public void handle(final DragEvent de) {
+
+			}
+		});
+
 		tablaValorIndicador.setOnDragOver(new EventHandler<DragEvent>() {
-             @Override public void handle(final DragEvent de) {
-                  de.acceptTransferModes(TransferMode.COPY);
-                  de.consume();
-             }
-        });
-		
+			@Override
+			public void handle(final DragEvent de) {
+				de.acceptTransferModes(TransferMode.COPY);
+				de.consume();
+			}
+		});
+
 		PanelDerecho.getInstance().getEditorTexto().setOnDragOver(new EventHandler<DragEvent>() {
-	
 
 			@Override
 			public void handle(DragEvent event) {
@@ -173,19 +174,19 @@ public class ValorIndicadorGUI extends TableView<ValorIndicador> implements Abst
 				}
 			}
 		});
-		
+
 		PanelDerecho.getInstance().getEditorTexto().setOnDragDropped(new EventHandler<DragEvent>() {
 
 			@Override
 			public void handle(DragEvent event) {
 				clipboard = Clipboard.getSystemClipboard();
 				ClipboardContent content = new ClipboardContent();
-				
+
 				String selected = "";
 				Set<ValorIndicador> selec = new HashSet<ValorIndicador>(
 						tablaValorIndicador.getSelectionModel().getSelectedItems());
 				Object[] arr = selec.toArray();
-				
+
 				for (int i = 0; i < arr.length; i++) {
 					selected += (((ValorIndicador) arr[i]).getIdIndicador().toString());
 					selected += " ";
@@ -194,36 +195,38 @@ public class ValorIndicadorGUI extends TableView<ValorIndicador> implements Abst
 				content.putString(selected);
 
 				clipboard.setContent(content);
-				
+
 				PanelDerecho.getInstance().getEditorTexto().insertText(
 						PanelDerecho.getInstance().getEditorTexto().getCaretPosition(), clipboard.getString());
 			}
 
 		});
 	}
+
 	@Override
 	public void crearTablaBaseDeDatos() {
-		 this.mostrarTabla();
+		this.mostrarTabla();
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
-	public void mostrarTabla(AbstractaConsulta consulta, FactoryConsultas factoryConsultasDAO, AnchorPane centroInferior) {
+	public void mostrarTabla(AbstractaConsulta consulta, FactoryConsultas factoryConsultasDAO,
+			AnchorPane centroInferior) {
 		this.setData(FXCollections.observableArrayList());
-		if(!centroInferior.getChildren().isEmpty()){
+		if (!centroInferior.getChildren().isEmpty()) {
 			centroInferior.getChildren().remove(0);
 		}
 		List<ValorIndicador> lista = (List<ValorIndicador>) factoryConsultasDAO.getLista("ValorIndicador");
-		lista = ((ValorIndicadorDAO)consulta).getTodos();
-		for (ValorIndicador vi : lista) { 
+		lista = ((ValorIndicadorDAO) consulta).getTodos();
+		for (ValorIndicador vi : lista) {
 			this.getData().add(vi);
 
 		}
-		this.getTablaValorIndicador().setItems(this.getData());	
-		centroInferior.getChildren().add(0,this.getTablaValorIndicador());
+		this.getTablaValorIndicador().setItems(this.getData());
+		tablaValorIndicador.setPrefSize(centroInferior.getMaxWidth(), centroInferior.getMaxHeight());
+		centroInferior.getChildren().add(0, this.getTablaValorIndicador());
+		
 
 	}
-	private static void log(Object o) {
-        System.out.println(""+o);
-   }
+
 }

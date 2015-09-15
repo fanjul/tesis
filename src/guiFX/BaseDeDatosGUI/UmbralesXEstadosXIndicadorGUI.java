@@ -139,7 +139,8 @@ public class UmbralesXEstadosXIndicadorGUI extends TableView<UmbralesXEstadosXIn
 			this.getData().add(vi);
 
 		}
-		this.getTablaUmbrales().setItems(this.getData());	
+		this.getTablaUmbrales().setItems(this.getData());
+		tablaUmbrales.setPrefSize(centroInferior.getMaxWidth(), centroInferior.getMaxHeight());
 		centroInferior.getChildren().add(0,this.getTablaUmbrales());			
 	}
 	

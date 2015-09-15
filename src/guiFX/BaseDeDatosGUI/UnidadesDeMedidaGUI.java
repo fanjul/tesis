@@ -90,6 +90,7 @@ public class UnidadesDeMedidaGUI extends TableView<UnidadesDeMedida> implements 
 
 		}
 		this.getTablaUnidadesdDeMedida().setItems(this.getData());	
+		tablaUnidadesdDeMedida.setPrefSize(centroInferior.getMaxWidth(), centroInferior.getMaxHeight());
 		centroInferior.getChildren().add(0,this.getTablaUnidadesdDeMedida());			
 	}
 	

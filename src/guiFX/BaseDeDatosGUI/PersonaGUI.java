@@ -129,7 +129,8 @@ public class PersonaGUI extends TableView<Persona> implements AbstractBaseDeDato
 			this.getData().add(vi);
 
 		}
-		this.getTablaPersona().setItems(this.getData());	
+		this.getTablaPersona().setItems(this.getData());
+		tablaPersona.setPrefSize(centroInferior.getMaxWidth(), centroInferior.getMaxHeight());
 		centroInferior.getChildren().add(0,this.getTablaPersona());			
 	}
 
