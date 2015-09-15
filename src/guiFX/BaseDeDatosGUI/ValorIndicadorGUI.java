@@ -38,7 +38,6 @@ public class ValorIndicadorGUI extends TableView<ValorIndicador> implements Abst
 	private TableColumn<ValorIndicador, String> columnaObservaciones;
 
 	private ObservableList<ValorIndicador> data;
-	private Clipboard clipboard;
 
 	public ValorIndicadorGUI() {
 		super();
@@ -73,10 +72,6 @@ public class ValorIndicadorGUI extends TableView<ValorIndicador> implements Abst
 				columnaVariacion, columnaSignoVariacion, columnaObservaciones);
 
 		this.agregarListenerEvent();
-	}
-
-	public Clipboard getClipboard() {
-		return this.clipboard;
 	}
 
 	public TableView<ValorIndicador> getTablaValorIndicador() {
@@ -178,7 +173,7 @@ public class ValorIndicadorGUI extends TableView<ValorIndicador> implements Abst
 
 			@Override
 			public void handle(DragEvent event) {
-				clipboard = Clipboard.getSystemClipboard();
+				Clipboard clipboard = Clipboard.getSystemClipboard();
 				ClipboardContent content = new ClipboardContent();
 
 				String selected = "";
