@@ -2,14 +2,20 @@ package guiFX.BaseDeDatosGUI;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.List;
 
+import baseDatos.hibernate.consultas.AbstractaConsulta;
+import baseDatos.hibernate.consultas.FactoryConsultas;
+import baseDatos.hibernate.consultas.IndicadorDAO;
 import baseDatos.hibernate.tablas.Indicador;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
 
-public class IndicadorGUI extends TableView<Indicador> {
+public class IndicadorGUI extends TableView<Indicador> implements AbstractBaseDeDatosGUI {
 	
 	private TableView<Indicador> tablaIndicador;
 	private TableColumn<Indicador, BigDecimal> columnaId;
@@ -29,9 +35,12 @@ public class IndicadorGUI extends TableView<Indicador> {
 	
 	private ObservableList<Indicador> data; 
 
-	@SuppressWarnings("unchecked")
 	public IndicadorGUI(){
 		super();
+	}
+	
+	@SuppressWarnings("unchecked")
+	public void mostrarTabla(){
 		tablaIndicador = new TableView<Indicador>();
 		
 		columnaId = new TableColumn<Indicador, BigDecimal>("Id");
@@ -143,6 +152,34 @@ public class IndicadorGUI extends TableView<Indicador> {
 
 	public ObservableList<Indicador> getData() {
 		return data;
+	}
+
+	public void setData(ObservableList<Indicador> data) {
+		this.data = data;
+	}
+
+	@Override
+	public void crearTablaBaseDeDatos() {
+		this.mostrarTabla();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public void mostrarTabla(AbstractaConsulta consulta, FactoryConsultas factoryConsultasDAO,
+			AnchorPane centroInferior) {
+		
+		if(!centroInferior.getChildren().isEmpty()){
+			centroInferior.getChildren().remove(0);
+		}
+		this.setData(FXCollections.observableArrayList());
+		List<Indicador> lista = (List<Indicador>) factoryConsultasDAO.getLista("Indicador");
+		lista = ((IndicadorDAO)consulta).getTodos();
+		for (Indicador vi : lista) { 
+			this.getData().add(vi);
+
+		}
+		this.getTablaIndicador().setItems(this.getData());	
+		centroInferior.getChildren().add(0,this.getTablaIndicador());			
 	}
 	
 	

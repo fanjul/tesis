@@ -7,7 +7,7 @@ import org.hibernate.Query;
 
 import baseDatos.hibernate.tablas.Persona;
 
-public class PersonaDAO extends DAO {
+public class PersonaDAO extends DAO implements AbstractaConsulta {
 	public void guardar(Persona persona) {
 		try {
 			iniciaOperacion();
@@ -48,6 +48,7 @@ public class PersonaDAO extends DAO {
 		}
 	}
 	
+	@SuppressWarnings("unchecked")
 	public List<Persona> getTodos() {
 		try {
 			this.iniciaOperacion();

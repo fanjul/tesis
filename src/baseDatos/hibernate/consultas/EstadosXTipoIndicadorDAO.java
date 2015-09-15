@@ -7,7 +7,7 @@ import org.hibernate.Query;
 
 import baseDatos.hibernate.tablas.EstadosXTipoIndicador;
 
-public class EstadosXTipoIndicadorDAO extends DAO {
+public class EstadosXTipoIndicadorDAO extends DAO implements AbstractaConsulta {
 	
 	public void guardar(EstadosXTipoIndicador estadosX) {
 		try {
@@ -49,6 +49,7 @@ public class EstadosXTipoIndicadorDAO extends DAO {
 		}
 	}
 	
+	@SuppressWarnings("unchecked")
 	public List<EstadosXTipoIndicador> getTodos() {
 		try {
 			this.iniciaOperacion();

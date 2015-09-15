@@ -2,10 +2,16 @@ package guiFX.BaseDeDatosGUI;
 
 import java.sql.Timestamp;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
+import baseDatos.hibernate.consultas.AbstractaConsulta;
+import baseDatos.hibernate.consultas.FactoryConsultas;
+import baseDatos.hibernate.consultas.ValorIndicadorDAO;
 import baseDatos.hibernate.tablas.ValorIndicador;
 import guiFX.PanelDerecho;
+
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.scene.control.SelectionMode;
@@ -18,8 +24,9 @@ import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
+import javafx.scene.layout.AnchorPane;
 
-public class ValorIndicadorGUI extends TableView<ValorIndicador> {
+public class ValorIndicadorGUI extends TableView<ValorIndicador> implements AbstractBaseDeDatosGUI {
 
 	private TableView<ValorIndicador> tablaValorIndicador;
 	private TableColumn<ValorIndicador, Integer> columnaIdIndicador;
@@ -33,9 +40,11 @@ public class ValorIndicadorGUI extends TableView<ValorIndicador> {
 	private ObservableList<ValorIndicador> data;
 	private Clipboard clipboard;
 
-	@SuppressWarnings({ "unchecked" })
 	public ValorIndicadorGUI() {
 		super();
+	}
+	@SuppressWarnings({ "unchecked" })
+	public void mostrarTabla() {
 		tablaValorIndicador = new TableView<ValorIndicador>();
 
 		columnaIdIndicador = new TableColumn<ValorIndicador, Integer>("Id Indicador");
@@ -153,6 +162,7 @@ public class ValorIndicadorGUI extends TableView<ValorIndicador> {
         });
 		
 		PanelDerecho.getInstance().getEditorTexto().setOnDragOver(new EventHandler<DragEvent>() {
+	
 
 			@Override
 			public void handle(DragEvent event) {
@@ -188,6 +198,27 @@ public class ValorIndicadorGUI extends TableView<ValorIndicador> {
 			}
 
 		});
+	}
+	@Override
+	public void crearTablaBaseDeDatos() {
+		 this.mostrarTabla();
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public void mostrarTabla(AbstractaConsulta consulta, FactoryConsultas factoryConsultasDAO, AnchorPane centroInferior) {
+		this.setData(FXCollections.observableArrayList());
+		if(!centroInferior.getChildren().isEmpty()){
+			centroInferior.getChildren().remove(0);
+		}
+		List<ValorIndicador> lista = (List<ValorIndicador>) factoryConsultasDAO.getLista("ValorIndicador");
+		lista = ((ValorIndicadorDAO)consulta).getTodos();
+		for (ValorIndicador vi : lista) { 
+			this.getData().add(vi);
+
+		}
+		this.getTablaValorIndicador().setItems(this.getData());	
+		centroInferior.getChildren().add(0,this.getTablaValorIndicador());
 
 	}
 	private static void log(Object o) {

@@ -1,14 +1,20 @@
 package guiFX.BaseDeDatosGUI;
 
 import java.sql.Timestamp;
+import java.util.List;
 
+import baseDatos.hibernate.consultas.AbstractaConsulta;
+import baseDatos.hibernate.consultas.FactoryConsultas;
+import baseDatos.hibernate.consultas.UmbralesXEstadosXIndicadorDAO;
 import baseDatos.hibernate.tablas.UmbralesXEstadosXIndicador;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
 
-public class UmbralesXEstadosXIndicadorGUI extends TableView<UmbralesXEstadosXIndicador> {
+public class UmbralesXEstadosXIndicadorGUI extends TableView<UmbralesXEstadosXIndicador> implements AbstractBaseDeDatosGUI {
 	
 	private TableView<UmbralesXEstadosXIndicador> tablaUmbrales;
 	private TableColumn<UmbralesXEstadosXIndicador, Integer> columnaIdIndicador;
@@ -23,9 +29,12 @@ public class UmbralesXEstadosXIndicadorGUI extends TableView<UmbralesXEstadosXIn
 	
 	private ObservableList<UmbralesXEstadosXIndicador> data; 
 
-	@SuppressWarnings("unchecked")
 	public UmbralesXEstadosXIndicadorGUI() {
 		super();
+	}
+	
+	@SuppressWarnings("unchecked")
+	public void mostrarTabla(){
 		tablaUmbrales = new TableView<UmbralesXEstadosXIndicador>();
 		
 		columnaIdIndicador = new TableColumn<UmbralesXEstadosXIndicador, Integer>("Id Indicador");
@@ -101,6 +110,35 @@ public class UmbralesXEstadosXIndicadorGUI extends TableView<UmbralesXEstadosXIn
 
 	public ObservableList<UmbralesXEstadosXIndicador> getData() {
 		return data;
+	}
+
+	public void setData(ObservableList<UmbralesXEstadosXIndicador> data) {
+		this.data = data;
+	}
+
+	@Override
+	public void crearTablaBaseDeDatos() {
+		this.mostrarTabla();
+	}
+
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public void mostrarTabla(AbstractaConsulta consulta, FactoryConsultas factoryConsultasDAO,
+			AnchorPane centroInferior) {
+		
+		if(!centroInferior.getChildren().isEmpty()){
+			centroInferior.getChildren().remove(0);
+		}
+		this.setData(FXCollections.observableArrayList());
+		List<UmbralesXEstadosXIndicador> lista = (List<UmbralesXEstadosXIndicador>) factoryConsultasDAO.getLista("UmbralesXEstadosXIndicador");
+		lista = ((UmbralesXEstadosXIndicadorDAO)consulta).getTodos();
+		for (UmbralesXEstadosXIndicador vi : lista) { 
+			this.getData().add(vi);
+
+		}
+		this.getTablaUmbrales().setItems(this.getData());	
+		centroInferior.getChildren().add(0,this.getTablaUmbrales());			
 	}
 	
 	
