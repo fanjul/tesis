@@ -195,6 +195,5 @@ public class GraficoGUI extends TableView<Grafico> implements AbstractBaseDeDato
 
 		});
 	}
-
 	
 }
