@@ -7,7 +7,7 @@ import org.hibernate.Query;
 
 import baseDatos.hibernate.tablas.ValorIndicador;
 
-public class ValorIndicadorDAO extends DAO {
+public class ValorIndicadorDAO extends DAO implements AbstractaConsulta {
 
 	public void guardar(ValorIndicador valorIndicador) {
 		try {
@@ -49,6 +49,7 @@ public class ValorIndicadorDAO extends DAO {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<ValorIndicador> getTodos() {
 		try {
 			this.iniciaOperacion();

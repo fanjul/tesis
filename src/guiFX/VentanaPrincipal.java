@@ -42,12 +42,12 @@ public class VentanaPrincipal extends BorderPane {
 	private TextField textFieldNombreArchivo;
 	private TextField textFieldNombreFuncion;
 	private HBox hBoxAbajoDelVBox;
+
 	private VBox panelDerecho;
-	private ComboBox comboBoxSeleccionarMetodo;
+
 	private ToggleButton toggleGraficoTorta;
 	private DropShadow shadow = new DropShadow();
-
-	private TipoObjeto sig;
+	private ComboBox<?> comboBoxSeleccionarMetodo;
 
 	static final String RUTA_METODOS = System.getProperty("user.dir") + "\\" + "Metodos Matematicos";
 	static final String EXTENSION_ARCHIVOS = "met";
@@ -114,6 +114,7 @@ public class VentanaPrincipal extends BorderPane {
 		comboBoxSeleccionarMetodo.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
 			@Override
 			public void changed(ObservableValue arg0, Object old_val, Object new_val) {
+
 				((PanelDerecho) panelDerecho).getEditorTexto().setText((String) new_val);
 				copiarContenidoArchivoEnEditorTexto();
 			}
@@ -131,8 +132,6 @@ public class VentanaPrincipal extends BorderPane {
 		hBoxAbajoDelVBox.setSpacing(120);
 	}
 
-	
-	
 	private void agregarGraficoTorta() {
 
 		ImageView imagenGraficoTorta = new ImageView("/imagenesFX/GraficoTorta.png");
@@ -166,8 +165,6 @@ public class VentanaPrincipal extends BorderPane {
 
 	}
 
-
-
 	private String agregarCuatroSparadores(String dir) {
 
 		String path = "";
@@ -188,7 +185,8 @@ public class VentanaPrincipal extends BorderPane {
 		FileReader leerArchivo = null;
 
 		try {
-
+			// TODO arreglar, el file tira error porque no existe al guardar uno
+			// nuevo
 			archivo = new File(
 					RUTA_METODOS + "\\" + comboBoxSeleccionarMetodo.getSelectionModel().getSelectedItem().toString()
 							+ "." + EXTENSION_ARCHIVOS);
@@ -198,12 +196,16 @@ public class VentanaPrincipal extends BorderPane {
 			String linea = null;
 
 			((PanelDerecho) panelDerecho).getEditorTexto().setText("");
+
 			while ((linea = memoriaParaLectura.readLine()) != null) {
+
 				((PanelDerecho) panelDerecho).getEditorTexto().appendText(linea);
 				((PanelDerecho) panelDerecho).getEditorTexto().appendText(System.lineSeparator());
+
 			}
 			memoriaParaLectura.close();
 		} catch (Exception ex) {
+			ex.printStackTrace();
 			JOptionPane.showMessageDialog(null, ex.getMessage());
 		} finally {
 			try {
@@ -259,6 +261,7 @@ public class VentanaPrincipal extends BorderPane {
 				fw = new FileWriter(archivo, false);
 				bw = new BufferedWriter(fw);
 				String texto = ((PanelDerecho) panelDerecho).getEditorTexto().getText();
+
 				bw.write(texto, 0, texto.length());
 			}
 			bw.close();

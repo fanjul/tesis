@@ -7,7 +7,7 @@ import org.hibernate.Query;
 
 import baseDatos.hibernate.tablas.Grafico;
 
-public class GraficoDAO extends DAO {
+public class GraficoDAO extends DAO implements AbstractaConsulta {
 	
 	public void guardar(Grafico grafico) {
 		try {
@@ -49,6 +49,7 @@ public class GraficoDAO extends DAO {
 		}
 	}
 	
+	@SuppressWarnings("unchecked")
 	public List<Grafico> getTodos() {
 		try {
 			this.iniciaOperacion();

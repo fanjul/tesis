@@ -7,7 +7,7 @@ import org.hibernate.Query;
 
 import baseDatos.hibernate.tablas.UnidadesDeMedida;
 
-public class UnidadesDeMedidaDAO extends DAO {
+public class UnidadesDeMedidaDAO extends DAO implements AbstractaConsulta {
 	public void guardar(UnidadesDeMedida unidadesDeMedida) {
 		try {
 			iniciaOperacion();
@@ -48,6 +48,7 @@ public class UnidadesDeMedidaDAO extends DAO {
 		}
 	}
 	
+	@SuppressWarnings("unchecked")
 	public List<UnidadesDeMedida> getTodos() {
 		try {
 			this.iniciaOperacion();

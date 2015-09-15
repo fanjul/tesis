@@ -7,7 +7,7 @@ import org.hibernate.Query;
 
 import baseDatos.hibernate.tablas.HSTumbralesXEstadosXIndicador;
 
-public class HSTumbralesXEstadosXIndicadorDAO extends DAO {
+public class HSTumbralesXEstadosXIndicadorDAO extends DAO implements AbstractaConsulta {
 	
 	public void guardar(HSTumbralesXEstadosXIndicador hstUmbrales) {
 		try {
@@ -49,6 +49,7 @@ public class HSTumbralesXEstadosXIndicadorDAO extends DAO {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<HSTumbralesXEstadosXIndicador> getTodos() {
 		try {
 			this.iniciaOperacion();

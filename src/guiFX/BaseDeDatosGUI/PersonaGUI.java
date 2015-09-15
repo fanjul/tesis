@@ -1,12 +1,19 @@
 package guiFX.BaseDeDatosGUI;
 
+import java.util.List;
+
+import baseDatos.hibernate.consultas.AbstractaConsulta;
+import baseDatos.hibernate.consultas.FactoryConsultas;
+import baseDatos.hibernate.consultas.PersonaDAO;
 import baseDatos.hibernate.tablas.Persona;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
 
-public class PersonaGUI extends TableView<Persona> {
+public class PersonaGUI extends TableView<Persona> implements AbstractBaseDeDatosGUI {
 	
 	private TableView<Persona> tablaPersona;
 	private TableColumn<Persona, Integer> columnaId;
@@ -20,9 +27,12 @@ public class PersonaGUI extends TableView<Persona> {
 	
 	private ObservableList<Persona> data; 
 
-	@SuppressWarnings("unchecked")
 	public PersonaGUI() {
 		super();
+	}
+	
+	@SuppressWarnings("unchecked")
+	public void mostrarTabla(){
 		tablaPersona = new TableView<Persona>();
 		
 		columnaId = new TableColumn<Persona, Integer>("Id");
@@ -90,8 +100,37 @@ public class PersonaGUI extends TableView<Persona> {
 		return columnaObsevaciones;
 	}
 
+	
 	public ObservableList<Persona> getData() {
 		return data;
+	}
+
+	public void setData(ObservableList<Persona> data) {
+		this.data = data;
+	}
+
+	@Override
+	public void crearTablaBaseDeDatos() {
+		this.mostrarTabla();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public void mostrarTabla(AbstractaConsulta consulta, FactoryConsultas factoryConsultasDAO,
+			AnchorPane centroInferior) {
+		
+		if(!centroInferior.getChildren().isEmpty()){
+			centroInferior.getChildren().remove(0);
+		}
+		this.setData(FXCollections.observableArrayList());
+		List<Persona> lista = (List<Persona>) factoryConsultasDAO.getLista("Persona");
+		lista = ((PersonaDAO)consulta).getTodos();
+		for (Persona vi : lista) { 
+			this.getData().add(vi);
+
+		}
+		this.getTablaPersona().setItems(this.getData());	
+		centroInferior.getChildren().add(0,this.getTablaPersona());			
 	}
 
 

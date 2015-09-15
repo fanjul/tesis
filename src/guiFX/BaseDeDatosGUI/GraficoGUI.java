@@ -1,13 +1,20 @@
 package guiFX.BaseDeDatosGUI;
 
+import java.util.List;
+
+import baseDatos.hibernate.consultas.AbstractaConsulta;
+import baseDatos.hibernate.consultas.FactoryConsultas;
+import baseDatos.hibernate.consultas.GraficoDAO;
 import baseDatos.hibernate.tablas.Grafico;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
 
 
-public class GraficoGUI extends TableView<Grafico>{
+public class GraficoGUI extends TableView<Grafico> implements AbstractBaseDeDatosGUI {
 	
 	private TableView<Grafico> tablaGrafico;
 	private TableColumn<Grafico, Integer> columnaId;
@@ -17,9 +24,12 @@ public class GraficoGUI extends TableView<Grafico>{
 	private ObservableList<Grafico> data; 
 
 
-	@SuppressWarnings("unchecked")
 	public GraficoGUI() {
 		super();
+	}
+	
+	@SuppressWarnings("unchecked")	
+	public void mostrarTabla(){
 		tablaGrafico = new TableView<Grafico>();
 		
 		columnaId = new TableColumn<Grafico, Integer>("Id");
@@ -60,6 +70,36 @@ public class GraficoGUI extends TableView<Grafico>{
 	public ObservableList<Grafico> getData() {
 		return data;
 	}
+
+
+	@Override
+	public void crearTablaBaseDeDatos() {
+		this.mostrarTabla();
+	}
+
+	public void setData(ObservableList<Grafico> data) {
+		this.data = data;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public void mostrarTabla(AbstractaConsulta consulta, FactoryConsultas factoryConsultasDAO,
+			AnchorPane centroInferior) {
+		
+		if(!centroInferior.getChildren().isEmpty()){
+			centroInferior.getChildren().remove(0);
+		}
+		this.setData(FXCollections.observableArrayList());
+		List<Grafico> lista = (List<Grafico>) factoryConsultasDAO.getLista("Grafico");
+		lista = ((GraficoDAO)consulta).getTodos();
+		for (Grafico vi : lista) { 
+			this.getData().add(vi);
+
+		}
+		this.getTablaGrafico().setItems(this.getData());	
+		centroInferior.getChildren().add(0,this.getTablaGrafico());		
+	}
+
 	
 	
 }

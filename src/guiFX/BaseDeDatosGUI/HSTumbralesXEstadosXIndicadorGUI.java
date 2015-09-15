@@ -1,14 +1,20 @@
 package guiFX.BaseDeDatosGUI;
 
 import java.sql.Timestamp;
+import java.util.List;
 
+import baseDatos.hibernate.consultas.AbstractaConsulta;
+import baseDatos.hibernate.consultas.FactoryConsultas;
+import baseDatos.hibernate.consultas.HSTumbralesXEstadosXIndicadorDAO;
 import baseDatos.hibernate.tablas.HSTumbralesXEstadosXIndicador;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
 
-public class HSTumbralesXEstadosXIndicadorGUI extends TableView<HSTumbralesXEstadosXIndicador> {
+public class HSTumbralesXEstadosXIndicadorGUI extends TableView<HSTumbralesXEstadosXIndicador> implements AbstractBaseDeDatosGUI {
 
 	private TableView<HSTumbralesXEstadosXIndicador> tablaHSTUmbrales;
 	private TableColumn<HSTumbralesXEstadosXIndicador, Integer> columnaIdIndicador;
@@ -23,9 +29,12 @@ public class HSTumbralesXEstadosXIndicadorGUI extends TableView<HSTumbralesXEsta
 	
 	private ObservableList<HSTumbralesXEstadosXIndicador> data; 
 	
-	@SuppressWarnings("unchecked")
 	public HSTumbralesXEstadosXIndicadorGUI(){
 		super();
+	}
+	
+	@SuppressWarnings("unchecked")
+	public void mostrarTabla(){
 		tablaHSTUmbrales = new TableView<HSTumbralesXEstadosXIndicador>();
 		
 		columnaIdIndicador = new TableColumn<HSTumbralesXEstadosXIndicador, Integer>("Id Indicador");
@@ -101,8 +110,38 @@ public class HSTumbralesXEstadosXIndicadorGUI extends TableView<HSTumbralesXEsta
 		return columnaObservaciones;
 	}
 
+
 	public ObservableList<HSTumbralesXEstadosXIndicador> getData() {
 		return data;
+	}
+
+	public void setData(ObservableList<HSTumbralesXEstadosXIndicador> data) {
+		this.data = data;
+	}
+
+	@Override
+	public void crearTablaBaseDeDatos() {
+		this.mostrarTabla();
+	}
+
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public void mostrarTabla(AbstractaConsulta consulta, FactoryConsultas factoryConsultasDAO,
+			AnchorPane centroInferior) {
+		
+		if(!centroInferior.getChildren().isEmpty()){
+			centroInferior.getChildren().remove(0);
+		}
+		this.setData(FXCollections.observableArrayList());
+		List<HSTumbralesXEstadosXIndicador> lista = (List<HSTumbralesXEstadosXIndicador>) factoryConsultasDAO.getLista("HSTumbralesXEstadosXIndicador");
+		lista = ((HSTumbralesXEstadosXIndicadorDAO)consulta).getTodos();
+		for (HSTumbralesXEstadosXIndicador vi : lista) { 
+			this.getData().add(vi);
+
+		}
+		this.getTablaHSTUmbrales().setItems(this.getData());	
+		centroInferior.getChildren().add(0,this.getTablaHSTUmbrales());		
 	}
 	
 	

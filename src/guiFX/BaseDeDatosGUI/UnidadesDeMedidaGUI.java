@@ -1,12 +1,19 @@
 package guiFX.BaseDeDatosGUI;
 
+import java.util.List;
+
+import baseDatos.hibernate.consultas.AbstractaConsulta;
+import baseDatos.hibernate.consultas.FactoryConsultas;
+import baseDatos.hibernate.consultas.UnidadesDeMedidaDAO;
 import baseDatos.hibernate.tablas.UnidadesDeMedida;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
 
-public class UnidadesDeMedidaGUI extends TableView<UnidadesDeMedida> {
+public class UnidadesDeMedidaGUI extends TableView<UnidadesDeMedida> implements AbstractBaseDeDatosGUI {
 	
 	private TableView<UnidadesDeMedida> tablaUnidadesdDeMedida;
 	private TableColumn<UnidadesDeMedida, Integer> columnaId;
@@ -15,9 +22,12 @@ public class UnidadesDeMedidaGUI extends TableView<UnidadesDeMedida> {
 	
 	private ObservableList<UnidadesDeMedida> data; 
 	
-	@SuppressWarnings("unchecked")
 	public UnidadesDeMedidaGUI() {
 		super();
+	}
+	
+	@SuppressWarnings("unchecked")
+	public void mostrarTabla(){
 		tablaUnidadesdDeMedida = new TableView<UnidadesDeMedida>();
 		
 		columnaId = new TableColumn<UnidadesDeMedida, Integer>("Id");
@@ -52,6 +62,35 @@ public class UnidadesDeMedidaGUI extends TableView<UnidadesDeMedida> {
 
 	public ObservableList<UnidadesDeMedida> getData() {
 		return data;
+	}
+
+	public void setData(ObservableList<UnidadesDeMedida> data) {
+		this.data = data;
+	}
+
+	@Override
+	public void crearTablaBaseDeDatos() {
+		this.mostrarTabla();
+		
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public void mostrarTabla(AbstractaConsulta consulta, FactoryConsultas factoryConsultasDAO,
+			AnchorPane centroInferior) {
+
+		if(!centroInferior.getChildren().isEmpty()){
+			centroInferior.getChildren().remove(0);
+		}
+		this.setData(FXCollections.observableArrayList());
+		List<UnidadesDeMedida> lista = (List<UnidadesDeMedida>) factoryConsultasDAO.getLista("UnidadesDeMedida");
+		lista = ((UnidadesDeMedidaDAO)consulta).getTodos();
+		for (UnidadesDeMedida vi : lista) { 
+			this.getData().add(vi);
+
+		}
+		this.getTablaUnidadesdDeMedida().setItems(this.getData());	
+		centroInferior.getChildren().add(0,this.getTablaUnidadesdDeMedida());			
 	}
 	
 	

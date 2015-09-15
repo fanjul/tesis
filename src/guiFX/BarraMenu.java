@@ -3,18 +3,28 @@ package guiFX;
 import java.io.File;
 import java.util.List;
 
-import baseDatos.hibernate.consultas.ValorIndicadorDAO;
-import baseDatos.hibernate.tablas.ValorIndicador;
-import guiFX.BaseDeDatosGUI.ValorIndicadorGUI;
+import baseDatos.hibernate.consultas.AbstractaConsulta;
+import baseDatos.hibernate.consultas.DAO;
+import baseDatos.hibernate.consultas.FactoryConsultas;
+import guiFX.BaseDeDatosGUI.AbstractBaseDeDatosGUI;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
+import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.Tooltip;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
@@ -24,8 +34,14 @@ public class BarraMenu extends VBox {
 	private BarraMenuDeslizable barraDeslizable;
 	private DropShadow shadow = new DropShadow();
 	private final TextField texto = new TextField();
-	private ValorIndicadorGUI baseDeDatos;
+	private FactoryBaseDeDatosGUI factoryBaseDeDatos;
+	private AbstractBaseDeDatosGUI baseDeDatos;
 	private VentanaPrincipal ventana;
+	private FactoryConsultas factoryConsultasDAO;
+	private AbstractaConsulta consultasDAO;
+	private ComboBox<String> comboBoxTablas;
+	private AnchorPane centroInferior;
+	private HBox centroSuperior;
 
 	public BarraMenu( VentanaPrincipal ventana) {
 		super();
@@ -47,26 +63,21 @@ public class BarraMenu extends VBox {
 		toggleButtonAbrirBaseDeDatos.getStyleClass().add("botones");
 		
 		toggleButtonAbrirBaseDeDatos.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-			final FileChooser fileChooser = new FileChooser();
 
 			@Override
 			public void handle(MouseEvent event) {
-				baseDeDatos = new ValorIndicadorGUI();
-				baseDeDatos.setData(FXCollections.observableArrayList());
-
-				// Prueba.main(null);
-				// ValorIndicador valor = new ValorIndicador();
-				// ValorIndicadorDAO asd = new ValorIndicadorDAO();
-				// valor.setIdIndicador(11);
-				// valor.setFecha(new Timestamp(0));
-				// asd.guardar(valor);
-				List<ValorIndicador> lista = new ValorIndicadorDAO().getTodos();
-				for (ValorIndicador vi : lista) {
-					baseDeDatos.getData().add(vi);
-
-				}
-				baseDeDatos.getTablaValorIndicador().setItems(baseDeDatos.getData());
-				ventana.setCenter(baseDeDatos.getTablaValorIndicador());
+				//TODO cambiar el "valorIndicador"por el comboBox
+				
+				configurarPanelCentro();
+				
+				
+//				factoryBaseDeDatos = new FactoryBaseDeDatosGUI();
+//				factoryConsultasDAO = new FactoryConsultas();
+//				baseDeDatos = factoryBaseDeDatos.getBaseDeDatos("ValorIndicador");
+//				baseDeDatos.crearTablaBaseDeDatos();
+//				consultasDAO = factoryConsultasDAO.getConsultaDAO("ValorIndicador");
+//				baseDeDatos.mostrarTabla(consultasDAO,ventana,factoryConsultasDAO);
+								
 			}
 		});
 
@@ -100,7 +111,6 @@ public class BarraMenu extends VBox {
 		toggleButtonAbrirArchivo.getStyleClass().add("botones");
 		
 		toggleButtonAbrirArchivo.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-			final FileChooser fileChooser = new FileChooser();
 
 			@Override
 			public void handle(MouseEvent event) {
@@ -131,11 +141,62 @@ public class BarraMenu extends VBox {
 		fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
 	}
 
-	public ValorIndicadorGUI getBaseDeDatos() {
+	public AbstractBaseDeDatosGUI getBaseDeDatos() {
 		return baseDeDatos;
 	}
 
 	public BarraMenuDeslizable getBarraDeslizable() {
 		return barraDeslizable;
+	}
+	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	private void configurarPanelCentro() {
+		centroSuperior = new HBox();
+		centroInferior = new AnchorPane();
+		centroSuperior.setSpacing(50);
+		centroSuperior.setMaxHeight(100);
+		centroSuperior.setMinHeight(0.0);
+		
+		
+		ObservableList<String> data = FXCollections.observableArrayList();
+		List<String> listaTodasTablas = new DAO().getAllTables();
+		for (String s : listaTodasTablas) { 
+			data.add(s);
+		}
+		
+		Label labelTabla = new Label("Tabla");
+		centroSuperior.getChildren().add(labelTabla);
+		comboBoxTablas = new ComboBox<String>();
+		comboBoxTablas.setItems(data);
+		
+		comboBoxTablas.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
+			@Override
+			public void changed(ObservableValue arg0, Object old_val, Object new_val) {
+				factoryBaseDeDatos = new FactoryBaseDeDatosGUI();
+				factoryConsultasDAO = new FactoryConsultas();
+				baseDeDatos = factoryBaseDeDatos.getBaseDeDatos((String)new_val);
+				baseDeDatos.crearTablaBaseDeDatos();
+				consultasDAO = factoryConsultasDAO.getConsultaDAO((String)new_val);
+				baseDeDatos.mostrarTabla(consultasDAO,factoryConsultasDAO,centroInferior);
+			}
+		});
+		
+		centroSuperior.getChildren().add(comboBoxTablas);
+		centroSuperior.setAlignment(Pos.CENTER);
+		
+		SplitPane dividirCentro = new SplitPane();
+		dividirCentro.setOrientation(Orientation.VERTICAL);
+		dividirCentro.getItems().add(centroSuperior);
+		dividirCentro.getItems().add(centroInferior);
+		dividirCentro.getItems().set(0, centroSuperior);
+		dividirCentro.getItems().set(1, centroInferior);
+
+		ObservableList<SplitPane.Divider> dividers = dividirCentro.getDividers();
+		for (int i = 0; i < dividers.size(); i++) {
+			dividers.get(i).setPosition((i + 1.5) / 10);
+		}
+		
+		ventana.setCenter(dividirCentro);
+
 	}
 }

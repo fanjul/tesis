@@ -1,12 +1,19 @@
 package guiFX.BaseDeDatosGUI;
 
+import java.util.List;
+
+import baseDatos.hibernate.consultas.AbstractaConsulta;
+import baseDatos.hibernate.consultas.EstadosXTipoIndicadorDAO;
+import baseDatos.hibernate.consultas.FactoryConsultas;
 import baseDatos.hibernate.tablas.EstadosXTipoIndicador;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
 
-public class EstadosXTipoIndicadorGUI extends TableView<EstadosXTipoIndicador>{
+public class EstadosXTipoIndicadorGUI extends TableView<EstadosXTipoIndicador> implements AbstractBaseDeDatosGUI {
 	private TableView<EstadosXTipoIndicador> tablaEstadosXTipoIndicador;
 	private TableColumn<EstadosXTipoIndicador,Integer> columnaIdTipoIndicador;
 	private TableColumn<EstadosXTipoIndicador,Integer> columnaIdEstado;
@@ -16,9 +23,12 @@ public class EstadosXTipoIndicadorGUI extends TableView<EstadosXTipoIndicador>{
 	
 	private ObservableList<EstadosXTipoIndicador> data; 
 
-	@SuppressWarnings("unchecked")
 	public EstadosXTipoIndicadorGUI() {
 		super();
+	}
+	
+	@SuppressWarnings("unchecked")	
+	public void mostrarTabla(){
 		tablaEstadosXTipoIndicador = new TableView<EstadosXTipoIndicador>();
 		
 		columnaEstado = new TableColumn<EstadosXTipoIndicador, String>("Estado");
@@ -68,6 +78,35 @@ public class EstadosXTipoIndicadorGUI extends TableView<EstadosXTipoIndicador>{
 	public ObservableList<EstadosXTipoIndicador> getData() {
 		return data;
 	}
+
+	public void setData(ObservableList<EstadosXTipoIndicador> data) {
+		this.data = data;
+	}
+
+	@Override
+	public void crearTablaBaseDeDatos() {
+		this.mostrarTabla();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public void mostrarTabla(AbstractaConsulta consulta, FactoryConsultas factoryConsultasDAO,
+			AnchorPane centroInferior) {
+		if(!centroInferior.getChildren().isEmpty()){
+			centroInferior.getChildren().remove(0);
+		}
+		this.setData(FXCollections.observableArrayList());
+		List<EstadosXTipoIndicador> lista = (List<EstadosXTipoIndicador>) factoryConsultasDAO.getLista("EstadosXTipoIndicador");
+		lista = ((EstadosXTipoIndicadorDAO)consulta).getTodos();
+		for (EstadosXTipoIndicador vi : lista) { 
+			this.getData().add(vi);
+
+		}
+		this.getTablaEstadosXTipoIndicador().setItems(this.getData());	
+		centroInferior.getChildren().add(0,this.getTablaEstadosXTipoIndicador());
+		
+	}
+
 	
 	
 }
