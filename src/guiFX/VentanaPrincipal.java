@@ -51,6 +51,7 @@ public class VentanaPrincipal extends BorderPane {
 	private ToggleButton toggleGraficoTorta;
 	private DropShadow shadow = new DropShadow();
 
+
 	static final String RUTA_METODOS = System.getProperty("user.dir") + "\\" + "Metodos Matematicos";
 	static final String EXTENSION_ARCHIVOS = "met";
 
@@ -118,12 +119,15 @@ public class VentanaPrincipal extends BorderPane {
 			public void changed(ObservableValue arg0, Object old_val, Object new_val) {
 
 				((PanelDerecho) panelDerecho).getEditorTexto().setText((String) new_val);
+
+
 				copiarContenidoArchivoEnEditorTexto();
 			}
 		});
 
 		hBoxAbajoDelVBox.getChildren().addAll(botonGuardarMetodoMatematico, textFieldNombreArchivo,
 				comboBoxSeleccionarMetodo, botonEjecutar, textFieldNombreFuncion);
+
 
 		panelDerecho = PanelDerecho.getInstance();
 		this.setRight(panelDerecho);
@@ -183,6 +187,8 @@ public class VentanaPrincipal extends BorderPane {
 		return path;
 	}
 
+
+
 	private void copiarContenidoArchivoEnEditorTexto() {
 		File archivo;
 		FileReader leerArchivo = null;
@@ -198,7 +204,7 @@ public class VentanaPrincipal extends BorderPane {
 
 			String linea = null;
 
-			((PanelDerecho) panelDerecho).getEditorTexto().setText("");
+			((PanelDerecho)panelDerecho).getEditorTexto().setText("");
 
 			while ((linea = memoriaParaLectura.readLine()) != null) {
 

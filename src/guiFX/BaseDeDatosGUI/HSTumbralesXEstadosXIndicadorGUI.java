@@ -37,6 +37,7 @@ import javafx.stage.Stage;
 public class HSTumbralesXEstadosXIndicadorGUI extends TableView<HSTumbralesXEstadosXIndicador>
 		implements AbstractBaseDeDatosGUI {
 
+
 	private TableView<HSTumbralesXEstadosXIndicador> tablaHSTUmbrales;
 	private TableColumn<HSTumbralesXEstadosXIndicador, Integer> columnaIdIndicador;
 	private TableColumn<HSTumbralesXEstadosXIndicador, Integer> columnaIdEstadoTipoIndicador;
@@ -51,12 +52,14 @@ public class HSTumbralesXEstadosXIndicadorGUI extends TableView<HSTumbralesXEsta
 
 	private ObservableList<HSTumbralesXEstadosXIndicador> data;
 
-	public HSTumbralesXEstadosXIndicadorGUI() {
+	
+	
+	public HSTumbralesXEstadosXIndicadorGUI(){
 		super();
 	}
 
 	@SuppressWarnings("unchecked")
-	public void mostrarTabla() {
+	public void mostrarTabla(){
 		tablaHSTUmbrales = new TableView<HSTumbralesXEstadosXIndicador>();
 
 		columnaIdIndicador = new TableColumn<HSTumbralesXEstadosXIndicador, Integer>("Id Indicador");
@@ -145,6 +148,7 @@ public class HSTumbralesXEstadosXIndicadorGUI extends TableView<HSTumbralesXEsta
 		return columnaObservaciones;
 	}
 
+
 	public ObservableList<HSTumbralesXEstadosXIndicador> getData() {
 		return data;
 	}
@@ -157,6 +161,8 @@ public class HSTumbralesXEstadosXIndicadorGUI extends TableView<HSTumbralesXEsta
 	public void crearTablaBaseDeDatos() {
 		this.mostrarTabla();
 	}
+
+
 
 	@SuppressWarnings("unchecked")
 	@Override

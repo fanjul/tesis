@@ -161,6 +161,7 @@ public class ValorIndicadorGUI extends TableView<ValorIndicador> implements Abst
 		});
 
 		PanelDerecho.getInstance().getEditorTexto().setOnDragOver(new EventHandler<DragEvent>() {
+	
 
 			@Override
 			public void handle(DragEvent event) {
@@ -221,6 +222,7 @@ public class ValorIndicadorGUI extends TableView<ValorIndicador> implements Abst
 		tablaValorIndicador.setPrefSize(centroInferior.getMaxWidth(), centroInferior.getMaxHeight());
 		centroInferior.getChildren().add(0, this.getTablaValorIndicador());
 		
+
 
 	}
 

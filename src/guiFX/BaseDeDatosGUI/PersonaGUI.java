@@ -4,11 +4,13 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+
 import baseDatos.hibernate.consultas.AbstractaConsulta;
 import baseDatos.hibernate.consultas.FactoryConsultas;
 import baseDatos.hibernate.consultas.PersonaDAO;
 import baseDatos.hibernate.tablas.Persona;
 import guiFX.PanelDerecho;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -22,6 +24,7 @@ import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
+
 import javafx.scene.layout.AnchorPane;
 
 public class PersonaGUI extends TableView<Persona> implements AbstractBaseDeDatosGUI {
@@ -227,5 +230,6 @@ public class PersonaGUI extends TableView<Persona> implements AbstractBaseDeDato
 
 		});
 	}
+
 
 }
