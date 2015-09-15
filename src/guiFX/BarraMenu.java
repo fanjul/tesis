@@ -193,6 +193,7 @@ public class BarraMenu extends VBox {
 		ObservableList<SplitPane.Divider> dividers = dividirCentro.getDividers();
 		for (int i = 0; i < dividers.size(); i++) {
 			dividers.get(i).setPosition((i + 1.3) / 10);
+
 		}
 		
 		ventana.setCenter(dividirCentro);
