@@ -101,6 +101,7 @@ public class EstadosXTipoIndicadorGUI extends TableView<EstadosXTipoIndicador> i
 
 		}
 		this.getTablaEstadosXTipoIndicador().setItems(this.getData());	
+		tablaEstadosXTipoIndicador.setPrefSize(centroInferior.getMaxWidth(), centroInferior.getMaxHeight());
 		centroInferior.getChildren().add(0,this.getTablaEstadosXTipoIndicador());
 		
 	}
