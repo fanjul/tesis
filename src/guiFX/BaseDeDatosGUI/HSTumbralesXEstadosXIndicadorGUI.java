@@ -181,7 +181,7 @@ public class HSTumbralesXEstadosXIndicadorGUI extends TableView<HSTumbralesXEsta
 		}
 		this.getTablaHSTUmbrales().setItems(this.getData());
 		tablaHSTUmbrales.setPrefSize(centroInferior.getMaxWidth(), centroInferior.getMaxHeight());
-		centroInferior.getChildren().add(0, this.getTablaHSTUmbrales());
+		centroInferior.getChildren().add(0,this.getTablaHSTUmbrales());		
 	}
 
 	public String getTexto() {
