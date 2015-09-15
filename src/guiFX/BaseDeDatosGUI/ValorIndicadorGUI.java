@@ -76,7 +76,6 @@ public class ValorIndicadorGUI extends TableView<ValorIndicador> implements Abst
 
 	}
 
-
 	public TableView<ValorIndicador> getTablaValorIndicador() {
 		return tablaValorIndicador;
 	}

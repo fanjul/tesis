@@ -18,6 +18,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -104,6 +105,7 @@ public class HSTumbralesXEstadosXIndicadorGUI extends TableView<HSTumbralesXEsta
 		tablaHSTUmbrales.getColumns().addAll(columnaIdIndicador, columnaIdEstadoTipoIndicador, columnaInicioUmbral,
 				columnaFinUmbral, columnaOperadorUmbralSuperior, columnaOperadorUmbralInferior,
 				columnaValorUmbralSuperior, columnaValorUmbralInferior, columnaObservaciones);
+
 		this.agregarListenerEvent();
 	}
 
@@ -183,6 +185,7 @@ public class HSTumbralesXEstadosXIndicadorGUI extends TableView<HSTumbralesXEsta
 		tablaHSTUmbrales.setPrefSize(centroInferior.getMaxWidth(), centroInferior.getMaxHeight());
 		centroInferior.getChildren().add(0,this.getTablaHSTUmbrales());		
 	}
+
 
 	public String getTexto() {
 		return texto;

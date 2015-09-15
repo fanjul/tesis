@@ -1,6 +1,5 @@
 package guiFX.BaseDeDatosGUI;
 
-
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -26,6 +25,7 @@ import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
 
 
+
 	public class EstadosXTipoIndicadorGUI extends TableView<EstadosXTipoIndicador>implements AbstractBaseDeDatosGUI {
 	
 		private TableView<EstadosXTipoIndicador> tablaEstadosXTipoIndicador;
@@ -40,13 +40,13 @@ import javafx.scene.layout.AnchorPane;
 
 	
 
-		public EstadosXTipoIndicadorGUI() {
-			super();
-		}
 
+	public EstadosXTipoIndicadorGUI() {
+		super();
+	}
 
-	@SuppressWarnings("unchecked")	
-	public void mostrarTabla(){
+	@SuppressWarnings("unchecked")
+	public void mostrarTabla() {
 		tablaEstadosXTipoIndicador = new TableView<EstadosXTipoIndicador>();
 
 		columnaEstado = new TableColumn<EstadosXTipoIndicador, String>("Estado");
@@ -73,64 +73,65 @@ import javafx.scene.layout.AnchorPane;
 
 	}
 
-		public TableView<EstadosXTipoIndicador> getTablaEstadosXTipoIndicador() {
-			return tablaEstadosXTipoIndicador;
+
+	public TableView<EstadosXTipoIndicador> getTablaEstadosXTipoIndicador() {
+		return tablaEstadosXTipoIndicador;
+	}
+
+	public TableColumn<EstadosXTipoIndicador, Integer> getColumnaIdTipoIndicador() {
+		return columnaIdTipoIndicador;
+	}
+
+	public TableColumn<EstadosXTipoIndicador, Integer> getColumnaIdEstado() {
+		return columnaIdEstado;
+	}
+
+	public TableColumn<EstadosXTipoIndicador, String> getColumnaEstado() {
+		return columnaEstado;
+	}
+
+	public TableColumn<EstadosXTipoIndicador, String> getColumnaRepresentacionCromatica() {
+		return columnaRepresentacionCromatica;
+	}
+
+	public TableColumn<EstadosXTipoIndicador, String> getColumnaObservaciones() {
+		return columnaObservaciones;
+	}
+
+	public ObservableList<EstadosXTipoIndicador> getData() {
+		return data;
+	}
+
+	public void setData(ObservableList<EstadosXTipoIndicador> data) {
+		this.data = data;
+	}
+
+	@Override
+	public void crearTablaBaseDeDatos() {
+		this.mostrarTabla();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public void mostrarTabla(AbstractaConsulta consulta, FactoryConsultas factoryConsultasDAO,
+			AnchorPane centroInferior) {
+		if (!centroInferior.getChildren().isEmpty()) {
+			centroInferior.getChildren().remove(0);
 		}
 
-		public TableColumn<EstadosXTipoIndicador, Integer> getColumnaIdTipoIndicador() {
-			return columnaIdTipoIndicador;
+		this.setData(FXCollections.observableArrayList());
+		List<EstadosXTipoIndicador> lista = (List<EstadosXTipoIndicador>) factoryConsultasDAO
+				.getLista("EstadosXTipoIndicador");
+		lista = ((EstadosXTipoIndicadorDAO) consulta).getTodos();
+		for (EstadosXTipoIndicador vi : lista) {
+			this.getData().add(vi);
 		}
 
-		public TableColumn<EstadosXTipoIndicador, Integer> getColumnaIdEstado() {
-			return columnaIdEstado;
-		}
+		this.getTablaEstadosXTipoIndicador().setItems(this.getData());
+		tablaEstadosXTipoIndicador.setPrefSize(centroInferior.getMaxWidth(), centroInferior.getMaxHeight());
+		centroInferior.getChildren().add(0, this.getTablaEstadosXTipoIndicador());
 
-		public TableColumn<EstadosXTipoIndicador, String> getColumnaEstado() {
-			return columnaEstado;
-		}
-
-		public TableColumn<EstadosXTipoIndicador, String> getColumnaRepresentacionCromatica() {
-			return columnaRepresentacionCromatica;
-		}
-
-		public TableColumn<EstadosXTipoIndicador, String> getColumnaObservaciones() {
-			return columnaObservaciones;
-		}
-
-		public ObservableList<EstadosXTipoIndicador> getData() {
-			return data;
-		}
-
-		public void setData(ObservableList<EstadosXTipoIndicador> data) {
-			this.data = data;
-		}
-
-		@Override
-		public void crearTablaBaseDeDatos() {
-			this.mostrarTabla();
-		}
-
-		@SuppressWarnings("unchecked")
-		@Override
-		public void mostrarTabla(AbstractaConsulta consulta, FactoryConsultas factoryConsultasDAO,
-				AnchorPane centroInferior) {
-			if (!centroInferior.getChildren().isEmpty()) {
-				centroInferior.getChildren().remove(0);
-			}
-			this.setData(FXCollections.observableArrayList());
-			List<EstadosXTipoIndicador> lista = (List<EstadosXTipoIndicador>) factoryConsultasDAO
-					.getLista("EstadosXTipoIndicador");
-			lista = ((EstadosXTipoIndicadorDAO) consulta).getTodos();
-			for (EstadosXTipoIndicador vi : lista) {
-				this.getData().add(vi);
-
-			}
-			this.getTablaEstadosXTipoIndicador().setItems(this.getData());
-			tablaEstadosXTipoIndicador.setPrefSize(centroInferior.getMaxWidth(), centroInferior.getMaxHeight());
-			centroInferior.getChildren().add(0, this.getTablaEstadosXTipoIndicador());
-
-		}
-
+	}
 
 		private void agregarListenerEvent() {
 			// Para que se pueda seleccionar varias rows de la tabla
@@ -213,6 +214,4 @@ import javafx.scene.layout.AnchorPane;
 
 			});
 		}
-
-	
 }
