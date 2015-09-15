@@ -134,6 +134,7 @@ import javafx.scene.layout.AnchorPane;
 
 		}
 
+
 		private void agregarListenerEvent() {
 			// Para que se pueda seleccionar varias rows de la tabla
 			tablaEstadosXTipoIndicador.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);

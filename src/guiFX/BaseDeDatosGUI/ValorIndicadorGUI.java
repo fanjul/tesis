@@ -43,6 +43,7 @@ public class ValorIndicadorGUI extends TableView<ValorIndicador> implements Abst
 		super();
 	}
 
+
 	@SuppressWarnings({ "unchecked" })
 	public void mostrarTabla() {
 		tablaValorIndicador = new TableView<ValorIndicador>();
@@ -73,7 +74,9 @@ public class ValorIndicadorGUI extends TableView<ValorIndicador> implements Abst
 		
 		tablaValorIndicador.getStyleClass().add("tablas");
 		this.agregarListenerEvent();
+
 	}
+
 
 	public TableView<ValorIndicador> getTablaValorIndicador() {
 		return tablaValorIndicador;
@@ -161,7 +164,6 @@ public class ValorIndicadorGUI extends TableView<ValorIndicador> implements Abst
 		});
 
 		PanelDerecho.getInstance().getEditorTexto().setOnDragOver(new EventHandler<DragEvent>() {
-	
 
 			@Override
 			public void handle(DragEvent event) {
@@ -221,7 +223,6 @@ public class ValorIndicadorGUI extends TableView<ValorIndicador> implements Abst
 		this.getTablaValorIndicador().setItems(this.getData());
 		tablaValorIndicador.setPrefSize(centroInferior.getMaxWidth(), centroInferior.getMaxHeight());
 		centroInferior.getChildren().add(0, this.getTablaValorIndicador());
-		
 
 
 	}

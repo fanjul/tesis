@@ -173,7 +173,8 @@ public class BarraMenu extends VBox {
 		centroInferior.setMinHeight(550);
 		centroInferior.setMinWidth(750);
 		centroInferior.setMaxHeight(550);
-		centroInferior.setMaxWidth(1050);
+
+		centroInferior.setMaxWidth(750);
 		comboBoxTablas.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
 			@Override
 			public void changed(ObservableValue arg0, Object old_val, Object new_val) {
