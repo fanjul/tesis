@@ -38,7 +38,6 @@ import javafx.stage.Stage;
 public class HSTumbralesXEstadosXIndicadorGUI extends TableView<HSTumbralesXEstadosXIndicador>
 		implements AbstractBaseDeDatosGUI {
 
-
 	private TableView<HSTumbralesXEstadosXIndicador> tablaHSTUmbrales;
 	private TableColumn<HSTumbralesXEstadosXIndicador, Integer> columnaIdIndicador;
 	private TableColumn<HSTumbralesXEstadosXIndicador, Integer> columnaIdEstadoTipoIndicador;
@@ -52,7 +51,6 @@ public class HSTumbralesXEstadosXIndicadorGUI extends TableView<HSTumbralesXEsta
 	private String texto = "";
 
 	private ObservableList<HSTumbralesXEstadosXIndicador> data;
-
 
 	public HSTumbralesXEstadosXIndicadorGUI() {
 		super();
@@ -98,11 +96,13 @@ public class HSTumbralesXEstadosXIndicadorGUI extends TableView<HSTumbralesXEsta
 				new PropertyValueFactory<HSTumbralesXEstadosXIndicador, Double>("valorUmbralInferior"));
 
 		columnaObservaciones = new TableColumn<HSTumbralesXEstadosXIndicador, String>("Observaciones");
-		columnaObservaciones.setCellValueFactory(new PropertyValueFactory<HSTumbralesXEstadosXIndicador,String>("observaciones"));
-	
-		tablaHSTUmbrales.getColumns().addAll(columnaIdIndicador,columnaIdEstadoTipoIndicador,columnaInicioUmbral,columnaFinUmbral,columnaOperadorUmbralSuperior,
-				columnaOperadorUmbralInferior,columnaValorUmbralSuperior,columnaValorUmbralInferior,columnaObservaciones);
-	
+		columnaObservaciones
+				.setCellValueFactory(new PropertyValueFactory<HSTumbralesXEstadosXIndicador, String>("observaciones"));
+
+		tablaHSTUmbrales.getColumns().addAll(columnaIdIndicador, columnaIdEstadoTipoIndicador, columnaInicioUmbral,
+				columnaFinUmbral, columnaOperadorUmbralSuperior, columnaOperadorUmbralInferior,
+				columnaValorUmbralSuperior, columnaValorUmbralInferior, columnaObservaciones);
+
 		tablaHSTUmbrales.getStyleClass().add("tablas");
 
 		this.agregarListenerEvent();
@@ -161,7 +161,6 @@ public class HSTumbralesXEstadosXIndicadorGUI extends TableView<HSTumbralesXEsta
 		this.mostrarTabla();
 	}
 
-
 	@SuppressWarnings("unchecked")
 	@Override
 	public void mostrarTabla(AbstractaConsulta consulta, FactoryConsultas factoryConsultasDAO,
@@ -180,10 +179,9 @@ public class HSTumbralesXEstadosXIndicadorGUI extends TableView<HSTumbralesXEsta
 		}
 		this.getTablaHSTUmbrales().setItems(this.getData());
 		tablaHSTUmbrales.setPrefSize(centroInferior.getMaxWidth(), centroInferior.getMaxHeight());
-		centroInferior.getChildren().add(0,this.getTablaHSTUmbrales());		
+		centroInferior.getChildren().add(0, this.getTablaHSTUmbrales());
 
 	}
-
 
 	public String getTexto() {
 		return texto;
