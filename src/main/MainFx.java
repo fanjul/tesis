@@ -20,7 +20,7 @@ public class MainFx extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		primaryStage.setTitle(HERRAMIENTA_TESIS);
-		primaryStage.setResizable(false);
+		primaryStage.setResizable(true);
 		primaryStage.setMaximized(false);
 		
 		

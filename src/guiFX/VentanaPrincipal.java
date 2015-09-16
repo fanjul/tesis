@@ -133,6 +133,7 @@ public class VentanaPrincipal extends BorderPane {
 
 		agregarGraficoTorta();
 		PanelDerecho.getInstance().agregarElemento(toggleGraficoTorta);
+		PanelDerecho.getInstance().setSpacing(30);
 
 		hBoxAbajoDelVBox.setSpacing(120);
 	}
