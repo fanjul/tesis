@@ -53,14 +53,13 @@ public class HSTumbralesXEstadosXIndicadorGUI extends TableView<HSTumbralesXEsta
 
 	private ObservableList<HSTumbralesXEstadosXIndicador> data;
 
-	
-	
-	public HSTumbralesXEstadosXIndicadorGUI(){
+
+	public HSTumbralesXEstadosXIndicadorGUI() {
 		super();
 	}
 
 	@SuppressWarnings("unchecked")
-	public void mostrarTabla(){
+	public void mostrarTabla() {
 		tablaHSTUmbrales = new TableView<HSTumbralesXEstadosXIndicador>();
 
 		columnaIdIndicador = new TableColumn<HSTumbralesXEstadosXIndicador, Integer>("Id Indicador");
@@ -149,7 +148,6 @@ public class HSTumbralesXEstadosXIndicadorGUI extends TableView<HSTumbralesXEsta
 		return columnaObservaciones;
 	}
 
-
 	public ObservableList<HSTumbralesXEstadosXIndicador> getData() {
 		return data;
 	}
@@ -162,7 +160,6 @@ public class HSTumbralesXEstadosXIndicadorGUI extends TableView<HSTumbralesXEsta
 	public void crearTablaBaseDeDatos() {
 		this.mostrarTabla();
 	}
-
 
 
 	@SuppressWarnings("unchecked")
@@ -184,6 +181,7 @@ public class HSTumbralesXEstadosXIndicadorGUI extends TableView<HSTumbralesXEsta
 		this.getTablaHSTUmbrales().setItems(this.getData());
 		tablaHSTUmbrales.setPrefSize(centroInferior.getMaxWidth(), centroInferior.getMaxHeight());
 		centroInferior.getChildren().add(0,this.getTablaHSTUmbrales());		
+
 	}
 
 
