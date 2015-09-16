@@ -55,6 +55,10 @@ public class MainFx extends Application {
 
 		Scene escenaPrincipal = new Scene(cuadroPrincipal);
 
+		//escenaPrincipal.setStyle("/archivosCSS/ombra.css");
+		escenaPrincipal.getStylesheets().add(MainFx.class.getResource("/archivosCSS/s1.css").toExternalForm());
+	
+		
 		primaryStage.setScene(escenaPrincipal);
 		primaryStage.show();
 	}

@@ -4,25 +4,39 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+import baseDatos.hibernate.tablas.Grafico;
+import graficosFX.GraficoTorta;
 import javafx.event.EventHandler;
+import javafx.scene.Node;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.ToggleButton;
+import javafx.scene.control.Tooltip;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
 
 public class PanelDerecho extends VBox{
 	
 	private static PanelDerecho instance = null;
 	private TextArea editorTexto;
-	
-	
+	//private ToggleButton toggleGraficoTorta;
+	private DropShadow shadow = new DropShadow();
 	
 	private PanelDerecho() {
 		super();
 		editorTexto = new TextArea();
+
+		
+		
 		configuracionEditorTexto();
-		this.getChildren().addAll(editorTexto); 
+	
+	//	this.getChildren().addAll(editorTexto,toggleGraficoTorta); 
+		this.getChildren().add(editorTexto);
 	}
 
 	public static PanelDerecho getInstance(){
@@ -36,6 +50,10 @@ public class PanelDerecho extends VBox{
 		return editorTexto;
 	}
 
+	public void agregarElemento(Node obj){
+		this.getChildren().add(obj);
+	}
+	
 
 	// Drag & Drop en el area de texto
 	private void configuracionEditorTexto() {
@@ -68,4 +86,15 @@ public class PanelDerecho extends VBox{
 		});
 
 	}
+	
+	
+	
+	
+	
+	
 }
+
+
+
+
+
