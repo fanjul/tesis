@@ -2,14 +2,12 @@
 	  
     /*-fx-background-color: #1d1d1d ;*/
       
-     -fx-base: rgb(50, 50, 50);
--fx-background: rgb(50, 50, 50);
--fx-control-inner-background:  rgb(50, 50, 50);
+ -fx-base: rgba(50.0, 50.0, 50.0,0.5);
+-fx-background: rgba(50.0, 50.0, 50.0,0.5);
+-fx-control-inner-background:  rgba(50.0, 50.0, 50.0,0.5);
+ 
       
-
-  
-      
-      
+-fx-background-color: transparent;
 }
 
 .botones{
@@ -17,7 +15,6 @@
 }
 
 .tablas {
--fx-table-cell-border-color:derive(-fx-base,+10%);
--fx-table-header-border-color:derive(-fx-base,+20%);
-
+-fx-table-cell-border-color:derive(-fx-base,10.0%);
+-fx-table-header-border-color:derive(-fx-base,20.0%);
 }

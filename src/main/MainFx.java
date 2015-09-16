@@ -1,12 +1,21 @@
 package main;
 
+import guiFX.EffectUtilities;
 import guiFX.VentanaPrincipal;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.Cursor;
+import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -25,8 +34,9 @@ public class MainFx extends Application {
 		primaryStage.setMaximized(false);
 		
 		
-		BorderPane ventana = new VentanaPrincipal(0.0, 0.0);
-
+		BorderPane ventana = new VentanaPrincipal(500.0, 500.0);
+ventana.setMinHeight(700);
+ventana.setMinWidth(1200);
 		
 		AnchorPane cuadroPrincipal = new AnchorPane();
 		cuadroPrincipal.setTopAnchor(ventana, 0.0);
@@ -56,12 +66,27 @@ public class MainFx extends Application {
 
 		Scene escenaPrincipal = new Scene(cuadroPrincipal);
 
+		 // Transparent scene and stage
+		escenaPrincipal.setFill(Color.rgb(34, 44, 44, 0.5));
+		primaryStage.initStyle(StageStyle.TRANSPARENT);
+	   Platform.setImplicitExit(false);
+	   
+
+
+	   
+	   
+	   
+	   EffectUtilities.makeDraggable(primaryStage, cuadroPrincipal);
+	   
 		escenaPrincipal.getStylesheets().add(getClass().getResource("/archivosCSS/s1.css").toExternalForm()); 
 		
 		cuadroPrincipal.getStyleClass().add("cuadro-principal");
-
 		
 		primaryStage.setScene(escenaPrincipal);
 		primaryStage.show();
 	}
+	
+
+	
 }
+
