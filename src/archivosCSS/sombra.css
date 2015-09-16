@@ -1,0 +1,5 @@
+/*Botones redondeados */
+.button {
+-fx-background-radius: 10px;
+}
+

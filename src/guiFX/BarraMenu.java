@@ -98,8 +98,8 @@ public class BarraMenu extends VBox {
 
 	private void configurarMenuAbrirArchivo() {
 
-		ImageView abrirAbrirArchivo = new ImageView("/imagenesFX/AbrirArchivo.png");
-		ToggleButton toggleButtonAbrirArchivo = new ToggleButton("", abrirAbrirArchivo);
+		ImageView abrirArchivo = new ImageView("/imagenesFX/AbrirArchivo.png");
+		ToggleButton toggleButtonAbrirArchivo = new ToggleButton("", abrirArchivo);
 		Tooltip toolTip = new Tooltip("Abrir Archivo");
 		toggleButtonAbrirArchivo.setTooltip(toolTip);
 
@@ -108,7 +108,7 @@ public class BarraMenu extends VBox {
 
 			@Override
 			public void handle(MouseEvent event) {
-				abrirAbrirArchivo.onMousePressedProperty();
+				abrirArchivo.onMousePressedProperty();
 
 			}
 		});

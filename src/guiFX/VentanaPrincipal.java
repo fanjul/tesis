@@ -10,7 +10,12 @@ import java.io.IOException;
 import javax.swing.JOptionPane;
 
 import org.apache.commons.io.FilenameUtils;
+import org.rosuda.JRI.Rengine;
 
+import cadenaResponsabilidades.TipoArregloDouble;
+import cadenaResponsabilidades.TipoObjeto;
+import cadenaResponsabilidades.TipoString;
+import graficosFX.GraficoTorta;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -20,6 +25,11 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleButton;
+import javafx.scene.control.Tooltip;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -28,12 +38,17 @@ public class VentanaPrincipal extends BorderPane {
 
 	private VBox barraMenu;
 	private Button botonGuardarMetodoMatematico;
+	private Button botonEjecutar;
 	private TextField textFieldNombreArchivo;
+	private TextField textFieldNombreFuncion;
 	private HBox hBoxAbajoDelVBox;
 
 	private VBox panelDerecho;
 
 	private ComboBox<?> comboBoxSeleccionarMetodo;
+
+	private ToggleButton toggleGraficoTorta;
+	private DropShadow shadow = new DropShadow();
 
 	static final String RUTA_METODOS = System.getProperty("user.dir") + "\\" + "Metodos Matematicos";
 	static final String EXTENSION_ARCHIVOS = "met";
@@ -67,6 +82,33 @@ public class VentanaPrincipal extends BorderPane {
 			}
 		});
 
+		botonEjecutar = new Button("Ejecutar");
+
+		botonEjecutar.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				File archivo = new File(
+						RUTA_METODOS + "\\" + comboBoxSeleccionarMetodo.getSelectionModel().getSelectedItem().toString()
+								+ "." + EXTENSION_ARCHIVOS);
+				// ejecutar(archivo);
+
+				Rengine re = new Rengine(new String[] { "--vanilla" }, false, null);
+				String dir = agregarCuatroSparadores(archivo.getAbsolutePath());
+				re.eval("source(\"" + dir + "\")");
+
+				TipoObjeto tipoArregloDouble = new TipoArregloDouble();
+				tipoArregloDouble.ejecutarMetodo(re.eval(textFieldNombreFuncion.getText()).getContent(), archivo,
+						comboBoxSeleccionarMetodo, textFieldNombreFuncion);
+
+				TipoObjeto tipoString = new TipoString();
+				tipoString.ejecutarMetodo(re.eval(textFieldNombreFuncion.getText()).getContent(), archivo,
+						comboBoxSeleccionarMetodo, textFieldNombreFuncion);
+
+			}
+		});
+
+		textFieldNombreFuncion = new TextField();
+
 		comboBoxSeleccionarMetodo = new ComboBox(getMetodosMatematicosYaCreados());
 
 		// Para copiar el contenido del archivo en el editor de texto
@@ -74,20 +116,70 @@ public class VentanaPrincipal extends BorderPane {
 			@Override
 			public void changed(ObservableValue arg0, Object old_val, Object new_val) {
 
-				((PanelDerecho)panelDerecho).getEditorTexto().setText((String) new_val);
+				((PanelDerecho) panelDerecho).getEditorTexto().setText((String) new_val);
 				copiarContenidoArchivoEnEditorTexto();
 			}
 		});
 
-		hBoxAbajoDelVBox.getChildren().addAll(botonGuardarMetodoMatematico, textFieldNombreArchivo, comboBoxSeleccionarMetodo);
-		
+		hBoxAbajoDelVBox.getChildren().addAll(botonGuardarMetodoMatematico, textFieldNombreArchivo,
+				comboBoxSeleccionarMetodo, botonEjecutar, textFieldNombreFuncion);
+
 		panelDerecho = PanelDerecho.getInstance();
 		this.setRight(panelDerecho);
-		
+
+		agregarGraficoTorta();
+		PanelDerecho.getInstance().agregarElemento(toggleGraficoTorta);
+
 		hBoxAbajoDelVBox.setSpacing(120);
 	}
 
+	private void agregarGraficoTorta() {
 
+		ImageView imagenGraficoTorta = new ImageView("/imagenesFX/GraficoTorta.png");
+		toggleGraficoTorta = new ToggleButton("", imagenGraficoTorta);
+		Tooltip toolTip = new Tooltip("Grafico de Torta");
+		toggleGraficoTorta.setTooltip(toolTip);
+
+		toggleGraficoTorta.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+			@Override
+			public void handle(MouseEvent event) {
+				graficosFX.Grafico graficoTorta = new GraficoTorta();
+				graficoTorta.graficar();
+
+			}
+		});
+
+		toggleGraficoTorta.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent e) {
+				toggleGraficoTorta.setEffect(shadow);
+			}
+		});
+
+		toggleGraficoTorta.addEventHandler(MouseEvent.MOUSE_EXITED, new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent e) {
+				toggleGraficoTorta.setEffect(null);
+			}
+		});
+
+	}
+
+	private String agregarCuatroSparadores(String dir) {
+
+		String path = "";
+		String[] numerosComoArray = dir.split("\\\\");
+
+		for (int i = 0; i < numerosComoArray.length; i++) {
+			if (i != numerosComoArray.length - 1)
+				path += numerosComoArray[i] + "\\\\";
+			else
+				path += numerosComoArray[i];
+		}
+
+		return path;
+	}
 
 	private void copiarContenidoArchivoEnEditorTexto() {
 		File archivo;
@@ -104,12 +196,11 @@ public class VentanaPrincipal extends BorderPane {
 
 			String linea = null;
 
-			((PanelDerecho)panelDerecho).getEditorTexto().setText("");
+			((PanelDerecho) panelDerecho).getEditorTexto().setText("");
 
 			while ((linea = memoriaParaLectura.readLine()) != null) {
-				((PanelDerecho)panelDerecho).getEditorTexto().appendText(linea);
-				((PanelDerecho)panelDerecho).getEditorTexto().appendText(System.lineSeparator());
-
+				((PanelDerecho) panelDerecho).getEditorTexto().appendText(linea);
+				((PanelDerecho) panelDerecho).getEditorTexto().appendText(System.lineSeparator());
 
 			}
 			memoriaParaLectura.close();
@@ -169,8 +260,8 @@ public class VentanaPrincipal extends BorderPane {
 
 				fw = new FileWriter(archivo, false);
 				bw = new BufferedWriter(fw);
-				String texto = 				((PanelDerecho)panelDerecho).getEditorTexto().getText();
 
+				String texto = ((PanelDerecho) panelDerecho).getEditorTexto().getText();
 				bw.write(texto, 0, texto.length());
 			}
 			bw.close();

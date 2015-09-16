@@ -1,0 +1,5 @@
+.border{
+	 -fx-background-color: rgba(255, 255, 255, 0.5);
+     -fx-effect: dropshadow(gaussian, red, 50, 0, 0, 0);
+     -fx-background-insets: 50;
+}
