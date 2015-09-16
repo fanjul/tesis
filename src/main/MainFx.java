@@ -59,6 +59,7 @@ public class MainFx extends Application {
 		escenaPrincipal.getStylesheets().add(getClass().getResource("/archivosCSS/s1.css").toExternalForm()); 
 		
 		cuadroPrincipal.getStyleClass().add("cuadro-principal");
+
 		
 		primaryStage.setScene(escenaPrincipal);
 		primaryStage.show();

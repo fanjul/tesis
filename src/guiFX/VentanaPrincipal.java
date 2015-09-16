@@ -45,9 +45,11 @@ public class VentanaPrincipal extends BorderPane {
 
 	private VBox panelDerecho;
 
+
+	private ComboBox<?> comboBoxSeleccionarMetodo;
+
 	private ToggleButton toggleGraficoTorta;
 	private DropShadow shadow = new DropShadow();
-	private ComboBox<?> comboBoxSeleccionarMetodo;
 
 	static final String RUTA_METODOS = System.getProperty("user.dir") + "\\" + "Metodos Matematicos";
 	static final String EXTENSION_ARCHIVOS = "met";
@@ -139,6 +141,7 @@ public class VentanaPrincipal extends BorderPane {
 		Tooltip toolTip = new Tooltip("Grafico de Torta");
 		toggleGraficoTorta.setTooltip(toolTip);
 		toggleGraficoTorta.getStyleClass().add("botones");
+
 		toggleGraficoTorta.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 
 			@Override
