@@ -31,6 +31,8 @@ public class TipoIndicadorGUI extends TableView<TipoIndicador> {
 		columnaObservaciones.setCellValueFactory(new PropertyValueFactory<TipoIndicador,String>("observaciones"));
 	
 		tablaTipoIndicador.getColumns().addAll(columnaId,columnaTipo,columnaObservaciones);
+		
+		tablaTipoIndicador.getStyleClass().add("tablas");
 	}
 
 

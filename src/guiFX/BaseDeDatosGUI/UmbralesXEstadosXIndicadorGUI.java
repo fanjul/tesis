@@ -57,6 +57,8 @@ public class UmbralesXEstadosXIndicadorGUI extends TableView<UmbralesXEstadosXIn
 		
 		tablaUmbrales.getColumns().addAll(columnaIdIndicador,columnaIdEstadoTipoIndicador,columnaInicioUmbral,columnaFinUmbral,columnaOperadorUmbralSuperior,
 				columnaOperadorUmbralInferior,columnaValorUmbralSuperior,columnaValorUmbralInferior,columnaObservaciones);
+	
+		tablaUmbrales.getStyleClass().add("tablas");
 	}
 
 	public TableView<UmbralesXEstadosXIndicador> getTablaUmbrales() {

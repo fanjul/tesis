@@ -30,6 +30,8 @@ public class UnidadesDeMedidaGUI extends TableView<UnidadesDeMedida> {
 		columnaObservaciones.setCellValueFactory(new PropertyValueFactory<UnidadesDeMedida,String>("observaciones"));
 		
 		tablaUnidadesdDeMedida.getColumns().addAll(columnaId,columnaUnidadDeMedida,columnaObservaciones);
+		
+		tablaUnidadesdDeMedida.getStyleClass().add("tablas");
 	}
 
 	public TableView<UnidadesDeMedida> getTablaUnidadesdDeMedida() {

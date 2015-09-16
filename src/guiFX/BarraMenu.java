@@ -43,6 +43,9 @@ public class BarraMenu extends VBox {
 		toggleButtonAbrirBaseDeDatos.setTooltip(toolTipAbrirBaseDeDatos);
 
 		toggleButtonAbrirBaseDeDatos.setBackground(null);
+		
+		toggleButtonAbrirBaseDeDatos.getStyleClass().add("botones");
+		
 		toggleButtonAbrirBaseDeDatos.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 			final FileChooser fileChooser = new FileChooser();
 
@@ -93,6 +96,9 @@ public class BarraMenu extends VBox {
 		toggleButtonAbrirArchivo.setTooltip(toolTip);
 
 		toggleButtonAbrirArchivo.setBackground(null);
+		
+		toggleButtonAbrirArchivo.getStyleClass().add("botones");
+		
 		toggleButtonAbrirArchivo.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 			final FileChooser fileChooser = new FileChooser();
 

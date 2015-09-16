@@ -1,5 +1,22 @@
-.border{
-	 -fx-background-color: rgba(255, 255, 255, 0.5);
-     -fx-effect: dropshadow(gaussian, red, 50, 0, 0, 0);
-     -fx-background-insets: 50;
+.cuadro-principal{
+	  
+    /*-fx-background-color: #1d1d1d ;*/
+      
+     -fx-base: rgb(50, 50, 50);
+-fx-background: rgb(50, 50, 50);
+-fx-control-inner-background:  rgb(50, 50, 50);
+      
+
+  
+      
+      
+}
+
+.botones{
+	-fx-background-color: transparent;
+}
+
+.tablas {
+-fx-table-cell-border-color:derive(-fx-base,+10%);
+-fx-table-header-border-color:derive(-fx-base,+20%);
 }

@@ -139,7 +139,7 @@ public class VentanaPrincipal extends BorderPane {
 		toggleGraficoTorta = new ToggleButton("", imagenGraficoTorta);
 		Tooltip toolTip = new Tooltip("Grafico de Torta");
 		toggleGraficoTorta.setTooltip(toolTip);
-
+		toggleGraficoTorta.getStyleClass().add("botones");
 		toggleGraficoTorta.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 
 			@Override

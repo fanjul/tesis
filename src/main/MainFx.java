@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 public class MainFx extends Application {
 	private static final String HERRAMIENTA_TESIS = "HerramientaTesis";
@@ -55,9 +56,9 @@ public class MainFx extends Application {
 
 		Scene escenaPrincipal = new Scene(cuadroPrincipal);
 
-		//escenaPrincipal.setStyle("/archivosCSS/ombra.css");
-		escenaPrincipal.getStylesheets().add(MainFx.class.getResource("/archivosCSS/s1.css").toExternalForm());
-	
+		escenaPrincipal.getStylesheets().add(getClass().getResource("/archivosCSS/s1.css").toExternalForm()); 
+		
+		cuadroPrincipal.getStyleClass().add("cuadro-principal");
 		
 		primaryStage.setScene(escenaPrincipal);
 		primaryStage.show();

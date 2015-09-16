@@ -32,6 +32,8 @@ public class GraficoGUI extends TableView<Grafico>{
 		columnaObservaciones.setCellValueFactory(new PropertyValueFactory<Grafico,String>("observaciones"));
 		
 		tablaGrafico.getColumns().addAll(columnaId,columnaTipoGrafico,columnaObservaciones);
+		
+		tablaGrafico.getStyleClass().add("tablas");
 	}
 
 

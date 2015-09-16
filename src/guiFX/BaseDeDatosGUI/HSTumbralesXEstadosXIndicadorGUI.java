@@ -57,6 +57,8 @@ public class HSTumbralesXEstadosXIndicadorGUI extends TableView<HSTumbralesXEsta
 	
 		tablaHSTUmbrales.getColumns().addAll(columnaIdIndicador,columnaIdEstadoTipoIndicador,columnaInicioUmbral,columnaFinUmbral,columnaOperadorUmbralSuperior,
 				columnaOperadorUmbralInferior,columnaValorUmbralSuperior,columnaValorUmbralInferior,columnaObservaciones);
+	
+		tablaHSTUmbrales.getStyleClass().add("tablas");
 	}
 
 	public TableView<HSTumbralesXEstadosXIndicador> getTablaHSTUmbrales() {

@@ -79,6 +79,8 @@ public class IndicadorGUI extends TableView<Indicador> {
 		tablaIndicador.getColumns().addAll(columnaId,columnaCodigo,columnaNombre,columnaIdUnidadDeMedida,columnaDireccion,columnaFormula,
 				columnaFichaMetodologica,columnaIdGrafico,columnaIdResponsable,columnaFrecuencia,columnaPeriodo,columnaFechaUltimaActualizacion,
 				columnaIdTipoIndicador,columnaObservaciones);
+	
+		tablaIndicador.getStyleClass().add("tablas");
 	}
 
 	public TableView<Indicador> getTablaIndicador() {

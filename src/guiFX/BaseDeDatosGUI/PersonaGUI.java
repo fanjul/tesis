@@ -50,6 +50,8 @@ public class PersonaGUI extends TableView<Persona> {
 		columnaObsevaciones.setCellValueFactory(new PropertyValueFactory<Persona,String>("observaciones"));
 		 
 		tablaPersona.getColumns().addAll(columnaId,columnaNombre,columnaApellido,columnaEmail,columnaCargo,columnaTipoDocumento,columnaNroDocumento,columnaObsevaciones);
+	
+		tablaPersona.getStyleClass().add("tablas");
 	}
 
 	public TableView<Persona> getTablaPersona() {

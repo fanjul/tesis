@@ -61,6 +61,8 @@ public class ValorIndicadorGUI extends TableView<ValorIndicador> {
 
 		tablaValorIndicador.getColumns().addAll(columnaIdIndicador, columnaFecha, columnaValor, columnaEstado,
 				columnaVariacion, columnaSignoVariacion, columnaObservaciones);
+		
+		tablaValorIndicador.getStyleClass().add("tablas");
 	
 		this.agregarListenerEvent();
 	}

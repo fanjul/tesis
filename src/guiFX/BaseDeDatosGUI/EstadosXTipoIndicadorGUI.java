@@ -37,6 +37,8 @@ public class EstadosXTipoIndicadorGUI extends TableView<EstadosXTipoIndicador>{
 		columnaRepresentacionCromatica.setCellValueFactory(new PropertyValueFactory<EstadosXTipoIndicador,String>("representacionCromatica"));
 		
 		tablaEstadosXTipoIndicador.getColumns().addAll(columnaIdTipoIndicador,columnaIdEstado,columnaEstado,columnaRepresentacionCromatica,columnaObservaciones);
+	
+		tablaEstadosXTipoIndicador.getStyleClass().add("tablas");
 	}
 
 	public TableView<EstadosXTipoIndicador> getTablaEstadosXTipoIndicador() {
