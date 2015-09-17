@@ -17,7 +17,6 @@ import javafx.geometry.Pos;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.SplitPane;
-import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.Tooltip;
 import javafx.scene.effect.DropShadow;
@@ -33,7 +32,6 @@ public class BarraMenu extends VBox {
 
 	private BarraMenuDeslizable barraDeslizable;
 	private DropShadow shadow = new DropShadow();
-	private final TextField texto = new TextField();
 	private FactoryBaseDeDatosGUI factoryBaseDeDatos;
 	private AbstractBaseDeDatosGUI baseDeDatos;
 	private VentanaPrincipal ventana;
@@ -65,19 +63,8 @@ public class BarraMenu extends VBox {
 		toggleButtonAbrirBaseDeDatos.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 
 			@Override
-			public void handle(MouseEvent event) {
-				//TODO cambiar el "valorIndicador"por el comboBox
-				
+			public void handle(MouseEvent event) {				
 				configurarPanelCentro();
-				
-				
-//				factoryBaseDeDatos = new FactoryBaseDeDatosGUI();
-//				factoryConsultasDAO = new FactoryConsultas();
-//				baseDeDatos = factoryBaseDeDatos.getBaseDeDatos("ValorIndicador");
-//				baseDeDatos.crearTablaBaseDeDatos();
-//				consultasDAO = factoryConsultasDAO.getConsultaDAO("ValorIndicador");
-//				baseDeDatos.mostrarTabla(consultasDAO,ventana,factoryConsultasDAO);
-								
 			}
 		});
 
