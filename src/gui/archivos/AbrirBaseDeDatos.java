@@ -15,11 +15,10 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 import org.joda.time.LocalDate;
 
-import properties.Parameters;
-import properties.PropertyManager;
-import baseDatos.DBIndicador;
-import baseDatos.DBValorIndicador;
-import baseDatos.Item;
+import EjemplosYPruebas.baseDeDatosRoman.DBIndicador;
+import EjemplosYPruebas.baseDeDatosRoman.DBValorIndicador;
+import EjemplosYPruebas.baseDeDatosRoman.Item;
+import EjemplosYPruebas.baseDeDatosRoman.properties.*;
 
 public class AbrirBaseDeDatos extends ManejadorArchivos {
 

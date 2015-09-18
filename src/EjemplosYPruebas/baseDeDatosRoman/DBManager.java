@@ -1,4 +1,4 @@
-package baseDatos;
+package EjemplosYPruebas.baseDeDatosRoman;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -6,8 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import properties.Parameters;
-import properties.PropertyManager;
+import EjemplosYPruebas.baseDeDatosRoman.properties.*;
 
 public class DBManager {
 

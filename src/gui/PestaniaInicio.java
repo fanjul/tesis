@@ -19,9 +19,9 @@ import javax.swing.JTextField;
 import org.hsqldb.DatabaseManager;
 import org.joda.time.LocalDate;
 
-import baseDatos.DBManager;
-import baseDatos.Item;
-import baseDatos.Periodo;
+import EjemplosYPruebas.baseDeDatosRoman.DBManager;
+import EjemplosYPruebas.baseDeDatosRoman.Item;
+import EjemplosYPruebas.baseDeDatosRoman.Periodo;
 
 public class PestaniaInicio extends Pestania {
 

@@ -1,4 +1,4 @@
-package properties;
+package EjemplosYPruebas.baseDeDatosRoman.properties;
 
 import java.util.Properties;
 

@@ -1,6 +1,9 @@
 package baseDatos.hibernate.consultas;
 
+import java.util.List;
+
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 
 import baseDatos.hibernate.tablas.Indicador;
 
@@ -39,6 +42,22 @@ public class IndicadorDAO extends DAO {
 			iniciaOperacion();
 			sesion.delete(indicador);
 			tx.commit();
+		} catch (HibernateException he) {
+			manejaExcepcion(he);
+			throw he;
+		} finally {
+			sesion.close();
+		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Indicador> getTodos() {
+		try {
+			this.iniciaOperacion();
+			String hql = "FROM Indicador ind";
+			Query query = sesion.createQuery(hql);
+			List<Indicador> results = query.list();
+			return results;
 		} catch (HibernateException he) {
 			manejaExcepcion(he);
 			throw he;

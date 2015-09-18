@@ -1,4 +1,4 @@
-package main;
+package EjemplosYPruebas;
 
 import gui.PestaniaInicio;
 import gui.VentanaPrincipal;

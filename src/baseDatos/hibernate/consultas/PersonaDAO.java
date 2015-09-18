@@ -1,6 +1,9 @@
 package baseDatos.hibernate.consultas;
 
+import java.util.List;
+
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 
 import baseDatos.hibernate.tablas.Persona;
 
@@ -37,6 +40,22 @@ public class PersonaDAO extends DAO {
 			iniciaOperacion();
 			sesion.delete(persona);
 			tx.commit();
+		} catch (HibernateException he) {
+			manejaExcepcion(he);
+			throw he;
+		} finally {
+			sesion.close();
+		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Persona> getTodos() {
+		try {
+			this.iniciaOperacion();
+			String hql = "FROM Persona per";
+			Query query = sesion.createQuery(hql);
+			List<Persona> results = query.list();
+			return results;
 		} catch (HibernateException he) {
 			manejaExcepcion(he);
 			throw he;
