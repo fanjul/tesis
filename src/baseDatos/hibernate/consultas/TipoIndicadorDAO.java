@@ -8,7 +8,7 @@ import org.hibernate.Query;
 import baseDatos.hibernate.tablas.TipoIndicador;
 
 
-public class TipoIndicadorDAO extends DAO implements AbstractaConsulta {
+public class TipoIndicadorDAO extends DAO {
 
 	public void guardar(TipoIndicador tipoIndicador) {
 		try {

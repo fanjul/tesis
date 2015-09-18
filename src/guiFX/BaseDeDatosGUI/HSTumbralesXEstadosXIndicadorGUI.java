@@ -5,7 +5,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import baseDatos.hibernate.consultas.AbstractaConsulta;
 import baseDatos.hibernate.consultas.FactoryConsultas;
 import baseDatos.hibernate.consultas.HSTumbralesXEstadosXIndicadorDAO;
 import baseDatos.hibernate.tablas.HSTumbralesXEstadosXIndicador;
@@ -17,12 +16,11 @@ import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
@@ -49,6 +47,7 @@ public class HSTumbralesXEstadosXIndicadorGUI extends TableView<HSTumbralesXEsta
 	private TableColumn<HSTumbralesXEstadosXIndicador, Double> columnaValorUmbralInferior;
 	private TableColumn<HSTumbralesXEstadosXIndicador, String> columnaObservaciones;
 	private String texto = "";
+	private HSTumbralesXEstadosXIndicadorDAO consulta;
 
 	private ObservableList<HSTumbralesXEstadosXIndicador> data;
 
@@ -163,16 +162,16 @@ public class HSTumbralesXEstadosXIndicadorGUI extends TableView<HSTumbralesXEsta
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public void mostrarTabla(AbstractaConsulta consulta, FactoryConsultas factoryConsultasDAO,
-			AnchorPane centroInferior) {
+	public void mostrarTabla(Object consulta, FactoryConsultas factoryConsultasDAO, AnchorPane centroInferior) {
 
 		if (!centroInferior.getChildren().isEmpty()) {
 			centroInferior.getChildren().remove(0);
 		}
+		this.consulta = (HSTumbralesXEstadosXIndicadorDAO) consulta;
 		this.setData(FXCollections.observableArrayList());
 		List<HSTumbralesXEstadosXIndicador> lista = (List<HSTumbralesXEstadosXIndicador>) factoryConsultasDAO
 				.getLista("HSTumbralesXEstadosXIndicador");
-		lista = ((HSTumbralesXEstadosXIndicadorDAO) consulta).getTodos();
+		lista = this.consulta.getTodos();
 		for (HSTumbralesXEstadosXIndicador vi : lista) {
 			this.getData().add(vi);
 
@@ -202,24 +201,12 @@ public class HSTumbralesXEstadosXIndicadorGUI extends TableView<HSTumbralesXEsta
 			public void handle(final MouseEvent me) {
 
 				final Dragboard db = tablaHSTUmbrales.startDragAndDrop(TransferMode.COPY);
-
 				final ClipboardContent content = new ClipboardContent();
-				String selected = "";
-				Set<HSTumbralesXEstadosXIndicador> selec = new HashSet<HSTumbralesXEstadosXIndicador>(
-						tablaHSTUmbrales.getSelectionModel().getSelectedItems());
-				Object[] arr = selec.toArray();
-				for (int i = 0; i < arr.length; i++) {
-					if ("IdIndicador".equalsIgnoreCase(getTexto())) {
 
-						selected += (((HSTumbralesXEstadosXIndicador) arr[i]).getIdIndicador().toString());
-						selected += " ";
-					}
-				}
-
-				content.putString(selected.toString());
-
+				content.putString("");
 				db.setContent(content);
 				me.consume();
+
 			}
 		});
 		tablaHSTUmbrales.setOnDragEntered(new EventHandler<DragEvent>() {
@@ -251,54 +238,133 @@ public class HSTumbralesXEstadosXIndicadorGUI extends TableView<HSTumbralesXEsta
 
 			@Override
 			public void handle(DragEvent event) {
-				nuevaStage();
-				Clipboard clipboard = Clipboard.getSystemClipboard();
-				ClipboardContent content = new ClipboardContent();
+				Runnable callback = new Runnable() {
 
-				String selected = "";
-				Set<HSTumbralesXEstadosXIndicador> selec = new HashSet<HSTumbralesXEstadosXIndicador>(
-						tablaHSTUmbrales.getSelectionModel().getSelectedItems());
-				Object[] arr = selec.toArray();
-				for (int i = 0; i < arr.length; i++) {
-					if ("IdIndicador".equalsIgnoreCase(getTexto())) {
-						selected += (((HSTumbralesXEstadosXIndicador) arr[i]).getIdIndicador().toString());
-						selected += " ";
+					@Override
+					public void run() {
+						Clipboard clipboard = Clipboard.getSystemClipboard();
+						ClipboardContent content = new ClipboardContent();
+
+						String selected = "";
+						Set<HSTumbralesXEstadosXIndicador> selec = new HashSet<HSTumbralesXEstadosXIndicador>(
+								tablaHSTUmbrales.getSelectionModel().getSelectedItems());
+						Object[] arr = selec.toArray();
+
+						String columnaSeleccionada = getTexto();
+						for (int i = 0; i < arr.length; i++) {
+							switch (columnaSeleccionada.toLowerCase()) {
+							case "idindicador":
+								if (((HSTumbralesXEstadosXIndicador) arr[i]).getIdIndicador() != null) {
+									selected += ((HSTumbralesXEstadosXIndicador) arr[i]).getIdIndicador().toString();
+									selected += " ";
+								} else
+									selected = "";
+								break;
+							case "observaciones":
+								if (((HSTumbralesXEstadosXIndicador) arr[i]).getObservaciones() != null) {
+									selected += ((HSTumbralesXEstadosXIndicador) arr[i]).getObservaciones();
+									selected += " ";
+								} else
+									selected = "";
+								break;
+							case "idestadotipoindicador":
+								if (((HSTumbralesXEstadosXIndicador) arr[i]).getIdEstadoTipoIndicador() != null) {
+									selected += ((HSTumbralesXEstadosXIndicador) arr[i]).getIdEstadoTipoIndicador()
+											.toString();
+									selected += " ";
+								} else
+									selected = "";
+								break;
+							case "inicioumbral":
+								if (((HSTumbralesXEstadosXIndicador) arr[i]).getInicioUmbral() != null) {
+									selected += ((HSTumbralesXEstadosXIndicador) arr[i]).getInicioUmbral().toString();
+									selected += " ";
+								} else
+									selected = "";
+								break;
+							case "finumbral":
+								if (((HSTumbralesXEstadosXIndicador) arr[i]).getFinUmbral() != null) {
+									selected += ((HSTumbralesXEstadosXIndicador) arr[i]).getFinUmbral().toString();
+									selected += " ";
+								} else
+									selected = "";
+								break;
+							case "operadorumbralsuperior":
+								if (((HSTumbralesXEstadosXIndicador) arr[i]).getOperadorUmbralSuperior() != null) {
+									selected += ((HSTumbralesXEstadosXIndicador) arr[i]).getOperadorUmbralSuperior();
+									selected += " ";
+								} else
+									selected = "";
+								break;
+							case "operadorumbralinferior":
+								if (((HSTumbralesXEstadosXIndicador) arr[i]).getOperadorUmbralInferior() != null) {
+									selected += ((HSTumbralesXEstadosXIndicador) arr[i]).getOperadorUmbralInferior();
+									selected += " ";
+								} else
+									selected = "";
+								break;
+							case "valorumbralsuperior":
+								if (((HSTumbralesXEstadosXIndicador) arr[i]).getValorUmbralSuperior() != null) {
+									selected += ((HSTumbralesXEstadosXIndicador) arr[i]).getValorUmbralSuperior();
+									selected += " ";
+								} else
+									selected = "";
+								break;
+							case "valorumbralinferior":
+								if (((HSTumbralesXEstadosXIndicador) arr[i]).getValorUmbralInferior() != null) {
+									selected += ((HSTumbralesXEstadosXIndicador) arr[i]).getValorUmbralInferior();
+									selected += " ";
+								} else
+									selected = "";
+								break;
+							}
+
+						}
+						content.putString(selected);
+
+						clipboard.setContent(content);
+
+						PanelDerecho.getInstance().getEditorTexto().insertText(
+								PanelDerecho.getInstance().getEditorTexto().getCaretPosition(), clipboard.getString());
+						setTexto("");
+
 					}
+				};
+				nuevaStage(callback);
 
-				}
-
-				setTexto("");
-				content.putString(selected);
-
-				clipboard.setContent(content);
-
-				PanelDerecho.getInstance().getEditorTexto().insertText(
-						PanelDerecho.getInstance().getEditorTexto().getCaretPosition(), clipboard.getString());
 			}
 
 		});
 	}
 
-	public void nuevaStage() {
+	public void nuevaStage(Runnable callback) {
 		Stage nuevoStage = new Stage();
 
 		HBox ventana = new HBox();
 		Label labelColumna = new Label("Seleccione Columna: ");
-		TextField areaTexto = new TextField();
+		ComboBox<String> comboColumna = new ComboBox<String>();
 		Button botonAceptar = new Button("Aceptar");
 		Button botonCancelar = new Button("Cancelar");
 		HBox botones = new HBox();
 		VBox todo = new VBox();
 
 		botones.setSpacing(50);
-		ventana.getChildren().addAll(labelColumna, areaTexto);
+		ventana.getChildren().addAll(labelColumna, comboColumna);
 		ventana.setSpacing(50);
 		ventana.setAlignment(Pos.CENTER);
+
+		ObservableList<String> listaColumnas = FXCollections.observableArrayList();
+		List<String> listaTodasTablas = consulta.getColumnas();
+		for (String s : listaTodasTablas) {
+			listaColumnas.add(s);
+		}
+		comboColumna.setItems(listaColumnas);
 
 		botonAceptar.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				HSTumbralesXEstadosXIndicadorGUI.this.setTexto(areaTexto.getText());
+				HSTumbralesXEstadosXIndicadorGUI.this.setTexto(comboColumna.getValue());
+				callback.run();
 				nuevoStage.close();
 			}
 		});
@@ -319,4 +385,5 @@ public class HSTumbralesXEstadosXIndicadorGUI extends TableView<HSTumbralesXEsta
 		nuevoStage.show();
 
 	}
+
 }

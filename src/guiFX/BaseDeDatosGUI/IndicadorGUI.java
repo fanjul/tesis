@@ -6,13 +6,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-
-import baseDatos.hibernate.consultas.AbstractaConsulta;
 import baseDatos.hibernate.consultas.FactoryConsultas;
 import baseDatos.hibernate.consultas.IndicadorDAO;
 import baseDatos.hibernate.tablas.Indicador;
 import guiFX.PanelDerecho;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -26,7 +23,6 @@ import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
-
 import javafx.scene.layout.AnchorPane;
 
 public class IndicadorGUI extends TableView<Indicador> implements AbstractBaseDeDatosGUI {
@@ -183,7 +179,7 @@ public class IndicadorGUI extends TableView<Indicador> implements AbstractBaseDe
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public void mostrarTabla(AbstractaConsulta consulta, FactoryConsultas factoryConsultasDAO,
+	public void mostrarTabla(Object consulta, FactoryConsultas factoryConsultasDAO,
 			AnchorPane centroInferior) {
 		
 		if(!centroInferior.getChildren().isEmpty()){
@@ -224,8 +220,6 @@ public class IndicadorGUI extends TableView<Indicador> implements AbstractBaseDe
 
 				}
 				content.putString(selected.toString());
-
-				// content.putString("Drag Me!");
 				db.setContent(content);
 				me.consume();
 			}

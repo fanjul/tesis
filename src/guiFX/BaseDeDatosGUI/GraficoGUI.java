@@ -4,7 +4,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import baseDatos.hibernate.consultas.AbstractaConsulta;
 import baseDatos.hibernate.consultas.FactoryConsultas;
 import baseDatos.hibernate.consultas.GraficoDAO;
 import baseDatos.hibernate.tablas.Grafico;
@@ -95,7 +94,7 @@ public class GraficoGUI extends TableView<Grafico> implements AbstractBaseDeDato
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public void mostrarTabla(AbstractaConsulta consulta, FactoryConsultas factoryConsultasDAO,
+	public void mostrarTabla(Object consulta, FactoryConsultas factoryConsultasDAO,
 			AnchorPane centroInferior) {
 		
 		if(!centroInferior.getChildren().isEmpty()){

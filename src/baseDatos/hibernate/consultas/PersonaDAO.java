@@ -7,7 +7,7 @@ import org.hibernate.Query;
 
 import baseDatos.hibernate.tablas.Persona;
 
-public class PersonaDAO extends DAO implements AbstractaConsulta {
+public class PersonaDAO extends DAO {
 	public void guardar(Persona persona) {
 		try {
 			iniciaOperacion();

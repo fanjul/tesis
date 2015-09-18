@@ -69,6 +69,7 @@ public class MainFx extends Application {
 
 		primaryStage.setScene(escenaPrincipal);
 		primaryStage.show();
+
 	}
 
 }

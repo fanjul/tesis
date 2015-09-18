@@ -1,9 +1,7 @@
 package guiFX;
 
-import java.io.File;
 import java.util.List;
 
-import baseDatos.hibernate.consultas.AbstractaConsulta;
 import baseDatos.hibernate.consultas.DAO;
 import baseDatos.hibernate.consultas.FactoryConsultas;
 import guiFX.BaseDeDatosGUI.AbstractBaseDeDatosGUI;
@@ -26,7 +24,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import javafx.stage.FileChooser;
 
 public class BarraMenu extends VBox {
 
@@ -36,7 +33,7 @@ public class BarraMenu extends VBox {
 	private AbstractBaseDeDatosGUI baseDeDatos;
 	private VentanaPrincipal ventana;
 	private FactoryConsultas factoryConsultasDAO;
-	private AbstractaConsulta consultasDAO;
+	private Object consultasDAO;
 	private ComboBox<String> comboBoxTablas;
 	private AnchorPane centroInferior;
 	private HBox centroSuperior;
@@ -123,10 +120,10 @@ public class BarraMenu extends VBox {
 		this.getChildren().add(toggleButtonAbrirArchivo);
 	}
 
-	private static void configurarElegirArchivo(final FileChooser fileChooser) {
-		fileChooser.setTitle("View Pictures");
-		fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
-	}
+//	private static void configurarElegirArchivo(final FileChooser fileChooser) {
+//		fileChooser.setTitle("View Pictures");
+//		fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
+//	}
 
 	public AbstractBaseDeDatosGUI getBaseDeDatos() {
 		return baseDeDatos;
@@ -146,16 +143,16 @@ public class BarraMenu extends VBox {
 		centroSuperior.setMaxWidth(750);
 		centroSuperior.setMinWidth(750);
 		
-		ObservableList<String> data = FXCollections.observableArrayList();
+		ObservableList<String> listaTablas = FXCollections.observableArrayList();
 		List<String> listaTodasTablas = new DAO().getAllTables();
 		for (String s : listaTodasTablas) { 
-			data.add(s);
+			listaTablas.add(s);
 		}
 		
 		Label labelTabla = new Label("Tabla");
 		centroSuperior.getChildren().add(labelTabla);
 		comboBoxTablas = new ComboBox<String>();
-		comboBoxTablas.setItems(data);
+		comboBoxTablas.setItems(listaTablas);
 		
 		centroInferior.setMinHeight(550);
 		centroInferior.setMinWidth(750);

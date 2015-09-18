@@ -5,12 +5,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import baseDatos.hibernate.consultas.AbstractaConsulta;
 import baseDatos.hibernate.consultas.FactoryConsultas;
 import baseDatos.hibernate.consultas.ValorIndicadorDAO;
 import baseDatos.hibernate.tablas.ValorIndicador;
 import guiFX.PanelDerecho;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -207,7 +205,7 @@ public class ValorIndicadorGUI extends TableView<ValorIndicador> implements Abst
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public void mostrarTabla(AbstractaConsulta consulta, FactoryConsultas factoryConsultasDAO,
+	public void mostrarTabla(Object consulta, FactoryConsultas factoryConsultasDAO,
 			AnchorPane centroInferior) {
 		this.setData(FXCollections.observableArrayList());
 		if (!centroInferior.getChildren().isEmpty()) {

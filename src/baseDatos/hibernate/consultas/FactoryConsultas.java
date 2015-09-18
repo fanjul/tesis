@@ -15,7 +15,7 @@ import baseDatos.hibernate.tablas.ValorIndicador;
 
 public class FactoryConsultas {
 
-	public AbstractaConsulta getConsultaDAO(String nombre) {
+	public Object getConsultaDAO(String nombre) {
 
 		if ("ValorIndicador".equalsIgnoreCase(nombre)) {
 			return new ValorIndicadorDAO();

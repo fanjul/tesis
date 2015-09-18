@@ -7,7 +7,7 @@ import org.hibernate.Query;
 
 import baseDatos.hibernate.tablas.Grafico;
 
-public class GraficoDAO extends DAO implements AbstractaConsulta {
+public class GraficoDAO extends DAO {
 	
 	public void guardar(Grafico grafico) {
 		try {

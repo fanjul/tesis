@@ -4,13 +4,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-
-import baseDatos.hibernate.consultas.AbstractaConsulta;
 import baseDatos.hibernate.consultas.FactoryConsultas;
 import baseDatos.hibernate.consultas.TipoIndicadorDAO;
 import baseDatos.hibernate.tablas.TipoIndicador;
 import guiFX.PanelDerecho;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -24,7 +21,6 @@ import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
-
 import javafx.scene.layout.AnchorPane;
 
 public class TipoIndicadorGUI extends TableView<TipoIndicador> implements AbstractBaseDeDatosGUI{
@@ -97,7 +93,7 @@ public class TipoIndicadorGUI extends TableView<TipoIndicador> implements Abstra
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public void mostrarTabla(AbstractaConsulta consulta, FactoryConsultas factoryConsultasDAO,
+	public void mostrarTabla(Object consulta, FactoryConsultas factoryConsultasDAO,
 			AnchorPane centroInferior) {
 		
 		if(!centroInferior.getChildren().isEmpty()){

@@ -7,7 +7,7 @@ import org.hibernate.Query;
 
 import baseDatos.hibernate.tablas.EstadosXTipoIndicador;
 
-public class EstadosXTipoIndicadorDAO extends DAO implements AbstractaConsulta {
+public class EstadosXTipoIndicadorDAO extends DAO {
 	
 	public void guardar(EstadosXTipoIndicador estadosX) {
 		try {

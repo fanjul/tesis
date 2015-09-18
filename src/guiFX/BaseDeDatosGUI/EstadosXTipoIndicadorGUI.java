@@ -4,7 +4,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import baseDatos.hibernate.consultas.AbstractaConsulta;
 import baseDatos.hibernate.consultas.EstadosXTipoIndicadorDAO;
 import baseDatos.hibernate.consultas.FactoryConsultas;
 import baseDatos.hibernate.tablas.EstadosXTipoIndicador;
@@ -116,7 +115,7 @@ import javafx.scene.layout.AnchorPane;
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public void mostrarTabla(AbstractaConsulta consulta, FactoryConsultas factoryConsultasDAO,
+	public void mostrarTabla(Object consulta, FactoryConsultas factoryConsultasDAO,
 			AnchorPane centroInferior) {
 		if (!centroInferior.getChildren().isEmpty()) {
 			centroInferior.getChildren().remove(0);

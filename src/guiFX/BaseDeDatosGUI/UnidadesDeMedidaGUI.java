@@ -4,12 +4,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import baseDatos.hibernate.consultas.AbstractaConsulta;
 import baseDatos.hibernate.consultas.FactoryConsultas;
 import baseDatos.hibernate.consultas.UnidadesDeMedidaDAO;
 import baseDatos.hibernate.tablas.UnidadesDeMedida;
 import guiFX.PanelDerecho;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -89,7 +87,7 @@ public class UnidadesDeMedidaGUI extends TableView<UnidadesDeMedida> implements 
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public void mostrarTabla(AbstractaConsulta consulta, FactoryConsultas factoryConsultasDAO,
+	public void mostrarTabla(Object consulta, FactoryConsultas factoryConsultasDAO,
 			AnchorPane centroInferior) {
 
 		if(!centroInferior.getChildren().isEmpty()){
