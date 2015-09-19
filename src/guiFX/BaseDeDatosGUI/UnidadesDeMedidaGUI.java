@@ -10,7 +10,13 @@ import baseDatos.hibernate.tablas.UnidadesDeMedida;
 import guiFX.PanelDerecho;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -22,35 +28,39 @@ import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
-public class UnidadesDeMedidaGUI extends TableView<UnidadesDeMedida> implements AbstractBaseDeDatosGUI {
-	
+public class UnidadesDeMedidaGUI extends TableView<UnidadesDeMedida>implements AbstractBaseDeDatosGUI {
+
 	private TableView<UnidadesDeMedida> tablaUnidadesdDeMedida;
 	private TableColumn<UnidadesDeMedida, Integer> columnaId;
 	private TableColumn<UnidadesDeMedida, String> columnaUnidadDeMedida;
 	private TableColumn<UnidadesDeMedida, String> columnaObservaciones;
-	
-	private ObservableList<UnidadesDeMedida> data; 
-	
+	private UnidadesDeMedidaDAO consulta;
+	private String texto = "";
+	private ObservableList<UnidadesDeMedida> data;
+
 	public UnidadesDeMedidaGUI() {
 		super();
 	}
-	
+
 	@SuppressWarnings("unchecked")
-	public void mostrarTabla(){
+	public void mostrarTabla() {
 		tablaUnidadesdDeMedida = new TableView<UnidadesDeMedida>();
-		
+
 		columnaId = new TableColumn<UnidadesDeMedida, Integer>("Id");
-		columnaId.setCellValueFactory(new PropertyValueFactory<UnidadesDeMedida,Integer>("id"));
-		
+		columnaId.setCellValueFactory(new PropertyValueFactory<UnidadesDeMedida, Integer>("id"));
+
 		columnaUnidadDeMedida = new TableColumn<UnidadesDeMedida, String>("Unidad de Medida");
-		columnaUnidadDeMedida.setCellValueFactory(new PropertyValueFactory<UnidadesDeMedida,String>("unidadDeMedida"));
-		
+		columnaUnidadDeMedida.setCellValueFactory(new PropertyValueFactory<UnidadesDeMedida, String>("unidadDeMedida"));
+
 		columnaObservaciones = new TableColumn<UnidadesDeMedida, String>("Observaciones");
-		columnaObservaciones.setCellValueFactory(new PropertyValueFactory<UnidadesDeMedida,String>("observaciones"));
-		
-		tablaUnidadesdDeMedida.getColumns().addAll(columnaId,columnaUnidadDeMedida,columnaObservaciones);
-		
+		columnaObservaciones.setCellValueFactory(new PropertyValueFactory<UnidadesDeMedida, String>("observaciones"));
+
+		tablaUnidadesdDeMedida.getColumns().addAll(columnaId, columnaUnidadDeMedida, columnaObservaciones);
+
 		tablaUnidadesdDeMedida.getStyleClass().add("tablas");
 		this.agregarListenerEvent();
 	}
@@ -79,32 +89,40 @@ public class UnidadesDeMedidaGUI extends TableView<UnidadesDeMedida> implements 
 		this.data = data;
 	}
 
+	public String getTexto() {
+		return texto;
+	}
+
+	public void setTexto(String texto) {
+		this.texto = texto;
+	}
+
 	@Override
 	public void crearTablaBaseDeDatos() {
 		this.mostrarTabla();
-		
+
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public void mostrarTabla(Object consulta, FactoryConsultas factoryConsultasDAO,
-			AnchorPane centroInferior) {
+	public void mostrarTabla(Object consulta, FactoryConsultas factoryConsultasDAO, AnchorPane centroInferior) {
 
-		if(!centroInferior.getChildren().isEmpty()){
+		if (!centroInferior.getChildren().isEmpty()) {
 			centroInferior.getChildren().remove(0);
 		}
+		this.consulta = (UnidadesDeMedidaDAO) consulta;
 		this.setData(FXCollections.observableArrayList());
 		List<UnidadesDeMedida> lista = (List<UnidadesDeMedida>) factoryConsultasDAO.getLista("UnidadesDeMedida");
-		lista = ((UnidadesDeMedidaDAO)consulta).getTodos();
-		for (UnidadesDeMedida vi : lista) { 
+		lista = this.consulta.getTodos();
+		for (UnidadesDeMedida vi : lista) {
 			this.getData().add(vi);
 
 		}
-		this.getTablaUnidadesdDeMedida().setItems(this.getData());	
+		this.getTablaUnidadesdDeMedida().setItems(this.getData());
 		tablaUnidadesdDeMedida.setPrefSize(centroInferior.getMaxWidth(), centroInferior.getMaxHeight());
-		centroInferior.getChildren().add(0,this.getTablaUnidadesdDeMedida());			
+		centroInferior.getChildren().add(0, this.getTablaUnidadesdDeMedida());
 	}
-	
+
 	private void agregarListenerEvent() {
 		// Para que se pueda seleccionar varias rows de la tabla
 		tablaUnidadesdDeMedida.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
@@ -114,24 +132,14 @@ public class UnidadesDeMedidaGUI extends TableView<UnidadesDeMedida> implements 
 		tablaUnidadesdDeMedida.setOnDragDetected(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(final MouseEvent me) {
+
 				final Dragboard db = tablaUnidadesdDeMedida.startDragAndDrop(TransferMode.COPY);
 				final ClipboardContent content = new ClipboardContent();
 
-				String selected = "";
-				Set<UnidadesDeMedida> selec = new HashSet<UnidadesDeMedida>(
-						tablaUnidadesdDeMedida.getSelectionModel().getSelectedItems());
-				Object[] arr = selec.toArray();
-
-				for (int i = 0; i < arr.length; i++) {
-					selected += (((UnidadesDeMedida) arr[i]).getId().toString());
-					selected += " ";
-
-				}
-				content.putString(selected.toString());
-
-				// content.putString("Drag Me!");
+				content.putString("");
 				db.setContent(content);
 				me.consume();
+
 			}
 		});
 		tablaUnidadesdDeMedida.setOnDragEntered(new EventHandler<DragEvent>() {
@@ -160,31 +168,112 @@ public class UnidadesDeMedidaGUI extends TableView<UnidadesDeMedida> implements 
 		});
 
 		PanelDerecho.getInstance().getEditorTexto().setOnDragDropped(new EventHandler<DragEvent>() {
-			 
+
 			@Override
 			public void handle(DragEvent event) {
-				Clipboard clipboard = Clipboard.getSystemClipboard();
-				ClipboardContent content = new ClipboardContent();
+				Runnable callback = new Runnable() {
 
-				String selected = "";
-				Set<UnidadesDeMedida> selec = new HashSet<UnidadesDeMedida>(
-						tablaUnidadesdDeMedida.getSelectionModel().getSelectedItems());
-				Object[] arr = selec.toArray();
+					@Override
+					public void run() {
+						Clipboard clipboard = Clipboard.getSystemClipboard();
+						ClipboardContent content = new ClipboardContent();
 
-				for (int i = 0; i < arr.length; i++) {
-					selected += (((UnidadesDeMedida) arr[i]).getId().toString());
-					selected += " ";
+						String selected = "";
+						Set<UnidadesDeMedida> selec = new HashSet<UnidadesDeMedida>(
+								tablaUnidadesdDeMedida.getSelectionModel().getSelectedItems());
+						Object[] arr = selec.toArray();
 
-				}
-				content.putString(selected);
+						String columnaSeleccionada = getTexto();
+						for (int i = 0; i < arr.length; i++) {
+							switch (columnaSeleccionada.toLowerCase()) {
+							case "id":
+								if (((UnidadesDeMedida) arr[i]).getId() != null) {
+									selected += ((UnidadesDeMedida) arr[i]).getId().toString();
+									selected += " ";
+								} else
+									selected += "";
+								break;
+							case "unidaddemedida":
+								if (((UnidadesDeMedida) arr[i]).getUnidadDeMedida() != null) {
+									selected += ((UnidadesDeMedida) arr[i]).getUnidadDeMedida();
+									selected += " ";
+								} else
+									selected += "";
+								break;
+							case "observaciones":
+								if (((UnidadesDeMedida) arr[i]).getObservaciones() != null) {
+									selected += ((UnidadesDeMedida) arr[i]).getObservaciones();
+									selected += " ";
+								} else
+									selected += "";
+								break;
 
-				clipboard.setContent(content);
+							}
+						}
+						content.putString(selected);
 
-				PanelDerecho.getInstance().getEditorTexto().insertText(
-						PanelDerecho.getInstance().getEditorTexto().getCaretPosition(), clipboard.getString());
+						clipboard.setContent(content);
+
+						PanelDerecho.getInstance().getEditorTexto().insertText(
+								PanelDerecho.getInstance().getEditorTexto().getCaretPosition(), clipboard.getString());
+						setTexto("");
+
+					}
+
+				};
+				nuevaStage(callback);
+
 			}
 
 		});
 	}
 
+	public void nuevaStage(Runnable callback) {
+		Stage nuevoStage = new Stage();
+
+		HBox ventana = new HBox();
+		Label labelColumna = new Label("Seleccione Columna: ");
+		ComboBox<String> comboColumna = new ComboBox<String>();
+		Button botonAceptar = new Button("Aceptar");
+		Button botonCancelar = new Button("Cancelar");
+		HBox botones = new HBox();
+		VBox todo = new VBox();
+
+		botones.setSpacing(50);
+		ventana.getChildren().addAll(labelColumna, comboColumna);
+		ventana.setSpacing(50);
+		ventana.setAlignment(Pos.CENTER);
+
+		ObservableList<String> listaColumnas = FXCollections.observableArrayList();
+		List<String> listaTodasTablas = consulta.getColumnas();
+		for (String s : listaTodasTablas) {
+			listaColumnas.add(s);
+		}
+		comboColumna.setItems(listaColumnas);
+
+		botonAceptar.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				UnidadesDeMedidaGUI.this.setTexto(comboColumna.getValue());
+				callback.run();
+				nuevoStage.close();
+			}
+		});
+
+		botonCancelar.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				nuevoStage.close();
+			}
+		});
+
+		botones.getChildren().addAll(botonAceptar, botonCancelar);
+		todo.getChildren().addAll(ventana, botones);
+		todo.setSpacing(100);
+		Scene escena = new Scene(todo);
+
+		nuevoStage.setScene(escena);
+		nuevoStage.show();
+
+	}
 }

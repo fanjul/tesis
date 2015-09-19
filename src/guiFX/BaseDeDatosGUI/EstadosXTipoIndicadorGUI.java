@@ -10,7 +10,13 @@ import baseDatos.hibernate.tablas.EstadosXTipoIndicador;
 import guiFX.PanelDerecho;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -22,23 +28,22 @@ import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
+public class EstadosXTipoIndicadorGUI extends TableView<EstadosXTipoIndicador>implements AbstractBaseDeDatosGUI {
 
+	private TableView<EstadosXTipoIndicador> tablaEstadosXTipoIndicador;
+	private TableColumn<EstadosXTipoIndicador, Integer> columnaIdTipoIndicador;
+	private TableColumn<EstadosXTipoIndicador, Integer> columnaIdEstado;
+	private TableColumn<EstadosXTipoIndicador, String> columnaEstado;
+	private TableColumn<EstadosXTipoIndicador, String> columnaRepresentacionCromatica;
+	private TableColumn<EstadosXTipoIndicador, String> columnaObservaciones;
+	private EstadosXTipoIndicadorDAO consulta;
+	private String texto = "";
 
-	public class EstadosXTipoIndicadorGUI extends TableView<EstadosXTipoIndicador>implements AbstractBaseDeDatosGUI {
-	
-		private TableView<EstadosXTipoIndicador> tablaEstadosXTipoIndicador;
-		private TableColumn<EstadosXTipoIndicador, Integer> columnaIdTipoIndicador;
-		private TableColumn<EstadosXTipoIndicador, Integer> columnaIdEstado;
-		private TableColumn<EstadosXTipoIndicador, String> columnaEstado;
-		private TableColumn<EstadosXTipoIndicador, String> columnaRepresentacionCromatica;
-		private TableColumn<EstadosXTipoIndicador, String> columnaObservaciones;
-
-		
-		private ObservableList<EstadosXTipoIndicador> data;
-
-	
-
+	private ObservableList<EstadosXTipoIndicador> data;
 
 	public EstadosXTipoIndicadorGUI() {
 		super();
@@ -72,9 +77,7 @@ import javafx.scene.layout.AnchorPane;
 		this.agregarListenerEvent();
 		tablaEstadosXTipoIndicador.getStyleClass().add("tablas");
 
-
 	}
-
 
 	public TableView<EstadosXTipoIndicador> getTablaEstadosXTipoIndicador() {
 		return tablaEstadosXTipoIndicador;
@@ -108,6 +111,14 @@ import javafx.scene.layout.AnchorPane;
 		this.data = data;
 	}
 
+	public String getTexto() {
+		return texto;
+	}
+
+	public void setTexto(String texto) {
+		this.texto = texto;
+	}
+
 	@Override
 	public void crearTablaBaseDeDatos() {
 		this.mostrarTabla();
@@ -115,16 +126,15 @@ import javafx.scene.layout.AnchorPane;
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public void mostrarTabla(Object consulta, FactoryConsultas factoryConsultasDAO,
-			AnchorPane centroInferior) {
+	public void mostrarTabla(Object consulta, FactoryConsultas factoryConsultasDAO, AnchorPane centroInferior) {
 		if (!centroInferior.getChildren().isEmpty()) {
 			centroInferior.getChildren().remove(0);
 		}
-
+		this.consulta = (EstadosXTipoIndicadorDAO) consulta;
 		this.setData(FXCollections.observableArrayList());
 		List<EstadosXTipoIndicador> lista = (List<EstadosXTipoIndicador>) factoryConsultasDAO
 				.getLista("EstadosXTipoIndicador");
-		lista = ((EstadosXTipoIndicadorDAO) consulta).getTodos();
+		lista = this.consulta.getTodos();
 		for (EstadosXTipoIndicador vi : lista) {
 			this.getData().add(vi);
 		}
@@ -135,85 +145,170 @@ import javafx.scene.layout.AnchorPane;
 
 	}
 
-		private void agregarListenerEvent() {
-			// Para que se pueda seleccionar varias rows de la tabla
-			tablaEstadosXTipoIndicador.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+	private void agregarListenerEvent() {
+		// Para que se pueda seleccionar varias rows de la tabla
+		tablaEstadosXTipoIndicador.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
-			// Drag & Drop de tabla al editor. Si queres pone el cursor donde
-			// quieras y arrastras.
-			tablaEstadosXTipoIndicador.setOnDragDetected(new EventHandler<MouseEvent>() {
-				@Override
-				public void handle(final MouseEvent me) {
-					final Dragboard db = tablaEstadosXTipoIndicador.startDragAndDrop(TransferMode.COPY);
-					final ClipboardContent content = new ClipboardContent();
+		// Drag & Drop de tabla al editor. Si queres pone el cursor donde
+		// quieras y arrastras.
+		tablaEstadosXTipoIndicador.setOnDragDetected(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(final MouseEvent me) {
+				final Dragboard db = tablaEstadosXTipoIndicador.startDragAndDrop(TransferMode.COPY);
+				final ClipboardContent content = new ClipboardContent();
 
-					String selected = "";
-					Set<EstadosXTipoIndicador> selec = new HashSet<EstadosXTipoIndicador>(
-							tablaEstadosXTipoIndicador.getSelectionModel().getSelectedItems());
-					Object[] arr = selec.toArray();
+				content.putString("");
+				db.setContent(content);
+				me.consume();
 
-					for (int i = 0; i < arr.length; i++) {
-						selected += (((EstadosXTipoIndicador) arr[i]).getIdTipoIndicador().toString());
-						selected += " ";
+			}
+		});
+		tablaEstadosXTipoIndicador.setOnDragEntered(new EventHandler<DragEvent>() {
+			@Override
+			public void handle(final DragEvent de) {
+
+			}
+		});
+
+		tablaEstadosXTipoIndicador.setOnDragOver(new EventHandler<DragEvent>() {
+			@Override
+			public void handle(final DragEvent de) {
+				de.acceptTransferModes(TransferMode.COPY);
+				de.consume();
+			}
+		});
+
+		PanelDerecho.getInstance().getEditorTexto().setOnDragOver(new EventHandler<DragEvent>() {
+
+			@Override
+			public void handle(DragEvent event) {
+				if (event.getDragboard().hasString()) {
+					event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+				}
+			}
+		});
+
+		PanelDerecho.getInstance().getEditorTexto().setOnDragDropped(new EventHandler<DragEvent>() {
+
+			@Override
+			public void handle(DragEvent event) {
+				Runnable callback = new Runnable() {
+
+					@Override
+					public void run() {
+						Clipboard clipboard = Clipboard.getSystemClipboard();
+						ClipboardContent content = new ClipboardContent();
+
+						String selected = "";
+						Set<EstadosXTipoIndicador> selec = new HashSet<EstadosXTipoIndicador>(
+								tablaEstadosXTipoIndicador.getSelectionModel().getSelectedItems());
+						Object[] arr = selec.toArray();
+
+						String columnaSeleccionada = getTexto();
+						for (int i = 0; i < arr.length; i++) {
+							switch (columnaSeleccionada.toLowerCase()) {
+							case "idtipoindicador":
+								if (((EstadosXTipoIndicador) arr[i]).getIdTipoIndicador() != null) {
+									selected += ((EstadosXTipoIndicador) arr[i]).getIdTipoIndicador().toString();
+									selected += " ";
+								} else
+									selected += "";
+								break;
+							case "observaciones":
+								if (((EstadosXTipoIndicador) arr[i]).getObservaciones() != null) {
+									selected += ((EstadosXTipoIndicador) arr[i]).getObservaciones();
+									selected += " ";
+								} else
+									selected += "";
+								break;
+							case "idestado":
+								if (((EstadosXTipoIndicador) arr[i]).getIdEstado() != null) {
+									selected += ((EstadosXTipoIndicador) arr[i]).getIdEstado().toString();
+									selected += " ";
+								} else
+									selected += "";
+								break;
+							case "estado":
+								if (((EstadosXTipoIndicador) arr[i]).getEstado() != null) {
+									selected += ((EstadosXTipoIndicador) arr[i]).getEstado();
+									selected += " ";
+								} else
+									selected += "";
+								break;
+							case "representacioncromatica":
+								if (((EstadosXTipoIndicador) arr[i]).getRepresentacionCromatica() != null) {
+									selected += ((EstadosXTipoIndicador) arr[i]).getRepresentacionCromatica();
+									selected += " ";
+								} else
+									selected += "";
+								break;
+							}
+
+						}
+						content.putString(selected);
+
+						clipboard.setContent(content);
+
+						PanelDerecho.getInstance().getEditorTexto().insertText(
+								PanelDerecho.getInstance().getEditorTexto().getCaretPosition(), clipboard.getString());
+						setTexto("");
 
 					}
-					content.putString(selected.toString());
 
-					// content.putString("Drag Me!");
-					db.setContent(content);
-					me.consume();
-				}
-			});
-			tablaEstadosXTipoIndicador.setOnDragEntered(new EventHandler<DragEvent>() {
-				@Override
-				public void handle(final DragEvent de) {
+				};
+				nuevaStage(callback);
 
-				}
-			});
+			}
 
-			tablaEstadosXTipoIndicador.setOnDragOver(new EventHandler<DragEvent>() {
-				@Override
-				public void handle(final DragEvent de) {
-					de.acceptTransferModes(TransferMode.COPY);
-					de.consume();
-				}
-			});
+		});
+	}
 
-			PanelDerecho.getInstance().getEditorTexto().setOnDragOver(new EventHandler<DragEvent>() {
+	public void nuevaStage(Runnable callback) {
+		Stage nuevoStage = new Stage();
 
-				@Override
-				public void handle(DragEvent event) {
-					if (event.getDragboard().hasString()) {
-						event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
-					}
-				}
-			});
+		HBox ventana = new HBox();
+		Label labelColumna = new Label("Seleccione Columna: ");
+		ComboBox<String> comboColumna = new ComboBox<String>();
+		Button botonAceptar = new Button("Aceptar");
+		Button botonCancelar = new Button("Cancelar");
+		HBox botones = new HBox();
+		VBox todo = new VBox();
 
-			PanelDerecho.getInstance().getEditorTexto().setOnDragDropped(new EventHandler<DragEvent>() {
+		botones.setSpacing(50);
+		ventana.getChildren().addAll(labelColumna, comboColumna);
+		ventana.setSpacing(50);
+		ventana.setAlignment(Pos.CENTER);
 
-				@Override
-				public void handle(DragEvent event) {
-					Clipboard clipboard = Clipboard.getSystemClipboard();
-					ClipboardContent content = new ClipboardContent();
-
-					String selected = "";
-					Set<EstadosXTipoIndicador> selec = new HashSet<EstadosXTipoIndicador>(
-							tablaEstadosXTipoIndicador.getSelectionModel().getSelectedItems());
-					Object[] arr = selec.toArray();
-
-					for (int i = 0; i < arr.length; i++) {
-						selected += (((EstadosXTipoIndicador) arr[i]).getIdTipoIndicador().toString());
-						selected += " ";
-
-					}
-					content.putString(selected);
-
-					clipboard.setContent(content);
-
-					PanelDerecho.getInstance().getEditorTexto().insertText(
-							PanelDerecho.getInstance().getEditorTexto().getCaretPosition(), clipboard.getString());
-				}
-
-			});
+		ObservableList<String> listaColumnas = FXCollections.observableArrayList();
+		List<String> listaTodasTablas = consulta.getColumnas();
+		for (String s : listaTodasTablas) {
+			listaColumnas.add(s);
 		}
+		comboColumna.setItems(listaColumnas);
+
+		botonAceptar.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				EstadosXTipoIndicadorGUI.this.setTexto(comboColumna.getValue());
+				callback.run();
+				nuevoStage.close();
+			}
+		});
+
+		botonCancelar.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				nuevoStage.close();
+			}
+		});
+
+		botones.getChildren().addAll(botonAceptar, botonCancelar);
+		todo.getChildren().addAll(ventana, botones);
+		todo.setSpacing(100);
+		Scene escena = new Scene(todo);
+
+		nuevoStage.setScene(escena);
+		nuevoStage.show();
+
+	}
 }
