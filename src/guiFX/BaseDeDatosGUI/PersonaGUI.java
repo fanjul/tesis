@@ -10,7 +10,13 @@ import baseDatos.hibernate.tablas.Persona;
 import guiFX.PanelDerecho;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -22,9 +28,12 @@ import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
-public class PersonaGUI extends TableView<Persona> implements AbstractBaseDeDatosGUI {
-	
+public class PersonaGUI extends TableView<Persona>implements AbstractBaseDeDatosGUI {
+
 	private TableView<Persona> tablaPersona;
 	private TableColumn<Persona, Integer> columnaId;
 	private TableColumn<Persona, String> columnaNombre;
@@ -34,43 +43,46 @@ public class PersonaGUI extends TableView<Persona> implements AbstractBaseDeDato
 	private TableColumn<Persona, String> columnaNroDocumento;
 	private TableColumn<Persona, String> columnaCargo;
 	private TableColumn<Persona, String> columnaObsevaciones;
-	
-	private ObservableList<Persona> data; 
+	private PersonaDAO consulta;
+	private String texto = "";
+
+	private ObservableList<Persona> data;
 
 	public PersonaGUI() {
 		super();
 	}
-	
+
 	@SuppressWarnings("unchecked")
-	public void mostrarTabla(){
+	public void mostrarTabla() {
 		tablaPersona = new TableView<Persona>();
-		
+
 		columnaId = new TableColumn<Persona, Integer>("Id");
-		columnaId.setCellValueFactory(new PropertyValueFactory<Persona,Integer>("id"));
-		
+		columnaId.setCellValueFactory(new PropertyValueFactory<Persona, Integer>("id"));
+
 		columnaNombre = new TableColumn<Persona, String>("Nombre");
-		columnaNombre.setCellValueFactory(new PropertyValueFactory<Persona,String>("nombre"));
-		
+		columnaNombre.setCellValueFactory(new PropertyValueFactory<Persona, String>("nombre"));
+
 		columnaApellido = new TableColumn<Persona, String>("Apellido");
-		columnaApellido.setCellValueFactory(new PropertyValueFactory<Persona,String>("apellido"));
-		
+		columnaApellido.setCellValueFactory(new PropertyValueFactory<Persona, String>("apellido"));
+
 		columnaEmail = new TableColumn<Persona, String>("Email");
-		columnaEmail.setCellValueFactory(new PropertyValueFactory<Persona,String>("email"));
-		
+		columnaEmail.setCellValueFactory(new PropertyValueFactory<Persona, String>("email"));
+
 		columnaCargo = new TableColumn<Persona, String>("Cargo");
-		columnaCargo.setCellValueFactory(new PropertyValueFactory<Persona,String>("cargo"));
-		
+		columnaCargo.setCellValueFactory(new PropertyValueFactory<Persona, String>("cargo"));
+
 		columnaTipoDocumento = new TableColumn<Persona, String>("Tipo Documento");
-		columnaTipoDocumento.setCellValueFactory(new PropertyValueFactory<Persona,String>("tipoDocumento"));
-		
+		columnaTipoDocumento.setCellValueFactory(new PropertyValueFactory<Persona, String>("tipoDocumento"));
+
 		columnaNroDocumento = new TableColumn<Persona, String>("Nro Documento");
-		columnaNroDocumento.setCellValueFactory(new PropertyValueFactory<Persona,String>("nroDocumento"));
-		
+		columnaNroDocumento.setCellValueFactory(new PropertyValueFactory<Persona, String>("nroDocumento"));
+
 		columnaObsevaciones = new TableColumn<Persona, String>("Observaciones");
-		columnaObsevaciones.setCellValueFactory(new PropertyValueFactory<Persona,String>("observaciones"));
-		 
-		tablaPersona.getColumns().addAll(columnaId,columnaNombre,columnaApellido,columnaEmail,columnaCargo,columnaTipoDocumento,columnaNroDocumento,columnaObsevaciones);
-	
+		columnaObsevaciones.setCellValueFactory(new PropertyValueFactory<Persona, String>("observaciones"));
+
+		tablaPersona.getColumns().addAll(columnaId, columnaNombre, columnaApellido, columnaEmail, columnaCargo,
+				columnaTipoDocumento, columnaNroDocumento, columnaObsevaciones);
+
 		tablaPersona.getStyleClass().add("tablas");
 		this.agregarListenerEvent();
 	}
@@ -111,13 +123,20 @@ public class PersonaGUI extends TableView<Persona> implements AbstractBaseDeDato
 		return columnaObsevaciones;
 	}
 
-	
 	public ObservableList<Persona> getData() {
 		return data;
 	}
 
 	public void setData(ObservableList<Persona> data) {
 		this.data = data;
+	}
+
+	public String getTexto() {
+		return texto;
+	}
+
+	public void setTexto(String texto) {
+		this.texto = texto;
 	}
 
 	@Override
@@ -127,22 +146,22 @@ public class PersonaGUI extends TableView<Persona> implements AbstractBaseDeDato
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public void mostrarTabla(Object consulta, FactoryConsultas factoryConsultasDAO,
-			AnchorPane centroInferior) {
-		
-		if(!centroInferior.getChildren().isEmpty()){
+	public void mostrarTabla(Object consulta, FactoryConsultas factoryConsultasDAO, AnchorPane centroInferior) {
+
+		if (!centroInferior.getChildren().isEmpty()) {
 			centroInferior.getChildren().remove(0);
 		}
+		this.consulta = (PersonaDAO) consulta;
 		this.setData(FXCollections.observableArrayList());
 		List<Persona> lista = (List<Persona>) factoryConsultasDAO.getLista("Persona");
-		lista = ((PersonaDAO)consulta).getTodos();
-		for (Persona vi : lista) { 
+		lista = this.consulta.getTodos();
+		for (Persona vi : lista) {
 			this.getData().add(vi);
 
 		}
 		this.getTablaPersona().setItems(this.getData());
 		tablaPersona.setPrefSize(centroInferior.getMaxWidth(), centroInferior.getMaxHeight());
-		centroInferior.getChildren().add(0,this.getTablaPersona());			
+		centroInferior.getChildren().add(0, this.getTablaPersona());
 	}
 
 	private void agregarListenerEvent() {
@@ -157,21 +176,10 @@ public class PersonaGUI extends TableView<Persona> implements AbstractBaseDeDato
 				final Dragboard db = tablaPersona.startDragAndDrop(TransferMode.COPY);
 				final ClipboardContent content = new ClipboardContent();
 
-				String selected = "";
-				Set<Persona> selec = new HashSet<Persona>(
-						tablaPersona.getSelectionModel().getSelectedItems());
-				Object[] arr = selec.toArray();
-
-				for (int i = 0; i < arr.length; i++) {
-					selected += (((Persona) arr[i]).getId().toString());
-					selected += " ";
-
-				}
-				content.putString(selected.toString());
-
-				// content.putString("Drag Me!");
+				content.putString("");
 				db.setContent(content);
 				me.consume();
+
 			}
 		});
 		tablaPersona.setOnDragEntered(new EventHandler<DragEvent>() {
@@ -200,32 +208,145 @@ public class PersonaGUI extends TableView<Persona> implements AbstractBaseDeDato
 		});
 
 		PanelDerecho.getInstance().getEditorTexto().setOnDragDropped(new EventHandler<DragEvent>() {
-			 
+
 			@Override
 			public void handle(DragEvent event) {
-				Clipboard clipboard = Clipboard.getSystemClipboard();
-				ClipboardContent content = new ClipboardContent();
+				Runnable callback = new Runnable() {
 
-				String selected = "";
-				Set<Persona> selec = new HashSet<Persona>(
-						tablaPersona.getSelectionModel().getSelectedItems());
-				Object[] arr = selec.toArray();
+					@Override
+					public void run() {
+						Clipboard clipboard = Clipboard.getSystemClipboard();
+						ClipboardContent content = new ClipboardContent();
 
-				for (int i = 0; i < arr.length; i++) {
-					selected += (((Persona) arr[i]).getId().toString());
-					selected += " ";
+						String selected = "";
+						Set<Persona> selec = new HashSet<Persona>(tablaPersona.getSelectionModel().getSelectedItems());
+						Object[] arr = selec.toArray();
 
-				}
-				content.putString(selected);
+						String columnaSeleccionada = getTexto();
+						for (int i = 0; i < arr.length; i++) {
+							switch (columnaSeleccionada.toLowerCase()) {
+							case "id":
+								if (((Persona) arr[i]).getId() != null) {
+									selected += ((Persona) arr[i]).getId().toString();
+									selected += " ";
+								} else
+									selected += "";
+								break;
+							case "nombre":
+								if (((Persona) arr[i]).getNombre() != null) {
+									selected += ((Persona) arr[i]).getNombre();
+									selected += " ";
+								} else
+									selected += "";
+								break;
+							case "apellido":
+								if (((Persona) arr[i]).getApellido() != null) {
+									selected += ((Persona) arr[i]).getApellido();
+									selected += " ";
+								} else
+									selected += "";
+								break;
+							case "email":
+								if (((Persona) arr[i]).getEmail() != null) {
+									selected += ((Persona) arr[i]).getEmail();
+									selected += " ";
+								} else
+									selected += "";
+								break;
+							case "tipodocumento":
+								if (((Persona) arr[i]).getTipoDocumento() != null) {
+									selected += ((Persona) arr[i]).getTipoDocumento();
+									selected += " ";
+								} else
+									selected += "";
+								break;
+							case "nrodocumento":
+								if (((Persona) arr[i]).getNroDocumento() != null) {
+									selected += ((Persona) arr[i]).getNroDocumento();
+									selected += " ";
+								} else
+									selected += "";
+								break;
+							case "cargo":
+								if (((Persona) arr[i]).getCargo() != null) {
+									selected += ((Persona) arr[i]).getCargo();
+									selected += " ";
+								} else
+									selected += "";
+								break;
+							case "observaciones":
+								if (((Persona) arr[i]).getObservaciones() != null) {
+									selected += ((Persona) arr[i]).getObservaciones();
+									selected += " ";
+								} else
+									selected += "";
+								break;
+							}
+						}
+						content.putString(selected);
 
-				clipboard.setContent(content);
+						clipboard.setContent(content);
 
-				PanelDerecho.getInstance().getEditorTexto().insertText(
-						PanelDerecho.getInstance().getEditorTexto().getCaretPosition(), clipboard.getString());
+						PanelDerecho.getInstance().getEditorTexto().insertText(
+								PanelDerecho.getInstance().getEditorTexto().getCaretPosition(), clipboard.getString());
+						setTexto("");
+
+					}
+
+				};
+				nuevaStage(callback);
+
 			}
-
 		});
 	}
 
+	public void nuevaStage(Runnable callback) {
+		Stage nuevoStage = new Stage();
+
+		HBox ventana = new HBox();
+		Label labelColumna = new Label("Seleccione Columna: ");
+		ComboBox<String> comboColumna = new ComboBox<String>();
+		Button botonAceptar = new Button("Aceptar");
+		Button botonCancelar = new Button("Cancelar");
+		HBox botones = new HBox();
+		VBox todo = new VBox();
+
+		botones.setSpacing(50);
+		ventana.getChildren().addAll(labelColumna, comboColumna);
+		ventana.setSpacing(50);
+		ventana.setAlignment(Pos.CENTER);
+
+		ObservableList<String> listaColumnas = FXCollections.observableArrayList();
+		List<String> listaTodasTablas = consulta.getColumnas();
+		for (String s : listaTodasTablas) {
+			listaColumnas.add(s);
+		}
+		comboColumna.setItems(listaColumnas);
+
+		botonAceptar.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				PersonaGUI.this.setTexto(comboColumna.getValue());
+				callback.run();
+				nuevoStage.close();
+			}
+		});
+
+		botonCancelar.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				nuevoStage.close();
+			}
+		});
+
+		botones.getChildren().addAll(botonAceptar, botonCancelar);
+		todo.getChildren().addAll(ventana, botones);
+		todo.setSpacing(100);
+		Scene escena = new Scene(todo);
+
+		nuevoStage.setScene(escena);
+		nuevoStage.show();
+
+	}
 
 }

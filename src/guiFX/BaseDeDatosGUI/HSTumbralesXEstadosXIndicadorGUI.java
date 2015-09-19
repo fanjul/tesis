@@ -258,14 +258,14 @@ public class HSTumbralesXEstadosXIndicadorGUI extends TableView<HSTumbralesXEsta
 									selected += ((HSTumbralesXEstadosXIndicador) arr[i]).getIdIndicador().toString();
 									selected += " ";
 								} else
-									selected = "";
+									selected += "";
 								break;
 							case "observaciones":
 								if (((HSTumbralesXEstadosXIndicador) arr[i]).getObservaciones() != null) {
 									selected += ((HSTumbralesXEstadosXIndicador) arr[i]).getObservaciones();
 									selected += " ";
 								} else
-									selected = "";
+									selected += "";
 								break;
 							case "idestadotipoindicador":
 								if (((HSTumbralesXEstadosXIndicador) arr[i]).getIdEstadoTipoIndicador() != null) {
@@ -273,49 +273,49 @@ public class HSTumbralesXEstadosXIndicadorGUI extends TableView<HSTumbralesXEsta
 											.toString();
 									selected += " ";
 								} else
-									selected = "";
+									selected += "";
 								break;
 							case "inicioumbral":
 								if (((HSTumbralesXEstadosXIndicador) arr[i]).getInicioUmbral() != null) {
 									selected += ((HSTumbralesXEstadosXIndicador) arr[i]).getInicioUmbral().toString();
 									selected += " ";
 								} else
-									selected = "";
+									selected += "";
 								break;
 							case "finumbral":
 								if (((HSTumbralesXEstadosXIndicador) arr[i]).getFinUmbral() != null) {
 									selected += ((HSTumbralesXEstadosXIndicador) arr[i]).getFinUmbral().toString();
 									selected += " ";
 								} else
-									selected = "";
+									selected += "";
 								break;
 							case "operadorumbralsuperior":
 								if (((HSTumbralesXEstadosXIndicador) arr[i]).getOperadorUmbralSuperior() != null) {
 									selected += ((HSTumbralesXEstadosXIndicador) arr[i]).getOperadorUmbralSuperior();
 									selected += " ";
 								} else
-									selected = "";
+									selected += "";
 								break;
 							case "operadorumbralinferior":
 								if (((HSTumbralesXEstadosXIndicador) arr[i]).getOperadorUmbralInferior() != null) {
 									selected += ((HSTumbralesXEstadosXIndicador) arr[i]).getOperadorUmbralInferior();
 									selected += " ";
 								} else
-									selected = "";
+									selected += "";
 								break;
 							case "valorumbralsuperior":
 								if (((HSTumbralesXEstadosXIndicador) arr[i]).getValorUmbralSuperior() != null) {
 									selected += ((HSTumbralesXEstadosXIndicador) arr[i]).getValorUmbralSuperior();
 									selected += " ";
 								} else
-									selected = "";
+									selected += "";
 								break;
 							case "valorumbralinferior":
 								if (((HSTumbralesXEstadosXIndicador) arr[i]).getValorUmbralInferior() != null) {
 									selected += ((HSTumbralesXEstadosXIndicador) arr[i]).getValorUmbralInferior();
 									selected += " ";
 								} else
-									selected = "";
+									selected += "";
 								break;
 							}
 

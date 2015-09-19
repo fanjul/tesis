@@ -10,7 +10,13 @@ import baseDatos.hibernate.tablas.TipoIndicador;
 import guiFX.PanelDerecho;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -22,60 +28,58 @@ import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
-public class TipoIndicadorGUI extends TableView<TipoIndicador> implements AbstractBaseDeDatosGUI{
-	
+public class TipoIndicadorGUI extends TableView<TipoIndicador>implements AbstractBaseDeDatosGUI {
+
 	private TableView<TipoIndicador> tablaTipoIndicador;
 	private TableColumn<TipoIndicador, Integer> columnaId;
 	private TableColumn<TipoIndicador, String> columnaTipo;
 	private TableColumn<TipoIndicador, String> columnaObservaciones;
-	
-	private ObservableList<TipoIndicador> data; 
+	private TipoIndicadorDAO consulta;
+	private String texto = "";
+	private ObservableList<TipoIndicador> data;
 
-	
 	public TipoIndicadorGUI() {
 		super();
 	}
-	
+
 	@SuppressWarnings("unchecked")
-	public void mostrarTabla(){
+	public void mostrarTabla() {
 		tablaTipoIndicador = new TableView<TipoIndicador>();
-		
+
 		columnaId = new TableColumn<TipoIndicador, Integer>("Id");
-		columnaId.setCellValueFactory(new PropertyValueFactory<TipoIndicador,Integer>("id"));
-		
+		columnaId.setCellValueFactory(new PropertyValueFactory<TipoIndicador, Integer>("id"));
+
 		columnaTipo = new TableColumn<TipoIndicador, String>("Tipo");
-		columnaTipo.setCellValueFactory(new PropertyValueFactory<TipoIndicador,String>("tipo"));
-		
+		columnaTipo.setCellValueFactory(new PropertyValueFactory<TipoIndicador, String>("tipo"));
+
 		columnaObservaciones = new TableColumn<TipoIndicador, String>("Observaciones");
-		columnaObservaciones.setCellValueFactory(new PropertyValueFactory<TipoIndicador,String>("observaciones"));
-	
-		tablaTipoIndicador.getColumns().addAll(columnaId,columnaTipo,columnaObservaciones);
-		
+		columnaObservaciones.setCellValueFactory(new PropertyValueFactory<TipoIndicador, String>("observaciones"));
+
+		tablaTipoIndicador.getColumns().addAll(columnaId, columnaTipo, columnaObservaciones);
+
 		tablaTipoIndicador.getStyleClass().add("tablas");
 		this.agregarListenerEvent();
 	}
-
 
 	public TableView<TipoIndicador> getTablaTipoIndicador() {
 		return tablaTipoIndicador;
 	}
 
-
 	public TableColumn<TipoIndicador, Integer> getColumnaId() {
 		return columnaId;
 	}
-
 
 	public TableColumn<TipoIndicador, String> getColumnaTipo() {
 		return columnaTipo;
 	}
 
-
 	public TableColumn<TipoIndicador, String> getColumnaObservaciones() {
 		return columnaObservaciones;
 	}
-
 
 	public ObservableList<TipoIndicador> getData() {
 		return data;
@@ -90,26 +94,34 @@ public class TipoIndicadorGUI extends TableView<TipoIndicador> implements Abstra
 		this.mostrarTabla();
 	}
 
+	public String getTexto() {
+		return texto;
+	}
+
+	public void setTexto(String texto) {
+		this.texto = texto;
+	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public void mostrarTabla(Object consulta, FactoryConsultas factoryConsultasDAO,
-			AnchorPane centroInferior) {
-		
-		if(!centroInferior.getChildren().isEmpty()){
+	public void mostrarTabla(Object consulta, FactoryConsultas factoryConsultasDAO, AnchorPane centroInferior) {
+
+		if (!centroInferior.getChildren().isEmpty()) {
 			centroInferior.getChildren().remove(0);
 		}
+		this.consulta = (TipoIndicadorDAO) consulta;
 		this.setData(FXCollections.observableArrayList());
 		List<TipoIndicador> lista = (List<TipoIndicador>) factoryConsultasDAO.getLista("TipoIndicador");
-		lista = ((TipoIndicadorDAO)consulta).getTodos();
-		for (TipoIndicador vi : lista) { 
+		lista = this.consulta.getTodos();
+		for (TipoIndicador vi : lista) {
 			this.getData().add(vi);
 
 		}
 		this.getTablaTipoIndicador().setItems(this.getData());
 		tablaTipoIndicador.setPrefSize(centroInferior.getMaxWidth(), centroInferior.getMaxHeight());
-		centroInferior.getChildren().add(0,this.getTablaTipoIndicador());			
+		centroInferior.getChildren().add(0, this.getTablaTipoIndicador());
 	}
+
 	private void agregarListenerEvent() {
 		// Para que se pueda seleccionar varias rows de la tabla
 		tablaTipoIndicador.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
@@ -122,21 +134,10 @@ public class TipoIndicadorGUI extends TableView<TipoIndicador> implements Abstra
 				final Dragboard db = tablaTipoIndicador.startDragAndDrop(TransferMode.COPY);
 				final ClipboardContent content = new ClipboardContent();
 
-				String selected = "";
-				Set<TipoIndicador> selec = new HashSet<TipoIndicador>(
-						tablaTipoIndicador.getSelectionModel().getSelectedItems());
-				Object[] arr = selec.toArray();
-
-				for (int i = 0; i < arr.length; i++) {
-					selected += (((TipoIndicador) arr[i]).getId().toString());
-					selected += " ";
-
-				}
-				content.putString(selected.toString());
-
-				// content.putString("Drag Me!");
+				content.putString("");
 				db.setContent(content);
 				me.consume();
+
 			}
 		});
 		tablaTipoIndicador.setOnDragEntered(new EventHandler<DragEvent>() {
@@ -165,31 +166,111 @@ public class TipoIndicadorGUI extends TableView<TipoIndicador> implements Abstra
 		});
 
 		PanelDerecho.getInstance().getEditorTexto().setOnDragDropped(new EventHandler<DragEvent>() {
-			 
+
 			@Override
 			public void handle(DragEvent event) {
-				Clipboard clipboard = Clipboard.getSystemClipboard();
-				ClipboardContent content = new ClipboardContent();
+				Runnable callback = new Runnable() {
 
-				String selected = "";
-				Set<TipoIndicador> selec = new HashSet<TipoIndicador>(
-						tablaTipoIndicador.getSelectionModel().getSelectedItems());
-				Object[] arr = selec.toArray();
+					@Override
+					public void run() {
+						Clipboard clipboard = Clipboard.getSystemClipboard();
+						ClipboardContent content = new ClipboardContent();
 
-				for (int i = 0; i < arr.length; i++) {
-					selected += (((TipoIndicador) arr[i]).getId().toString());
-					selected += " ";
+						String selected = "";
+						Set<TipoIndicador> selec = new HashSet<TipoIndicador>(
+								tablaTipoIndicador.getSelectionModel().getSelectedItems());
+						Object[] arr = selec.toArray();
 
-				}
-				content.putString(selected);
+						String columnaSeleccionada = getTexto();
+						for (int i = 0; i < arr.length; i++) {
+							switch (columnaSeleccionada.toLowerCase()) {
+							case "id":
+								if (((TipoIndicador) arr[i]).getId() != null) {
+									selected += ((TipoIndicador) arr[i]).getId().toString();
+									selected += " ";
+								} else
+									selected += "";
+								break;
+							case "tipo":
+								if (((TipoIndicador) arr[i]).getTipo() != null) {
+									selected += ((TipoIndicador) arr[i]).getTipo();
+									selected += " ";
+								} else
+									selected += "";
+								break;
+							case "observaciones":
+								if (((TipoIndicador) arr[i]).getObservaciones() != null) {
+									selected += ((TipoIndicador) arr[i]).getObservaciones();
+									selected += " ";
+								} else
+									selected += "";
+								break;
+							}
+						}
+						content.putString(selected);
 
-				clipboard.setContent(content);
+						clipboard.setContent(content);
 
-				PanelDerecho.getInstance().getEditorTexto().insertText(
-						PanelDerecho.getInstance().getEditorTexto().getCaretPosition(), clipboard.getString());
+						PanelDerecho.getInstance().getEditorTexto().insertText(
+								PanelDerecho.getInstance().getEditorTexto().getCaretPosition(), clipboard.getString());
+						setTexto("");
+
+					}
+
+				};
+				nuevaStage(callback);
+
 			}
-
 		});
+	}
+
+	public void nuevaStage(Runnable callback) {
+		Stage nuevoStage = new Stage();
+
+		HBox ventana = new HBox();
+		Label labelColumna = new Label("Seleccione Columna: ");
+		ComboBox<String> comboColumna = new ComboBox<String>();
+		Button botonAceptar = new Button("Aceptar");
+		Button botonCancelar = new Button("Cancelar");
+		HBox botones = new HBox();
+		VBox todo = new VBox();
+
+		botones.setSpacing(50);
+		ventana.getChildren().addAll(labelColumna, comboColumna);
+		ventana.setSpacing(50);
+		ventana.setAlignment(Pos.CENTER);
+
+		ObservableList<String> listaColumnas = FXCollections.observableArrayList();
+		List<String> listaTodasTablas = consulta.getColumnas();
+		for (String s : listaTodasTablas) {
+			listaColumnas.add(s);
+		}
+		comboColumna.setItems(listaColumnas);
+
+		botonAceptar.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				TipoIndicadorGUI.this.setTexto(comboColumna.getValue());
+				callback.run();
+				nuevoStage.close();
+			}
+		});
+
+		botonCancelar.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				nuevoStage.close();
+			}
+		});
+
+		botones.getChildren().addAll(botonAceptar, botonCancelar);
+		todo.getChildren().addAll(ventana, botones);
+		todo.setSpacing(100);
+		Scene escena = new Scene(todo);
+
+		nuevoStage.setScene(escena);
+		nuevoStage.show();
+
 	}
 
 }

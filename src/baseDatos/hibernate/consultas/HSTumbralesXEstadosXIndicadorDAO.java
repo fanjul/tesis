@@ -81,10 +81,8 @@ public class HSTumbralesXEstadosXIndicadorDAO extends DAO {
 			}
 
 			for (int nameIndex = 0; nameIndex != properties.length; nameIndex++) {
-				System.out.println("Property name: " + properties[nameIndex]);
 				String[] columns = aep.getPropertyColumnNames(nameIndex);
 				for (int columnIndex = 0; columnIndex != columns.length; columnIndex++) {
-					System.out.println("Column name: " + columns[columnIndex]);
 					columnNames.add(columns[columnIndex]);
 				}
 			}
