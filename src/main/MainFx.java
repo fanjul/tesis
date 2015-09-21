@@ -6,9 +6,15 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.control.ToggleButton;
+import javafx.scene.control.Tooltip;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -16,6 +22,7 @@ import javafx.stage.StageStyle;
 public class MainFx extends Application {
 	private static final String HERRAMIENTA_TESIS = "HerramientaTesis";
 
+	
 	public static void main(String[] args) {
 		Application.launch(args);
 	}
@@ -27,10 +34,10 @@ public class MainFx extends Application {
 		primaryStage.setResizable(true);
 		primaryStage.setMaximized(false);
 
-		BorderPane ventana = new VentanaPrincipal(500.0, 500.0);
+		BorderPane ventana = new VentanaPrincipal(primaryStage, 500.0, 500.0);
 		ventana.setMinHeight(700);
 		ventana.setMinWidth(1300);
-
+		
 		AnchorPane cuadroPrincipal = new AnchorPane();
 		cuadroPrincipal.setTopAnchor(ventana, 0.0);
 		cuadroPrincipal.setBottomAnchor(ventana, 0.0);
@@ -51,6 +58,10 @@ public class MainFx extends Application {
 				System.out.println("maximized:" + t1.booleanValue());
 			}
 		});
+		
+		
+		
+		
 
 		cuadroPrincipal.getChildren().add(ventana);
 

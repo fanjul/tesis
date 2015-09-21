@@ -5,6 +5,7 @@ import java.io.File;
 import org.rosuda.JRI.REXP;
 
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 
 public abstract class TipoObjeto {
@@ -19,6 +20,6 @@ public abstract class TipoObjeto {
 		sig = obj;
 	}
 
-	abstract public void ejecutarMetodo(Object obj, File archivo, ComboBox comboBoxSeleccionarMetodo, TextField textFieldNombreFuncion);
+	abstract public void ejecutarMetodo(Object obj, File archivo, ListView listaMetodos, TextField textFieldNombreFuncion);
 
 }
