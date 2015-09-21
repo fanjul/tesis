@@ -42,6 +42,7 @@ public class BarraMenu extends VBox {
 	private AnchorPane centroInferior;
 	private HBox centroSuperior;
 	
+	@SuppressWarnings("rawtypes")
 	private ListView listaMetodos; 
 
 	public BarraMenu( VentanaPrincipal ventana) {
@@ -51,6 +52,7 @@ public class BarraMenu extends VBox {
 		VBox.setVgrow(this, Priority.ALWAYS);
 		this.agregarMenuAbrirArchivo();
 		this.agregarMenuBaseDeDatos();
+		//this.agregarMenuListaMetodosMatematicos();
 	}
 
 	private void agregarMenuBaseDeDatos() {
@@ -89,16 +91,23 @@ public class BarraMenu extends VBox {
 	}
 	
 	
-	private void agregarMenuListaMetodosMAtematicos(){
-		listaMetodos = new ListView();
-		
+	@SuppressWarnings("rawtypes")
+	public void inicializarListaMetodosMatematicos(ObservableList lista){
+		listaMetodos = new ListView(lista);
+		this.getChildren().add(listaMetodos);
 		
 	}
 	
-	
-	
-	
+		
+	public ListView getListaMetodos() {
+		return listaMetodos;
+	}
 
+	
+	
+	
+	
+	
 	private static void configurarElegirArchivo(final FileChooser fileChooser) {
 		fileChooser.setTitle("View Pictures");
 		fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
@@ -170,4 +179,6 @@ public class BarraMenu extends VBox {
 		ventana.setCenter(dividirCentro);
 
 	}
+
+
 }

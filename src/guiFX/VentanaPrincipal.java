@@ -38,7 +38,7 @@ import javafx.stage.Stage;
 
 public class VentanaPrincipal extends BorderPane {
 
-	private VBox barraMenu;
+	private BarraMenu barraMenu;
 	// private Button botonGuardarMetodoMatematico;
 	// private Button botonEjecutar;
 	// private TextField textFieldNombreArchivo;
@@ -57,7 +57,7 @@ public class VentanaPrincipal extends BorderPane {
 	private BotonImagen botonGraficoTorta;
 	
 	@SuppressWarnings("rawtypes")
-	private ListView listaMetodos;
+	//private ListView listaMetodos;
 	
 	static final String RUTA_METODOS = System.getProperty("user.dir") + "\\" + "Metodos Matematicos";
 	static final String EXTENSION_ARCHIVOS = "met";
@@ -86,12 +86,13 @@ public class VentanaPrincipal extends BorderPane {
 		abrirDialogoEjecutar();
 
 	//	comboBoxSeleccionarMetodo = new ComboBox(getMetodosMatematicosYaCreados());
-	listaMetodos = new ListView<>(getMetodosMatematicosYaCreados());
-	
+//	listaMetodos = new ListView<>(getMetodosMatematicosYaCreados());
+		barraMenu.inicializarListaMetodosMatematicos(getMetodosMatematicosYaCreados());
 		// Para copiar el contenido del archivo en el editor de texto
 		//comboBoxSeleccionarMetodo.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
-			listaMetodos.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
-			@Override
+			//listaMetodos.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
+		barraMenu.getListaMetodos().getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {	
+		@Override
 			public void changed(ObservableValue arg0, Object old_val, Object new_val) {
 
 				((PanelDerecho) panelDerecho).getEditorTexto().setText((String) new_val);
@@ -100,7 +101,7 @@ public class VentanaPrincipal extends BorderPane {
 			}
 		});
 
-		hBoxAbajoDelVBox.getChildren().addAll(listaMetodos, botonGuardarMetodo,
+		hBoxAbajoDelVBox.getChildren().addAll(/*listaMetodos,*/ botonGuardarMetodo,
 				botonEjecutar);
 
 		panelDerecho = PanelDerecho.getInstance();
@@ -137,7 +138,7 @@ public class VentanaPrincipal extends BorderPane {
 						guardarMetodoMtematicoLugarPorDefecto(((DialogoGuardarArchivo) dialogoGuardarMetodo));
 						// Actualiza el ComboBox con el nuevo Metodo Matematico
 						// agregado
-					listaMetodos.setItems(getMetodosMatematicosYaCreados());
+						barraMenu.getListaMetodos().setItems(getMetodosMatematicosYaCreados());
 						dialogoGuardarMetodo.cerrarDialogo();
 					}
 				});
@@ -174,7 +175,7 @@ public class VentanaPrincipal extends BorderPane {
 					public void handle(ActionEvent event) {
 
 						File archivo = new File(RUTA_METODOS + "\\"
-								+ listaMetodos.getSelectionModel().getSelectedItem().toString() + "."
+								+ barraMenu.getListaMetodos().getSelectionModel().getSelectedItem().toString() + "."
 								+ EXTENSION_ARCHIVOS);
 						// ejecutar(archivo);
 
@@ -186,14 +187,14 @@ public class VentanaPrincipal extends BorderPane {
 						tipoArregloDouble.ejecutarMetodo(
 								re.eval(((DialogoEjecutar) dialogoEjecutar).getTextFieldNombreDondeDevuelve().getText())
 										.getContent(),
-								archivo, listaMetodos,
+								archivo, barraMenu.getListaMetodos(),
 								((DialogoEjecutar) dialogoEjecutar).getTextFieldNombreDondeDevuelve());
 
 						TipoObjeto tipoString = new TipoString();
 						tipoString.ejecutarMetodo(
 								re.eval(((DialogoEjecutar) dialogoEjecutar).getTextFieldNombreDondeDevuelve().getText())
 										.getContent(),
-								archivo, listaMetodos,
+								archivo, barraMenu.getListaMetodos(),
 								((DialogoEjecutar) dialogoEjecutar).getTextFieldNombreDondeDevuelve());
 						dialogoEjecutar.cerrarDialogo();
 					}
@@ -303,7 +304,7 @@ public class VentanaPrincipal extends BorderPane {
 			// TODO arreglar, el file tira error porque no existe al guardar uno
 			// nuevo
 			archivo = new File(
-					RUTA_METODOS + "\\" + listaMetodos.getSelectionModel().getSelectedItem().toString()
+					RUTA_METODOS + "\\" + barraMenu.getListaMetodos().getSelectionModel().getSelectedItem().toString()
 							+ "." + EXTENSION_ARCHIVOS);
 			leerArchivo = new FileReader(archivo);
 			BufferedReader memoriaParaLectura = new BufferedReader(leerArchivo);
