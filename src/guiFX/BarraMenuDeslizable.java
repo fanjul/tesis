@@ -1,18 +1,34 @@
 package guiFX;
 
+import java.io.File;
+
+import org.rosuda.JRI.Rengine;
+
+import cadenaResponsabilidades.TipoArregloDouble;
+import cadenaResponsabilidades.TipoObjeto;
+import cadenaResponsabilidades.TipoString;
 import javafx.animation.Animation;
 import javafx.animation.Transition;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.ToggleButton;
+import javafx.scene.control.Tooltip;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
 
 public class BarraMenuDeslizable extends AnchorPane {
 	private static final int EXPANDIR_ANCHO = 150;
 	private Button botonMenu;
-
+	private ToggleButton toggleButtonMenu;
+	private DropShadow shadow = new DropShadow();
+	private ImageView imagenAbrirBarraDeslizable = new ImageView("/imagenesFX/AbrirBarraDeslizable.png");
+	private ImageView imagenCerrarBarraDeslizable = new ImageView("/imagenesFX/CerrarBarraDeslizable.png");
+	
 	public BarraMenuDeslizable(Node nodo) {
 		this.setWidth(EXPANDIR_ANCHO);
 		this.setMinWidth(0);
@@ -21,8 +37,29 @@ public class BarraMenuDeslizable extends AnchorPane {
 		
 		  botonMenu = new Button("Mostrar Menu");
 		  setVisible(false);
-	      // apply the animations when the button is pressed.
-	      botonMenu.setOnAction(new EventHandler<ActionEvent>() {
+
+		  
+			toggleButtonMenu = new ToggleButton("", imagenAbrirBarraDeslizable);
+			toggleButtonMenu.setTooltip(new Tooltip("Abrir Menu"));
+			toggleButtonMenu.getStyleClass().add("botones");
+	     
+			toggleButtonMenu.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
+				@Override
+				public void handle(MouseEvent e) {
+					toggleButtonMenu.setEffect(shadow);
+
+				}
+			});
+
+			toggleButtonMenu.addEventHandler(MouseEvent.MOUSE_EXITED, new EventHandler<MouseEvent>() {
+				@Override
+				public void handle(MouseEvent e) {
+					toggleButtonMenu.setEffect(null);
+				}
+			});
+			
+		  
+			toggleButtonMenu.setOnAction(new EventHandler<ActionEvent>() {
 	        @Override public void handle(ActionEvent actionEvent) {
 	          // create an animation to hide sidebar.
 	          final Animation hideSidebar = new Transition() {
@@ -36,7 +73,12 @@ public class BarraMenuDeslizable extends AnchorPane {
 	          hideSidebar.onFinishedProperty().set(new EventHandler<ActionEvent>() {
 	            @Override public void handle(ActionEvent actionEvent) {
 	              setVisible(false);
-	              botonMenu.setText("Mostrar Menu");
+	              //botonMenu.setText("Mostrar Menu");
+
+	  			//ImageView imagenAbrirCerrarBarraDeslizable = new ImageView("/imagenesFX/AbrirBarraDeslizable.png");
+	  			toggleButtonMenu.setGraphic(imagenAbrirBarraDeslizable);
+	  			toggleButtonMenu.setTooltip(new Tooltip("Abrir Menu"));
+	              
 	            }		              
 
 	          });
@@ -52,8 +94,11 @@ public class BarraMenuDeslizable extends AnchorPane {
 	          };
 	          showSidebar.onFinishedProperty().set(new EventHandler<ActionEvent>() {
 	            @Override public void handle(ActionEvent actionEvent) {
-		              botonMenu.setText("Cerrar Menu");
+		         //     botonMenu.setText("Cerrar Menu");
 
+	    			//ImageView imagenAbrirCerrarBarraDeslizable = new ImageView("/imagenesFX/CerrarBarraDeslizable.png");
+	    			toggleButtonMenu.setGraphic(imagenCerrarBarraDeslizable);
+	    			toggleButtonMenu.setTooltip(new Tooltip("Cerrar Menu"));
 	            }
 	          });
 	  
@@ -69,8 +114,8 @@ public class BarraMenuDeslizable extends AnchorPane {
 	      });
 	}
 	
-	public Button getBotonMenu() {
-		return botonMenu;
+	public ToggleButton getBotonMenu() {
+		return toggleButtonMenu;
 	}
 
 }

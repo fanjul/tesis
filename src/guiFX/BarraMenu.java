@@ -16,6 +16,7 @@ import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.Tooltip;
@@ -40,27 +41,23 @@ public class BarraMenu extends VBox {
 	private ComboBox<String> comboBoxTablas;
 	private AnchorPane centroInferior;
 	private HBox centroSuperior;
+	
+	private ListView listaMetodos; 
 
 	public BarraMenu( VentanaPrincipal ventana) {
 		super();
 		this.ventana = ventana;
 		barraDeslizable = new BarraMenuDeslizable(this);
 		VBox.setVgrow(this, Priority.ALWAYS);
-		this.configurarMenuAbrirArchivo();
-		this.configurarMenuBaseDeDatos();
+		this.agregarMenuAbrirArchivo();
+		this.agregarMenuBaseDeDatos();
 	}
 
-	private void configurarMenuBaseDeDatos() {
-		ImageView abrirBaseDeDatos = new ImageView("/imagenesFX/AbrirBaseDeDatos.png");
-		ToggleButton toggleButtonAbrirBaseDeDatos = new ToggleButton("", abrirBaseDeDatos);
-		Tooltip toolTipAbrirBaseDeDatos = new Tooltip("Abrir Base de Datos");
-		toggleButtonAbrirBaseDeDatos.setTooltip(toolTipAbrirBaseDeDatos);
-
-		toggleButtonAbrirBaseDeDatos.setBackground(null);
+	private void agregarMenuBaseDeDatos() {
 		
-		toggleButtonAbrirBaseDeDatos.getStyleClass().add("botones");
+		BotonImagen botonAbrirBaseDatos = new BotonImagen("/imagenesFX/AbrirBaseDeDatos.png", "Abrir Base de Datos");
 		
-		toggleButtonAbrirBaseDeDatos.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+		botonAbrirBaseDatos.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 
 			@Override
 			public void handle(MouseEvent event) {				
@@ -68,60 +65,39 @@ public class BarraMenu extends VBox {
 			}
 		});
 
-		toggleButtonAbrirBaseDeDatos.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
-			@Override
-			public void handle(MouseEvent e) {
-				toggleButtonAbrirBaseDeDatos.setEffect(shadow);
-			}
-		});
-
-		toggleButtonAbrirBaseDeDatos.addEventHandler(MouseEvent.MOUSE_EXITED, new EventHandler<MouseEvent>() {
-			@Override
-			public void handle(MouseEvent e) {
-				toggleButtonAbrirBaseDeDatos.setEffect(null);
-			}
-		});
-
-		this.getChildren().add(toggleButtonAbrirBaseDeDatos);
+		this.getChildren().add(botonAbrirBaseDatos);
 
 	}
 
-	private void configurarMenuAbrirArchivo() {
-
-		ImageView abrirArchivo = new ImageView("/imagenesFX/AbrirArchivo.png");
-		ToggleButton toggleButtonAbrirArchivo = new ToggleButton("", abrirArchivo);
-		Tooltip toolTip = new Tooltip("Abrir Archivo");
-		toggleButtonAbrirArchivo.setTooltip(toolTip);
-
-		toggleButtonAbrirArchivo.setBackground(null);
+	private void agregarMenuAbrirArchivo() {
 		
-		toggleButtonAbrirArchivo.getStyleClass().add("botones");
-		
-		toggleButtonAbrirArchivo.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+		BotonImagen botonAbrirArchivo = new BotonImagen("/imagenesFX/AbrirArchivo.png", "Abrir Archivo");
+
+		botonAbrirArchivo.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 
 			@Override
 			public void handle(MouseEvent event) {
-				abrirArchivo.onMousePressedProperty();
+				//TODO hacer para que te deje elegir archivo a abrir
+		//		abrirArchivo.onMousePressedProperty();
+				
 
 			}
 		});
 
-		toggleButtonAbrirArchivo.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
-			@Override
-			public void handle(MouseEvent e) {
-				toggleButtonAbrirArchivo.setEffect(shadow);
-			}
-		});
-
-		toggleButtonAbrirArchivo.addEventHandler(MouseEvent.MOUSE_EXITED, new EventHandler<MouseEvent>() {
-			@Override
-			public void handle(MouseEvent e) {
-				toggleButtonAbrirArchivo.setEffect(null);
-			}
-		});
 		// Agrego el boton abrir archivo
-		this.getChildren().add(toggleButtonAbrirArchivo);
+		this.getChildren().add(botonAbrirArchivo);
 	}
+	
+	
+	private void agregarMenuListaMetodosMAtematicos(){
+		listaMetodos = new ListView();
+		
+		
+	}
+	
+	
+	
+	
 
 	private static void configurarElegirArchivo(final FileChooser fileChooser) {
 		fileChooser.setTitle("View Pictures");
