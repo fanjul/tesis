@@ -12,6 +12,7 @@
 
 .botones{
 	-fx-background-color: transparent;
+	-fx-padding: 2px;
 }
 
 .tablas {

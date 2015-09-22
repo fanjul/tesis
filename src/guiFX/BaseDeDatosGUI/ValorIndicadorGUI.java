@@ -220,7 +220,7 @@ public class ValorIndicadorGUI extends TableView<ValorIndicador> implements Abst
 
 		}
 		this.getTablaValorIndicador().setItems(this.getData());
-		tablaValorIndicador.setPrefSize(centroInferior.getMaxWidth(), centroInferior.getMaxHeight());
+//		tablaValorIndicador.setPrefSize(centroInferior.getMaxWidth(), centroInferior.getMaxHeight());
 		centroInferior.getChildren().add(0, this.getTablaValorIndicador());
 
 

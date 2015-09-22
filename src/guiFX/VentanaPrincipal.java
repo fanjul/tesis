@@ -18,6 +18,7 @@ import cadenaResponsabilidades.TipoString;
 import dialogos.Dialogo;
 import dialogos.DialogoEjecutar;
 import dialogos.DialogoGuardarArchivo;
+import graficosFX.Grafico;
 import graficosFX.GraficoTorta;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -25,11 +26,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.ListView;
+import javafx.geometry.Pos;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.Tooltip;
-import javafx.scene.effect.DropShadow;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -39,87 +38,87 @@ import javafx.stage.Stage;
 public class VentanaPrincipal extends BorderPane {
 
 	private BarraMenu barraMenu;
-	// private Button botonGuardarMetodoMatematico;
-	// private Button botonEjecutar;
-	// private TextField textFieldNombreArchivo;
-	// private TextField textFieldNombreFuncion;
-	private HBox hBoxAbajoDelVBox;
+	private HBox hBoxAbajo;
 	private VBox panelDerecho;
-	//private ComboBox<?> comboBoxSeleccionarMetodo;
-	
-	private DropShadow shadow = new DropShadow();
-
 	private BorderPane borderPaneMenuOpciones;
 	private HBox hBoxMenuOpcionesVentana;
-		
 	private BotonImagen botonGuardarMetodo;
 	private BotonImagen botonEjecutar;
 	private BotonImagen botonGraficoTorta;
-	
-	@SuppressWarnings("rawtypes")
-	//private ListView listaMetodos;
-	
+	private BotonImagen botonGraficoTortaPRUEBA;
+	private ListaBotonesGrafico listaBotonesSuperior;
+	private ListaBotonesGrafico listaBotonesInferior;
+
+
 	static final String RUTA_METODOS = System.getProperty("user.dir") + "\\" + "Metodos Matematicos";
 	static final String EXTENSION_ARCHIVOS = "met";
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public VentanaPrincipal(Stage primaryStage, Double alto, Double ancho) {
+	public VentanaPrincipal(Stage primaryStage) {
 		super();
-		this.setPrefHeight(alto);
-		this.setPrefWidth(ancho);
 
+		// Configuracion de la parte izquierda del borderPane (VentanaPrincipal)
 		barraMenu = new BarraMenu(this);
+		barraMenu.setMaxHeight(543);
+		barraMenu.setMinHeight(543);
+		barraMenu.setMaxWidth(120);
+		barraMenu.setMinWidth(0);
+
 		barraMenu.setSpacing(10);
 		this.setLeft(((BarraMenu) barraMenu).getBarraDeslizable());
 
-		// Agrega Menu ventana
+		// Configuracion de la parte de arriba del borderPane (VentanaPrincipal)
 		agregarMenuVentana(primaryStage);
 		borderPaneMenuOpciones = new BorderPane();
-		// hBoxMenuOpcionesVentana = new HBox();
 		borderPaneMenuOpciones.setLeft(((BarraMenu) barraMenu).getBarraDeslizable().getBotonMenu());
 		borderPaneMenuOpciones.setRight(hBoxMenuOpcionesVentana);
-		// hBoxMenuOpciones.getChildren().addAll(((BarraMenu)
-		// barraMenu).getBarraDeslizable().getBotonMenu(),hBoxMenuOpcionesVentana);
+		borderPaneMenuOpciones.setMaxHeight(110);
+		borderPaneMenuOpciones.setMinHeight(110);
+		borderPaneMenuOpciones.setMaxWidth(1365);
+		borderPaneMenuOpciones.setMinWidth(1365);
 		this.setTop(borderPaneMenuOpciones);
 
+		// Configuracion de la parte de abajo del borderPane (VentanaPrincipal)
 		abrirDialogoGuardarArchivo();
 		abrirDialogoEjecutar();
+		hBoxAbajo.getChildren().addAll(/* listaMetodos, */ botonGuardarMetodo, botonEjecutar);
+		hBoxAbajo.setSpacing(120);
+		hBoxAbajo.setMaxHeight(75);
+		hBoxAbajo.setMinHeight(75);
+		hBoxAbajo.setMaxWidth(1365);
+		hBoxAbajo.setMinWidth(1365);
+		hBoxAbajo.setAlignment(Pos.CENTER);
+		this.setBottom(hBoxAbajo);
 
-	//	comboBoxSeleccionarMetodo = new ComboBox(getMetodosMatematicosYaCreados());
-//	listaMetodos = new ListView<>(getMetodosMatematicosYaCreados());
+		// Configuracion de la parte derecha del borderPane (VentanaPrincipal)
 		barraMenu.inicializarListaMetodosMatematicos(getMetodosMatematicosYaCreados());
 		// Para copiar el contenido del archivo en el editor de texto
-		//comboBoxSeleccionarMetodo.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
-			//listaMetodos.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
-		barraMenu.getListaMetodos().getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {	
-		@Override
+		barraMenu.getListaMetodos().getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
+			@Override
 			public void changed(ObservableValue arg0, Object old_val, Object new_val) {
 
 				((PanelDerecho) panelDerecho).getEditorTexto().setText((String) new_val);
-
 				copiarContenidoArchivoEnEditorTexto();
 			}
 		});
 
-		hBoxAbajoDelVBox.getChildren().addAll(/*listaMetodos,*/ botonGuardarMetodo,
-				botonEjecutar);
-
 		panelDerecho = PanelDerecho.getInstance();
+
+		crearGraficoTorta();
+		listaBotonesSuperior = new ListaBotonesGrafico();
+		listaBotonesInferior = new ListaBotonesGrafico();
+		listaBotonesSuperior.agregarNodo(botonGraficoTorta);
+		listaBotonesInferior.agregarNodo(botonGraficoTortaPRUEBA);
+		((PanelDerecho) panelDerecho).agregarElemento(listaBotonesSuperior);
+		((PanelDerecho) panelDerecho).agregarElemento(listaBotonesInferior);
+		panelDerecho.setSpacing(10);
 		this.setRight(panelDerecho);
-
-		agregarGraficoTorta();
-		PanelDerecho.getInstance().agregarElemento(botonGraficoTorta);
-		PanelDerecho.getInstance().setSpacing(30);
-
-		hBoxAbajoDelVBox.setSpacing(120);
 	}
 
 	private void abrirDialogoGuardarArchivo() {
+		hBoxAbajo = new HBox();
 
 		botonGuardarMetodo = new BotonImagen("/imagenesFX/Guardar.png", "Guardar Metodo");
-
-		hBoxAbajoDelVBox = new HBox();
-		this.setBottom(hBoxAbajoDelVBox);
 
 		botonGuardarMetodo.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
@@ -131,7 +130,6 @@ public class VentanaPrincipal extends BorderPane {
 
 				((DialogoGuardarArchivo) dialogoGuardarMetodo).getBotonGuardar()
 						.setOnAction(new EventHandler<ActionEvent>() {
-					@SuppressWarnings("unchecked")
 					@Override
 					public void handle(ActionEvent event) {
 						// guardarMetodoMatematicoDondeQuiero(primaryStage);
@@ -158,8 +156,8 @@ public class VentanaPrincipal extends BorderPane {
 	}
 
 	private void abrirDialogoEjecutar() {
-//TODO hacer para que se ejecute cuando aprieta enter
-		botonEjecutar =new BotonImagen("/imagenesFX/Ejecutar2.png", "Ejecutar");
+		// TODO hacer para que se ejecute cuando aprieta enter
+		botonEjecutar = new BotonImagen("/imagenesFX/Ejecutar2.png", "Ejecutar");
 
 		botonEjecutar.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
@@ -250,7 +248,7 @@ public class VentanaPrincipal extends BorderPane {
 		botonMaximizarVentana.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent e) {
-			//	botonMaximizarVentana.setEffect(shadow);
+				// botonMaximizarVentana.setEffect(shadow);
 				if (!primaryStage.isMaximized()) {
 					botonMaximizarVentana.setTooltip(new Tooltip("Maximizar"));
 				} else {
@@ -266,14 +264,14 @@ public class VentanaPrincipal extends BorderPane {
 
 	}
 
-	private void agregarGraficoTorta() {
-		
-		botonGraficoTorta = new BotonImagen("/imagenesFX/GraficoTorta.png", "Grafico de Torta");
+	private void crearGraficoTorta() {
 
+		botonGraficoTorta = new BotonImagen("/imagenesFX/GraficoTorta.png", "Grafico de Torta");
+		botonGraficoTortaPRUEBA = new BotonImagen("/imagenesFX/GraficoTorta.png", "Grafico de Torta");
 		botonGraficoTorta.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
-				graficosFX.Grafico graficoTorta = new GraficoTorta();
+				Grafico graficoTorta = new GraficoTorta();
 				graficoTorta.graficar();
 
 			}
@@ -334,8 +332,7 @@ public class VentanaPrincipal extends BorderPane {
 		}
 	}
 
-	@SuppressWarnings("rawtypes")
-	private ObservableList getMetodosMatematicosYaCreados() {
+	private ObservableList<String> getMetodosMatematicosYaCreados() {
 		File carpetaDefecto = new File(RUTA_METODOS);
 		ObservableList<String> listaMetodos = FXCollections.observableArrayList();
 

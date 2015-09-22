@@ -12,39 +12,42 @@ import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.VBox;
 
-public class PanelDerecho extends VBox{
-	
+public class PanelDerecho extends VBox {
+
 	private static PanelDerecho instance = null;
 	private TextArea editorTexto;
 
-	
 	private PanelDerecho() {
 		super();
+		this.setMaxHeight(543);
+		this.setMinHeight(543);
+		this.setMaxWidth(600);
+		this.setMinWidth(600);
+
 		editorTexto = new TextArea();
 		configuracionEditorTexto();
 		this.getChildren().add(editorTexto);
-		editorTexto.setMaxHeight(450);
-		editorTexto.setMinHeight(450);
-		editorTexto.setMinWidth(350);
-		editorTexto.setMaxWidth(350);
+		editorTexto.setMaxHeight(350);
+		editorTexto.setMinHeight(350);
+		editorTexto.setMinWidth(600);
+		editorTexto.setMaxWidth(600);
 
 	}
 
-	public static PanelDerecho getInstance(){
-		if(instance == null){
+	public static PanelDerecho getInstance() {
+		if (instance == null) {
 			instance = new PanelDerecho();
 		}
 		return instance;
 	}
-	
+
 	public TextArea getEditorTexto() {
 		return editorTexto;
 	}
 
-	public void agregarElemento(Node obj){
+	public void agregarElemento(Node obj) {
 		this.getChildren().add(obj);
 	}
-	
 
 	// Drag & Drop en el area de texto
 	private void configuracionEditorTexto() {
@@ -77,15 +80,5 @@ public class PanelDerecho extends VBox{
 		});
 
 	}
-	
-	
-	
-	
-	
-	
+
 }
-
-
-
-
-

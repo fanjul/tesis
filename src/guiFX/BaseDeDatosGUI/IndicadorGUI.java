@@ -197,7 +197,7 @@ public class IndicadorGUI extends TableView<Indicador> implements AbstractBaseDe
 
 		}
 		this.getTablaIndicador().setItems(this.getData());
-		tablaIndicador.setPrefSize(centroInferior.getMaxWidth(), centroInferior.getMaxHeight());
+//		tablaIndicador.setPrefSize(centroInferior.getMaxWidth(), centroInferior.getMaxHeight());
 		centroInferior.getChildren().add(0,this.getTablaIndicador());			
 	}
 	

@@ -111,7 +111,7 @@ public class TipoIndicadorGUI extends TableView<TipoIndicador> implements Abstra
 
 		}
 		this.getTablaTipoIndicador().setItems(this.getData());
-		tablaTipoIndicador.setPrefSize(centroInferior.getMaxWidth(), centroInferior.getMaxHeight());
+//		tablaTipoIndicador.setPrefSize(centroInferior.getMaxWidth(), centroInferior.getMaxHeight());
 		centroInferior.getChildren().add(0,this.getTablaTipoIndicador());			
 	}
 	private void agregarListenerEvent() {

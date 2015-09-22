@@ -96,10 +96,10 @@ public class GraficoGUI extends TableView<Grafico> implements AbstractBaseDeDato
 	@SuppressWarnings("unchecked")
 	@Override
 	public void mostrarTabla(AbstractaConsulta consulta, FactoryConsultas factoryConsultasDAO,
-			AnchorPane centroInferior) {
+			AnchorPane centroTabla) {
 		
-		if(!centroInferior.getChildren().isEmpty()){
-			centroInferior.getChildren().remove(0);
+		if(!centroTabla.getChildren().isEmpty()){
+			centroTabla.getChildren().remove(0);
 		}
 		this.setData(FXCollections.observableArrayList());
 		List<Grafico> lista = (List<Grafico>) factoryConsultasDAO.getLista("Grafico");
@@ -110,8 +110,9 @@ public class GraficoGUI extends TableView<Grafico> implements AbstractBaseDeDato
 		}
 
 		this.getTablaGrafico().setItems(this.getData());
-		tablaGrafico.setPrefSize(centroInferior.getMaxWidth(), centroInferior.getMaxHeight());
-		centroInferior.getChildren().add(0,this.getTablaGrafico());		
+		tablaGrafico.setMaxSize(centroTabla.getMaxWidth(), centroTabla.getMaxHeight());
+		tablaGrafico.setMinSize(centroTabla.getMinWidth(), centroTabla.getMinHeight());
+		centroTabla.getChildren().add(0,this.getTablaGrafico());		
 	}
 
 	private void agregarListenerEvent() {

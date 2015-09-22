@@ -6,15 +6,9 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
-import javafx.scene.control.ToggleButton;
-import javafx.scene.control.Tooltip;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -22,7 +16,6 @@ import javafx.stage.StageStyle;
 public class MainFx extends Application {
 	private static final String HERRAMIENTA_TESIS = "HerramientaTesis";
 
-	
 	public static void main(String[] args) {
 		Application.launch(args);
 	}
@@ -31,13 +24,15 @@ public class MainFx extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		primaryStage.setTitle(HERRAMIENTA_TESIS);
-		primaryStage.setResizable(true);
+		primaryStage.setResizable(false);
 		primaryStage.setMaximized(false);
 
-		BorderPane ventana = new VentanaPrincipal(primaryStage, 500.0, 500.0);
-		ventana.setMinHeight(700);
-		ventana.setMinWidth(1300);
-		
+		BorderPane ventana = new VentanaPrincipal(primaryStage);
+		//mismos layout para que no se agrande de mas la ventana principal.
+		ventana.setMinHeight(728);//minimo alto de la pantalla
+		ventana.setMinWidth(1365);//minimo ancho de la pantalla
+		ventana.setMaxHeight(728);
+		ventana.setMaxWidth(1365);
 		AnchorPane cuadroPrincipal = new AnchorPane();
 		cuadroPrincipal.setTopAnchor(ventana, 0.0);
 		cuadroPrincipal.setBottomAnchor(ventana, 0.0);
@@ -48,20 +43,14 @@ public class MainFx extends Application {
 
 			@Override
 			public void changed(ObservableValue<? extends Boolean> ov, Boolean t, Boolean t1) {
-				System.out.println("minimized:" + t1.booleanValue());
 			}
 		});
 		primaryStage.maximizedProperty().addListener(new ChangeListener<Boolean>() {
 
 			@Override
 			public void changed(ObservableValue<? extends Boolean> ov, Boolean t, Boolean t1) {
-				System.out.println("maximized:" + t1.booleanValue());
 			}
 		});
-		
-		
-		
-		
 
 		cuadroPrincipal.getChildren().add(ventana);
 
@@ -70,7 +59,8 @@ public class MainFx extends Application {
 		// Transparent scene and stage
 		escenaPrincipal.setFill(Color.rgb(34, 44, 44, 0.5));
 		primaryStage.initStyle(StageStyle.TRANSPARENT);
-		Platform.setImplicitExit(false);
+		primaryStage.alwaysOnTopProperty();
+		Platform.setImplicitExit(true);
 
 		EffectUtilities.makeDraggable(primaryStage, cuadroPrincipal);
 
