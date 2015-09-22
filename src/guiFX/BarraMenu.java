@@ -18,10 +18,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SplitPane;
-import javafx.scene.control.ToggleButton;
-import javafx.scene.control.Tooltip;
 import javafx.scene.effect.DropShadow;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
@@ -44,6 +41,9 @@ public class BarraMenu extends VBox {
 	
 	@SuppressWarnings("rawtypes")
 	private ListView listaMetodos; 
+	
+	
+	
 
 	public BarraMenu( VentanaPrincipal ventana) {
 		super();
@@ -56,49 +56,38 @@ public class BarraMenu extends VBox {
 	}
 
 	private void agregarMenuBaseDeDatos() {
-		
 		BotonImagen botonAbrirBaseDatos = new BotonImagen("/imagenesFX/AbrirBaseDeDatos.png", "Abrir Base de Datos");
-		
 		botonAbrirBaseDatos.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-
 			@Override
 			public void handle(MouseEvent event) {				
 				configurarPanelCentro();
 			}
 		});
-
 		this.getChildren().add(botonAbrirBaseDatos);
-
 	}
 
 	private void agregarMenuAbrirArchivo() {
-		
 		BotonImagen botonAbrirArchivo = new BotonImagen("/imagenesFX/AbrirArchivo.png", "Abrir Archivo");
-
 		botonAbrirArchivo.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-
 			@Override
 			public void handle(MouseEvent event) {
 				//TODO hacer para que te deje elegir archivo a abrir
 		//		abrirArchivo.onMousePressedProperty();
-				
-
 			}
 		});
-
 		// Agrego el boton abrir archivo
 		this.getChildren().add(botonAbrirArchivo);
 	}
 	
 	
-	@SuppressWarnings("rawtypes")
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void inicializarListaMetodosMatematicos(ObservableList lista){
 		listaMetodos = new ListView(lista);
 		this.getChildren().add(listaMetodos);
-		
 	}
 	
 		
+	@SuppressWarnings("rawtypes")
 	public ListView getListaMetodos() {
 		return listaMetodos;
 	}
@@ -175,6 +164,9 @@ public class BarraMenu extends VBox {
 			dividers.get(i).setPosition((i + 1.3) / 10);
 
 		}
+		
+//		dividirCentro.setMinHeight(1);
+//		dividirCentro.setMinWidth(10);
 		
 		ventana.setCenter(dividirCentro);
 

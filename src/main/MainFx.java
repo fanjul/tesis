@@ -38,6 +38,8 @@ public class MainFx extends Application {
 		ventana.setMinHeight(700);
 		ventana.setMinWidth(1300);
 		
+		
+		
 		AnchorPane cuadroPrincipal = new AnchorPane();
 		cuadroPrincipal.setTopAnchor(ventana, 0.0);
 		cuadroPrincipal.setBottomAnchor(ventana, 0.0);
@@ -70,10 +72,11 @@ public class MainFx extends Application {
 		// Transparent scene and stage
 		escenaPrincipal.setFill(Color.rgb(34, 44, 44, 0.5));
 		primaryStage.initStyle(StageStyle.TRANSPARENT);
-		Platform.setImplicitExit(false);
+		//Platform.setImplicitExit(false);
 
 		EffectUtilities.makeDraggable(primaryStage, cuadroPrincipal);
 
+		Platform.setImplicitExit(true);
 		escenaPrincipal.getStylesheets().add(getClass().getResource("/archivosCSS/s1.css").toExternalForm());
 
 		cuadroPrincipal.getStyleClass().add("cuadro-principal");

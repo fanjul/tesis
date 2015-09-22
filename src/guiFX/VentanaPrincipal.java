@@ -19,6 +19,7 @@ import dialogos.Dialogo;
 import dialogos.DialogoEjecutar;
 import dialogos.DialogoGuardarArchivo;
 import graficosFX.GraficoTorta;
+import javafx.beans.binding.BooleanBinding;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -45,20 +46,17 @@ public class VentanaPrincipal extends BorderPane {
 	// private TextField textFieldNombreFuncion;
 	private HBox hBoxAbajoDelVBox;
 	private VBox panelDerecho;
-	//private ComboBox<?> comboBoxSeleccionarMetodo;
-	
+	// private ComboBox<?> comboBoxSeleccionarMetodo;
+
 	private DropShadow shadow = new DropShadow();
 
 	private BorderPane borderPaneMenuOpciones;
 	private HBox hBoxMenuOpcionesVentana;
-		
+
 	private BotonImagen botonGuardarMetodo;
 	private BotonImagen botonEjecutar;
 	private BotonImagen botonGraficoTorta;
-	
-	@SuppressWarnings("rawtypes")
-	//private ListView listaMetodos;
-	
+
 	static final String RUTA_METODOS = System.getProperty("user.dir") + "\\" + "Metodos Matematicos";
 	static final String EXTENSION_ARCHIVOS = "met";
 
@@ -82,17 +80,23 @@ public class VentanaPrincipal extends BorderPane {
 		// barraMenu).getBarraDeslizable().getBotonMenu(),hBoxMenuOpcionesVentana);
 		this.setTop(borderPaneMenuOpciones);
 
+		panelDerecho = PanelDerecho.getInstance();
+		this.setRight(panelDerecho);
+
 		abrirDialogoGuardarArchivo();
 		abrirDialogoEjecutar();
 
-	//	comboBoxSeleccionarMetodo = new ComboBox(getMetodosMatematicosYaCreados());
-//	listaMetodos = new ListView<>(getMetodosMatematicosYaCreados());
+		// comboBoxSeleccionarMetodo = new
+		// ComboBox(getMetodosMatematicosYaCreados());
+		// listaMetodos = new ListView<>(getMetodosMatematicosYaCreados());
 		barraMenu.inicializarListaMetodosMatematicos(getMetodosMatematicosYaCreados());
 		// Para copiar el contenido del archivo en el editor de texto
-		//comboBoxSeleccionarMetodo.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
-			//listaMetodos.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
-		barraMenu.getListaMetodos().getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {	
-		@Override
+		// comboBoxSeleccionarMetodo.getSelectionModel().selectedItemProperty().addListener(new
+		// ChangeListener() {
+		// listaMetodos.getSelectionModel().selectedItemProperty().addListener(new
+		// ChangeListener() {
+		barraMenu.getListaMetodos().getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
+			@Override
 			public void changed(ObservableValue arg0, Object old_val, Object new_val) {
 
 				((PanelDerecho) panelDerecho).getEditorTexto().setText((String) new_val);
@@ -101,11 +105,12 @@ public class VentanaPrincipal extends BorderPane {
 			}
 		});
 
-		hBoxAbajoDelVBox.getChildren().addAll(/*listaMetodos,*/ botonGuardarMetodo,
-				botonEjecutar);
+		hBoxAbajoDelVBox.getChildren().addAll(/* listaMetodos, */ botonGuardarMetodo, botonEjecutar);
+		// hBoxAbajoDelVBox.prefWidth(400);
+		hBoxAbajoDelVBox.prefHeight(200);
 
-		panelDerecho = PanelDerecho.getInstance();
-		this.setRight(panelDerecho);
+		hBoxAbajoDelVBox.setMaxHeight(850);
+		hBoxAbajoDelVBox.setMinHeight(200);
 
 		agregarGraficoTorta();
 		PanelDerecho.getInstance().agregarElemento(botonGraficoTorta);
@@ -115,11 +120,23 @@ public class VentanaPrincipal extends BorderPane {
 	}
 
 	private void abrirDialogoGuardarArchivo() {
-
 		botonGuardarMetodo = new BotonImagen("/imagenesFX/Guardar.png", "Guardar Metodo");
-
 		hBoxAbajoDelVBox = new HBox();
 		this.setBottom(hBoxAbajoDelVBox);
+
+		///////////////////// Para disablear/enablear el boton guardar
+		BooleanBinding bb = new BooleanBinding() {
+			{
+				super.bind(((PanelDerecho) panelDerecho).getEditorTexto().textProperty());
+			}
+
+			@Override
+			protected boolean computeValue() {
+				return (((PanelDerecho) panelDerecho).getEditorTexto().getText().isEmpty());
+			}
+		};
+		botonGuardarMetodo.disableProperty().bind(bb);
+		/////////////////////////
 
 		botonGuardarMetodo.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
@@ -136,7 +153,8 @@ public class VentanaPrincipal extends BorderPane {
 					public void handle(ActionEvent event) {
 						// guardarMetodoMatematicoDondeQuiero(primaryStage);
 						guardarMetodoMtematicoLugarPorDefecto(((DialogoGuardarArchivo) dialogoGuardarMetodo));
-						// Actualiza el ComboBox con el nuevo Metodo Matematico
+						// Actualiza el ComboBox con el nuevo Metodo
+						// Matematico
 						// agregado
 						barraMenu.getListaMetodos().setItems(getMetodosMatematicosYaCreados());
 						dialogoGuardarMetodo.cerrarDialogo();
@@ -152,14 +170,30 @@ public class VentanaPrincipal extends BorderPane {
 				});
 
 				dialogoGuardarMetodo.mostrarDialogo();
+
 			}
 		});
 
 	}
 
 	private void abrirDialogoEjecutar() {
-//TODO hacer para que se ejecute cuando aprieta enter
-		botonEjecutar =new BotonImagen("/imagenesFX/Ejecutar2.png", "Ejecutar");
+		// TODO hacer para que se ejecute cuando aprieta enter
+
+		botonEjecutar = new BotonImagen("/imagenesFX/Ejecutar2.png", "Ejecutar");
+
+		///////////////////// Para disablear/enablear el boton ejecutar
+		BooleanBinding bb = new BooleanBinding() {
+			{
+				super.bind(((PanelDerecho) panelDerecho).getEditorTexto().textProperty());
+			}
+
+			@Override
+			protected boolean computeValue() {
+				return (((PanelDerecho) panelDerecho).getEditorTexto().getText().isEmpty());
+			}
+		};
+		botonEjecutar.disableProperty().bind(bb);
+		/////////////////////////
 
 		botonEjecutar.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
@@ -250,7 +284,7 @@ public class VentanaPrincipal extends BorderPane {
 		botonMaximizarVentana.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent e) {
-			//	botonMaximizarVentana.setEffect(shadow);
+				// botonMaximizarVentana.setEffect(shadow);
 				if (!primaryStage.isMaximized()) {
 					botonMaximizarVentana.setTooltip(new Tooltip("Maximizar"));
 				} else {
@@ -267,7 +301,7 @@ public class VentanaPrincipal extends BorderPane {
 	}
 
 	private void agregarGraficoTorta() {
-		
+
 		botonGraficoTorta = new BotonImagen("/imagenesFX/GraficoTorta.png", "Grafico de Torta");
 
 		botonGraficoTorta.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
@@ -384,6 +418,7 @@ public class VentanaPrincipal extends BorderPane {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+
 	}
 
 	/*
