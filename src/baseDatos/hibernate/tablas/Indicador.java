@@ -4,9 +4,14 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Table(name="Indicador")
@@ -27,12 +32,15 @@ public class Indicador implements Serializable {
 	private Timestamp fechaUltimaActualizacion;
 	private Integer idTipoIndicador;
 	private String observaciones;
+	private Tablero tablero;
 	
 	public Indicador(){
 		
 	}
 	
 	@Id
+	@GeneratedValue(generator="myGenerator")  
+    @GenericGenerator(name="myGenerator", strategy="foreign", parameters= @Parameter(value="employee", name = "property")) 
 	public BigDecimal getId() {
 		return id;
 	}
@@ -116,6 +124,15 @@ public class Indicador implements Serializable {
 	}
 	public void setObservaciones(String observaciones) {
 		this.observaciones = observaciones;
+	}
+
+	@OneToOne(cascade=CascadeType.ALL)
+	public Tablero getTablero() {
+		return tablero;
+	}
+
+	public void setTablero(Tablero tablero) {
+		this.tablero = tablero;
 	}
 	
 }

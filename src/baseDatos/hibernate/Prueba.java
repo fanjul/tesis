@@ -8,6 +8,7 @@ import baseDatos.hibernate.consultas.GraficoDAO;
 import baseDatos.hibernate.consultas.HSTumbralesXEstadosXIndicadorDAO;
 import baseDatos.hibernate.consultas.IndicadorDAO;
 import baseDatos.hibernate.consultas.PersonaDAO;
+import baseDatos.hibernate.consultas.TableroDAO;
 import baseDatos.hibernate.consultas.TipoIndicadorDAO;
 import baseDatos.hibernate.consultas.UmbralesXEstadosXIndicadorDAO;
 import baseDatos.hibernate.consultas.UnidadesDeMedidaDAO;
@@ -17,6 +18,7 @@ import baseDatos.hibernate.tablas.Grafico;
 import baseDatos.hibernate.tablas.HSTumbralesXEstadosXIndicador;
 import baseDatos.hibernate.tablas.Indicador;
 import baseDatos.hibernate.tablas.Persona;
+import baseDatos.hibernate.tablas.Tablero;
 import baseDatos.hibernate.tablas.TipoIndicador;
 import baseDatos.hibernate.tablas.UmbralesXEstadosXIndicador;
 import baseDatos.hibernate.tablas.UnidadesDeMedida;
@@ -35,7 +37,7 @@ public class Prueba {
 		UmbralesXEstadosXIndicador umbral = new UmbralesXEstadosXIndicador();
 		UnidadesDeMedida unidad = new UnidadesDeMedida();
 		ValorIndicador valor = new ValorIndicador();
-
+		Tablero tablero = new Tablero();
 
 
 		EstadosXTipoIndicadorDAO estadosDao = new EstadosXTipoIndicadorDAO();
@@ -47,9 +49,17 @@ public class Prueba {
 		UmbralesXEstadosXIndicadorDAO umbralDao = new UmbralesXEstadosXIndicadorDAO();
 		UnidadesDeMedidaDAO unidadDao = new UnidadesDeMedidaDAO();
 		ValorIndicadorDAO valorDao = new ValorIndicadorDAO();
-
+		TableroDAO tableroDao = new TableroDAO();
 
 		//setear datos en las tablas
+		indicador.setCodigo("asd");
+		indicador.setId(new BigDecimal(4));
+		
+		tablero.setId(1);
+		tablero.setIdIndicador(indicador);
+		tablero.setNombre("hola");
+		
+		
 //		estados.setIdEstado(3);
 //		estados.setIdTipoIndicador(4);
 //		
@@ -62,8 +72,7 @@ public class Prueba {
 //		hst.setInicioUmbral(new Timestamp(0));
 //		hst.setFinUmbral(new Timestamp(0));
 //
-//		indicador.setCodigo("asd");
-//		indicador.setId(new BigDecimal(4));
+//		
 //
 //		persona.setApellido("Corvi");
 //
@@ -80,13 +89,18 @@ public class Prueba {
 //		
 //		valor.setIdIndicador(10);
 //		valor.setFecha(new Timestamp(0));
-//
-//
-//		//realizar las consultas de las tablas: GUARDAR
+
+
+		//realizar las consultas de las tablas: GUARDAR
 //		estadosDao.guardar(estados);
 //		graficoDao.guardar(grafico);
 //		hstDao.guardar(hst);	
-//		indicadorDao.guardar(indicador);
+		indicadorDao.guardar(indicador);
+		tableroDao.guardar(tablero);
+
+	
+
+
 //		personaDao.guardar(persona);
 //		tipoIndicadorDao.guardar(tipoIndicador);
 //		umbralDao.guardar(umbral);

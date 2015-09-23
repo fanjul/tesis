@@ -31,6 +31,7 @@
 		<mapping class="baseDatos.hibernate.tablas.Indicador" />
 		<mapping class="baseDatos.hibernate.tablas.Persona" />
 		<mapping class="baseDatos.hibernate.tablas.TipoIndicador" />
+		<mapping class="baseDatos.hibernate.tablas.Tablero" />
 		<mapping class="baseDatos.hibernate.tablas.UmbralesXEstadosXIndicador" />
 		<mapping class="baseDatos.hibernate.tablas.UnidadesDeMedida" />
 		<mapping class="baseDatos.hibernate.tablas.ValorIndicador" />
