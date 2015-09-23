@@ -6,16 +6,19 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-
-import baseDatos.hibernate.consultas.AbstractaConsulta;
 import baseDatos.hibernate.consultas.FactoryConsultas;
 import baseDatos.hibernate.consultas.IndicadorDAO;
 import baseDatos.hibernate.tablas.Indicador;
 import guiFX.PanelDerecho;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -26,11 +29,13 @@ import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
-
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
-public class IndicadorGUI extends TableView<Indicador> implements AbstractBaseDeDatosGUI {
-	
+public class IndicadorGUI extends TableView<Indicador>implements AbstractBaseDeDatosGUI {
+
 	private TableView<Indicador> tablaIndicador;
 	private TableColumn<Indicador, BigDecimal> columnaId;
 	private TableColumn<Indicador, String> columnaCodigo;
@@ -46,65 +51,69 @@ public class IndicadorGUI extends TableView<Indicador> implements AbstractBaseDe
 	private TableColumn<Indicador, Timestamp> columnaFechaUltimaActualizacion;
 	private TableColumn<Indicador, Integer> columnaIdTipoIndicador;
 	private TableColumn<Indicador, String> columnaObservaciones;
-	
-	private ObservableList<Indicador> data; 
+	private IndicadorDAO consulta;
+	private String texto = "";
 
-	public IndicadorGUI(){
+	private ObservableList<Indicador> data;
+
+	public IndicadorGUI() {
 		super();
 	}
-	
+
 	@SuppressWarnings("unchecked")
-	public void mostrarTabla(){
+	public void mostrarTabla() {
 		tablaIndicador = new TableView<Indicador>();
-		
+
 		columnaId = new TableColumn<Indicador, BigDecimal>("Id");
-		columnaId.setCellValueFactory(new PropertyValueFactory<Indicador,BigDecimal>("id"));
-		
+		columnaId.setCellValueFactory(new PropertyValueFactory<Indicador, BigDecimal>("id"));
+
 		columnaCodigo = new TableColumn<Indicador, String>("Codigo");
-		columnaCodigo.setCellValueFactory(new PropertyValueFactory<Indicador,String>("codigo"));
-		
+		columnaCodigo.setCellValueFactory(new PropertyValueFactory<Indicador, String>("codigo"));
+
 		columnaNombre = new TableColumn<Indicador, String>("Nombre");
-		columnaNombre.setCellValueFactory(new PropertyValueFactory<Indicador,String>("nombre"));
-		
+		columnaNombre.setCellValueFactory(new PropertyValueFactory<Indicador, String>("nombre"));
+
 		columnaIdGrafico = new TableColumn<Indicador, Integer>("Id Grafico");
-		columnaIdGrafico.setCellValueFactory(new PropertyValueFactory<Indicador,Integer>("idGrafico"));
-		
+		columnaIdGrafico.setCellValueFactory(new PropertyValueFactory<Indicador, Integer>("idGrafico"));
+
 		columnaIdUnidadDeMedida = new TableColumn<Indicador, Integer>("Id Unidad de Medida");
-		columnaIdUnidadDeMedida.setCellValueFactory(new PropertyValueFactory<Indicador,Integer>("idUnidadDeMedida"));
-		
+		columnaIdUnidadDeMedida.setCellValueFactory(new PropertyValueFactory<Indicador, Integer>("idUnidadDeMedida"));
+
 		columnaDireccion = new TableColumn<Indicador, Integer>("Direccion");
-		columnaDireccion.setCellValueFactory(new PropertyValueFactory<Indicador,Integer>("direccion"));
-		
+		columnaDireccion.setCellValueFactory(new PropertyValueFactory<Indicador, Integer>("direccion"));
+
 		columnaFormula = new TableColumn<Indicador, String>("formula");
-		columnaFormula.setCellValueFactory(new PropertyValueFactory<Indicador,String>("formula"));
-		
+		columnaFormula.setCellValueFactory(new PropertyValueFactory<Indicador, String>("formula"));
+
 		columnaFichaMetodologica = new TableColumn<Indicador, String>("Ficha Metodologica");
-		columnaFichaMetodologica.setCellValueFactory(new PropertyValueFactory<Indicador,String>("fichaMetodologica"));
-		
+		columnaFichaMetodologica.setCellValueFactory(new PropertyValueFactory<Indicador, String>("fichaMetodologica"));
+
 		columnaIdResponsable = new TableColumn<Indicador, Integer>("Id Responsable");
-		columnaIdResponsable.setCellValueFactory(new PropertyValueFactory<Indicador,Integer>("idResponsable"));
-		
+		columnaIdResponsable.setCellValueFactory(new PropertyValueFactory<Indicador, Integer>("idResponsable"));
+
 		columnaFrecuencia = new TableColumn<Indicador, String>("Frecuencia");
-		columnaFrecuencia.setCellValueFactory(new PropertyValueFactory<Indicador,String>("frecuencia"));
-		
+		columnaFrecuencia.setCellValueFactory(new PropertyValueFactory<Indicador, String>("frecuencia"));
+
 		columnaPeriodo = new TableColumn<Indicador, String>("Periodo");
-		columnaPeriodo.setCellValueFactory(new PropertyValueFactory<Indicador,String>("periodo"));
-		
+		columnaPeriodo.setCellValueFactory(new PropertyValueFactory<Indicador, String>("periodo"));
+
 		columnaFechaUltimaActualizacion = new TableColumn<Indicador, Timestamp>("Fecha Ultima Actualizacion");
-		columnaFechaUltimaActualizacion.setCellValueFactory(new PropertyValueFactory<Indicador,Timestamp>("fechaUltimaActualizacion"));
-		
+		columnaFechaUltimaActualizacion
+				.setCellValueFactory(new PropertyValueFactory<Indicador, Timestamp>("fechaUltimaActualizacion"));
+
 		columnaIdTipoIndicador = new TableColumn<Indicador, Integer>("Id Tipo Indicador");
-		columnaIdTipoIndicador.setCellValueFactory(new PropertyValueFactory<Indicador,Integer>("idTipoIndicador"));
-		
+		columnaIdTipoIndicador.setCellValueFactory(new PropertyValueFactory<Indicador, Integer>("idTipoIndicador"));
+
 		columnaObservaciones = new TableColumn<Indicador, String>("Observaciones");
-		columnaObservaciones.setCellValueFactory(new PropertyValueFactory<Indicador,String>("observaciones"));
-		
-		tablaIndicador.getColumns().addAll(columnaId,columnaCodigo,columnaNombre,columnaIdUnidadDeMedida,columnaDireccion,columnaFormula,
-				columnaFichaMetodologica,columnaIdGrafico,columnaIdResponsable,columnaFrecuencia,columnaPeriodo,columnaFechaUltimaActualizacion,
-				columnaIdTipoIndicador,columnaObservaciones);
-	
+		columnaObservaciones.setCellValueFactory(new PropertyValueFactory<Indicador, String>("observaciones"));
+
+		tablaIndicador.getColumns().addAll(columnaId, columnaCodigo, columnaNombre, columnaIdUnidadDeMedida,
+				columnaDireccion, columnaFormula, columnaFichaMetodologica, columnaIdGrafico, columnaIdResponsable,
+				columnaFrecuencia, columnaPeriodo, columnaFechaUltimaActualizacion, columnaIdTipoIndicador,
+				columnaObservaciones);
+
 		tablaIndicador.getStyleClass().add("tablas");
-		
+
 		this.agregarListenerEvent();
 	}
 
@@ -176,6 +185,14 @@ public class IndicadorGUI extends TableView<Indicador> implements AbstractBaseDe
 		this.data = data;
 	}
 
+	public String getTexto() {
+		return texto;
+	}
+
+	public void setTexto(String texto) {
+		this.texto = texto;
+	}
+
 	@Override
 	public void crearTablaBaseDeDatos() {
 		this.mostrarTabla();
@@ -183,26 +200,27 @@ public class IndicadorGUI extends TableView<Indicador> implements AbstractBaseDe
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public void mostrarTabla(AbstractaConsulta consulta, FactoryConsultas factoryConsultasDAO,
-			AnchorPane centroTabla) {
-		
-		if(!centroTabla.getChildren().isEmpty()){
+	public void mostrarTabla(Object consulta, FactoryConsultas factoryConsultasDAO, AnchorPane centroTabla) {
+
+		if (!centroTabla.getChildren().isEmpty()) {
 			centroTabla.getChildren().remove(0);
+
 		}
+		this.consulta = (IndicadorDAO) consulta;
 		this.setData(FXCollections.observableArrayList());
 		List<Indicador> lista = (List<Indicador>) factoryConsultasDAO.getLista("Indicador");
-		lista = ((IndicadorDAO)consulta).getTodos();
-		for (Indicador vi : lista) { 
+		lista = this.consulta.getTodos();
+		for (Indicador vi : lista) {
 			this.getData().add(vi);
 
 		}
 		this.getTablaIndicador().setItems(this.getData());
 		tablaIndicador.setMaxSize(centroTabla.getMaxWidth(), centroTabla.getMaxHeight());
 		tablaIndicador.setMinSize(centroTabla.getMinWidth(), centroTabla.getMinHeight());
-		
-		centroTabla.getChildren().add(0,this.getTablaIndicador());			
+		centroTabla.getChildren().add(0, this.getTablaIndicador());
+
 	}
-	
+
 	private void agregarListenerEvent() {
 		// Para que se pueda seleccionar varias rows de la tabla
 		tablaIndicador.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
@@ -215,21 +233,10 @@ public class IndicadorGUI extends TableView<Indicador> implements AbstractBaseDe
 				final Dragboard db = tablaIndicador.startDragAndDrop(TransferMode.COPY);
 				final ClipboardContent content = new ClipboardContent();
 
-				String selected = "";
-				Set<Indicador> selec = new HashSet<Indicador>(
-						tablaIndicador.getSelectionModel().getSelectedItems());
-				Object[] arr = selec.toArray();
-
-				for (int i = 0; i < arr.length; i++) {
-					selected += (((Indicador) arr[i]).getId().toString());
-					selected += " ";
-
-				}
-				content.putString(selected.toString());
-
-				// content.putString("Drag Me!");
+				content.putString("");
 				db.setContent(content);
 				me.consume();
+
 			}
 		});
 		tablaIndicador.setOnDragEntered(new EventHandler<DragEvent>() {
@@ -258,32 +265,190 @@ public class IndicadorGUI extends TableView<Indicador> implements AbstractBaseDe
 		});
 
 		PanelDerecho.getInstance().getEditorTexto().setOnDragDropped(new EventHandler<DragEvent>() {
-			 
+
 			@Override
 			public void handle(DragEvent event) {
-				Clipboard clipboard = Clipboard.getSystemClipboard();
-				ClipboardContent content = new ClipboardContent();
+				Runnable callback = new Runnable() {
 
-				String selected = "";
-				Set<Indicador> selec = new HashSet<Indicador>(
-						tablaIndicador.getSelectionModel().getSelectedItems());
-				Object[] arr = selec.toArray();
+					@Override
+					public void run() {
+						Clipboard clipboard = Clipboard.getSystemClipboard();
+						ClipboardContent content = new ClipboardContent();
 
-				for (int i = 0; i < arr.length; i++) {
-					selected += (((Indicador) arr[i]).getId().toString());
-					selected += " ";
+						String selected = "";
+						Set<Indicador> selec = new HashSet<Indicador>(
+								tablaIndicador.getSelectionModel().getSelectedItems());
+						Object[] arr = selec.toArray();
 
-				}
-				content.putString(selected);
+						String columnaSeleccionada = getTexto();
+						for (int i = 0; i < arr.length; i++) {
+							switch (columnaSeleccionada.toLowerCase()) {
+							case "id":
+								if (((Indicador) arr[i]).getId() != null) {
+									selected += ((Indicador) arr[i]).getId().toString();
+									selected += " ";
+								} else
+									selected += "";
+								break;
+							case "observaciones":
+								if (((Indicador) arr[i]).getObservaciones() != null) {
+									selected += ((Indicador) arr[i]).getObservaciones();
+									selected += " ";
+								} else
+									selected += "";
+								break;
+							case "codigo":
+								if (((Indicador) arr[i]).getCodigo() != null) {
+									selected += ((Indicador) arr[i]).getCodigo();
+									selected += " ";
+								} else
+									selected += "";
+								break;
+							case "nombre":
+								if (((Indicador) arr[i]).getNombre() != null) {
+									selected += ((Indicador) arr[i]).getNombre();
+									selected += " ";
+								} else
+									selected += "";
+								break;
+							case "idunidaddemedida":
+								if (((Indicador) arr[i]).getIdUnidadDeMedida() != null) {
+									selected += ((Indicador) arr[i]).getIdUnidadDeMedida().toString();
+									selected += " ";
+								} else
+									selected += "";
+								break;
+							case "direccion":
+								if (((Indicador) arr[i]).getDireccion() != null) {
+									selected += ((Indicador) arr[i]).getDireccion().toString();
+									selected += " ";
+								} else
+									selected += "";
+								break;
+							case "formula":
+								if (((Indicador) arr[i]).getFormula() != null) {
+									selected += ((Indicador) arr[i]).getFormula();
+									selected += " ";
+								} else
+									selected += "";
+								break;
+							case "fichametodologica":
+								if (((Indicador) arr[i]).getFichaMetodologica() != null) {
+									selected += ((Indicador) arr[i]).getFichaMetodologica();
+									selected += " ";
+								} else
+									selected += "";
+								break;
+							case "idgrafico":
+								if (((Indicador) arr[i]).getIdGrafico() != null) {
+									selected += ((Indicador) arr[i]).getIdGrafico().toString();
+									selected += " ";
+								} else
+									selected += "";
+								break;
+							case "idresponsable":
+								if (((Indicador) arr[i]).getIdResponsable() != null) {
+									selected += ((Indicador) arr[i]).getIdResponsable().toString();
+									selected += " ";
+								} else
+									selected += "";
+								break;
+							case "frecuencia":
+								if (((Indicador) arr[i]).getFrecuencia() != null) {
+									selected += ((Indicador) arr[i]).getFrecuencia();
+									selected += " ";
+								} else
+									selected += "";
+								break;
+							case "periodo":
+								if (((Indicador) arr[i]).getPeriodo() != null) {
+									selected += ((Indicador) arr[i]).getPeriodo();
+									selected += " ";
+								} else
+									selected += "";
+								break;
+							case "fechaultimaactualizacion":
+								if (((Indicador) arr[i]).getFechaUltimaActualizacion() != null) {
+									selected += ((Indicador) arr[i]).getFechaUltimaActualizacion().toString();
+									selected += " ";
+								} else
+									selected += "";
+								break;
+							case "idtipoindicador":
+								if (((Indicador) arr[i]).getIdTipoIndicador() != null) {
+									selected += ((Indicador) arr[i]).getIdTipoIndicador().toString();
+									selected += " ";
+								} else
+									selected += "";
+								break;
 
-				clipboard.setContent(content);
+							}
+						}
+						content.putString(selected);
 
-				PanelDerecho.getInstance().getEditorTexto().insertText(
-						PanelDerecho.getInstance().getEditorTexto().getCaretPosition(), clipboard.getString());
+						clipboard.setContent(content);
+
+						PanelDerecho.getInstance().getEditorTexto().insertText(
+								PanelDerecho.getInstance().getEditorTexto().getCaretPosition(), clipboard.getString());
+						setTexto("");
+
+					}
+
+				};
+				nuevaStage(callback);
+
 			}
 
 		});
 	}
-	
-}
 
+	public void nuevaStage(Runnable callback) {
+		Stage nuevoStage = new Stage();
+
+		HBox ventana = new HBox();
+		Label labelColumna = new Label("Seleccione Columna: ");
+		ComboBox<String> comboColumna = new ComboBox<String>();
+		Button botonAceptar = new Button("Aceptar");
+		Button botonCancelar = new Button("Cancelar");
+		HBox botones = new HBox();
+		VBox todo = new VBox();
+
+		botones.setSpacing(50);
+		ventana.getChildren().addAll(labelColumna, comboColumna);
+		ventana.setSpacing(50);
+		ventana.setAlignment(Pos.CENTER);
+
+		ObservableList<String> listaColumnas = FXCollections.observableArrayList();
+		List<String> listaTodasTablas = consulta.getColumnas();
+		for (String s : listaTodasTablas) {
+			listaColumnas.add(s);
+		}
+		comboColumna.setItems(listaColumnas);
+
+		botonAceptar.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				IndicadorGUI.this.setTexto(comboColumna.getValue());
+				callback.run();
+				nuevoStage.close();
+			}
+		});
+
+		botonCancelar.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				nuevoStage.close();
+			}
+		});
+
+		botones.getChildren().addAll(botonAceptar, botonCancelar);
+		todo.getChildren().addAll(ventana, botones);
+		todo.setSpacing(100);
+		Scene escena = new Scene(todo);
+
+		nuevoStage.setScene(escena);
+		nuevoStage.show();
+
+	}
+
+}

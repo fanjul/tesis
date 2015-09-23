@@ -299,6 +299,7 @@ public class VentanaPrincipal extends BorderPane {
 
 		try {
 			// TODO arreglar, el file tira error porque no existe al guardar uno
+			//TODO arreglar que si no es un txt no se rompa y tirar error 
 			// nuevo
 			archivo = new File(
 					RUTA_METODOS + "\\" + barraMenu.getListaMetodos().getSelectionModel().getSelectedItem().toString()

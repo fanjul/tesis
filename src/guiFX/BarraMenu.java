@@ -2,7 +2,6 @@ package guiFX;
 
 import java.util.List;
 
-import baseDatos.hibernate.consultas.AbstractaConsulta;
 import baseDatos.hibernate.consultas.DAO;
 import baseDatos.hibernate.consultas.FactoryConsultas;
 import guiFX.BaseDeDatosGUI.AbstractBaseDeDatosGUI;
@@ -30,7 +29,7 @@ public class BarraMenu extends VBox {
 	private AbstractBaseDeDatosGUI baseDeDatos;
 	private VentanaPrincipal ventana;
 	private FactoryConsultas factoryConsultasDAO;
-	private AbstractaConsulta consultasDAO;
+	private Object consultasDAO;
 	private ComboBox<String> comboBoxTablas;
 
 	private ListView<String> listaMetodos;
@@ -89,6 +88,13 @@ public class BarraMenu extends VBox {
 
 	}
 
+	// private static void configurarElegirArchivo(final FileChooser
+	// fileChooser) {
+	// fileChooser.setTitle("View Pictures");
+	// fileChooser.setInitialDirectory(new
+	// File(System.getProperty("user.home")));
+	// }
+
 	public ListView<String> getListaMetodos() {
 		return listaMetodos;
 	}
@@ -123,9 +129,11 @@ public class BarraMenu extends VBox {
 		centroSuperior.setMinWidth(645);
 
 		ObservableList<String> data = FXCollections.observableArrayList();
+
 		List<String> listaTodasTablas = new DAO().getAllTables();
 		for (String s : listaTodasTablas) {
 			data.add(s);
+
 		}
 
 		Label labelTabla = new Label("Tabla");

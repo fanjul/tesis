@@ -4,14 +4,19 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import baseDatos.hibernate.consultas.AbstractaConsulta;
 import baseDatos.hibernate.consultas.EstadosXTipoIndicadorDAO;
 import baseDatos.hibernate.consultas.FactoryConsultas;
 import baseDatos.hibernate.tablas.EstadosXTipoIndicador;
 import guiFX.PanelDerecho;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -23,6 +28,9 @@ import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 public class EstadosXTipoIndicadorGUI extends TableView<EstadosXTipoIndicador>implements AbstractBaseDeDatosGUI {
 
@@ -32,6 +40,8 @@ public class EstadosXTipoIndicadorGUI extends TableView<EstadosXTipoIndicador>im
 	private TableColumn<EstadosXTipoIndicador, String> columnaEstado;
 	private TableColumn<EstadosXTipoIndicador, String> columnaRepresentacionCromatica;
 	private TableColumn<EstadosXTipoIndicador, String> columnaObservaciones;
+	private EstadosXTipoIndicadorDAO consulta;
+	private String texto = "";
 
 	private ObservableList<EstadosXTipoIndicador> data;
 
@@ -101,6 +111,14 @@ public class EstadosXTipoIndicadorGUI extends TableView<EstadosXTipoIndicador>im
 		this.data = data;
 	}
 
+	public String getTexto() {
+		return texto;
+	}
+
+	public void setTexto(String texto) {
+		this.texto = texto;
+	}
+
 	@Override
 	public void crearTablaBaseDeDatos() {
 		this.mostrarTabla();
@@ -108,23 +126,25 @@ public class EstadosXTipoIndicadorGUI extends TableView<EstadosXTipoIndicador>im
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public void mostrarTabla(AbstractaConsulta consulta, FactoryConsultas factoryConsultasDAO,
-			AnchorPane centroTabla) {
+	public void mostrarTabla(Object consulta, FactoryConsultas factoryConsultasDAO, AnchorPane centroTabla) {
 		if (!centroTabla.getChildren().isEmpty()) {
 			centroTabla.getChildren().remove(0);
+
 		}
+
+		this.consulta = (EstadosXTipoIndicadorDAO) consulta;
 
 		this.setData(FXCollections.observableArrayList());
 		List<EstadosXTipoIndicador> lista = (List<EstadosXTipoIndicador>) factoryConsultasDAO
 				.getLista("EstadosXTipoIndicador");
-		lista = ((EstadosXTipoIndicadorDAO) consulta).getTodos();
+		lista = this.consulta.getTodos();
 		for (EstadosXTipoIndicador vi : lista) {
 			this.getData().add(vi);
 		}
 
 		this.getTablaEstadosXTipoIndicador().setItems(this.getData());
 		tablaEstadosXTipoIndicador.setMaxSize(centroTabla.getMaxWidth(), centroTabla.getMaxHeight());
-		tablaEstadosXTipoIndicador.setMinSize(centroTabla.getMinWidth(), centroTabla.getMinHeight());		
+		tablaEstadosXTipoIndicador.setMinSize(centroTabla.getMinWidth(), centroTabla.getMinHeight());
 		centroTabla.getChildren().add(0, this.getTablaEstadosXTipoIndicador());
 
 	}
@@ -141,21 +161,10 @@ public class EstadosXTipoIndicadorGUI extends TableView<EstadosXTipoIndicador>im
 				final Dragboard db = tablaEstadosXTipoIndicador.startDragAndDrop(TransferMode.COPY);
 				final ClipboardContent content = new ClipboardContent();
 
-				String selected = "";
-				Set<EstadosXTipoIndicador> selec = new HashSet<EstadosXTipoIndicador>(
-						tablaEstadosXTipoIndicador.getSelectionModel().getSelectedItems());
-				Object[] arr = selec.toArray();
-
-				for (int i = 0; i < arr.length; i++) {
-					selected += (((EstadosXTipoIndicador) arr[i]).getIdTipoIndicador().toString());
-					selected += " ";
-
-				}
-				content.putString(selected.toString());
-
-				// content.putString("Drag Me!");
+				content.putString("");
 				db.setContent(content);
 				me.consume();
+
 			}
 		});
 		tablaEstadosXTipoIndicador.setOnDragEntered(new EventHandler<DragEvent>() {
@@ -187,27 +196,123 @@ public class EstadosXTipoIndicadorGUI extends TableView<EstadosXTipoIndicador>im
 
 			@Override
 			public void handle(DragEvent event) {
-				Clipboard clipboard = Clipboard.getSystemClipboard();
-				ClipboardContent content = new ClipboardContent();
+				Runnable callback = new Runnable() {
 
-				String selected = "";
-				Set<EstadosXTipoIndicador> selec = new HashSet<EstadosXTipoIndicador>(
-						tablaEstadosXTipoIndicador.getSelectionModel().getSelectedItems());
-				Object[] arr = selec.toArray();
+					@Override
+					public void run() {
+						Clipboard clipboard = Clipboard.getSystemClipboard();
+						ClipboardContent content = new ClipboardContent();
 
-				for (int i = 0; i < arr.length; i++) {
-					selected += (((EstadosXTipoIndicador) arr[i]).getIdTipoIndicador().toString());
-					selected += " ";
+						String selected = "";
+						Set<EstadosXTipoIndicador> selec = new HashSet<EstadosXTipoIndicador>(
+								tablaEstadosXTipoIndicador.getSelectionModel().getSelectedItems());
+						Object[] arr = selec.toArray();
 
-				}
-				content.putString(selected);
+						String columnaSeleccionada = getTexto();
+						for (int i = 0; i < arr.length; i++) {
+							switch (columnaSeleccionada.toLowerCase()) {
+							case "idtipoindicador":
+								if (((EstadosXTipoIndicador) arr[i]).getIdTipoIndicador() != null) {
+									selected += ((EstadosXTipoIndicador) arr[i]).getIdTipoIndicador().toString();
+									selected += " ";
+								} else
+									selected += "";
+								break;
+							case "observaciones":
+								if (((EstadosXTipoIndicador) arr[i]).getObservaciones() != null) {
+									selected += ((EstadosXTipoIndicador) arr[i]).getObservaciones();
+									selected += " ";
+								} else
+									selected += "";
+								break;
+							case "idestado":
+								if (((EstadosXTipoIndicador) arr[i]).getIdEstado() != null) {
+									selected += ((EstadosXTipoIndicador) arr[i]).getIdEstado().toString();
+									selected += " ";
+								} else
+									selected += "";
+								break;
+							case "estado":
+								if (((EstadosXTipoIndicador) arr[i]).getEstado() != null) {
+									selected += ((EstadosXTipoIndicador) arr[i]).getEstado();
+									selected += " ";
+								} else
+									selected += "";
+								break;
+							case "representacioncromatica":
+								if (((EstadosXTipoIndicador) arr[i]).getRepresentacionCromatica() != null) {
+									selected += ((EstadosXTipoIndicador) arr[i]).getRepresentacionCromatica();
+									selected += " ";
+								} else
+									selected += "";
+								break;
+							}
 
-				clipboard.setContent(content);
+						}
+						content.putString(selected);
 
-				PanelDerecho.getInstance().getEditorTexto().insertText(
-						PanelDerecho.getInstance().getEditorTexto().getCaretPosition(), clipboard.getString());
+						clipboard.setContent(content);
+
+						PanelDerecho.getInstance().getEditorTexto().insertText(
+								PanelDerecho.getInstance().getEditorTexto().getCaretPosition(), clipboard.getString());
+						setTexto("");
+
+					}
+
+				};
+				nuevaStage(callback);
+
 			}
 
 		});
+	}
+
+	public void nuevaStage(Runnable callback) {
+		Stage nuevoStage = new Stage();
+
+		HBox ventana = new HBox();
+		Label labelColumna = new Label("Seleccione Columna: ");
+		ComboBox<String> comboColumna = new ComboBox<String>();
+		Button botonAceptar = new Button("Aceptar");
+		Button botonCancelar = new Button("Cancelar");
+		HBox botones = new HBox();
+		VBox todo = new VBox();
+
+		botones.setSpacing(50);
+		ventana.getChildren().addAll(labelColumna, comboColumna);
+		ventana.setSpacing(50);
+		ventana.setAlignment(Pos.CENTER);
+
+		ObservableList<String> listaColumnas = FXCollections.observableArrayList();
+		List<String> listaTodasTablas = consulta.getColumnas();
+		for (String s : listaTodasTablas) {
+			listaColumnas.add(s);
+		}
+		comboColumna.setItems(listaColumnas);
+
+		botonAceptar.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				EstadosXTipoIndicadorGUI.this.setTexto(comboColumna.getValue());
+				callback.run();
+				nuevoStage.close();
+			}
+		});
+
+		botonCancelar.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				nuevoStage.close();
+			}
+		});
+
+		botones.getChildren().addAll(botonAceptar, botonCancelar);
+		todo.getChildren().addAll(ventana, botones);
+		todo.setSpacing(100);
+		Scene escena = new Scene(todo);
+
+		nuevoStage.setScene(escena);
+		nuevoStage.show();
+
 	}
 }

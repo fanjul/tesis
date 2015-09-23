@@ -5,15 +5,19 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import baseDatos.hibernate.consultas.AbstractaConsulta;
 import baseDatos.hibernate.consultas.FactoryConsultas;
 import baseDatos.hibernate.consultas.ValorIndicadorDAO;
 import baseDatos.hibernate.tablas.ValorIndicador;
 import guiFX.PanelDerecho;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -25,8 +29,11 @@ import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
-public class ValorIndicadorGUI extends TableView<ValorIndicador> implements AbstractBaseDeDatosGUI {
+public class ValorIndicadorGUI extends TableView<ValorIndicador>implements AbstractBaseDeDatosGUI {
 
 	private TableView<ValorIndicador> tablaValorIndicador;
 	private TableColumn<ValorIndicador, Integer> columnaIdIndicador;
@@ -36,13 +43,13 @@ public class ValorIndicadorGUI extends TableView<ValorIndicador> implements Abst
 	private TableColumn<ValorIndicador, Double> columnaVariacion;
 	private TableColumn<ValorIndicador, Integer> columnaSignoVariacion;
 	private TableColumn<ValorIndicador, String> columnaObservaciones;
-
+	private ValorIndicadorDAO consulta;
+	private String texto = "";
 	private ObservableList<ValorIndicador> data;
 
 	public ValorIndicadorGUI() {
 		super();
 	}
-
 
 	@SuppressWarnings({ "unchecked" })
 	public void mostrarTabla() {
@@ -71,7 +78,7 @@ public class ValorIndicadorGUI extends TableView<ValorIndicador> implements Abst
 
 		tablaValorIndicador.getColumns().addAll(columnaIdIndicador, columnaFecha, columnaValor, columnaEstado,
 				columnaVariacion, columnaSignoVariacion, columnaObservaciones);
-		
+
 		tablaValorIndicador.getStyleClass().add("tablas");
 		this.agregarListenerEvent();
 
@@ -118,6 +125,14 @@ public class ValorIndicadorGUI extends TableView<ValorIndicador> implements Abst
 
 	}
 
+	public String getTexto() {
+		return texto;
+	}
+
+	public void setTexto(String texto) {
+		this.texto = texto;
+	}
+
 	private void agregarListenerEvent() {
 		// Para que se pueda seleccionar varias rows de la tabla
 		tablaValorIndicador.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
@@ -127,22 +142,11 @@ public class ValorIndicadorGUI extends TableView<ValorIndicador> implements Abst
 		tablaValorIndicador.setOnDragDetected(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(final MouseEvent me) {
+
 				final Dragboard db = tablaValorIndicador.startDragAndDrop(TransferMode.COPY);
 				final ClipboardContent content = new ClipboardContent();
 
-				String selected = "";
-				Set<ValorIndicador> selec = new HashSet<ValorIndicador>(
-						tablaValorIndicador.getSelectionModel().getSelectedItems());
-				Object[] arr = selec.toArray();
-
-				for (int i = 0; i < arr.length; i++) {
-					selected += (((ValorIndicador) arr[i]).getIdIndicador().toString());
-					selected += " ";
-
-				}
-				content.putString(selected.toString());
-
-				// content.putString("Drag Me!");
+				content.putString("");
 				db.setContent(content);
 				me.consume();
 			}
@@ -176,25 +180,86 @@ public class ValorIndicadorGUI extends TableView<ValorIndicador> implements Abst
 
 			@Override
 			public void handle(DragEvent event) {
-				Clipboard clipboard = Clipboard.getSystemClipboard();
-				ClipboardContent content = new ClipboardContent();
+				Runnable callback = new Runnable() {
 
-				String selected = "";
-				Set<ValorIndicador> selec = new HashSet<ValorIndicador>(
-						tablaValorIndicador.getSelectionModel().getSelectedItems());
-				Object[] arr = selec.toArray();
+					@Override
+					public void run() {
+						Clipboard clipboard = Clipboard.getSystemClipboard();
+						ClipboardContent content = new ClipboardContent();
 
-				for (int i = 0; i < arr.length; i++) {
-					selected += (((ValorIndicador) arr[i]).getIdIndicador().toString());
-					selected += " ";
+						String selected = "";
+						Set<ValorIndicador> selec = new HashSet<ValorIndicador>(
+								tablaValorIndicador.getSelectionModel().getSelectedItems());
+						Object[] arr = selec.toArray();
 
-				}
-				content.putString(selected);
+						String columnaSeleccionada = getTexto();
+						for (int i = 0; i < arr.length; i++) {
+							switch (columnaSeleccionada.toLowerCase()) {
+							case "idindicador":
+								if (((ValorIndicador) arr[i]).getIdIndicador() != null) {
+									selected += ((ValorIndicador) arr[i]).getIdIndicador().toString();
+									selected += " ";
+								} else
+									selected += "";
+								break;
+							case "fecha":
+								if (((ValorIndicador) arr[i]).getFecha() != null) {
+									selected += ((ValorIndicador) arr[i]).getFecha().toString();
+									selected += " ";
+								} else
+									selected += "";
+								break;
+							case "valor":
+								if (((ValorIndicador) arr[i]).getValor() != null) {
+									selected += ((ValorIndicador) arr[i]).getValor().toString();
+									selected += " ";
+								} else
+									selected += "";
+								break;
+							case "estado":
+								if (((ValorIndicador) arr[i]).getEstado() != null) {
+									selected += ((ValorIndicador) arr[i]).getEstado();
+									selected += " ";
+								} else
+									selected += "";
+								break;
+							case "variacion":
+								if (((ValorIndicador) arr[i]).getVariacion() != null) {
+									selected += ((ValorIndicador) arr[i]).getVariacion().toString();
+									selected += " ";
+								} else
+									selected += "";
+								break;
+							case "signovariacion":
+								if (((ValorIndicador) arr[i]).getSignoVariacion() != null) {
+									selected += ((ValorIndicador) arr[i]).getSignoVariacion().toString();
+									selected += " ";
+								} else
+									selected += "";
+								break;
+							case "observaciones":
+								if (((ValorIndicador) arr[i]).getObservaciones() != null) {
+									selected += ((ValorIndicador) arr[i]).getObservaciones();
+									selected += " ";
+								} else
+									selected += "";
+								break;
 
-				clipboard.setContent(content);
+							}
+						}
+						content.putString(selected);
 
-				PanelDerecho.getInstance().getEditorTexto().insertText(
-						PanelDerecho.getInstance().getEditorTexto().getCaretPosition(), clipboard.getString());
+						clipboard.setContent(content);
+
+						PanelDerecho.getInstance().getEditorTexto().insertText(
+								PanelDerecho.getInstance().getEditorTexto().getCaretPosition(), clipboard.getString());
+						setTexto("");
+
+					}
+
+				};
+				nuevaStage(callback);
+
 			}
 
 		});
@@ -207,14 +272,16 @@ public class ValorIndicadorGUI extends TableView<ValorIndicador> implements Abst
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public void mostrarTabla(AbstractaConsulta consulta, FactoryConsultas factoryConsultasDAO,
+	public void mostrarTabla(Object consulta, FactoryConsultas factoryConsultasDAO,
 			AnchorPane centroTabla) {
+
 		this.setData(FXCollections.observableArrayList());
 		if (!centroTabla.getChildren().isEmpty()) {
 			centroTabla.getChildren().remove(0);
 		}
+		this.consulta = (ValorIndicadorDAO) consulta;
 		List<ValorIndicador> lista = (List<ValorIndicador>) factoryConsultasDAO.getLista("ValorIndicador");
-		lista = ((ValorIndicadorDAO) consulta).getTodos();
+		lista = this.consulta.getTodos();
 		for (ValorIndicador vi : lista) {
 			this.getData().add(vi);
 
@@ -223,7 +290,55 @@ public class ValorIndicadorGUI extends TableView<ValorIndicador> implements Abst
 		tablaValorIndicador.setMaxSize(centroTabla.getMaxWidth(), centroTabla.getMaxHeight());
 		tablaValorIndicador.setMinSize(centroTabla.getMinWidth(), centroTabla.getMinHeight());
 		centroTabla.getChildren().add(0, this.getTablaValorIndicador());
+		
+	}
 
+	public void nuevaStage(Runnable callback) {
+		Stage nuevoStage = new Stage();
+
+		HBox ventana = new HBox();
+		Label labelColumna = new Label("Seleccione Columna: ");
+		ComboBox<String> comboColumna = new ComboBox<String>();
+		Button botonAceptar = new Button("Aceptar");
+		Button botonCancelar = new Button("Cancelar");
+		HBox botones = new HBox();
+		VBox todo = new VBox();
+
+		botones.setSpacing(50);
+		ventana.getChildren().addAll(labelColumna, comboColumna);
+		ventana.setSpacing(50);
+		ventana.setAlignment(Pos.CENTER);
+
+		ObservableList<String> listaColumnas = FXCollections.observableArrayList();
+		List<String> listaTodasTablas = consulta.getColumnas();
+		for (String s : listaTodasTablas) {
+			listaColumnas.add(s);
+		}
+		comboColumna.setItems(listaColumnas);
+
+		botonAceptar.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				ValorIndicadorGUI.this.setTexto(comboColumna.getValue());
+				callback.run();
+				nuevoStage.close();
+			}
+		});
+
+		botonCancelar.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				nuevoStage.close();
+			}
+		});
+
+		botones.getChildren().addAll(botonAceptar, botonCancelar);
+		todo.getChildren().addAll(ventana, botones);
+		todo.setSpacing(100);
+		Scene escena = new Scene(todo);
+
+		nuevoStage.setScene(escena);
+		nuevoStage.show();
 
 	}
 
