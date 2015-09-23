@@ -33,18 +33,23 @@ public abstract class Dialogo {
 	}
 	
 	private void configuracionDialogo(){
-		escena.setFill(Color.rgb(34, 44, 44, 0.5));
-		dialogo.initStyle(StageStyle.TRANSPARENT);
-		dialogo.initModality(Modality.APPLICATION_MODAL);
+		this.escena.setFill(Color.rgb(34, 44, 44, 0.5));
+		this.dialogo.initStyle(StageStyle.TRANSPARENT);
+		this.dialogo.initModality(Modality.APPLICATION_MODAL);
 		Platform.setImplicitExit(false);
 		EffectUtilities.makeDraggable(dialogo, vBoxContenedor);
-		escena.getStylesheets().add(getClass().getResource("/archivosCSS/s1.css").toExternalForm());
-		vBoxContenedor.getStyleClass().add("cuadro-principal");
-		vBoxContenedor.setSpacing(50);
-		hBoxAbajo.setSpacing(180);
-		vBoxContenedor.setAlignment(Pos.BASELINE_CENTER);
-		dialogo.setHeight(100);
-		dialogo.setWidth(300);
+		this.escena.getStylesheets().add(getClass().getResource("/archivosCSS/s1.css").toExternalForm());
+		this.vBoxContenedor.getStyleClass().add("cuadro-principal");
+		this.hBoxAbajo.setSpacing(180);
+		this.vBoxContenedor.setAlignment(Pos.BASELINE_CENTER);
+		this.dialogo.setHeight(100);
+		this.dialogo.setWidth(300);
+		
+		this.vBoxContenedor.setSpacing(20);
+		this.hBoxAbajo.setSpacing(40);
+		this.vBoxContenedor.setAlignment(Pos.CENTER);
+		this.hBoxArriba.setAlignment(Pos.CENTER);
+		this.hBoxAbajo.setAlignment(Pos.CENTER);
 	}
 		
 	public void mostrarDialogo(){

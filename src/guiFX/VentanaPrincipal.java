@@ -17,7 +17,9 @@ import cadenaResponsabilidades.TipoObjeto;
 import cadenaResponsabilidades.TipoString;
 import dialogos.Dialogo;
 import dialogos.DialogoEjecutar;
+import dialogos.DialogoErrorArchivoExistente;
 import dialogos.DialogoGuardarArchivo;
+import dialogos.DialogoSeGuardoCorrectamente;
 import graficosFX.Grafico;
 import graficosFX.GraficoTorta;
 import javafx.beans.binding.BooleanBinding;
@@ -96,9 +98,10 @@ public class VentanaPrincipal extends BorderPane {
 		barraMenu.getListaMetodos().getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
 			@Override
 			public void changed(ObservableValue arg0, Object old_val, Object new_val) {
-
-				((PanelDerecho) panelDerecho).getEditorTexto().setText((String) new_val);
-				copiarContenidoArchivoEnEditorTexto();
+				if (barraMenu.getListaMetodos().getSelectionModel().getSelectedItem() != null) {
+					((PanelDerecho) panelDerecho).getEditorTexto().setText((String) new_val);
+					copiarContenidoArchivoEnEditorTexto();
+				}
 			}
 		});
 
@@ -155,6 +158,35 @@ public class VentanaPrincipal extends BorderPane {
 						// agregado
 						barraMenu.getListaMetodos().setItems(getMetodosMatematicosYaCreados());
 						dialogoGuardarMetodo.cerrarDialogo();
+						
+						
+						
+						//////////////////////
+//					s	File carpetaDefecto = new File(RUTA_METODOS);
+//						carpetaDefecto.mkdir();
+//						File archivo = new File(carpetaDefecto.getPath() + "\\"
+//								+ ((DialogoGuardarArchivo) dialogoGuardarMetodo).getTextFieldNombreArchivo().getText() + "." + EXTENSION_ARCHIVOS);
+//						
+//						
+//						Dialogo dialogoSeGuardoCorrectamente = new DialogoSeGuardoCorrectamente();
+//						((DialogoSeGuardoCorrectamente)dialogoSeGuardoCorrectamente).crearDialogo();
+//						dialogoSeGuardoCorrectamente.mostrarDialogo();
+//						
+//						((DialogoSeGuardoCorrectamente)dialogoSeGuardoCorrectamente).getBotonAceptar().setOnAction(new EventHandler<ActionEvent>() {
+//
+//							@Override
+//							public void handle(ActionEvent arg0) {
+//								// TODO Auto-generated method stub
+//								dialogoSeGuardoCorrectamente.cerrarDialogo();
+//							}
+//						
+//						});
+						
+						
+						//////////////////////////////
+						
+						
+						
 					}
 				});
 
@@ -167,7 +199,6 @@ public class VentanaPrincipal extends BorderPane {
 				});
 
 				dialogoGuardarMetodo.mostrarDialogo();
-
 			}
 		});
 
@@ -331,14 +362,19 @@ public class VentanaPrincipal extends BorderPane {
 	private void copiarContenidoArchivoEnEditorTexto() {
 		File archivo;
 		FileReader leerArchivo = null;
-
+		
+		
+		
 		try {
-			// TODO arreglar, el file tira error porque no existe al guardar uno
-			//TODO arreglar que si no es un txt no se rompa y tirar error 
-			// nuevo
+
+			//TODO arreglar que si no es un txt no se rompa y tirar error nuevo
+			// TODO arreglar, el file tira error porque no existe al guardar uno nuevo (creo q ya esta)
+
 			archivo = new File(
 					RUTA_METODOS + "\\" + barraMenu.getListaMetodos().getSelectionModel().getSelectedItem().toString()
 							+ "." + EXTENSION_ARCHIVOS);
+			
+		
 			leerArchivo = new FileReader(archivo);
 			BufferedReader memoriaParaLectura = new BufferedReader(leerArchivo);
 
@@ -397,9 +433,20 @@ public class VentanaPrincipal extends BorderPane {
 			File archivo = new File(carpetaDefecto.getPath() + "\\"
 					+ dialogoGuardarMetodo.getTextFieldNombreArchivo().getText() + "." + EXTENSION_ARCHIVOS);
 
+			
 			if (archivo.exists()) {
-				bw = new BufferedWriter(new FileWriter(archivo));
-				bw.write("El archivo de texto ya estaba creado.");
+				Dialogo dialogoErrorArchivoExistente = new DialogoErrorArchivoExistente();
+				dialogoErrorArchivoExistente.crearDialogo();
+				dialogoErrorArchivoExistente.mostrarDialogo();
+	
+				((DialogoErrorArchivoExistente) dialogoErrorArchivoExistente).getBotonAceptar().setOnAction(new EventHandler<ActionEvent>() {
+					@Override
+					public void handle(ActionEvent arg0) {
+						dialogoErrorArchivoExistente.cerrarDialogo();
+					}
+				});
+				
+			
 
 			} else {
 
@@ -410,9 +457,26 @@ public class VentanaPrincipal extends BorderPane {
 				String texto = ((PanelDerecho) panelDerecho).getEditorTexto().getText();
 
 				bw.write(texto, 0, texto.length());
-			}
-			bw.close();
+				
+				Dialogo dialogoSeGuardoCorrectamente = new DialogoSeGuardoCorrectamente();
+				((DialogoSeGuardoCorrectamente)dialogoSeGuardoCorrectamente).crearDialogo();
+				dialogoSeGuardoCorrectamente.mostrarDialogo();
+				
+				((DialogoSeGuardoCorrectamente)dialogoSeGuardoCorrectamente).getBotonAceptar().setOnAction(new EventHandler<ActionEvent>() {
 
+					@Override
+					public void handle(ActionEvent arg0) {
+						// TODO Auto-generated method stub
+						dialogoSeGuardoCorrectamente.cerrarDialogo();
+					}
+				
+				});
+				
+			}
+			if(bw != null){
+				bw.close();
+			}
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

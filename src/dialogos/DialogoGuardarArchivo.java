@@ -1,6 +1,5 @@
 package dialogos;
 
-import guiFX.PanelDerecho;
 import javafx.beans.binding.BooleanBinding;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
