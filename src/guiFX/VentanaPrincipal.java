@@ -20,6 +20,7 @@ import dialogos.DialogoEjecutar;
 import dialogos.DialogoGuardarArchivo;
 import graficosFX.Grafico;
 import graficosFX.GraficoTorta;
+import javafx.beans.binding.BooleanBinding;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -48,7 +49,7 @@ public class VentanaPrincipal extends BorderPane {
 	private BotonImagen botonGraficoTortaPRUEBA;
 	private ListaBotonesGrafico listaBotonesSuperior;
 	private ListaBotonesGrafico listaBotonesInferior;
-	
+
 	static final String RUTA_METODOS = System.getProperty("user.dir") + "\\" + "Metodos Matematicos";
 	static final String EXTENSION_ARCHIVOS = "met";
 
@@ -101,6 +102,7 @@ public class VentanaPrincipal extends BorderPane {
 			}
 		});
 
+
 		panelDerecho = PanelDerecho.getInstance();
 
 		crearGraficoTorta();
@@ -116,8 +118,23 @@ public class VentanaPrincipal extends BorderPane {
 
 	private void abrirDialogoGuardarArchivo() {
 		hBoxAbajo = new HBox();
-
 		botonGuardarMetodo = new BotonImagen("/imagenesFX/Guardar.png", "Guardar Metodo");
+
+		
+
+		///////////////////// Para disablear/enablear el boton guardar
+		BooleanBinding bb = new BooleanBinding() {
+			{
+				super.bind(((PanelDerecho) panelDerecho).getEditorTexto().textProperty());
+			}
+
+			@Override
+			protected boolean computeValue() {
+				return (((PanelDerecho) panelDerecho).getEditorTexto().getText().isEmpty());
+			}
+		};
+		botonGuardarMetodo.disableProperty().bind(bb);
+		/////////////////////////
 
 		botonGuardarMetodo.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
@@ -133,7 +150,8 @@ public class VentanaPrincipal extends BorderPane {
 					public void handle(ActionEvent event) {
 						// guardarMetodoMatematicoDondeQuiero(primaryStage);
 						guardarMetodoMtematicoLugarPorDefecto(((DialogoGuardarArchivo) dialogoGuardarMetodo));
-						// Actualiza el ComboBox con el nuevo Metodo Matematico
+						// Actualiza el ComboBox con el nuevo Metodo
+						// Matematico
 						// agregado
 						barraMenu.getListaMetodos().setItems(getMetodosMatematicosYaCreados());
 						dialogoGuardarMetodo.cerrarDialogo();
@@ -149,6 +167,7 @@ public class VentanaPrincipal extends BorderPane {
 				});
 
 				dialogoGuardarMetodo.mostrarDialogo();
+
 			}
 		});
 
@@ -156,7 +175,23 @@ public class VentanaPrincipal extends BorderPane {
 
 	private void abrirDialogoEjecutar() {
 		// TODO hacer para que se ejecute cuando aprieta enter
+
+
 		botonEjecutar = new BotonImagen("/imagenesFX/Ejecutar2.png", "Ejecutar");
+
+		///////////////////// Para disablear/enablear el boton ejecutar
+		BooleanBinding bb = new BooleanBinding() {
+			{
+				super.bind(((PanelDerecho) panelDerecho).getEditorTexto().textProperty());
+			}
+
+			@Override
+			protected boolean computeValue() {
+				return (((PanelDerecho) panelDerecho).getEditorTexto().getText().isEmpty());
+			}
+		};
+		botonEjecutar.disableProperty().bind(bb);
+		/////////////////////////
 
 		botonEjecutar.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
@@ -381,6 +416,7 @@ public class VentanaPrincipal extends BorderPane {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+
 	}
 
 	/*

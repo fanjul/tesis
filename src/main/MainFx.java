@@ -33,6 +33,7 @@ public class MainFx extends Application {
 		ventana.setMinWidth(1365);//minimo ancho de la pantalla
 		ventana.setMaxHeight(728);
 		ventana.setMaxWidth(1365);
+
 		AnchorPane cuadroPrincipal = new AnchorPane();
 		cuadroPrincipal.setTopAnchor(ventana, 0.0);
 		cuadroPrincipal.setBottomAnchor(ventana, 0.0);
@@ -62,8 +63,10 @@ public class MainFx extends Application {
 		primaryStage.alwaysOnTopProperty();
 		Platform.setImplicitExit(true);
 
+
 		EffectUtilities.makeDraggable(primaryStage, cuadroPrincipal);
 
+		Platform.setImplicitExit(true);
 		escenaPrincipal.getStylesheets().add(getClass().getResource("/archivosCSS/s1.css").toExternalForm());
 
 		cuadroPrincipal.getStyleClass().add("cuadro-principal");

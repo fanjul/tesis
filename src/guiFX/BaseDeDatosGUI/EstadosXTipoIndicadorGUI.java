@@ -42,7 +42,6 @@ public class EstadosXTipoIndicadorGUI extends TableView<EstadosXTipoIndicador>im
 	private TableColumn<EstadosXTipoIndicador, String> columnaObservaciones;
 	private EstadosXTipoIndicadorDAO consulta;
 	private String texto = "";
-
 	private ObservableList<EstadosXTipoIndicador> data;
 
 	public EstadosXTipoIndicadorGUI() {
@@ -51,6 +50,7 @@ public class EstadosXTipoIndicadorGUI extends TableView<EstadosXTipoIndicador>im
 
 	@SuppressWarnings("unchecked")
 	public void mostrarTabla() {
+
 		tablaEstadosXTipoIndicador = new TableView<EstadosXTipoIndicador>();
 
 		columnaEstado = new TableColumn<EstadosXTipoIndicador, String>("Estado");
@@ -129,11 +129,9 @@ public class EstadosXTipoIndicadorGUI extends TableView<EstadosXTipoIndicador>im
 	public void mostrarTabla(Object consulta, FactoryConsultas factoryConsultasDAO, AnchorPane centroTabla) {
 		if (!centroTabla.getChildren().isEmpty()) {
 			centroTabla.getChildren().remove(0);
-
 		}
 
 		this.consulta = (EstadosXTipoIndicadorDAO) consulta;
-
 		this.setData(FXCollections.observableArrayList());
 		List<EstadosXTipoIndicador> lista = (List<EstadosXTipoIndicador>) factoryConsultasDAO
 				.getLista("EstadosXTipoIndicador");
@@ -146,7 +144,6 @@ public class EstadosXTipoIndicadorGUI extends TableView<EstadosXTipoIndicador>im
 		tablaEstadosXTipoIndicador.setMaxSize(centroTabla.getMaxWidth(), centroTabla.getMaxHeight());
 		tablaEstadosXTipoIndicador.setMinSize(centroTabla.getMinWidth(), centroTabla.getMinHeight());
 		centroTabla.getChildren().add(0, this.getTablaEstadosXTipoIndicador());
-
 	}
 
 	private void agregarListenerEvent() {
@@ -164,7 +161,6 @@ public class EstadosXTipoIndicadorGUI extends TableView<EstadosXTipoIndicador>im
 				content.putString("");
 				db.setContent(content);
 				me.consume();
-
 			}
 		});
 		tablaEstadosXTipoIndicador.setOnDragEntered(new EventHandler<DragEvent>() {
@@ -262,13 +258,16 @@ public class EstadosXTipoIndicadorGUI extends TableView<EstadosXTipoIndicador>im
 				};
 				nuevaStage(callback);
 
+
 			}
+
 
 		});
 	}
 
 	public void nuevaStage(Runnable callback) {
 		Stage nuevoStage = new Stage();
+
 
 		HBox ventana = new HBox();
 		Label labelColumna = new Label("Seleccione Columna: ");
@@ -277,7 +276,7 @@ public class EstadosXTipoIndicadorGUI extends TableView<EstadosXTipoIndicador>im
 		Button botonCancelar = new Button("Cancelar");
 		HBox botones = new HBox();
 		VBox todo = new VBox();
-
+		
 		botones.setSpacing(50);
 		ventana.getChildren().addAll(labelColumna, comboColumna);
 		ventana.setSpacing(50);
@@ -289,7 +288,6 @@ public class EstadosXTipoIndicadorGUI extends TableView<EstadosXTipoIndicador>im
 			listaColumnas.add(s);
 		}
 		comboColumna.setItems(listaColumnas);
-
 		botonAceptar.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {

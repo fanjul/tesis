@@ -31,7 +31,6 @@ public class BarraMenu extends VBox {
 	private FactoryConsultas factoryConsultasDAO;
 	private Object consultasDAO;
 	private ComboBox<String> comboBoxTablas;
-
 	private ListView<String> listaMetodos;
 
 	public BarraMenu(VentanaPrincipal ventana) {
@@ -47,33 +46,25 @@ public class BarraMenu extends VBox {
 	private void agregarMenuBaseDeDatos() {
 
 		BotonImagen botonAbrirBaseDatos = new BotonImagen("/imagenesFX/AbrirBaseDeDatos.png", "Abrir Base de Datos");
-
 		botonAbrirBaseDatos.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-
 			@Override
 			public void handle(MouseEvent event) {
 				configurarPanelCentro();
 			}
 		});
-
 		this.getChildren().add(botonAbrirBaseDatos);
-
 	}
 
 	private void agregarMenuAbrirArchivo() {
 
 		BotonImagen botonAbrirArchivo = new BotonImagen("/imagenesFX/AbrirArchivo.png", "Abrir Archivo");
-
 		botonAbrirArchivo.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-
 			@Override
 			public void handle(MouseEvent event) {
 				// TODO hacer para que te deje elegir archivo a abrir
 				// abrirArchivo.onMousePressedProperty();
-
 			}
 		});
-
 		// Agrego el boton abrir archivo
 		this.getChildren().add(botonAbrirArchivo);
 	}
@@ -84,8 +75,8 @@ public class BarraMenu extends VBox {
 		listaMetodos.setMinHeight(0);
 		listaMetodos.setMaxWidth(120);
 		listaMetodos.setMinWidth(0);
-		this.getChildren().add(listaMetodos);
 
+		this.getChildren().add(listaMetodos);
 	}
 
 	// private static void configurarElegirArchivo(final FileChooser
@@ -99,12 +90,6 @@ public class BarraMenu extends VBox {
 		return listaMetodos;
 	}
 
-	/*
-	 * private static void configurarElegirArchivo(final FileChooser
-	 * fileChooser) { fileChooser.setTitle("View Pictures");
-	 * fileChooser.setInitialDirectory(new
-	 * File(System.getProperty("user.home"))); }
-	 */
 	public AbstractBaseDeDatosGUI getBaseDeDatos() {
 		return baseDeDatos;
 	}

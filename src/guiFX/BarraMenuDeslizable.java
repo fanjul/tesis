@@ -24,19 +24,16 @@ public class BarraMenuDeslizable extends AnchorPane {
 		this.setWidth(EXPANDIR_ANCHO);
 		this.setMinWidth(0);
 		this.getChildren().add(nodo);
-
 		setVisible(false);
 
 		toggleButtonMenu = new ToggleButton("", imagenAbrirBarraDeslizable);
 		toggleButtonMenu.setTooltip(new Tooltip("Abrir Menu"));
 		toggleButtonMenu.getStyleClass().add("botones");
-		
 
 		toggleButtonMenu.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent e) {
 				toggleButtonMenu.setEffect(shadow);
-
 			}
 		});
 
@@ -88,6 +85,7 @@ public class BarraMenuDeslizable extends AnchorPane {
 				showSidebar.onFinishedProperty().set(new EventHandler<ActionEvent>() {
 					@Override
 					public void handle(ActionEvent actionEvent) {
+
 						toggleButtonMenu.setGraphic(imagenCerrarBarraDeslizable);
 						toggleButtonMenu.setTooltip(new Tooltip("Cerrar Menu"));
 					}
