@@ -104,10 +104,11 @@ public class TipoIndicadorGUI extends TableView<TipoIndicador>implements Abstrac
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public void mostrarTabla(Object consulta, FactoryConsultas factoryConsultasDAO, AnchorPane centroInferior) {
-
-		if (!centroInferior.getChildren().isEmpty()) {
-			centroInferior.getChildren().remove(0);
+	public void mostrarTabla(Object consulta, FactoryConsultas factoryConsultasDAO,
+			AnchorPane centroTabla) {
+		
+		if(!centroTabla.getChildren().isEmpty()){
+			centroTabla.getChildren().remove(0);
 		}
 		this.consulta = (TipoIndicadorDAO) consulta;
 		this.setData(FXCollections.observableArrayList());
@@ -118,8 +119,9 @@ public class TipoIndicadorGUI extends TableView<TipoIndicador>implements Abstrac
 
 		}
 		this.getTablaTipoIndicador().setItems(this.getData());
-		tablaTipoIndicador.setPrefSize(centroInferior.getMaxWidth(), centroInferior.getMaxHeight());
-		centroInferior.getChildren().add(0, this.getTablaTipoIndicador());
+		tablaTipoIndicador.setMaxSize(centroTabla.getMaxWidth(), centroTabla.getMaxHeight());
+		tablaTipoIndicador.setMinSize(centroTabla.getMinWidth(), centroTabla.getMinHeight());
+		centroTabla.getChildren().add(0,this.getTablaTipoIndicador());			
 	}
 
 	private void agregarListenerEvent() {

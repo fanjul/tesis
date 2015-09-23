@@ -200,10 +200,11 @@ public class IndicadorGUI extends TableView<Indicador>implements AbstractBaseDeD
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public void mostrarTabla(Object consulta, FactoryConsultas factoryConsultasDAO, AnchorPane centroInferior) {
+	public void mostrarTabla(Object consulta, FactoryConsultas factoryConsultasDAO, AnchorPane centroTabla) {
 
-		if (!centroInferior.getChildren().isEmpty()) {
-			centroInferior.getChildren().remove(0);
+		if (!centroTabla.getChildren().isEmpty()) {
+			centroTabla.getChildren().remove(0);
+
 		}
 		this.consulta = (IndicadorDAO) consulta;
 		this.setData(FXCollections.observableArrayList());
@@ -214,8 +215,10 @@ public class IndicadorGUI extends TableView<Indicador>implements AbstractBaseDeD
 
 		}
 		this.getTablaIndicador().setItems(this.getData());
-		tablaIndicador.setPrefSize(centroInferior.getMaxWidth(), centroInferior.getMaxHeight());
-		centroInferior.getChildren().add(0, this.getTablaIndicador());
+		tablaIndicador.setMaxSize(centroTabla.getMaxWidth(), centroTabla.getMaxHeight());
+		tablaIndicador.setMinSize(centroTabla.getMinWidth(), centroTabla.getMinHeight());
+		centroTabla.getChildren().add(0, this.getTablaIndicador());
+
 	}
 
 	private void agregarListenerEvent() {

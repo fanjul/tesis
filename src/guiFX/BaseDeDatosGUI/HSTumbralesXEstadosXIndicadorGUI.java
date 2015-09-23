@@ -162,10 +162,11 @@ public class HSTumbralesXEstadosXIndicadorGUI extends TableView<HSTumbralesXEsta
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public void mostrarTabla(Object consulta, FactoryConsultas factoryConsultasDAO, AnchorPane centroInferior) {
 
-		if (!centroInferior.getChildren().isEmpty()) {
-			centroInferior.getChildren().remove(0);
+	public void mostrarTabla(Object consulta, FactoryConsultas factoryConsultasDAO, AnchorPane centroTabla) {
+
+		if (!centroTabla.getChildren().isEmpty()) {
+			centroTabla.getChildren().remove(0);
 		}
 		this.consulta = (HSTumbralesXEstadosXIndicadorDAO) consulta;
 		this.setData(FXCollections.observableArrayList());
@@ -177,8 +178,9 @@ public class HSTumbralesXEstadosXIndicadorGUI extends TableView<HSTumbralesXEsta
 
 		}
 		this.getTablaHSTUmbrales().setItems(this.getData());
-		tablaHSTUmbrales.setPrefSize(centroInferior.getMaxWidth(), centroInferior.getMaxHeight());
-		centroInferior.getChildren().add(0, this.getTablaHSTUmbrales());
+		tablaHSTUmbrales.setMaxSize(centroTabla.getMaxWidth(), centroTabla.getMaxHeight());
+		tablaHSTUmbrales.setMinSize(centroTabla.getMinWidth(), centroTabla.getMinHeight());
+		centroTabla.getChildren().add(0, this.getTablaHSTUmbrales());
 
 	}
 

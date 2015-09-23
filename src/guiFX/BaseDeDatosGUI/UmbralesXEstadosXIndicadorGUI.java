@@ -166,10 +166,11 @@ public class UmbralesXEstadosXIndicadorGUI extends TableView<UmbralesXEstadosXIn
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public void mostrarTabla(Object consulta, FactoryConsultas factoryConsultasDAO, AnchorPane centroInferior) {
-
-		if (!centroInferior.getChildren().isEmpty()) {
-			centroInferior.getChildren().remove(0);
+	public void mostrarTabla(Object consulta, FactoryConsultas factoryConsultasDAO,
+			AnchorPane centroTabla) {
+		
+		if(!centroTabla.getChildren().isEmpty()){
+			centroTabla.getChildren().remove(0);
 		}
 		this.consulta = (UmbralesXEstadosXIndicadorDAO) consulta;
 		this.setData(FXCollections.observableArrayList());
@@ -181,8 +182,9 @@ public class UmbralesXEstadosXIndicadorGUI extends TableView<UmbralesXEstadosXIn
 
 		}
 		this.getTablaUmbrales().setItems(this.getData());
-		tablaUmbrales.setPrefSize(centroInferior.getMaxWidth(), centroInferior.getMaxHeight());
-		centroInferior.getChildren().add(0, this.getTablaUmbrales());
+		tablaUmbrales.setMaxSize(centroTabla.getMaxWidth(), centroTabla.getMaxHeight());
+		tablaUmbrales.setMinSize(centroTabla.getMinWidth(), centroTabla.getMinHeight());
+		centroTabla.getChildren().add(0,this.getTablaUmbrales());			
 	}
 
 	private void agregarListenerEvent() {

@@ -126,11 +126,14 @@ public class EstadosXTipoIndicadorGUI extends TableView<EstadosXTipoIndicador>im
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public void mostrarTabla(Object consulta, FactoryConsultas factoryConsultasDAO, AnchorPane centroInferior) {
-		if (!centroInferior.getChildren().isEmpty()) {
-			centroInferior.getChildren().remove(0);
+	public void mostrarTabla(Object consulta, FactoryConsultas factoryConsultasDAO, AnchorPane centroTabla) {
+		if (!centroTabla.getChildren().isEmpty()) {
+			centroTabla.getChildren().remove(0);
+
 		}
+
 		this.consulta = (EstadosXTipoIndicadorDAO) consulta;
+
 		this.setData(FXCollections.observableArrayList());
 		List<EstadosXTipoIndicador> lista = (List<EstadosXTipoIndicador>) factoryConsultasDAO
 				.getLista("EstadosXTipoIndicador");
@@ -140,8 +143,9 @@ public class EstadosXTipoIndicadorGUI extends TableView<EstadosXTipoIndicador>im
 		}
 
 		this.getTablaEstadosXTipoIndicador().setItems(this.getData());
-		tablaEstadosXTipoIndicador.setPrefSize(centroInferior.getMaxWidth(), centroInferior.getMaxHeight());
-		centroInferior.getChildren().add(0, this.getTablaEstadosXTipoIndicador());
+		tablaEstadosXTipoIndicador.setMaxSize(centroTabla.getMaxWidth(), centroTabla.getMaxHeight());
+		tablaEstadosXTipoIndicador.setMinSize(centroTabla.getMinWidth(), centroTabla.getMinHeight());
+		centroTabla.getChildren().add(0, this.getTablaEstadosXTipoIndicador());
 
 	}
 
