@@ -208,10 +208,10 @@ public class ValorIndicadorGUI extends TableView<ValorIndicador> implements Abst
 	@SuppressWarnings("unchecked")
 	@Override
 	public void mostrarTabla(AbstractaConsulta consulta, FactoryConsultas factoryConsultasDAO,
-			AnchorPane centroInferior) {
+			AnchorPane centroTabla) {
 		this.setData(FXCollections.observableArrayList());
-		if (!centroInferior.getChildren().isEmpty()) {
-			centroInferior.getChildren().remove(0);
+		if (!centroTabla.getChildren().isEmpty()) {
+			centroTabla.getChildren().remove(0);
 		}
 		List<ValorIndicador> lista = (List<ValorIndicador>) factoryConsultasDAO.getLista("ValorIndicador");
 		lista = ((ValorIndicadorDAO) consulta).getTodos();
@@ -220,8 +220,9 @@ public class ValorIndicadorGUI extends TableView<ValorIndicador> implements Abst
 
 		}
 		this.getTablaValorIndicador().setItems(this.getData());
-//		tablaValorIndicador.setPrefSize(centroInferior.getMaxWidth(), centroInferior.getMaxHeight());
-		centroInferior.getChildren().add(0, this.getTablaValorIndicador());
+		tablaValorIndicador.setMaxSize(centroTabla.getMaxWidth(), centroTabla.getMaxHeight());
+		tablaValorIndicador.setMinSize(centroTabla.getMinWidth(), centroTabla.getMinHeight());
+		centroTabla.getChildren().add(0, this.getTablaValorIndicador());
 
 
 	}

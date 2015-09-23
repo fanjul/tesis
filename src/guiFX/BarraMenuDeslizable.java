@@ -14,7 +14,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
 
 public class BarraMenuDeslizable extends AnchorPane {
-	private static final int EXPANDIR_ANCHO = 200;
+	private static final int EXPANDIR_ANCHO = 120;
 	private ToggleButton toggleButtonMenu;
 	private DropShadow shadow = new DropShadow();
 	private ImageView imagenAbrirBarraDeslizable = new ImageView("/imagenesFX/AbrirBarraDeslizable.png");
@@ -66,10 +66,6 @@ public class BarraMenuDeslizable extends AnchorPane {
 					@Override
 					public void handle(ActionEvent actionEvent) {
 						setVisible(false);
-						// botonMenu.setText("Mostrar Menu");
-
-						// ImageView imagenAbrirCerrarBarraDeslizable = new
-						// ImageView("/imagenesFX/AbrirBarraDeslizable.png");
 						toggleButtonMenu.setGraphic(imagenAbrirBarraDeslizable);
 						toggleButtonMenu.setTooltip(new Tooltip("Abrir Menu"));
 
@@ -92,10 +88,6 @@ public class BarraMenuDeslizable extends AnchorPane {
 				showSidebar.onFinishedProperty().set(new EventHandler<ActionEvent>() {
 					@Override
 					public void handle(ActionEvent actionEvent) {
-						// botonMenu.setText("Cerrar Menu");
-
-						// ImageView imagenAbrirCerrarBarraDeslizable = new
-						// ImageView("/imagenesFX/CerrarBarraDeslizable.png");
 						toggleButtonMenu.setGraphic(imagenCerrarBarraDeslizable);
 						toggleButtonMenu.setTooltip(new Tooltip("Cerrar Menu"));
 					}

@@ -90,10 +90,10 @@ public class UnidadesDeMedidaGUI extends TableView<UnidadesDeMedida> implements 
 	@SuppressWarnings("unchecked")
 	@Override
 	public void mostrarTabla(AbstractaConsulta consulta, FactoryConsultas factoryConsultasDAO,
-			AnchorPane centroInferior) {
+			AnchorPane centroTabla) {
 
-		if(!centroInferior.getChildren().isEmpty()){
-			centroInferior.getChildren().remove(0);
+		if(!centroTabla.getChildren().isEmpty()){
+			centroTabla.getChildren().remove(0);
 		}
 		this.setData(FXCollections.observableArrayList());
 		List<UnidadesDeMedida> lista = (List<UnidadesDeMedida>) factoryConsultasDAO.getLista("UnidadesDeMedida");
@@ -103,8 +103,9 @@ public class UnidadesDeMedidaGUI extends TableView<UnidadesDeMedida> implements 
 
 		}
 		this.getTablaUnidadesdDeMedida().setItems(this.getData());	
-//		tablaUnidadesdDeMedida.setPrefSize(centroInferior.getMaxWidth(), centroInferior.getMaxHeight());
-		centroInferior.getChildren().add(0,this.getTablaUnidadesdDeMedida());			
+		tablaUnidadesdDeMedida.setMaxSize(centroTabla.getMaxWidth(), centroTabla.getMaxHeight());
+		tablaUnidadesdDeMedida.setMinSize(centroTabla.getMinWidth(), centroTabla.getMinHeight());
+		centroTabla.getChildren().add(0,this.getTablaUnidadesdDeMedida());			
 	}
 	
 	private void agregarListenerEvent() {

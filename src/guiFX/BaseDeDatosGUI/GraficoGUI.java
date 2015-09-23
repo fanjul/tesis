@@ -112,6 +112,7 @@ public class GraficoGUI extends TableView<Grafico> implements AbstractBaseDeDato
 		this.getTablaGrafico().setItems(this.getData());
 		tablaGrafico.setMaxSize(centroTabla.getMaxWidth(), centroTabla.getMaxHeight());
 		tablaGrafico.setMinSize(centroTabla.getMinWidth(), centroTabla.getMinHeight());
+
 		centroTabla.getChildren().add(0,this.getTablaGrafico());		
 	}
 

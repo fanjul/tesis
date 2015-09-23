@@ -48,8 +48,7 @@ public class VentanaPrincipal extends BorderPane {
 	private BotonImagen botonGraficoTortaPRUEBA;
 	private ListaBotonesGrafico listaBotonesSuperior;
 	private ListaBotonesGrafico listaBotonesInferior;
-
-
+	
 	static final String RUTA_METODOS = System.getProperty("user.dir") + "\\" + "Metodos Matematicos";
 	static final String EXTENSION_ARCHIVOS = "met";
 

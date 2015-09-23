@@ -132,10 +132,10 @@ public class PersonaGUI extends TableView<Persona> implements AbstractBaseDeDato
 	@SuppressWarnings("unchecked")
 	@Override
 	public void mostrarTabla(AbstractaConsulta consulta, FactoryConsultas factoryConsultasDAO,
-			AnchorPane centroInferior) {
+			AnchorPane centroTabla) {
 		
-		if(!centroInferior.getChildren().isEmpty()){
-			centroInferior.getChildren().remove(0);
+		if(!centroTabla.getChildren().isEmpty()){
+			centroTabla.getChildren().remove(0);
 		}
 		this.setData(FXCollections.observableArrayList());
 		List<Persona> lista = (List<Persona>) factoryConsultasDAO.getLista("Persona");
@@ -145,8 +145,9 @@ public class PersonaGUI extends TableView<Persona> implements AbstractBaseDeDato
 
 		}
 		this.getTablaPersona().setItems(this.getData());
-//		tablaPersona.setPrefSize(centroInferior.getMaxWidth(), centroInferior.getMaxHeight());
-		centroInferior.getChildren().add(0,this.getTablaPersona());			
+		tablaPersona.setMaxSize(centroTabla.getMaxWidth(), centroTabla.getMaxHeight());
+		tablaPersona.setMinSize(centroTabla.getMinWidth(), centroTabla.getMinHeight());
+		centroTabla.getChildren().add(0,this.getTablaPersona());			
 	}
 
 	private void agregarListenerEvent() {

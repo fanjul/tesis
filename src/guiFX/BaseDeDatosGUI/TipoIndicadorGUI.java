@@ -98,10 +98,10 @@ public class TipoIndicadorGUI extends TableView<TipoIndicador> implements Abstra
 	@SuppressWarnings("unchecked")
 	@Override
 	public void mostrarTabla(AbstractaConsulta consulta, FactoryConsultas factoryConsultasDAO,
-			AnchorPane centroInferior) {
+			AnchorPane centroTabla) {
 		
-		if(!centroInferior.getChildren().isEmpty()){
-			centroInferior.getChildren().remove(0);
+		if(!centroTabla.getChildren().isEmpty()){
+			centroTabla.getChildren().remove(0);
 		}
 		this.setData(FXCollections.observableArrayList());
 		List<TipoIndicador> lista = (List<TipoIndicador>) factoryConsultasDAO.getLista("TipoIndicador");
@@ -111,8 +111,9 @@ public class TipoIndicadorGUI extends TableView<TipoIndicador> implements Abstra
 
 		}
 		this.getTablaTipoIndicador().setItems(this.getData());
-//		tablaTipoIndicador.setPrefSize(centroInferior.getMaxWidth(), centroInferior.getMaxHeight());
-		centroInferior.getChildren().add(0,this.getTablaTipoIndicador());			
+		tablaTipoIndicador.setMaxSize(centroTabla.getMaxWidth(), centroTabla.getMaxHeight());
+		tablaTipoIndicador.setMinSize(centroTabla.getMinWidth(), centroTabla.getMinHeight());
+		centroTabla.getChildren().add(0,this.getTablaTipoIndicador());			
 	}
 	private void agregarListenerEvent() {
 		// Para que se pueda seleccionar varias rows de la tabla

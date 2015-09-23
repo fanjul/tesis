@@ -114,8 +114,8 @@ public class BarraMenu extends VBox {
 		AnchorPane centroCentro = new AnchorPane();
 		AnchorPane centroInferior = new AnchorPane();
 		SplitPane dividirCentro = new SplitPane();
-		
-		//contiene nombre de las tablas
+
+		// contiene nombre de las tablas
 		centroSuperior.setSpacing(50);
 		centroSuperior.setMaxHeight(50);
 		centroSuperior.setMinHeight(50);
@@ -133,12 +133,13 @@ public class BarraMenu extends VBox {
 		comboBoxTablas = new ComboBox<String>();
 		comboBoxTablas.setItems(data);
 
-		//contiene la tabla
+		// contiene la tabla
 		centroCentro.setMinHeight(247);
 		centroCentro.setMaxHeight(247);
-		centroCentro.setMaxWidth(765);
+
+		centroCentro.setMaxWidth(645);
 		centroCentro.setMinWidth(645);
-		
+		;
 
 		comboBoxTablas.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
 			@Override
@@ -154,14 +155,14 @@ public class BarraMenu extends VBox {
 
 		centroSuperior.getChildren().add(comboBoxTablas);
 		centroSuperior.setAlignment(Pos.CENTER);
-		
-		//contiene resultado R
+
+		// contiene resultado R
 		centroInferior.setMinHeight(246);
 		centroInferior.setMaxHeight(246);
 		centroInferior.setMinWidth(645);
 		centroInferior.setMaxWidth(765);
-		
-		//SplitPane, una para tablas y la otra resultados R
+
+		// SplitPane, una para tablas y la otra resultados R
 		centroSplit.setOrientation(Orientation.VERTICAL);
 		centroSplit.setMaxHeight(493);
 		centroSplit.setMinHeight(493);
@@ -178,8 +179,9 @@ public class BarraMenu extends VBox {
 			dividers.get(i).setPosition((i + 1.3) / 10);
 
 		}
-		
-		//SplitPane, uno con comboBox de las tablas y otro con el splitPane de Tabla con resultados R
+
+		// SplitPane, uno con comboBox de las tablas y otro con el splitPane de
+		// Tabla con resultados R
 		dividirCentro.setMaxHeight(543);
 		dividirCentro.setMinHeight(543);
 		dividirCentro.setMaxWidth(765);
