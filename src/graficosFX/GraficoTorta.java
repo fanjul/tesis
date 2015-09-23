@@ -8,21 +8,15 @@ import javafx.scene.chart.PieChart;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-public class GraficoTorta implements Grafico{
-	private Stage ventanaGraficoTorta;
-	private Group root;
+public class GraficoTorta extends Grafico{
 
-	
 	public GraficoTorta(){
-		
-		ventanaGraficoTorta = new Stage();
-		root = new Group();
-	
+			super();
 	}
 	
 	public void graficar(){
 		
-		ventanaGraficoTorta.setScene(new Scene(root));
+		super.getVentana().setScene(new Scene(super.getRoot()));
 
 	     ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList(
 
@@ -42,9 +36,9 @@ public class GraficoTorta implements Grafico{
 
 	    chart.setClockwise(false);
 
-	    root.getChildren().add(chart);
+	    super.getRoot().getChildren().add(chart);
 	    
-	    ventanaGraficoTorta.show();
+	    super.getVentana().show();
 
 		
 	}
