@@ -21,6 +21,9 @@ import dialogos.DialogoErrorArchivoExistente;
 import dialogos.DialogoGuardarArchivo;
 import dialogos.DialogoSeGuardoCorrectamente;
 import graficosFX.Grafico;
+import graficosFX.GraficoArea;
+import graficosFX.GraficoBarras;
+import graficosFX.GraficoLinea;
 import graficosFX.GraficoTorta;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.value.ChangeListener;
@@ -47,8 +50,12 @@ public class VentanaPrincipal extends BorderPane {
 	private HBox hBoxMenuOpcionesVentana;
 	private BotonImagen botonGuardarMetodo;
 	private BotonImagen botonEjecutar;
+	
 	private BotonImagen botonGraficoTorta;
-	private BotonImagen botonGraficoTortaPRUEBA;
+	private BotonImagen botonGraficoBarras;
+	private BotonImagen botonGraficoLinea;
+	private BotonImagen botonGraficoArea;
+	
 	private ListaBotonesGrafico listaBotonesSuperior;
 	private ListaBotonesGrafico listaBotonesInferior;
 
@@ -74,10 +81,10 @@ public class VentanaPrincipal extends BorderPane {
 		borderPaneMenuOpciones = new BorderPane();
 		borderPaneMenuOpciones.setLeft(((BarraMenu) barraMenu).getBarraDeslizable().getBotonMenu());
 		borderPaneMenuOpciones.setRight(hBoxMenuOpcionesVentana);
-		borderPaneMenuOpciones.setMaxHeight(110);
-		borderPaneMenuOpciones.setMinHeight(110);
-		borderPaneMenuOpciones.setMaxWidth(1365);
-		borderPaneMenuOpciones.setMinWidth(1365);
+//		borderPaneMenuOpciones.setMaxHeight(110);
+//		borderPaneMenuOpciones.setMinHeight(110);
+//		borderPaneMenuOpciones.setMaxWidth(1365);
+//		borderPaneMenuOpciones.setMinWidth(1365);
 		this.setTop(borderPaneMenuOpciones);
 
 		// Configuracion de la parte derecha del borderPane (VentanaPrincipal)
@@ -96,10 +103,16 @@ public class VentanaPrincipal extends BorderPane {
 		panelDerecho = PanelDerecho.getInstance();
 
 		crearGraficoTorta();
+		crearGraficoBarras();
+		crearGraficoLinea();
+		crearGraficoArea();
+		
 		listaBotonesSuperior = new ListaBotonesGrafico();
 		listaBotonesInferior = new ListaBotonesGrafico();
 		listaBotonesSuperior.agregarNodo(botonGraficoTorta);
-		listaBotonesInferior.agregarNodo(botonGraficoTortaPRUEBA);
+		listaBotonesSuperior.agregarNodo(botonGraficoBarras);
+		listaBotonesSuperior.agregarNodo(botonGraficoLinea);
+		listaBotonesSuperior.agregarNodo(botonGraficoArea);
 		((PanelDerecho) panelDerecho).agregarElemento(listaBotonesSuperior);
 		((PanelDerecho) panelDerecho).agregarElemento(listaBotonesInferior);
 		panelDerecho.setSpacing(10);
@@ -328,7 +341,7 @@ public class VentanaPrincipal extends BorderPane {
 	private void crearGraficoTorta() {
 
 		botonGraficoTorta = new BotonImagen("/imagenesFX/GraficoTorta.png", "Grafico de Torta");
-		botonGraficoTortaPRUEBA = new BotonImagen("/imagenesFX/GraficoTorta.png", "Grafico de Torta");
+		//botonGraficoTortaPRUEBA = new BotonImagen("/imagenesFX/GraficoTorta.png", "Grafico de Torta");
 		botonGraficoTorta.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
@@ -340,6 +353,48 @@ public class VentanaPrincipal extends BorderPane {
 
 	}
 
+	private void crearGraficoBarras(){
+		botonGraficoBarras = new BotonImagen("/imagenesFX/GraficoBarras.png", "Grafico de Barras");
+		//botonGraficoTortaPRUEBA = new BotonImagen("/imagenesFX/GraficoTorta.png", "Grafico de Torta");
+		botonGraficoBarras.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				Grafico graficoBarras = new GraficoBarras();
+				graficoBarras.graficar();
+
+			}
+		});
+	}
+	
+	private void crearGraficoLinea(){
+		botonGraficoLinea = new BotonImagen("/imagenesFX/GraficoLinea.png", "Grafico de Linea");
+		//botonGraficoTortaPRUEBA = new BotonImagen("/imagenesFX/GraficoTorta.png", "Grafico de Torta");
+		botonGraficoLinea.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				Grafico graficoLinea = new GraficoLinea();
+				graficoLinea.graficar();
+
+			}
+		});
+		
+	}
+	
+	private void crearGraficoArea(){
+		botonGraficoArea = new BotonImagen("/imagenesFX/GraficoArea.png", "Grafico de Area");
+		//botonGraficoTortaPRUEBA = new BotonImagen("/imagenesFX/GraficoTorta.png", "Grafico de Torta");
+		botonGraficoArea.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				Grafico graficoArea = new GraficoArea();
+				graficoArea.graficar();
+
+			}
+		});
+		
+	}
+	
+	
 	private String agregarCuatroSparadores(String dir) {
 
 		String path = "";
