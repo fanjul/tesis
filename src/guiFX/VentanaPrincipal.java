@@ -33,6 +33,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.Tooltip;
@@ -60,7 +61,8 @@ public class VentanaPrincipal extends BorderPane {
 	private ListaBotonesGrafico listaBotonesSuperior;
 	private ListaBotonesGrafico listaBotonesInferior;
 	
-	private TextArea areaResultado;
+	//private TextArea areaResultado;
+	private TableView tablaResultado;
 
 	static final String RUTA_METODOS = System.getProperty("user.dir") + "\\" + "Metodos Matematicos";
 	static final String EXTENSION_ARCHIVOS = "met";
@@ -79,8 +81,11 @@ public class VentanaPrincipal extends BorderPane {
 		barraMenu.setSpacing(10);
 		this.setLeft(((BarraMenu) barraMenu).getBarraDeslizable());
 
-		areaResultado = new TextArea();
-		areaResultado.setEditable(false);
+		//areaResultado = new TextArea();
+	//	areaResultado.setEditable(false);
+		tablaResultado = new TableView();
+		tablaResultado.setEditable(false); 
+		
 		
 		// Configuracion de la parte de arriba del borderPane (VentanaPrincipal)
 		agregarMenuVentana(primaryStage);
@@ -120,7 +125,7 @@ public class VentanaPrincipal extends BorderPane {
 		listaBotonesSuperior.agregarNodo(botonGraficoLinea);
 		listaBotonesSuperior.agregarNodo(botonGraficoArea);
 
-		listaBotonesInferior.agregarNodo(areaResultado);
+		listaBotonesInferior.agregarNodo(tablaResultado/*areaResultado*/);
 
 		((PanelDerecho) panelDerecho).agregarElemento(listaBotonesSuperior);
 		((PanelDerecho) panelDerecho).agregarElemento(listaBotonesInferior);
@@ -259,8 +264,6 @@ public class VentanaPrincipal extends BorderPane {
 								+ barraMenu.getListaMetodos().getSelectionModel().getSelectedItem().toString() + "."
 								+ EXTENSION_ARCHIVOS);
 						// ejecutar(archivo);
-
-						//Rengine re = new Rengine(new String[] { "--vanilla" }, false, null);
 						
 						Rengine re = Rengine.getMainEngine();
 						if(re == null)
@@ -269,19 +272,21 @@ public class VentanaPrincipal extends BorderPane {
 						String dir = agregarCuatroSparadores(archivo.getAbsolutePath());
 						re.eval("source(\"" + dir + "\")");
 
+						tablaResultado.getColumns().clear();
+						
 						TipoObjeto tipoArregloDouble = new TipoArregloDouble();
 						tipoArregloDouble.ejecutarMetodo(
 								re.eval(((DialogoEjecutar) dialogoEjecutar).getTextFieldNombreDondeDevuelve().getText())
 										.getContent(),
 								archivo, barraMenu.getListaMetodos(),
-								((DialogoEjecutar) dialogoEjecutar).getTextFieldNombreDondeDevuelve(),areaResultado);
+								((DialogoEjecutar) dialogoEjecutar).getTextFieldNombreDondeDevuelve(),tablaResultado/*areaResultado*/);
 
 						TipoObjeto tipoString = new TipoString();
 						tipoString.ejecutarMetodo(
 								re.eval(((DialogoEjecutar) dialogoEjecutar).getTextFieldNombreDondeDevuelve().getText())
 										.getContent(),
 								archivo, barraMenu.getListaMetodos(),
-								((DialogoEjecutar) dialogoEjecutar).getTextFieldNombreDondeDevuelve(),areaResultado);
+								((DialogoEjecutar) dialogoEjecutar).getTextFieldNombreDondeDevuelve(),tablaResultado/*areaResultado*/);
 						dialogoEjecutar.cerrarDialogo();
 					
 					}
