@@ -31,7 +31,7 @@ public class BarraMenu extends VBox {
 	private FactoryConsultas factoryConsultasDAO;
 	private Object consultasDAO;
 	private ComboBox<String> comboBoxTablas;
-	private ListView<String> listaMetodos;
+	private ListaMetodos listaMetodos;
 
 	public BarraMenu(VentanaPrincipal ventana) {
 		super();
@@ -45,7 +45,7 @@ public class BarraMenu extends VBox {
 
 	private void agregarMenuBaseDeDatos() {
 
-		BotonImagen botonAbrirBaseDatos = new BotonImagen("/imagenesFX/AbrirBaseDeDatos.png", "Abrir Base de Datos");
+		BotonImagen botonAbrirBaseDatos = new BotonImagen("/imagenesFX/ConectarBaseDatos.png", "Conectar Base de Datos");
 		botonAbrirBaseDatos.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
@@ -70,7 +70,7 @@ public class BarraMenu extends VBox {
 	}
 
 	public void inicializarListaMetodosMatematicos(ObservableList<String> lista) {
-		listaMetodos = new ListView<String>(lista);
+		listaMetodos = new ListaMetodos(lista);
 		listaMetodos.setMaxHeight(350);
 		listaMetodos.setMinHeight(0);
 		listaMetodos.setMaxWidth(120);

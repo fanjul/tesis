@@ -4,33 +4,33 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 
-public class DialogoSeGuardoCorrectamente extends Dialogo{
-
+public class DialogoEstaSeguroDeEliminar extends Dialogo{
+	
 	ImageView imagen;
 	private Label label;
 	private Button botonAceptar;
+	private Button botonCancelar;
 	
-	public DialogoSeGuardoCorrectamente(){
-		super();
-		imagen = new ImageView("/imagenesFX/GuardoCorrectamente.png");
+	public DialogoEstaSeguroDeEliminar(){
+		imagen = new ImageView("/imagenesFX/SignoPregunta.png");
 		botonAceptar = new Button("Aceptar");
-		label = new Label("El método se guardó correctamente");
+		botonCancelar = new Button("Cancelar");
+		label = new Label("¿Está seguro que quiere eliminar el archivo?");
 	}
 	
 	@Override
 	public void crearDialogo() {
 		super.gethBoxArriba().getChildren().addAll(imagen, label);
 		super.gethBoxAbajo().setCenterShape(true);
-		super.gethBoxAbajo().getChildren().addAll(botonAceptar);	
+		super.gethBoxAbajo().getChildren().addAll(botonAceptar, botonCancelar);	
 	}
 	
-	
-	public ImageView getImagen() {
-		return imagen;
+
+	public Button getBotonCancelar() {
+		return botonCancelar;
 	}
 
 	public Button getBotonAceptar() {
 		return botonAceptar;
 	}
-
 }

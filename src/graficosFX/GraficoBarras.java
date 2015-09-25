@@ -1,5 +1,9 @@
 package graficosFX;
 
+import java.util.ArrayList;
+
+import com.mysql.fabric.xmlrpc.base.Array;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Group;
@@ -7,6 +11,9 @@ import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.PieChart;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.stage.Stage;
 
 public class GraficoBarras extends Grafico {
@@ -15,20 +22,54 @@ public class GraficoBarras extends Grafico {
 		super();
 	}
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
-	public void graficar() {
+	public void graficar(TableView tablaResultado) {
 		// TODO Auto-generated method stub
-		
 		super.getVentana().setScene(new Scene(super.getRoot()));
-
-		String[] years = { "2007", "2008", "2009" };
-
 		CategoryAxis xAxis = new CategoryAxis();
+	
+		ObservableList<BarChart.Series> datos = FXCollections.observableArrayList();
+		
+		
+	
+		
+		String[] arrNombreColumnas = null;
+		double max = 0;
+		
+		for (int i = 0; i < tablaResultado.getItems().size(); i++) {
+			//TODO poner excepcion por si lo que esta en la tabla resultados es un string
+			if (tablaResultado.getItems().get(i) instanceof double[]) {
+				
+				
+				double[] fila = (double[]) tablaResultado.getItems().get(i);
+				arrNombreColumnas = new String[fila.length];  
+				
+				for (int valor = 0; valor < fila.length; valor++) {
+					//new PieChart.Data(((TableColumn) tablaResultado.getColumns().get(valor)).getText(),fila[valor])
+					if(fila[valor] > max){
+						max = fila[valor];
+					}
+					arrNombreColumnas[valor]=((TableColumn) tablaResultado.getColumns().get(valor)).getText().toString();
+					
+					datos.add(new BarChart.Series(((TableColumn) tablaResultado.getColumns().get(valor)).getText(), FXCollections.observableArrayList(
 
-		xAxis.setCategories(FXCollections.<String> observableArrayList(years));
+							new BarChart.Data(((TableColumn) tablaResultado.getColumns().get(valor)).getText(), fila[valor])
 
-		NumberAxis yAxis = new NumberAxis("Units Sold", 0.0d, 3000.0d, 1000.0d);
+							)));
+				}
+			}
+		}
 
+		NumberAxis yAxis = new NumberAxis("Units Sold", 0.0d, max, max/10);
+		
+		xAxis.setCategories(FXCollections.<String> observableArrayList(arrNombreColumnas));
+///////////////////////////////////////////////
+		
+		/*
+		
+		
+		
 		ObservableList<BarChart.Series> barChartData = FXCollections.observableArrayList(
 
 		new BarChart.Series("Apples", FXCollections.observableArrayList(
@@ -62,8 +103,8 @@ public class GraficoBarras extends Grafico {
 		))
 
 		);
-
-		BarChart chart = new BarChart(xAxis, yAxis, barChartData, 25.0d);
+*/
+		BarChart chart = new BarChart(xAxis, yAxis, datos, 25.0d);
 
 		super.getRoot().getChildren().add(chart);
 

@@ -7,6 +7,7 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
+import javafx.scene.control.TableView;
 
 public class GraficoLinea extends Grafico {
 
@@ -14,7 +15,7 @@ public class GraficoLinea extends Grafico {
 		super();
 	}
 
-	public void graficar() {
+	public void graficar(TableView tablaResultado) {
 
 		super.getVentana().setScene(new Scene(super.getRoot()));
 

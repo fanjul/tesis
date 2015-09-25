@@ -5,44 +5,43 @@ import javafx.collections.ObservableList;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.chart.PieChart;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-public class GraficoTorta extends Grafico{
+public class GraficoTorta extends Grafico {
 
-	public GraficoTorta(){
-			super();
+	public GraficoTorta() {
+		super();
 	}
-	
-	public void graficar(){
-		
+
+	@SuppressWarnings("rawtypes")
+	public void graficar(TableView tablaResultado) {
+
 		super.getVentana().setScene(new Scene(super.getRoot()));
 
-	     ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList(
+		ObservableList<PieChart.Data> datos = FXCollections.observableArrayList();
 
-	         new PieChart.Data("Sun", 20),
+		for (int i = 0; i < tablaResultado.getItems().size(); i++) {
+			//TODO poner excepcion por si lo que esta en la tabla resultados es un string
+			if (tablaResultado.getItems().get(i) instanceof double[]) {
+				double[] fila = (double[]) tablaResultado.getItems().get(i);
+				for (int valor = 0; valor < fila.length; valor++) {
+					datos.add(new PieChart.Data(((TableColumn) tablaResultado.getColumns().get(valor)).getText(),
+							fila[valor]));
+				}
+			}
+		}
 
-	         new PieChart.Data("IBM", 12),
+		PieChart chart = new PieChart(datos);
 
-	         new PieChart.Data("HP", 25),
+		chart.setClockwise(false);
 
-	         new PieChart.Data("Dell", 22),
+		super.getRoot().getChildren().add(chart);
 
-	         new PieChart.Data("Apple", 30)
+		super.getVentana().show();
 
-	     );
-
-	    PieChart chart = new PieChart(pieChartData);
-
-	    chart.setClockwise(false);
-
-	    super.getRoot().getChildren().add(chart);
-	    
-	    super.getVentana().show();
-
-		
 	}
-	
-	
 
 }

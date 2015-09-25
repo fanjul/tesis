@@ -6,6 +6,7 @@ import javafx.scene.Scene;
 import javafx.scene.chart.AreaChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.PieChart;
+import javafx.scene.control.TableView;
 
 public class GraficoArea extends Grafico {
 
@@ -13,7 +14,7 @@ public class GraficoArea extends Grafico {
 		super();
 	}
 
-	public void graficar() {
+	public void graficar(TableView tablaResultado) {
 
 		super.getVentana().setScene(new Scene(super.getRoot()));
 
