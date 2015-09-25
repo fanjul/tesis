@@ -25,16 +25,17 @@
 		<property name="format_sql">true</property>
 
 		<!-- Mapping files -->
-		<mapping class="baseDatos.hibernate.tablas.EstadosXTipoIndicador" />
+
 		<mapping class="baseDatos.hibernate.tablas.Grafico" />
 		<mapping class="baseDatos.hibernate.tablas.HSTumbralesXEstadosXIndicador" />
 		<mapping class="baseDatos.hibernate.tablas.Indicador" />
 		<mapping class="baseDatos.hibernate.tablas.Persona" />
 		<mapping class="baseDatos.hibernate.tablas.TipoIndicador" />
-		<mapping class="baseDatos.hibernate.tablas.Tablero" />
 		<mapping class="baseDatos.hibernate.tablas.UmbralesXEstadosXIndicador" />
 		<mapping class="baseDatos.hibernate.tablas.UnidadesDeMedida" />
 		<mapping class="baseDatos.hibernate.tablas.ValorIndicador" />
+		<mapping class="baseDatos.hibernate.tablas.Tablero" />
+		<mapping class="baseDatos.hibernate.tablas.EstadosXTipoIndicador" />
 
 
 

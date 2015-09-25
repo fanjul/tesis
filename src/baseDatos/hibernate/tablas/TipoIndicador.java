@@ -1,25 +1,22 @@
 package baseDatos.hibernate.tablas;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import java.io.Serializable;
+import javax.persistence.*;
 
 @Entity
-@Table(name="tipoindicador")
-public class TipoIndicador {
-	
+@Table(name = "TipoIndicador")
+public class TipoIndicador implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
+	public TipoIndicador() {
+	}
+
+	@Id
 	private Integer id;
 	private String tipo;
 	private String observaciones;
-	
-	public TipoIndicador(){
-		
-	}
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+
 	public Integer getId() {
 		return id;
 	}
@@ -32,18 +29,16 @@ public class TipoIndicador {
 		return tipo;
 	}
 
-	public void setTipo(String tipo) {
-		this.tipo = tipo;
+	public void setTipo(String param) {
+		this.tipo = param;
 	}
 
 	public String getObservaciones() {
 		return observaciones;
 	}
 
-	public void setObservaciones(String observaciones) {
-		this.observaciones = observaciones;
+	public void setObservaciones(String param) {
+		this.observaciones = param;
 	}
-	
-	
 
 }

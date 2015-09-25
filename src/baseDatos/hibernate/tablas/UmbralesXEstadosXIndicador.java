@@ -4,13 +4,28 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.IdClass;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+import baseDatos.hibernate.tablas.primaryKey.UmbralesPK;
 
 @Entity
+@IdClass(UmbralesPK.class)
+@Table(name = "UmbralesXEstadosXIndicador")
 public class UmbralesXEstadosXIndicador implements Serializable {
 
-	private static final long serialVersionUID = 5997811267098143433L;
+	private static final long serialVersionUID = 1L;
+
+	public UmbralesXEstadosXIndicador() {
+	}
+
+	@Id
 	private Integer idIndicador;
+	@Id
 	private Integer idEstadoTipoIndicador;
 	private Timestamp inicioUmbral;
 	private Timestamp finUmbral;
@@ -19,17 +34,15 @@ public class UmbralesXEstadosXIndicador implements Serializable {
 	private Double valorUmbralSuperior;
 	private Double valorUmbralInferior;
 	private String observaciones;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "idIndicador", referencedColumnName = "id",insertable=false, updatable=false, nullable = false)
+	private Indicador indicador;
 	
-	public UmbralesXEstadosXIndicador() {
-		
-	}
 	
-	@Id
 	public Integer getIdIndicador() {
 		return idIndicador;
 	}
-	
-	@Id
+
 	public void setIdIndicador(Integer idIndicador) {
 		this.idIndicador = idIndicador;
 	}
@@ -97,7 +110,14 @@ public class UmbralesXEstadosXIndicador implements Serializable {
 	public void setObservaciones(String observaciones) {
 		this.observaciones = observaciones;
 	}
-	
-	
+
+	public Indicador getIndicador() {
+	    return indicador;
+	}
+
+	public void setIndicador(Indicador indicador) {
+		this.indicador = indicador;
+	    this.idIndicador = indicador.getId();
+	}
 
 }

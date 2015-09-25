@@ -3,26 +3,30 @@ package baseDatos.hibernate.tablas;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
+
+import baseDatos.hibernate.tablas.primaryKey.ValorIndicadorPK;
 
 @Entity
+@IdClass(ValorIndicadorPK.class)
+@Table(name = "ValorIndicador")
 public class ValorIndicador implements Serializable {
 
-	private static final long serialVersionUID = -8423220578940394325L;
+	private static final long serialVersionUID = 1L;
+
+	public ValorIndicador() {
+	}
+
+	@Id
 	private Integer idIndicador;
+	@Id
 	private Timestamp fecha;
 	private Double valor;
 	private String estado;
 	private Double variacion;
 	private Integer signoVariacion;
 	private String observaciones;
-	
-	public ValorIndicador(){
-		
-	}
-	
-	@Id
+
 	public Integer getIdIndicador() {
 		return idIndicador;
 	}
@@ -31,7 +35,6 @@ public class ValorIndicador implements Serializable {
 		this.idIndicador = idIndicador;
 	}
 
-	@Id
 	public Timestamp getFecha() {
 		return fecha;
 	}
@@ -79,7 +82,5 @@ public class ValorIndicador implements Serializable {
 	public void setObservaciones(String observaciones) {
 		this.observaciones = observaciones;
 	}
-	
-	
 
 }

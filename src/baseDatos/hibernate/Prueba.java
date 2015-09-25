@@ -32,6 +32,8 @@ public class Prueba {
 		Grafico grafico = new Grafico();
 		HSTumbralesXEstadosXIndicador hst = new HSTumbralesXEstadosXIndicador();
 		Indicador indicador = new Indicador();
+		Indicador indicador2 = new Indicador();
+
 		Persona persona = new Persona();
 		TipoIndicador tipoIndicador = new TipoIndicador();
 		UmbralesXEstadosXIndicador umbral = new UmbralesXEstadosXIndicador();
@@ -53,15 +55,36 @@ public class Prueba {
 
 		//setear datos en las tablas
 		indicador.setCodigo("asd");
-		indicador.setId(new BigDecimal(4));
+		indicador.setId(1);
+		indicador2.setCodigo("asdf2");
+		indicador2.setId(5);
 		
-		tablero.setId(1);
-		tablero.setIdIndicador(indicador);
-		tablero.setNombre("hola");
-		
-		
-//		estados.setIdEstado(3);
+		indicadorDao.guardar(indicador);
+		indicadorDao.guardar(indicador2);
+
+
 //		estados.setIdTipoIndicador(4);
+//		estados.setIdEstado(3);
+//		
+//		estadosDao.guardar(estados);
+//
+//		
+		umbral.setFinUmbral(new Timestamp(0));
+		umbral.setIdEstadoTipoIndicador(4);
+		umbral.setIdIndicador(1);
+	//	umbral.setEstadosXTipoIndicador(estados);
+		umbral.setIndicador(indicador);
+//		
+		umbralDao.guardar(umbral);
+//		
+//		umbral.setFinUmbral(new Timestamp(0));
+//		umbral.setIdEstadoTipoIndicador(4);
+//		umbral.setIdIndicador(5);
+//		//umbral.setEstadosXTipoIndicador(estados);
+//		umbral.setIndicador(indicador2);
+//		umbralDao.guardar(umbral);
+
+//		
 //		
 //
 //		grafico.setObservaciones("joya");
@@ -80,9 +103,7 @@ public class Prueba {
 //		tipoIndicador.setObservaciones("el corvi no entiende nada. Fanjul menos... Guille Z");
 //		tipoIndicador.setTipo("De la vida");
 //
-//		umbral.setFinUmbral(new Timestamp(0));
-//		umbral.setIdEstadoTipoIndicador(3);
-//		umbral.setIdIndicador(3);
+//		
 //
 //		unidad.setUnidadDeMedida("centimetro");
 //
@@ -92,18 +113,15 @@ public class Prueba {
 
 
 		//realizar las consultas de las tablas: GUARDAR
-//		estadosDao.guardar(estados);
 //		graficoDao.guardar(grafico);
 //		hstDao.guardar(hst);	
-		indicadorDao.guardar(indicador);
-		tableroDao.guardar(tablero);
+//		tableroDao.guardar(tablero);
 
 	
 
 
 //		personaDao.guardar(persona);
 //		tipoIndicadorDao.guardar(tipoIndicador);
-//		umbralDao.guardar(umbral);
 //		unidadDao.guardar(unidad);
 //		valorDao.guardar(valor);
 
@@ -111,7 +129,7 @@ public class Prueba {
 //		estadosDao.eliminar(estados);
 //		graficoDao.eliminar(grafico);
 //		hstDao.eliminar(hst);	
-//		indicadorDao.eliminar(indicador);
+		indicadorDao.eliminar(indicador);
 //		personaDao.eliminar(persona);
 //		tipoIndicadorDao.eliminar(tipoIndicador);
 //		umbralDao.eliminar(umbral);

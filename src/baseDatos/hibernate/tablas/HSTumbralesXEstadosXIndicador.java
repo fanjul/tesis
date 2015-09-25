@@ -5,26 +5,35 @@ import java.sql.Timestamp;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.IdClass;
+import javax.persistence.Table;
+
+import baseDatos.hibernate.tablas.primaryKey.HSTumbralesPK;
 
 @Entity
+@IdClass(HSTumbralesPK.class)
+@Table(name = "HSTumbralesXEstadosXIndicador")
 public class HSTumbralesXEstadosXIndicador implements Serializable {
 
-	private static final long serialVersionUID = 9218812442649637983L;
+	private static final long serialVersionUID = 1L;
+
+	public HSTumbralesXEstadosXIndicador() {
+	}
+
+	@Id
 	private Integer idIndicador;
+	@Id
 	private Integer idEstadoTipoIndicador;
+	@Id
 	private Timestamp inicioUmbral;
+	@Id
 	private Timestamp finUmbral;
 	private String operadorUmbralSuperior;
-	private String operadorUmbralInferior;
 	private Double valorUmbralSuperior;
 	private Double valorUmbralInferior;
+	private String operadorUmbralInferior;
 	private String observaciones;
-	
-	public HSTumbralesXEstadosXIndicador(){
-		
-	}
-	
-	@Id
+
 	public Integer getIdIndicador() {
 		return idIndicador;
 	}
@@ -32,8 +41,7 @@ public class HSTumbralesXEstadosXIndicador implements Serializable {
 	public void setIdIndicador(Integer idIndicador) {
 		this.idIndicador = idIndicador;
 	}
-	
-	@Id
+
 	public Integer getIdEstadoTipoIndicador() {
 		return idEstadoTipoIndicador;
 	}
@@ -41,8 +49,7 @@ public class HSTumbralesXEstadosXIndicador implements Serializable {
 	public void setIdEstadoTipoIndicador(Integer idEstadoTipoIndicador) {
 		this.idEstadoTipoIndicador = idEstadoTipoIndicador;
 	}
-	
-	@Id
+
 	public Timestamp getInicioUmbral() {
 		return inicioUmbral;
 	}
@@ -51,7 +58,6 @@ public class HSTumbralesXEstadosXIndicador implements Serializable {
 		this.inicioUmbral = inicioUmbral;
 	}
 
-	@Id
 	public Timestamp getFinUmbral() {
 		return finUmbral;
 	}
@@ -64,42 +70,40 @@ public class HSTumbralesXEstadosXIndicador implements Serializable {
 		return operadorUmbralSuperior;
 	}
 
-	public void setOperadorUmbralSuperior(String operadorUmbralSuperior) {
-		this.operadorUmbralSuperior = operadorUmbralSuperior;
-	}
-
-	public String getOperadorUmbralInferior() {
-		return operadorUmbralInferior;
-	}
-
-	public void setOperadorUmbralInferior(String operadorUmbralInferior) {
-		this.operadorUmbralInferior = operadorUmbralInferior;
+	public void setOperadorUmbralSuperior(String param) {
+		this.operadorUmbralSuperior = param;
 	}
 
 	public Double getValorUmbralSuperior() {
 		return valorUmbralSuperior;
 	}
 
-	public void setValorUmbralSuperior(Double valorUmbralSuperior) {
-		this.valorUmbralSuperior = valorUmbralSuperior;
+	public void setValorUmbralSuperior(Double param) {
+		this.valorUmbralSuperior = param;
 	}
 
 	public Double getValorUmbralInferior() {
 		return valorUmbralInferior;
 	}
 
-	public void setValorUmbralInferior(Double valorUmbralInferior) {
-		this.valorUmbralInferior = valorUmbralInferior;
+	public void setValorUmbralInferior(Double param) {
+		this.valorUmbralInferior = param;
+	}
+
+	public String getOperadorUmbralInferior() {
+		return operadorUmbralInferior;
+	}
+
+	public void setOperadorUmbralInferior(String param) {
+		this.operadorUmbralInferior = param;
 	}
 
 	public String getObservaciones() {
 		return observaciones;
 	}
 
-	public void setObservaciones(String observaciones) {
-		this.observaciones = observaciones;
+	public void setObservaciones(String param) {
+		this.observaciones = param;
 	}
-	
-	
 
 }

@@ -3,24 +3,23 @@ package baseDatos.hibernate.tablas;
 import java.io.Serializable;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "Grafico")
 public class Grafico implements Serializable {
 
-	private static final long serialVersionUID = 449773034871093563L;
+	private static final long serialVersionUID = 1L;
+
+	public Grafico() {
+	}
+
+	@Id
 	private Integer id;
 	private String tipoGrafico;
 	private String observaciones;
 	
-	public Grafico(){
-		
-	}
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
 	public Integer getId() {
 		return id;
 	}
@@ -30,21 +29,19 @@ public class Grafico implements Serializable {
 	}
 
 	public String getTipoGrafico() {
-		return tipoGrafico;
+	    return tipoGrafico;
 	}
 
-	public void setTipoGrafico(String tipoGrafico) {
-		this.tipoGrafico = tipoGrafico;
+	public void setTipoGrafico(String param) {
+	    this.tipoGrafico = param;
 	}
 
 	public String getObservaciones() {
-		return observaciones;
+	    return observaciones;
 	}
 
-	public void setObservaciones(String observaciones) {
-		this.observaciones = observaciones;
+	public void setObservaciones(String param) {
+	    this.observaciones = param;
 	}
 
-	
-	
 }

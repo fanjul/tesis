@@ -1,16 +1,18 @@
 package baseDatos.hibernate.tablas;
 
 import java.io.Serializable;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
+@Table(name = "Persona")
 public class Persona implements Serializable {
 
-	private static final long serialVersionUID = 7426062590786453905L;
+	private static final long serialVersionUID = 1L;
+
+	public Persona() {
+	}
+
+	@Id
 	private Integer id;
 	private String nombre;
 	private String apellido;
@@ -19,12 +21,7 @@ public class Persona implements Serializable {
 	private String nroDocumento;
 	private String cargo;
 	private String observaciones;
-	
-	public Persona(){
-		
-	}
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+
 	public Integer getId() {
 		return id;
 	}
@@ -37,57 +34,56 @@ public class Persona implements Serializable {
 		return nombre;
 	}
 
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
+	public void setNombre(String param) {
+		this.nombre = param;
 	}
 
 	public String getApellido() {
 		return apellido;
 	}
 
-	public void setApellido(String apellido) {
-		this.apellido = apellido;
+	public void setApellido(String param) {
+		this.apellido = param;
 	}
 
 	public String getEmail() {
 		return email;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setEmail(String param) {
+		this.email = param;
 	}
 
 	public String getTipoDocumento() {
 		return tipoDocumento;
 	}
 
-	public void setTipoDocumento(String tipoDocumento) {
-		this.tipoDocumento = tipoDocumento;
+	public void setTipoDocumento(String param) {
+		this.tipoDocumento = param;
 	}
 
 	public String getNroDocumento() {
 		return nroDocumento;
 	}
 
-	public void setNroDocumento(String nroDocumento) {
-		this.nroDocumento = nroDocumento;
+	public void setNroDocumento(String param) {
+		this.nroDocumento = param;
 	}
 
 	public String getCargo() {
 		return cargo;
 	}
 
-	public void setCargo(String cargo) {
-		this.cargo = cargo;
+	public void setCargo(String param) {
+		this.cargo = param;
 	}
 
 	public String getObservaciones() {
 		return observaciones;
 	}
 
-	public void setObservaciones(String observaciones) {
-		this.observaciones = observaciones;
+	public void setObservaciones(String param) {
+		this.observaciones = param;
 	}
-	
-	
+
 }

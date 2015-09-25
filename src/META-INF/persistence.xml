@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1"
+	xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+	<persistence-unit name="HerramientaTesis" transaction-type="RESOURCE_LOCAL">
+
+		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+		<!-- Mapping files -->
+		
+		<class>baseDatos.hibernate.tablas.Grafico</class>
+		<class>baseDatos.hibernate.tablas.HSTumbralesXEstadosXIndicador</class>
+		<class>baseDatos.hibernate.tablas.Indicador</class>
+		<class>baseDatos.hibernate.tablas.Persona</class>
+		<class>baseDatos.hibernate.tablas.TipoIndicador</class>
+		<class>baseDatos.hibernate.tablas.UmbralesXEstadosXIndicador</class>
+		<class>baseDatos.hibernate.tablas.UnidadesDeMedida</class>
+		<class>baseDatos.hibernate.tablas.ValorIndicador</class>
+		<class>baseDatos.hibernate.tablas.Tablero</class>
+		<class>baseDatos.hibernate.tablas.EstadosXTipoIndicador</class>
+
+		<properties>
+			<property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/indicadores" />
+			<property name="hibernate.connection.password" value="" />
+			<property name="hibernate.connection.username" value="root" />
+			<property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver" />
+			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect" />
+			<property name="hibernate.hbm2ddl.auto" value="update" />
+			<property name="hibernate.show_sql" value="true" />
+			<property name="hibernate.format_sql" value="true" />
+			<property name="hibernate.connection.pool_size" value ="1" />
+			<property name="hibernate.current_session_context_class" value="thread" />
+			<property name="hibernate.cache.provider_class" value = "org.hibernate.cache.NoCacheProvider" />
+			
+		</properties>
+
+	</persistence-unit>
+
+</persistence>
