@@ -7,6 +7,7 @@ import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
@@ -58,18 +59,28 @@ public class MainFx extends Application {
 		Scene escenaPrincipal = new Scene(cuadroPrincipal);
 
 		// Transparent scene and stage
-		escenaPrincipal.setFill(Color.rgb(34, 44, 44, 0.5));
-		primaryStage.initStyle(StageStyle.TRANSPARENT);
-		primaryStage.alwaysOnTopProperty();
-		Platform.setImplicitExit(true);
-
-
-		EffectUtilities.makeDraggable(primaryStage, cuadroPrincipal);
-
-		Platform.setImplicitExit(true);
-		escenaPrincipal.getStylesheets().add(getClass().getResource("/archivosCSS/s1.css").toExternalForm());
-
-		cuadroPrincipal.getStyleClass().add("cuadro-principal");
+		EffectUtilities.configuracionVentana(escenaPrincipal, primaryStage, cuadroPrincipal, getClass());
+		
+        primaryStage.getIcons().add(new Image("/imagenesFX/Icono.png"));
+     
+        
+     //   primaryStage.setTitle("Tesis");
+		
+//		escenaPrincipal.setFill(Color.rgb(34, 44, 44, 0.5));
+//		primaryStage.initStyle(StageStyle.TRANSPARENT);
+//		primaryStage.alwaysOnTopProperty();
+//		Platform.setImplicitExit(true);
+//
+//
+//		EffectUtilities.makeDraggable(primaryStage, cuadroPrincipal);
+//
+//		Platform.setImplicitExit(true);
+//		escenaPrincipal.getStylesheets().add(getClass().getResource("/archivosCSS/s1.css").toExternalForm());
+//
+//		
+//		EffectUtilities.configuracionVentana(escenaPrincipal, primaryStage, cuadroPrincipal, getClass());
+//		
+//		cuadroPrincipal.getStyleClass().add("cuadro-principal");
 
 		primaryStage.setScene(escenaPrincipal);
 		primaryStage.show();

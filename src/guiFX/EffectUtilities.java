@@ -1,10 +1,14 @@
 package guiFX;
 
+import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 
 public class EffectUtilities {
@@ -50,4 +54,22 @@ public class EffectUtilities {
 	  private static class Delta {
 	    double x, y;
 	  }
+	  
+	  public static void configuracionVentana(final Scene escena, final Stage stage, final Node nodo, Class<?> clase){
+		  escena.setFill(Color.rgb(34, 44, 44, 0.5));
+			stage.initStyle(StageStyle.TRANSPARENT);
+			stage.alwaysOnTopProperty();
+			Platform.setImplicitExit(true);
+
+
+			EffectUtilities.makeDraggable(stage, nodo);
+
+			Platform.setImplicitExit(true);
+			escena.getStylesheets().add(clase.getResource("/archivosCSS/s1.css").toExternalForm());
+			nodo.getStyleClass().add("cuadro-principal");
+
+		//	cuadroPrincipal.getStyleClass().add("cuadro-principal");
+
+	  }
+	  
 	}

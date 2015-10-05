@@ -19,7 +19,7 @@ public class GraficoTorta extends Grafico {
 	@SuppressWarnings("rawtypes")
 	public void graficar(TableView tablaResultado) {
 
-		super.getVentana().setScene(new Scene(super.getRoot()));
+		super.getVentana().setScene(super.getEscena());
 
 		ObservableList<PieChart.Data> datos = FXCollections.observableArrayList();
 

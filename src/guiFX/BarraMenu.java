@@ -15,6 +15,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.SplitPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -141,6 +142,9 @@ public class BarraMenu extends VBox {
 				baseDeDatos = factoryBaseDeDatos.getBaseDeDatos((String) new_val);
 				baseDeDatos.crearTablaBaseDeDatos();
 				consultasDAO = factoryConsultasDAO.getConsultaDAO((String) new_val);
+				
+			
+				
 				baseDeDatos.mostrarTabla(consultasDAO, factoryConsultasDAO, centroCentro);
 			}
 		});

@@ -14,6 +14,7 @@ public class GraficoArea extends Grafico {
 		super();
 	}
 
+	@SuppressWarnings("unchecked")
 	public void graficar(TableView tablaResultado) {
 
 		super.getVentana().setScene(new Scene(super.getRoot()));

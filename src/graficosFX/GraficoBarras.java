@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import com.mysql.fabric.xmlrpc.base.Array;
 
+import guiFX.EffectUtilities;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Group;
@@ -15,9 +17,10 @@ import javafx.scene.chart.PieChart;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 public class GraficoBarras extends Grafico {
-
+	
 	public GraficoBarras() {
 		super();
 	}
@@ -25,14 +28,10 @@ public class GraficoBarras extends Grafico {
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public void graficar(TableView tablaResultado) {
-		// TODO Auto-generated method stub
-		super.getVentana().setScene(new Scene(super.getRoot()));
+		super.getVentana().setScene(super.getEscena());
 		CategoryAxis xAxis = new CategoryAxis();
 	
 		ObservableList<BarChart.Series> datos = FXCollections.observableArrayList();
-		
-		
-	
 		
 		String[] arrNombreColumnas = null;
 		double max = 0;
@@ -112,4 +111,10 @@ public class GraficoBarras extends Grafico {
 
 	}
 
+	
+	
+	
+	
+	
+	
 }

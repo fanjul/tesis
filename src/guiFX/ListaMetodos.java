@@ -26,6 +26,7 @@ public class ListaMetodos extends ListView<String> {
 
 	public ListaMetodos(ObservableList<String> lista) {
 		super(lista);
+		this.getSelectionModel().select(0);
 		crearBotonDerecho();
 	}
 

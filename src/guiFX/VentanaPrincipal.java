@@ -3,9 +3,13 @@ package guiFX;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.util.Iterator;
+import java.util.Scanner;
 
 import javax.swing.JOptionPane;
 
@@ -33,10 +37,13 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.Tooltip;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -50,7 +57,8 @@ public class VentanaPrincipal extends BorderPane {
 	private VBox panelDerecho;
 	private BorderPane borderPaneMenuOpciones;
 	private HBox hBoxMenuOpcionesVentana;
-	private BotonImagen botonGuardarMetodo;
+	private BotonImagen botonGuardarNuevoMetodo;
+	private BotonImagen botonGuardar;
 	private BotonImagen botonEjecutar;
 
 	private BotonImagen botonGraficoTorta;
@@ -62,10 +70,14 @@ public class VentanaPrincipal extends BorderPane {
 	private ListaBotonesGrafico listaBotonesInferior;
 
 	// private TextArea areaResultado;
+	@SuppressWarnings("rawtypes")
 	private TableView tablaResultado;
 
+	
+	
 	static final String RUTA_METODOS = System.getProperty("user.dir") + "\\" + "Metodos Matematicos";
 	static final String EXTENSION_ARCHIVOS = "met";
+	static final String EXTENSION_TEMPORAL = "tmp";
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public VentanaPrincipal(Stage primaryStage) {
@@ -131,9 +143,15 @@ public class VentanaPrincipal extends BorderPane {
 		panelDerecho.setSpacing(10);
 		this.setRight(panelDerecho);
 		// Configuracion de la parte de abajo del borderPane (VentanaPrincipal)
-		abrirDialogoGuardarArchivo();
-		abrirDialogoEjecutar();
-		hBoxAbajo.getChildren().addAll(/* listaMetodos, */ botonGuardarMetodo, botonEjecutar);
+		
+		hBoxAbajo = new HBox();
+	
+		
+		crearBotonGuardarArchivo();
+		crearBotonEjecutar();
+		crearBotonGuardar();
+		
+		hBoxAbajo.getChildren().addAll(/* listaMetodos, */ botonGuardarNuevoMetodo, botonGuardar, botonEjecutar);
 		hBoxAbajo.setSpacing(120);
 		hBoxAbajo.setMaxHeight(75);
 		hBoxAbajo.setMinHeight(75);
@@ -143,26 +161,247 @@ public class VentanaPrincipal extends BorderPane {
 		this.setBottom(hBoxAbajo);
 
 	}
+	
+	
+	private String readFile( File file) throws IOException {
 
-	private void abrirDialogoGuardarArchivo() {
-		hBoxAbajo = new HBox();
-		botonGuardarMetodo = new BotonImagen("/imagenesFX/Guardar.png", "Guardar Metodo");
+	   // File file = new File(pathname);
+	    StringBuilder fileContents = new StringBuilder((int)file.length());
+	    Scanner scanner = new Scanner(file);
+	    String lineSeparator = System.getProperty("line.separator");
 
-		///////////////////// Para disablear/enablear el boton guardar
-		BooleanBinding bb = new BooleanBinding() {
-			{
-				super.bind(((PanelDerecho) panelDerecho).getEditorTexto().textProperty());
+	    try {
+	        while(scanner.hasNextLine()) {        
+	            fileContents.append(scanner.nextLine());
+	        }
+	        return fileContents.toString();
+	    } finally {
+	        scanner.close();
+	    }
+	}
+	
+	private String cambioTextoDelArchivo(File archivo) throws FileNotFoundException {
+
+		FileReader fr;
+		String content="";
+		try {
+
+			fr = new FileReader(archivo);
+			BufferedReader br = new BufferedReader(fr);
+
+			 content = readFile(archivo);
+
+//			if (((PanelDerecho) panelDerecho).getEditorTexto().getText().equalsIgnoreCase(content)) {
+//				return false;
+//			}
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return content;
+
+	}
+	
+private String aaa(File archivo){
+		
+		FileReader leerArchivo = null;
+		String contenido = "";
+		try {
+
+			// TODO arreglar que si no es un txt no se rompa y tirar error nuevo
+			// TODO arreglar, el file tira error porque no existe al guardar uno
+			// nuevo (creo q ya esta)
+
+			
+
+			leerArchivo = new FileReader(archivo);
+			BufferedReader memoriaParaLectura = new BufferedReader(leerArchivo);
+
+			String linea ;
+
+		//	((PanelDerecho) panelDerecho).getEditorTexto().clear();//setText("");
+
+			while ((linea = memoriaParaLectura.readLine()) != null) {
+
+				contenido += linea;
+				contenido += System.lineSeparator();
+
 			}
+			memoriaParaLectura.close();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			JOptionPane.showMessageDialog(null, ex.getMessage());
+		} finally {
+			try {
+				if (null != leerArchivo) {
+					leerArchivo.close();
+				}
+			} catch (Exception ex1) {
+				JOptionPane.showMessageDialog(null, ex1.getMessage());
+			}
+		}
+		
+			return contenido;
+		
+	}
+	
+	private void crearBotonGuardar(){
+		
+		botonGuardar = new BotonImagen("/imagenesFX/Guardar4.png", "Guardar");
+		
+		
+
+			
+			
+			///////////////////// Para disablear/enablear el boton guardar
+//			BooleanBinding bb = new BooleanBinding() {
+//				{
+//					super.bind(((PanelDerecho) panelDerecho).getEditorTexto().textProperty());
+//				}
+//
+//				@Override
+//				protected boolean computeValue() {
+//					
+//					boolean cambio = false;
+//					try {
+//						if (barraMenu.getListaMetodos().getSelectionModel().getSelectedItem() != null) {
+//						File carpetaDefecto2 = new File(RUTA_METODOS);
+//						carpetaDefecto2.mkdir();
+//						File archivo2 = new File(carpetaDefecto2.getPath() + "\\"
+//								+ barraMenu.getListaMetodos().getSelectionModel().getSelectedItem().toString() + "."
+//								+ EXTENSION_ARCHIVOS);
+//					
+//						cambio = cambioTextoDelArchivo(archivo2);
+//						}
+//					} catch (FileNotFoundException e) {
+//						// TODO Auto-generated catch block
+//						e.printStackTrace();
+//					}
+//						return (!cambio);
+//			
+//				}
+//			};
+//			botonGuardar.disableProperty().bind(bb);
+			/////////////////////////
+
+		((PanelDerecho) panelDerecho).getEditorTexto().textProperty().addListener(new ChangeListener<String>() {
+		    @Override
+		    public void changed(final ObservableValue<? extends String> observable, final String oldValue, final String newValue) {
+		    	
+		    	File carpetaDefecto2 = new File(RUTA_METODOS);
+				carpetaDefecto2.mkdir();
+				File archivo2 = new File(carpetaDefecto2.getPath() + "\\"
+						+ barraMenu.getListaMetodos().getSelectionModel().getSelectedItem().toString() + "."
+						+ EXTENSION_ARCHIVOS);
+			
+		    	
+		    	
+		      try {
+		    	  System.out.println("*************Nuevo**************");
+		    	  System.out.println("contenido archivo:  " + cambioTextoDelArchivo(archivo2).toString() + "--> " + cambioTextoDelArchivo(archivo2).length() );
+		    	  System.out.println("editor:  " + newValue.toString() + "--> " + newValue.length());
+		    	  System.out.println("*************termina**************");
+		    	  if(newValue.equalsIgnoreCase(aaa(archivo2))){
+					botonGuardar.setDisable(true);
+				  }else{
+					  botonGuardar.setDisable(false);
+				  }
+				
+				
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}	
+		    }
+		});
+		
+		
+		
+		botonGuardar.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
-			protected boolean computeValue() {
-				return (((PanelDerecho) panelDerecho).getEditorTexto().getText().isEmpty());
+			public void handle(ActionEvent event) {
+				// TODO Auto-generated method stub
+
+				System.out.println("se guardo: " + RUTA_METODOS);
+				botonGuardar.setDisable(true);
+				
+				File carpetaDefecto = new File(RUTA_METODOS);
+				carpetaDefecto.mkdir();
+
+				FileWriter fw = null;
+				BufferedWriter bw = null;
+
+				File archivo = new File(
+						carpetaDefecto.getPath() + "\\" + barraMenu.getListaMetodos().getSelectionModel().getSelectedItem().toString() + "." + EXTENSION_ARCHIVOS);
+
+				 ObservableList<CharSequence> paragraph = ((PanelDerecho) panelDerecho).getEditorTexto().getParagraphs();
+				    Iterator<CharSequence>  iter = paragraph.iterator();
+				try {
+					
+					
+					BufferedWriter bf = new BufferedWriter(new FileWriter(archivo));
+			        while(iter.hasNext())
+			        {
+			            CharSequence seq = iter.next();
+			            bf.append(seq);
+			            bf.newLine();
+			        }
+			        bf.flush();
+			        bf.close();
+					
+					
+	
+//					fw = new FileWriter(archivo, false);
+//					bw = new BufferedWriter(fw);
+//					
+//					if (archivo.exists()){
+//						bw.write("");
+//					}
+//					
+//					String texto = ((PanelDerecho) panelDerecho).getEditorTexto().getText();
+//
+//					bw.write(texto, 0, texto.length());
+//
+//					if (bw != null) {
+//						bw.close();
+//					}
+					
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				
 			}
-		};
-		botonGuardarMetodo.disableProperty().bind(bb);
+		
+		});
+	}
+	
+	
+	
+	
+	private void crearBotonGuardarArchivo() {
+
+		botonGuardarNuevoMetodo = new BotonImagen("/imagenesFX/NuevoMetodo.png", "Guardar Metodo");
+
+		///////////////////// Para disablear/enablear el boton guardar
+		// BooleanBinding bb = new BooleanBinding() {
+		// {
+		// super.bind(((PanelDerecho)
+		// panelDerecho).getEditorTexto().textProperty());
+		// }
+		//
+		// @Override
+		// protected boolean computeValue() {
+		// return (((PanelDerecho)
+		// panelDerecho).getEditorTexto().getText().isEmpty());
+		// }
+		// };
+		// botonGuardarNuevoMetodo.disableProperty().bind(bb);
 		/////////////////////////
 
-		botonGuardarMetodo.setOnAction(new EventHandler<ActionEvent>() {
+		botonGuardarNuevoMetodo.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
 
@@ -175,40 +414,17 @@ public class VentanaPrincipal extends BorderPane {
 					@Override
 					public void handle(ActionEvent event) {
 						// guardarMetodoMatematicoDondeQuiero(primaryStage);
-						guardarMetodoMtematicoLugarPorDefecto(((DialogoGuardarArchivo) dialogoGuardarMetodo));
+
+						guardarNuevoMetodoMatematicoLugarPorDefecto(((DialogoGuardarArchivo) dialogoGuardarMetodo));
+
 						// Actualiza el ComboBox con el nuevo Metodo
 						// Matematico
 						// agregado
 						barraMenu.getListaMetodos().setItems(getMetodosMatematicosYaCreados());
+
+						seleccionarNuevoMetodo(dialogoGuardarMetodo);
+
 						dialogoGuardarMetodo.cerrarDialogo();
-
-						//////////////////////
-						// s File carpetaDefecto = new File(RUTA_METODOS);
-						// carpetaDefecto.mkdir();
-						// File archivo = new File(carpetaDefecto.getPath() +
-						// "\\"
-						// + ((DialogoGuardarArchivo)
-						// dialogoGuardarMetodo).getTextFieldNombreArchivo().getText()
-						// + "." + EXTENSION_ARCHIVOS);
-						//
-						//
-						// Dialogo dialogoSeGuardoCorrectamente = new
-						// DialogoSeGuardoCorrectamente();
-						// ((DialogoSeGuardoCorrectamente)dialogoSeGuardoCorrectamente).crearDialogo();
-						// dialogoSeGuardoCorrectamente.mostrarDialogo();
-						//
-						// ((DialogoSeGuardoCorrectamente)dialogoSeGuardoCorrectamente).getBotonAceptar().setOnAction(new
-						// EventHandler<ActionEvent>() {
-						//
-						// @Override
-						// public void handle(ActionEvent arg0) {
-						// // TODO Auto-generated method stub
-						// dialogoSeGuardoCorrectamente.cerrarDialogo();
-						// }
-						//
-						// });
-
-						//////////////////////////////
 
 					}
 				});
@@ -227,10 +443,22 @@ public class VentanaPrincipal extends BorderPane {
 
 	}
 
-	private void abrirDialogoEjecutar() {
+	private void seleccionarNuevoMetodo(Dialogo dialogoGuardarMetodo) {
+		String ultimoMetodoCreado = ((DialogoGuardarArchivo) dialogoGuardarMetodo).getTextFieldNombreArchivo()
+				.getText();
+		ObservableList<String> elementosLista = barraMenu.getListaMetodos().getItems();
+		int pos = 0;
+		while (!ultimoMetodoCreado.equalsIgnoreCase(elementosLista.get(pos))) {
+			pos++;
+		}
+		barraMenu.getListaMetodos().getSelectionModel().select(pos);
+	}
+	
+	
+	private void crearBotonEjecutar() {
 		// TODO hacer para que se ejecute cuando aprieta enter
 
-		botonEjecutar = new BotonImagen("/imagenesFX/Ejecutar2.png", "Ejecutar");
+		botonEjecutar = new BotonImagen("/imagenesFX/Ejecutar1.png", "Ejecutar");
 
 		///////////////////// Para disablear/enablear el boton ejecutar
 		BooleanBinding bb = new BooleanBinding() {
@@ -258,27 +486,48 @@ public class VentanaPrincipal extends BorderPane {
 
 					@Override
 					public void handle(ActionEvent event) {
-						// TODO se rompe cuando no guardas el metodo porque no
-						// esta en la carpeta defecto
-						File archivo = new File(RUTA_METODOS + "\\"
-								+ barraMenu.getListaMetodos().getSelectionModel().getSelectedItem().toString() + "."
-								+ EXTENSION_ARCHIVOS);
-						// ejecutar(archivo);
+						// TODO Creo que lo arregle... Hay q testear
+//						File archivo = new File(RUTA_METODOS + "\\"
+//								+ barraMenu.getListaMetodos().getSelectionModel().getSelectedItem().toString() + "."
+//								+ EXTENSION_ARCHIVOS);
+
+						File archivoTemporal = new File(RUTA_METODOS + "\\" + "metodo" + "." + EXTENSION_TEMPORAL);
+						if (archivoTemporal.exists()) {
+							archivoTemporal.delete();
+						} else {
+
+							try {
+								FileWriter fw = null;
+								BufferedWriter bw = null;
+								fw = new FileWriter(archivoTemporal, false);
+								bw = new BufferedWriter(fw);
+								String texto = ((PanelDerecho) panelDerecho).getEditorTexto().getText();
+								bw.write(texto, 0, texto.length());
+
+								if (bw != null) {
+									bw.close();
+								}
+
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+						}
 
 						Rengine re = Rengine.getMainEngine();
 						if (re == null)
 							re = new Rengine(new String[] { "--vanilla" }, false, null);
 
-						String dir = agregarCuatroSparadores(archivo.getAbsolutePath());
+						String dir = agregarCuatroSparadores(archivoTemporal.getAbsolutePath());
+										
 						re.eval("source(\"" + dir + "\")");
-
+					
 						tablaResultado.getColumns().clear();
 
 						TipoObjeto tipoArregloDouble = new TipoArregloDouble();
 						tipoArregloDouble.ejecutarMetodo(
 								re.eval(((DialogoEjecutar) dialogoEjecutar).getTextFieldNombreDondeDevuelve().getText())
 										.getContent(),
-								archivo, barraMenu.getListaMetodos(),
+										archivoTemporal, barraMenu.getListaMetodos(),
 								((DialogoEjecutar) dialogoEjecutar).getTextFieldNombreDondeDevuelve(),
 								tablaResultado/* areaResultado */);
 
@@ -286,12 +535,14 @@ public class VentanaPrincipal extends BorderPane {
 						tipoString.ejecutarMetodo(
 								re.eval(((DialogoEjecutar) dialogoEjecutar).getTextFieldNombreDondeDevuelve().getText())
 										.getContent(),
-								archivo, barraMenu.getListaMetodos(),
+										archivoTemporal, barraMenu.getListaMetodos(),
 								((DialogoEjecutar) dialogoEjecutar).getTextFieldNombreDondeDevuelve(),
 								tablaResultado/* areaResultado */);
 						dialogoEjecutar.cerrarDialogo();
 
+						archivoTemporal.delete();
 					}
+					
 				});
 
 				((DialogoEjecutar) dialogoEjecutar).getBotonCancelar().setOnAction(new EventHandler<ActionEvent>() {
@@ -303,6 +554,9 @@ public class VentanaPrincipal extends BorderPane {
 
 				dialogoEjecutar.mostrarDialogo();
 			}
+			
+			
+			
 		});
 
 	}
@@ -498,6 +752,9 @@ public class VentanaPrincipal extends BorderPane {
 		return path;
 	}
 
+	
+	
+	
 	private void copiarContenidoArchivoEnEditorTexto() {
 		File archivo;
 		FileReader leerArchivo = null;
@@ -517,7 +774,7 @@ public class VentanaPrincipal extends BorderPane {
 
 			String linea = null;
 
-			((PanelDerecho) panelDerecho).getEditorTexto().setText("");
+			((PanelDerecho) panelDerecho).getEditorTexto().clear();//setText("");
 
 			while ((linea = memoriaParaLectura.readLine()) != null) {
 
@@ -558,7 +815,7 @@ public class VentanaPrincipal extends BorderPane {
 		return listaMetodos;
 	}
 
-	private void guardarMetodoMtematicoLugarPorDefecto(DialogoGuardarArchivo dialogoGuardarMetodo) {
+	private void guardarNuevoMetodoMatematicoLugarPorDefecto(DialogoGuardarArchivo dialogoGuardarMetodo) {
 
 		File carpetaDefecto = new File(RUTA_METODOS);
 		carpetaDefecto.mkdir();
@@ -587,12 +844,21 @@ public class VentanaPrincipal extends BorderPane {
 
 				System.out.println("se creo archivo.met en: " + RUTA_METODOS);
 
+//				fw = new FileWriter(archivo, false);
+//				bw = new BufferedWriter(fw);
+//				String texto = ((PanelDerecho) panelDerecho).getEditorTexto().getText();
+//
+//				bw.write(texto, 0, texto.length());
+
+				
 				fw = new FileWriter(archivo, false);
 				bw = new BufferedWriter(fw);
-				String texto = ((PanelDerecho) panelDerecho).getEditorTexto().getText();
+				//String texto = ((PanelDerecho) panelDerecho).getEditorTexto().getText();
 
-				bw.write(texto, 0, texto.length());
-
+				//TODO Puede haber error
+		//		bw.write(0, 0);
+				
+				
 				Dialogo dialogoSeGuardoCorrectamente = new DialogoSeGuardoCorrectamente();
 				((DialogoSeGuardoCorrectamente) dialogoSeGuardoCorrectamente).crearDialogo();
 				dialogoSeGuardoCorrectamente.mostrarDialogo();
@@ -602,7 +868,6 @@ public class VentanaPrincipal extends BorderPane {
 
 							@Override
 							public void handle(ActionEvent arg0) {
-								// TODO Auto-generated method stub
 								dialogoSeGuardoCorrectamente.cerrarDialogo();
 							}
 
