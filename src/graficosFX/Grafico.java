@@ -1,6 +1,7 @@
 package graficosFX;
 
 import javafx.scene.Group;
+import javafx.scene.control.TableView;
 import javafx.stage.Stage;
 
 public abstract class Grafico {
@@ -13,7 +14,7 @@ public abstract class Grafico {
 		root = new Group();
 	}
 
-	public abstract void graficar();
+	public abstract void graficar(TableView tablaResultado);
 
 	public Stage getVentana() {
 		return ventana;
