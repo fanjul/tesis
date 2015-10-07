@@ -1,13 +1,11 @@
 package baseDatos.hibernate;
 
-import java.math.BigDecimal;
-import java.sql.Timestamp;
-
 import baseDatos.hibernate.consultas.EstadosXTipoIndicadorDAO;
 import baseDatos.hibernate.consultas.GraficoDAO;
 import baseDatos.hibernate.consultas.HSTumbralesXEstadosXIndicadorDAO;
 import baseDatos.hibernate.consultas.IndicadorDAO;
 import baseDatos.hibernate.consultas.PersonaDAO;
+import baseDatos.hibernate.consultas.TableroDAO;
 import baseDatos.hibernate.consultas.TipoIndicadorDAO;
 import baseDatos.hibernate.consultas.UmbralesXEstadosXIndicadorDAO;
 import baseDatos.hibernate.consultas.UnidadesDeMedidaDAO;
@@ -17,6 +15,7 @@ import baseDatos.hibernate.tablas.Grafico;
 import baseDatos.hibernate.tablas.HSTumbralesXEstadosXIndicador;
 import baseDatos.hibernate.tablas.Indicador;
 import baseDatos.hibernate.tablas.Persona;
+import baseDatos.hibernate.tablas.Tablero;
 import baseDatos.hibernate.tablas.TipoIndicador;
 import baseDatos.hibernate.tablas.UmbralesXEstadosXIndicador;
 import baseDatos.hibernate.tablas.UnidadesDeMedida;
@@ -29,13 +28,15 @@ public class Prueba {
 		EstadosXTipoIndicador estados = new EstadosXTipoIndicador();
 		Grafico grafico = new Grafico();
 		HSTumbralesXEstadosXIndicador hst = new HSTumbralesXEstadosXIndicador();
-		Indicador indicador = new Indicador();
+		Indicador indicador = new Indicador(); 
+		Indicador indicador2 = new Indicador();
+
 		Persona persona = new Persona();
 		TipoIndicador tipoIndicador = new TipoIndicador();
 		UmbralesXEstadosXIndicador umbral = new UmbralesXEstadosXIndicador();
 		UnidadesDeMedida unidad = new UnidadesDeMedida();
 		ValorIndicador valor = new ValorIndicador();
-
+		Tablero tablero = new Tablero();
 
 
 		EstadosXTipoIndicadorDAO estadosDao = new EstadosXTipoIndicadorDAO();
@@ -47,11 +48,45 @@ public class Prueba {
 		UmbralesXEstadosXIndicadorDAO umbralDao = new UmbralesXEstadosXIndicadorDAO();
 		UnidadesDeMedidaDAO unidadDao = new UnidadesDeMedidaDAO();
 		ValorIndicadorDAO valorDao = new ValorIndicadorDAO();
-
+		TableroDAO tableroDao = new TableroDAO();
 
 		//setear datos en las tablas
-//		estados.setIdEstado(3);
+		grafico.setId(1);
+		grafico.setObservaciones("asd");
+		graficoDao.guardar(grafico);
+		
+		indicador.setCodigo("asd");
+		indicador.setId(1);
+		indicador.setGrafico(grafico);
+		indicador2.setCodigo("asdf2");
+		indicador2.setId(5);
+		
+		indicadorDao.guardar(indicador);
+		indicadorDao.guardar(indicador2);
+
+
 //		estados.setIdTipoIndicador(4);
+//		estados.setIdEstado(3);
+//		
+//		estadosDao.guardar(estados);
+//
+//		
+	//	umbral.setFinUmbral(new Timestamp(0));
+	//	umbral.setIdEstadoTipoIndicador(4);
+	//	umbral.setIdIndicador(1);
+	//	umbral.setEstadosXTipoIndicador(estados);
+	//	umbral.setIndicador(indicador);
+//		
+	//	umbralDao.guardar(umbral);
+//		
+//		umbral.setFinUmbral(new Timestamp(0));
+//		umbral.setIdEstadoTipoIndicador(4);
+//		umbral.setIdIndicador(5);
+//		//umbral.setEstadosXTipoIndicador(estados);
+//		umbral.setIndicador(indicador2);
+//		umbralDao.guardar(umbral);
+
+//		
 //		
 //
 //		grafico.setObservaciones("joya");
@@ -62,8 +97,7 @@ public class Prueba {
 //		hst.setInicioUmbral(new Timestamp(0));
 //		hst.setFinUmbral(new Timestamp(0));
 //
-//		indicador.setCodigo("asd");
-//		indicador.setId(new BigDecimal(4));
+//		
 //
 //		persona.setApellido("Corvi");
 //
@@ -71,31 +105,31 @@ public class Prueba {
 //		tipoIndicador.setObservaciones("el corvi no entiende nada. Fanjul menos... Guille Z");
 //		tipoIndicador.setTipo("De la vida");
 //
-//		umbral.setFinUmbral(new Timestamp(0));
-//		umbral.setIdEstadoTipoIndicador(3);
-//		umbral.setIdIndicador(3);
+//		
 //
 //		unidad.setUnidadDeMedida("centimetro");
 //
 //		
 //		valor.setIdIndicador(10);
 //		valor.setFecha(new Timestamp(0));
-//
-//
-//		//realizar las consultas de las tablas: GUARDAR
-//		estadosDao.guardar(estados);
+
+
+		//realizar las consultas de las tablas: GUARDAR
 //		graficoDao.guardar(grafico);
 //		hstDao.guardar(hst);	
-//		indicadorDao.guardar(indicador);
+//		tableroDao.guardar(tablero);
+
+	
+
+
 //		personaDao.guardar(persona);
 //		tipoIndicadorDao.guardar(tipoIndicador);
-//		umbralDao.guardar(umbral);
 //		unidadDao.guardar(unidad);
 //		valorDao.guardar(valor);
 
 		//ELIMINAR
 //		estadosDao.eliminar(estados);
-//		graficoDao.eliminar(grafico);
+		graficoDao.eliminar(grafico);
 //		hstDao.eliminar(hst);	
 //		indicadorDao.eliminar(indicador);
 //		personaDao.eliminar(persona);

@@ -5,24 +5,37 @@ import java.sql.Timestamp;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.IdClass;
+import javax.persistence.Table;
+
+import baseDatos.hibernate.tablas.primaryKey.ValorIndicadorPK;
+import baseDatos.hibernate.tablas.Indicador;
+import javax.persistence.ManyToOne;
+import javax.persistence.JoinColumn;
 
 @Entity
+@IdClass(ValorIndicadorPK.class)
+@Table(name = "ValorIndicador")
 public class ValorIndicador implements Serializable {
 
-	private static final long serialVersionUID = -8423220578940394325L;
+	private static final long serialVersionUID = 1L;
+
+	public ValorIndicador() {
+	}
+
+	@Id
 	private Integer idIndicador;
+	@Id
 	private Timestamp fecha;
 	private Double valor;
 	private String estado;
 	private Double variacion;
 	private Integer signoVariacion;
 	private String observaciones;
-	
-	public ValorIndicador(){
-		
-	}
-	
+	@ManyToOne
 	@Id
+	@JoinColumn(name = "idIndicador", referencedColumnName = "id", insertable = false, updatable = false, nullable = false)
+	private Indicador indicador;
 	public Integer getIdIndicador() {
 		return idIndicador;
 	}
@@ -31,7 +44,6 @@ public class ValorIndicador implements Serializable {
 		this.idIndicador = idIndicador;
 	}
 
-	@Id
 	public Timestamp getFecha() {
 		return fecha;
 	}
@@ -79,7 +91,13 @@ public class ValorIndicador implements Serializable {
 	public void setObservaciones(String observaciones) {
 		this.observaciones = observaciones;
 	}
-	
-	
+
+	public Indicador getIndicador() {
+	    return indicador;
+	}
+
+	public void setIndicador(Indicador param) {
+	    this.indicador = param;
+	}
 
 }

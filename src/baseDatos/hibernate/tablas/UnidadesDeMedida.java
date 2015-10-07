@@ -1,26 +1,26 @@
 package baseDatos.hibernate.tablas;
 
 import java.io.Serializable;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import baseDatos.hibernate.tablas.Indicador;
+import java.util.Collection;
 
 @Entity
+@Table(name = "UnidadesDeMedida")
 public class UnidadesDeMedida implements Serializable {
 
-	private static final long serialVersionUID = 6248494861573192357L;
-	private Integer id;
-	private String unidadDeMedida;
-	private String observaciones;
+	private static final long serialVersionUID = 1L;
 
 	public UnidadesDeMedida() {
-
 	}
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Integer id;
+	private String unidadDeMedida;
+	private String observaciones;
+	@OneToMany(mappedBy = "unidadesDeMedida")
+	private Collection<Indicador> indicador;
+
 	public Integer getId() {
 		return id;
 	}
@@ -33,16 +33,24 @@ public class UnidadesDeMedida implements Serializable {
 		return unidadDeMedida;
 	}
 
-	public void setUnidadDeMedida(String unidadDeMedida) {
-		this.unidadDeMedida = unidadDeMedida;
+	public void setUnidadDeMedida(String param) {
+		this.unidadDeMedida = param;
 	}
 
 	public String getObservaciones() {
 		return observaciones;
 	}
 
-	public void setObservaciones(String observaciones) {
-		this.observaciones = observaciones;
+	public void setObservaciones(String param) {
+		this.observaciones = param;
+	}
+
+	public Collection<Indicador> getIndicador() {
+	    return indicador;
+	}
+
+	public void setIndicador(Collection<Indicador> param) {
+	    this.indicador = param;
 	}
 
 }
