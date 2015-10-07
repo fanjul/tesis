@@ -1,7 +1,5 @@
 package baseDatos.hibernate;
 
-import java.sql.Timestamp;
-
 import baseDatos.hibernate.consultas.EstadosXTipoIndicadorDAO;
 import baseDatos.hibernate.consultas.GraficoDAO;
 import baseDatos.hibernate.consultas.HSTumbralesXEstadosXIndicadorDAO;
@@ -53,8 +51,13 @@ public class Prueba {
 		TableroDAO tableroDao = new TableroDAO();
 
 		//setear datos en las tablas
+		grafico.setId(1);
+		grafico.setObservaciones("asd");
+		graficoDao.guardar(grafico);
+		
 		indicador.setCodigo("asd");
 		indicador.setId(1);
+		indicador.setGrafico(grafico);
 		indicador2.setCodigo("asdf2");
 		indicador2.setId(5);
 		
@@ -126,7 +129,7 @@ public class Prueba {
 
 		//ELIMINAR
 //		estadosDao.eliminar(estados);
-//		graficoDao.eliminar(grafico);
+		graficoDao.eliminar(grafico);
 //		hstDao.eliminar(hst);	
 //		indicadorDao.eliminar(indicador);
 //		personaDao.eliminar(persona);
