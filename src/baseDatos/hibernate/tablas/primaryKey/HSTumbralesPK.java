@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 
 import baseDatos.hibernate.tablas.HSTumbralesXEstadosXIndicador;
+import javax.persistence.Basic;
 
 public class HSTumbralesPK implements Serializable {
 
@@ -12,6 +13,10 @@ public class HSTumbralesPK implements Serializable {
 	private Integer idEstadoTipoIndicador;
 	private Timestamp inicioUmbral;
 	private Timestamp finUmbral;
+	@Basic
+	private Integer tipoIndicador;
+	@Basic
+	private Integer indicador;
 
 	public Integer getIdIndicador() {
 		return idIndicador;
@@ -57,6 +62,22 @@ public class HSTumbralesPK implements Serializable {
 	@Override
 	public int hashCode() {
 		return super.hashCode();
+	}
+
+	public Integer getTipoIndicador() {
+	    return tipoIndicador;
+	}
+
+	public void setTipoIndicador(Integer param) {
+	    this.tipoIndicador = param;
+	}
+
+	public Integer getIndicador() {
+	    return indicador;
+	}
+
+	public void setIndicador(Integer param) {
+	    this.indicador = param;
 	}
 
 }

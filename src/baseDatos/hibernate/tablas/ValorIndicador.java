@@ -3,9 +3,15 @@ package baseDatos.hibernate.tablas;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.IdClass;
+import javax.persistence.Table;
 
 import baseDatos.hibernate.tablas.primaryKey.ValorIndicadorPK;
+import baseDatos.hibernate.tablas.Indicador;
+import javax.persistence.ManyToOne;
+import javax.persistence.JoinColumn;
 
 @Entity
 @IdClass(ValorIndicadorPK.class)
@@ -26,7 +32,10 @@ public class ValorIndicador implements Serializable {
 	private Double variacion;
 	private Integer signoVariacion;
 	private String observaciones;
-
+	@ManyToOne
+	@Id
+	@JoinColumn(name = "idIndicador", referencedColumnName = "id", insertable = false, updatable = false, nullable = false)
+	private Indicador indicador;
 	public Integer getIdIndicador() {
 		return idIndicador;
 	}
@@ -81,6 +90,14 @@ public class ValorIndicador implements Serializable {
 
 	public void setObservaciones(String observaciones) {
 		this.observaciones = observaciones;
+	}
+
+	public Indicador getIndicador() {
+	    return indicador;
+	}
+
+	public void setIndicador(Indicador param) {
+	    this.indicador = param;
 	}
 
 }

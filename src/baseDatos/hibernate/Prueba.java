@@ -1,6 +1,5 @@
 package baseDatos.hibernate;
 
-import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 import baseDatos.hibernate.consultas.EstadosXTipoIndicadorDAO;
@@ -31,7 +30,7 @@ public class Prueba {
 		EstadosXTipoIndicador estados = new EstadosXTipoIndicador();
 		Grafico grafico = new Grafico();
 		HSTumbralesXEstadosXIndicador hst = new HSTumbralesXEstadosXIndicador();
-		Indicador indicador = new Indicador();
+		Indicador indicador = new Indicador(); 
 		Indicador indicador2 = new Indicador();
 
 		Persona persona = new Persona();
@@ -69,13 +68,13 @@ public class Prueba {
 //		estadosDao.guardar(estados);
 //
 //		
-		umbral.setFinUmbral(new Timestamp(0));
-		umbral.setIdEstadoTipoIndicador(4);
-		umbral.setIdIndicador(1);
+	//	umbral.setFinUmbral(new Timestamp(0));
+	//	umbral.setIdEstadoTipoIndicador(4);
+	//	umbral.setIdIndicador(1);
 	//	umbral.setEstadosXTipoIndicador(estados);
-		umbral.setIndicador(indicador);
+	//	umbral.setIndicador(indicador);
 //		
-		umbralDao.guardar(umbral);
+	//	umbralDao.guardar(umbral);
 //		
 //		umbral.setFinUmbral(new Timestamp(0));
 //		umbral.setIdEstadoTipoIndicador(4);
@@ -129,7 +128,7 @@ public class Prueba {
 //		estadosDao.eliminar(estados);
 //		graficoDao.eliminar(grafico);
 //		hstDao.eliminar(hst);	
-		indicadorDao.eliminar(indicador);
+//		indicadorDao.eliminar(indicador);
 //		personaDao.eliminar(persona);
 //		tipoIndicadorDao.eliminar(tipoIndicador);
 //		umbralDao.eliminar(umbral);

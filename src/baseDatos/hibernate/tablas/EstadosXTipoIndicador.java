@@ -3,8 +3,11 @@ package baseDatos.hibernate.tablas;
 import java.io.Serializable;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import baseDatos.hibernate.tablas.primaryKey.EstadosXTipoIndicadorPK;
@@ -26,7 +29,10 @@ public class EstadosXTipoIndicador implements Serializable {
 	private String representacionCromatica;
 	private String estado;
 	private String observaciones;
-
+	@ManyToOne(fetch = FetchType.LAZY)
+	@Id
+	@JoinColumn(name = "idTipoIndicador", referencedColumnName = "id", insertable = false, updatable = false, nullable = false)
+	private TipoIndicador tipoIndicador;
 	public Integer getIdTipoIndicador() {
 		return idTipoIndicador;
 	}
@@ -65,6 +71,14 @@ public class EstadosXTipoIndicador implements Serializable {
 
 	public void setObservaciones(String param) {
 		this.observaciones = param;
+	}
+
+	public TipoIndicador getTipoIndicador() {
+	    return tipoIndicador;
+	}
+
+	public void setTipoIndicador(TipoIndicador param) {
+	    this.tipoIndicador = param;
 	}
 
 }

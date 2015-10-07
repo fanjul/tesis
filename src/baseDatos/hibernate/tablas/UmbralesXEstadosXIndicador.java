@@ -12,6 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import baseDatos.hibernate.tablas.primaryKey.UmbralesPK;
+import baseDatos.hibernate.tablas.TipoIndicador;
 
 @Entity
 @IdClass(UmbralesPK.class)
@@ -34,11 +35,14 @@ public class UmbralesXEstadosXIndicador implements Serializable {
 	private Double valorUmbralSuperior;
 	private Double valorUmbralInferior;
 	private String observaciones;
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "idIndicador", referencedColumnName = "id",insertable=false, updatable=false, nullable = false)
+	@ManyToOne(fetch=FetchType.LAZY)
+	@Id
+	@JoinColumn(name = "idIndicador", referencedColumnName = "id",insertable = false, updatable = false, nullable = false)
 	private Indicador indicador;
-	
-	
+	@ManyToOne(fetch=FetchType.LAZY)
+	@Id
+	@JoinColumn(name = "idEstadoTipoIndicador", referencedColumnName = "id",insertable = false, updatable = false, nullable = false)
+	private TipoIndicador tipoIndicador;
 	public Integer getIdIndicador() {
 		return idIndicador;
 	}
@@ -115,9 +119,16 @@ public class UmbralesXEstadosXIndicador implements Serializable {
 	    return indicador;
 	}
 
-	public void setIndicador(Indicador indicador) {
-		this.indicador = indicador;
-	    this.idIndicador = indicador.getId();
+	public void setIndicador(Indicador param) {
+	    this.indicador = param;
+	}
+
+	public TipoIndicador getTipoIndicador() {
+	    return tipoIndicador;
+	}
+
+	public void setTipoIndicador(TipoIndicador param) {
+	    this.tipoIndicador = param;
 	}
 
 }

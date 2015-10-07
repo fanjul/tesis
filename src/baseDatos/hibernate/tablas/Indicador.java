@@ -5,10 +5,13 @@ import java.sql.Timestamp;
 import java.util.Collection;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import baseDatos.hibernate.tablas.Grafico;
+import baseDatos.hibernate.tablas.ValorIndicador;
 
 @Entity
 @Table(name = "Indicador")
@@ -34,11 +37,26 @@ public class Indicador implements Serializable {
 	private Timestamp fechaUltimaActualizacion;
 	private Integer idTipoIndicador;
 	private String observaciones;
-	@OneToMany( mappedBy = "indicador")
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "idTipoIndicador", referencedColumnName = "id",insertable = false, updatable = false, nullable = false)
+	private TipoIndicador tipoIndicador;
+	@OneToMany(mappedBy = "indicador")
 	private Collection<UmbralesXEstadosXIndicador> umbralesXEstadosXIndicador;
-	@OneToMany
-	private Collection<Grafico> grafico;
-	
+	@OneToMany(mappedBy = "indicador")
+	private Collection<HSTumbralesXEstadosXIndicador> hSTumbralesXEstadosXIndicador;
+	@OneToMany(mappedBy = "indicador")
+	private Collection<Tablero> tablero;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "idUnidadDeMedida", referencedColumnName = "id", insertable = false, updatable = false, nullable = false)
+	private UnidadesDeMedida unidadesDeMedida;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "idResponsable", referencedColumnName = "id", insertable = false, updatable = false, nullable = false)
+	private Persona persona;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "idGrafico", referencedColumnName = "id", insertable = false, updatable = false, nullable = false)
+	private Grafico grafico;
+	@OneToMany(mappedBy = "indicador")
+	private Collection<ValorIndicador> valorIndicador;
 	public Integer getId() {
 		return id;
 	}
@@ -151,6 +169,14 @@ public class Indicador implements Serializable {
 		this.observaciones = param;
 	}
 
+	public TipoIndicador getTipoIndicador() {
+	    return tipoIndicador;
+	}
+
+	public void setTipoIndicador(TipoIndicador param) {
+	    this.tipoIndicador = param;
+	}
+
 	public Collection<UmbralesXEstadosXIndicador> getUmbralesXEstadosXIndicador() {
 	    return umbralesXEstadosXIndicador;
 	}
@@ -159,12 +185,53 @@ public class Indicador implements Serializable {
 	    this.umbralesXEstadosXIndicador = param;
 	}
 
-	public Collection<Grafico> getGrafico() {
+	public Collection<HSTumbralesXEstadosXIndicador> getHSTumbralesXEstadosXIndicador() {
+	    return hSTumbralesXEstadosXIndicador;
+	}
+
+	public void setHSTumbralesXEstadosXIndicador(Collection<HSTumbralesXEstadosXIndicador> param) {
+	    this.hSTumbralesXEstadosXIndicador = param;
+	}
+
+	public Collection<Tablero> getTablero() {
+	    return tablero;
+	}
+
+	public void setTablero(Collection<Tablero> param) {
+	    this.tablero = param;
+	}
+
+	public UnidadesDeMedida getUnidadesDeMedida() {
+	    return unidadesDeMedida;
+	}
+
+	public void setUnidadesDeMedida(UnidadesDeMedida param) {
+	    this.unidadesDeMedida = param;
+	}
+
+	public Persona getPersona() {
+	    return persona;
+	}
+
+	public void setPersona(Persona param) {
+	    this.persona = param;
+	}
+
+	public Grafico getGrafico() {
 	    return grafico;
 	}
 
-	public void setGrafico(Collection<Grafico> param) {
+	public void setGrafico(Grafico param) {
 	    this.grafico = param;
 	}
+
+	public Collection<ValorIndicador> getValorIndicador() {
+	    return valorIndicador;
+	}
+
+	public void setValorIndicador(Collection<ValorIndicador> param) {
+	    this.valorIndicador = param;
+	}
+
 
 }

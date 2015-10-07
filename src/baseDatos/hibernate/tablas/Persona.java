@@ -2,6 +2,9 @@ package baseDatos.hibernate.tablas;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import baseDatos.hibernate.tablas.Indicador;
+import java.util.Collection;
+import baseDatos.hibernate.tablas.Tablero;
 
 @Entity
 @Table(name = "Persona")
@@ -21,6 +24,10 @@ public class Persona implements Serializable {
 	private String nroDocumento;
 	private String cargo;
 	private String observaciones;
+	@OneToMany(mappedBy = "persona")
+	private Collection<Indicador> indicador;
+	@OneToMany(mappedBy = "persona")
+	private Collection<Tablero> tablero;
 
 	public Integer getId() {
 		return id;
@@ -84,6 +91,22 @@ public class Persona implements Serializable {
 
 	public void setObservaciones(String param) {
 		this.observaciones = param;
+	}
+
+	public Collection<Indicador> getIndicador() {
+	    return indicador;
+	}
+
+	public void setIndicador(Collection<Indicador> param) {
+	    this.indicador = param;
+	}
+
+	public Collection<Tablero> getTablero() {
+	    return tablero;
+	}
+
+	public void setTablero(Collection<Tablero> param) {
+	    this.tablero = param;
 	}
 
 }

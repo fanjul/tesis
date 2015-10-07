@@ -4,11 +4,16 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.Table;
 
 import baseDatos.hibernate.tablas.primaryKey.HSTumbralesPK;
+import baseDatos.hibernate.tablas.TipoIndicador;
+import javax.persistence.ManyToOne;
+import javax.persistence.JoinColumn;
+import baseDatos.hibernate.tablas.Indicador;
 
 @Entity
 @IdClass(HSTumbralesPK.class)
@@ -33,6 +38,14 @@ public class HSTumbralesXEstadosXIndicador implements Serializable {
 	private Double valorUmbralInferior;
 	private String operadorUmbralInferior;
 	private String observaciones;
+	@ManyToOne(fetch=FetchType.LAZY)
+	@Id
+	@JoinColumn(name = "idEstadoTipoIndicador", referencedColumnName = "id",insertable = false, updatable = false, nullable = false)
+	private TipoIndicador tipoIndicador;
+	@ManyToOne(fetch=FetchType.LAZY)
+	@Id
+	@JoinColumn(name = "idIndicador", referencedColumnName = "id",insertable = false, updatable = false, nullable = false)
+	private Indicador indicador;
 
 	public Integer getIdIndicador() {
 		return idIndicador;
@@ -104,6 +117,22 @@ public class HSTumbralesXEstadosXIndicador implements Serializable {
 
 	public void setObservaciones(String param) {
 		this.observaciones = param;
+	}
+
+	public TipoIndicador getTipoIndicador() {
+	    return tipoIndicador;
+	}
+
+	public void setTipoIndicador(TipoIndicador param) {
+	    this.tipoIndicador = param;
+	}
+
+	public Indicador getIndicador() {
+	    return indicador;
+	}
+
+	public void setIndicador(Indicador param) {
+	    this.indicador = param;
 	}
 
 }
