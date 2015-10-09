@@ -19,8 +19,10 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DragEvent;
@@ -49,15 +51,43 @@ public class GraficoGUI extends TableView<Grafico>implements AbstractBaseDeDatos
 	@SuppressWarnings("unchecked")
 	public void mostrarTabla() {
 		tablaGrafico = new TableView<Grafico>();
+		tablaGrafico.setEditable(true);
 
 		columnaId = new TableColumn<Grafico, Integer>("Id");
 		columnaId.setCellValueFactory(new PropertyValueFactory<Grafico, Integer>("id"));
 
 		columnaTipoGrafico = new TableColumn<Grafico, String>("Tipo Grafico");
 		columnaTipoGrafico.setCellValueFactory(new PropertyValueFactory<Grafico, String>("tipoGrafico"));
+		columnaTipoGrafico.setCellFactory(TextFieldTableCell.forTableColumn());
+		columnaTipoGrafico.setOnEditCommit(new EventHandler<CellEditEvent<Grafico, String>>() {
+			@Override
+			public void handle(CellEditEvent<Grafico, String> t) {
+				Grafico grafico = new Grafico();
+				grafico = (Grafico) t.getTableView().getItems().get(t.getTablePosition().getRow());
 
+				grafico.setTipoGrafico(t.getNewValue());
+				GraficoDAO graficoDAO = new GraficoDAO();
+				graficoDAO.actualizar(grafico);
+
+			}
+
+		});
 		columnaObservaciones = new TableColumn<Grafico, String>("Observaciones");
 		columnaObservaciones.setCellValueFactory(new PropertyValueFactory<Grafico, String>("observaciones"));
+		columnaObservaciones.setCellFactory(TextFieldTableCell.forTableColumn());
+		columnaObservaciones.setOnEditCommit(new EventHandler<CellEditEvent<Grafico, String>>() {
+			@Override
+			public void handle(CellEditEvent<Grafico, String> t) {
+				Grafico grafico = new Grafico();
+				grafico = (Grafico) t.getTableView().getItems().get(t.getTablePosition().getRow());
+
+				grafico.setObservaciones(t.getNewValue());
+				GraficoDAO graficoDAO = new GraficoDAO();
+				graficoDAO.actualizar(grafico);
+
+			}
+
+		});
 
 		tablaGrafico.getColumns().addAll(columnaId, columnaTipoGrafico, columnaObservaciones);
 
@@ -104,10 +134,9 @@ public class GraficoGUI extends TableView<Grafico>implements AbstractBaseDeDatos
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public void mostrarTabla(Object consulta, FactoryConsultas factoryConsultasDAO,
-			AnchorPane centroTabla) {
-		
-		if(!centroTabla.getChildren().isEmpty()){
+	public void mostrarTabla(Object consulta, FactoryConsultas factoryConsultasDAO, AnchorPane centroTabla) {
+
+		if (!centroTabla.getChildren().isEmpty()) {
 			centroTabla.getChildren().remove(0);
 
 		}
@@ -125,7 +154,7 @@ public class GraficoGUI extends TableView<Grafico>implements AbstractBaseDeDatos
 		tablaGrafico.setMaxSize(centroTabla.getMaxWidth(), centroTabla.getMaxHeight());
 		tablaGrafico.setMinSize(centroTabla.getMinWidth(), centroTabla.getMinHeight());
 
-		centroTabla.getChildren().add(0,this.getTablaGrafico());		
+		centroTabla.getChildren().add(0, this.getTablaGrafico());
 
 	}
 

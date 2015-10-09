@@ -19,8 +19,10 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DragEvent;
@@ -55,30 +57,128 @@ public class PersonaGUI extends TableView<Persona>implements AbstractBaseDeDatos
 	@SuppressWarnings("unchecked")
 	public void mostrarTabla() {
 		tablaPersona = new TableView<Persona>();
-
+		tablaPersona.setEditable(true);
 		columnaId = new TableColumn<Persona, Integer>("Id");
 		columnaId.setCellValueFactory(new PropertyValueFactory<Persona, Integer>("id"));
 
 		columnaNombre = new TableColumn<Persona, String>("Nombre");
 		columnaNombre.setCellValueFactory(new PropertyValueFactory<Persona, String>("nombre"));
+		columnaNombre.setCellFactory(TextFieldTableCell.forTableColumn());
+		columnaNombre.setOnEditCommit(new EventHandler<CellEditEvent<Persona, String>>() {
+			@Override
+			public void handle(CellEditEvent<Persona, String> t) {
+				Persona persona = new Persona();
+				persona = (Persona) t.getTableView().getItems().get(t.getTablePosition().getRow());
+
+				persona.setNombre(t.getNewValue());
+				PersonaDAO personaDAO = new PersonaDAO();
+				personaDAO.actualizar(persona);
+
+			}
+
+		});
 
 		columnaApellido = new TableColumn<Persona, String>("Apellido");
 		columnaApellido.setCellValueFactory(new PropertyValueFactory<Persona, String>("apellido"));
+		columnaApellido.setCellFactory(TextFieldTableCell.forTableColumn());
+		columnaApellido.setOnEditCommit(new EventHandler<CellEditEvent<Persona, String>>() {
+			@Override
+			public void handle(CellEditEvent<Persona, String> t) {
+				Persona persona = new Persona();
+				persona = (Persona) t.getTableView().getItems().get(t.getTablePosition().getRow());
+
+				persona.setApellido(t.getNewValue());
+				PersonaDAO personaDAO = new PersonaDAO();
+				personaDAO.actualizar(persona);
+
+			}
+
+		});
 
 		columnaEmail = new TableColumn<Persona, String>("Email");
 		columnaEmail.setCellValueFactory(new PropertyValueFactory<Persona, String>("email"));
+		columnaEmail.setCellFactory(TextFieldTableCell.forTableColumn());
+		columnaEmail.setOnEditCommit(new EventHandler<CellEditEvent<Persona, String>>() {
+			@Override
+			public void handle(CellEditEvent<Persona, String> t) {
+				Persona persona = new Persona();
+				persona = (Persona) t.getTableView().getItems().get(t.getTablePosition().getRow());
+
+				persona.setEmail(t.getNewValue());
+				PersonaDAO personaDAO = new PersonaDAO();
+				personaDAO.actualizar(persona);
+
+			}
+
+		});
 
 		columnaCargo = new TableColumn<Persona, String>("Cargo");
 		columnaCargo.setCellValueFactory(new PropertyValueFactory<Persona, String>("cargo"));
+		columnaCargo.setCellFactory(TextFieldTableCell.forTableColumn());
+		columnaCargo.setOnEditCommit(new EventHandler<CellEditEvent<Persona, String>>() {
+			@Override
+			public void handle(CellEditEvent<Persona, String> t) {
+				Persona persona = new Persona();
+				persona = (Persona) t.getTableView().getItems().get(t.getTablePosition().getRow());
+
+				persona.setCargo(t.getNewValue());
+				PersonaDAO personaDAO = new PersonaDAO();
+				personaDAO.actualizar(persona);
+
+			}
+
+		});
 
 		columnaTipoDocumento = new TableColumn<Persona, String>("Tipo Documento");
 		columnaTipoDocumento.setCellValueFactory(new PropertyValueFactory<Persona, String>("tipoDocumento"));
+		columnaTipoDocumento.setCellFactory(TextFieldTableCell.forTableColumn());
+		columnaTipoDocumento.setOnEditCommit(new EventHandler<CellEditEvent<Persona, String>>() {
+			@Override
+			public void handle(CellEditEvent<Persona, String> t) {
+				Persona persona = new Persona();
+				persona = (Persona) t.getTableView().getItems().get(t.getTablePosition().getRow());
+
+				persona.setTipoDocumento(t.getNewValue());
+				PersonaDAO personaDAO = new PersonaDAO();
+				personaDAO.actualizar(persona);
+
+			}
+
+		});
 
 		columnaNroDocumento = new TableColumn<Persona, String>("Nro Documento");
 		columnaNroDocumento.setCellValueFactory(new PropertyValueFactory<Persona, String>("nroDocumento"));
+		columnaNroDocumento.setCellFactory(TextFieldTableCell.forTableColumn());
+		columnaNroDocumento.setOnEditCommit(new EventHandler<CellEditEvent<Persona, String>>() {
+			@Override
+			public void handle(CellEditEvent<Persona, String> t) {
+				Persona persona = new Persona();
+				persona = (Persona) t.getTableView().getItems().get(t.getTablePosition().getRow());
+
+				persona.setNroDocumento(t.getNewValue());
+				PersonaDAO personaDAO = new PersonaDAO();
+				personaDAO.actualizar(persona);
+
+			}
+
+		});
 
 		columnaObsevaciones = new TableColumn<Persona, String>("Observaciones");
 		columnaObsevaciones.setCellValueFactory(new PropertyValueFactory<Persona, String>("observaciones"));
+		columnaObsevaciones.setCellFactory(TextFieldTableCell.forTableColumn());
+		columnaObsevaciones.setOnEditCommit(new EventHandler<CellEditEvent<Persona, String>>() {
+			@Override
+			public void handle(CellEditEvent<Persona, String> t) {
+				Persona persona = new Persona();
+				persona = (Persona) t.getTableView().getItems().get(t.getTablePosition().getRow());
+
+				persona.setObservaciones(t.getNewValue());
+				PersonaDAO personaDAO = new PersonaDAO();
+				personaDAO.actualizar(persona);
+
+			}
+
+		});
 
 		tablaPersona.getColumns().addAll(columnaId, columnaNombre, columnaApellido, columnaEmail, columnaCargo,
 				columnaTipoDocumento, columnaNroDocumento, columnaObsevaciones);
@@ -147,10 +247,9 @@ public class PersonaGUI extends TableView<Persona>implements AbstractBaseDeDatos
 	@SuppressWarnings("unchecked")
 	@Override
 
-	public void mostrarTabla(Object consulta, FactoryConsultas factoryConsultasDAO,
-			AnchorPane centroTabla) {
-		
-		if(!centroTabla.getChildren().isEmpty()){
+	public void mostrarTabla(Object consulta, FactoryConsultas factoryConsultasDAO, AnchorPane centroTabla) {
+
+		if (!centroTabla.getChildren().isEmpty()) {
 			centroTabla.getChildren().remove(0);
 		}
 		this.consulta = (PersonaDAO) consulta;
@@ -164,7 +263,7 @@ public class PersonaGUI extends TableView<Persona>implements AbstractBaseDeDatos
 		this.getTablaPersona().setItems(this.getData());
 		tablaPersona.setMaxSize(centroTabla.getMaxWidth(), centroTabla.getMaxHeight());
 		tablaPersona.setMinSize(centroTabla.getMinWidth(), centroTabla.getMinHeight());
-		centroTabla.getChildren().add(0,this.getTablaPersona());			
+		centroTabla.getChildren().add(0, this.getTablaPersona());
 	}
 
 	private void agregarListenerEvent() {

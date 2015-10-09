@@ -19,8 +19,10 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DragEvent;
@@ -49,15 +51,43 @@ public class TipoIndicadorGUI extends TableView<TipoIndicador>implements Abstrac
 	@SuppressWarnings("unchecked")
 	public void mostrarTabla() {
 		tablaTipoIndicador = new TableView<TipoIndicador>();
-
+		tablaTipoIndicador.setEditable(true);
 		columnaId = new TableColumn<TipoIndicador, Integer>("Id");
 		columnaId.setCellValueFactory(new PropertyValueFactory<TipoIndicador, Integer>("id"));
 
 		columnaTipo = new TableColumn<TipoIndicador, String>("Tipo");
 		columnaTipo.setCellValueFactory(new PropertyValueFactory<TipoIndicador, String>("tipo"));
+		columnaTipo.setCellFactory(TextFieldTableCell.forTableColumn());
+		columnaTipo.setOnEditCommit(new EventHandler<CellEditEvent<TipoIndicador, String>>() {
+			@Override
+			public void handle(CellEditEvent<TipoIndicador, String> t) {
+				TipoIndicador tipoIndicador = new TipoIndicador();
+				tipoIndicador = (TipoIndicador) t.getTableView().getItems().get(t.getTablePosition().getRow());
+
+				tipoIndicador.setTipo(t.getNewValue());
+				TipoIndicadorDAO tipoIndicadorDAO = new TipoIndicadorDAO();
+				tipoIndicadorDAO.actualizar(tipoIndicador);
+
+			}
+
+		});
 
 		columnaObservaciones = new TableColumn<TipoIndicador, String>("Observaciones");
 		columnaObservaciones.setCellValueFactory(new PropertyValueFactory<TipoIndicador, String>("observaciones"));
+		columnaObservaciones.setCellFactory(TextFieldTableCell.forTableColumn());
+		columnaObservaciones.setOnEditCommit(new EventHandler<CellEditEvent<TipoIndicador, String>>() {
+			@Override
+			public void handle(CellEditEvent<TipoIndicador, String> t) {
+				TipoIndicador tipoIndicador = new TipoIndicador();
+				tipoIndicador = (TipoIndicador) t.getTableView().getItems().get(t.getTablePosition().getRow());
+
+				tipoIndicador.setObservaciones(t.getNewValue());
+				TipoIndicadorDAO tipoIndicadorDAO = new TipoIndicadorDAO();
+				tipoIndicadorDAO.actualizar(tipoIndicador);
+
+			}
+
+		});
 
 		tablaTipoIndicador.getColumns().addAll(columnaId, columnaTipo, columnaObservaciones);
 
@@ -104,10 +134,9 @@ public class TipoIndicadorGUI extends TableView<TipoIndicador>implements Abstrac
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public void mostrarTabla(Object consulta, FactoryConsultas factoryConsultasDAO,
-			AnchorPane centroTabla) {
-		
-		if(!centroTabla.getChildren().isEmpty()){
+	public void mostrarTabla(Object consulta, FactoryConsultas factoryConsultasDAO, AnchorPane centroTabla) {
+
+		if (!centroTabla.getChildren().isEmpty()) {
 			centroTabla.getChildren().remove(0);
 		}
 		this.consulta = (TipoIndicadorDAO) consulta;
@@ -121,7 +150,7 @@ public class TipoIndicadorGUI extends TableView<TipoIndicador>implements Abstrac
 		this.getTablaTipoIndicador().setItems(this.getData());
 		tablaTipoIndicador.setMaxSize(centroTabla.getMaxWidth(), centroTabla.getMaxHeight());
 		tablaTipoIndicador.setMinSize(centroTabla.getMinWidth(), centroTabla.getMinHeight());
-		centroTabla.getChildren().add(0,this.getTablaTipoIndicador());			
+		centroTabla.getChildren().add(0, this.getTablaTipoIndicador());
 	}
 
 	private void agregarListenerEvent() {
