@@ -24,7 +24,7 @@ public class Grafico implements Serializable {
 	private String observaciones;
 	@OneToMany(mappedBy = "grafico")
 	private Collection<Indicador> indicador;
-	
+
 	public Integer getId() {
 		return id;
 	}
@@ -34,27 +34,27 @@ public class Grafico implements Serializable {
 	}
 
 	public String getTipoGrafico() {
-	    return tipoGrafico;
+		return tipoGrafico;
 	}
 
 	public void setTipoGrafico(String param) {
-	    this.tipoGrafico = param;
+		this.tipoGrafico = param;
 	}
 
 	public String getObservaciones() {
-	    return observaciones;
+		return observaciones;
 	}
 
 	public void setObservaciones(String param) {
-	    this.observaciones = param;
+		this.observaciones = param;
 	}
 
 	public Collection<Indicador> getIndicador() {
-	    return indicador;
+		return indicador;
 	}
 
 	public void setIndicador(Collection<Indicador> param) {
-	    this.indicador = param;
+		this.indicador = param;
 	}
 
 }

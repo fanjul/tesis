@@ -20,8 +20,10 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DragEvent;
@@ -32,6 +34,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.util.converter.DoubleStringConverter;
 
 public class ValorIndicadorGUI extends TableView<ValorIndicador>implements AbstractBaseDeDatosGUI {
 
@@ -54,6 +57,7 @@ public class ValorIndicadorGUI extends TableView<ValorIndicador>implements Abstr
 	@SuppressWarnings({ "unchecked" })
 	public void mostrarTabla() {
 		tablaValorIndicador = new TableView<ValorIndicador>();
+		tablaValorIndicador.setEditable(true);
 
 		columnaIdIndicador = new TableColumn<ValorIndicador, Integer>("Id Indicador");
 		columnaIdIndicador.setCellValueFactory(new PropertyValueFactory<ValorIndicador, Integer>("idIndicador"));
@@ -63,6 +67,21 @@ public class ValorIndicadorGUI extends TableView<ValorIndicador>implements Abstr
 
 		columnaValor = new TableColumn<ValorIndicador, Double>("Valor");
 		columnaValor.setCellValueFactory(new PropertyValueFactory<ValorIndicador, Double>("valor"));
+		columnaValor.setCellFactory(TextFieldTableCell.<ValorIndicador,Double>forTableColumn(new DoubleStringConverter()));
+		columnaValor.setOnEditCommit(new EventHandler<CellEditEvent<ValorIndicador, Double>>() {
+			@Override
+			public void handle(CellEditEvent<ValorIndicador, Double> t) {
+				ValorIndicador valorIndicador = new ValorIndicador();
+				valorIndicador = (ValorIndicador) t.getTableView().getItems()
+						.get(t.getTablePosition().getRow());
+
+				valorIndicador.setValor(t.getNewValue());
+				ValorIndicadorDAO valorIndicadorDAO = new ValorIndicadorDAO();
+				valorIndicadorDAO.actualizar(valorIndicador);
+
+			}
+
+		});
 
 		columnaEstado = new TableColumn<ValorIndicador, String>("Estado");
 		columnaEstado.setCellValueFactory(new PropertyValueFactory<ValorIndicador, String>("estado"));

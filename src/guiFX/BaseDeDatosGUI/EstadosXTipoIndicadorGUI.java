@@ -19,8 +19,10 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DragEvent;
@@ -52,9 +54,24 @@ public class EstadosXTipoIndicadorGUI extends TableView<EstadosXTipoIndicador>im
 	public void mostrarTabla() {
 
 		tablaEstadosXTipoIndicador = new TableView<EstadosXTipoIndicador>();
+		tablaEstadosXTipoIndicador.setEditable(true);
 
 		columnaEstado = new TableColumn<EstadosXTipoIndicador, String>("Estado");
 		columnaEstado.setCellValueFactory(new PropertyValueFactory<EstadosXTipoIndicador, String>("estado"));
+		columnaEstado.setCellFactory(TextFieldTableCell.forTableColumn());
+		columnaEstado.setOnEditCommit(new EventHandler<CellEditEvent<EstadosXTipoIndicador, String>>() {
+			@Override
+			public void handle(CellEditEvent<EstadosXTipoIndicador, String> t) {
+				EstadosXTipoIndicador estadosX = new EstadosXTipoIndicador();
+				estadosX = (EstadosXTipoIndicador) t.getTableView().getItems().get(t.getTablePosition().getRow());
+
+				estadosX.setEstado(t.getNewValue());
+				EstadosXTipoIndicadorDAO estadoXDAO = new EstadosXTipoIndicadorDAO();
+				estadoXDAO.actualizar(estadosX);
+
+			}
+
+		});
 
 		columnaIdEstado = new TableColumn<EstadosXTipoIndicador, Integer>("id Estado");
 		columnaIdEstado.setCellValueFactory(new PropertyValueFactory<EstadosXTipoIndicador, Integer>("idEstado"));
@@ -66,11 +83,40 @@ public class EstadosXTipoIndicadorGUI extends TableView<EstadosXTipoIndicador>im
 		columnaObservaciones = new TableColumn<EstadosXTipoIndicador, String>("Observaciones");
 		columnaObservaciones
 				.setCellValueFactory(new PropertyValueFactory<EstadosXTipoIndicador, String>("observaciones"));
+		columnaObservaciones.setCellFactory(TextFieldTableCell.forTableColumn());
+		columnaObservaciones.setOnEditCommit(new EventHandler<CellEditEvent<EstadosXTipoIndicador, String>>() {
+			@Override
+			public void handle(CellEditEvent<EstadosXTipoIndicador, String> t) {
+				EstadosXTipoIndicador estadosX = new EstadosXTipoIndicador();
+				estadosX = (EstadosXTipoIndicador) t.getTableView().getItems().get(t.getTablePosition().getRow());
+
+				estadosX.setObservaciones(t.getNewValue());
+				EstadosXTipoIndicadorDAO estadoXDAO = new EstadosXTipoIndicadorDAO();
+				estadoXDAO.actualizar(estadosX);
+
+			}
+
+		});
 
 		columnaRepresentacionCromatica = new TableColumn<EstadosXTipoIndicador, String>("Representacion Cronomatica");
-
 		columnaRepresentacionCromatica.setCellValueFactory(
 				new PropertyValueFactory<EstadosXTipoIndicador, String>("representacionCromatica"));
+		columnaRepresentacionCromatica.setCellFactory(TextFieldTableCell.forTableColumn());
+		columnaRepresentacionCromatica
+				.setOnEditCommit(new EventHandler<CellEditEvent<EstadosXTipoIndicador, String>>() {
+					@Override
+					public void handle(CellEditEvent<EstadosXTipoIndicador, String> t) {
+						EstadosXTipoIndicador estadosX = new EstadosXTipoIndicador();
+						estadosX = (EstadosXTipoIndicador) t.getTableView().getItems()
+								.get(t.getTablePosition().getRow());
+
+						estadosX.setRepresentacionCromatica(t.getNewValue());
+						EstadosXTipoIndicadorDAO estadoXDAO = new EstadosXTipoIndicadorDAO();
+						estadoXDAO.actualizar(estadosX);
+
+					}
+
+				});
 
 		tablaEstadosXTipoIndicador.getColumns().addAll(columnaIdTipoIndicador, columnaIdEstado, columnaEstado,
 				columnaRepresentacionCromatica, columnaObservaciones);
@@ -258,16 +304,13 @@ public class EstadosXTipoIndicadorGUI extends TableView<EstadosXTipoIndicador>im
 				};
 				nuevaStage(callback);
 
-
 			}
-
 
 		});
 	}
 
 	public void nuevaStage(Runnable callback) {
 		Stage nuevoStage = new Stage();
-
 
 		HBox ventana = new HBox();
 		Label labelColumna = new Label("Seleccione Columna: ");
@@ -276,7 +319,7 @@ public class EstadosXTipoIndicadorGUI extends TableView<EstadosXTipoIndicador>im
 		Button botonCancelar = new Button("Cancelar");
 		HBox botones = new HBox();
 		VBox todo = new VBox();
-		
+
 		botones.setSpacing(50);
 		ventana.getChildren().addAll(labelColumna, comboColumna);
 		ventana.setSpacing(50);

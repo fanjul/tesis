@@ -1,12 +1,10 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!DOCTYPE xml>
-<entities>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><entities>
 	<entity>
 		<entity-name>baseDatos.hibernate.tablas.HSTumbralesXEstadosXIndicador</entity-name>
 		<entity-width>181</entity-width>
 		<entity-height>30</entity-height>
-		<entity-X-Coordinate>251</entity-X-Coordinate>
-		<entity-Y-Coordinate>380</entity-Y-Coordinate>
+		<entity-X-Coordinate>289</entity-X-Coordinate>
+		<entity-Y-Coordinate>461</entity-Y-Coordinate>
 		<primary-collapsed>false</primary-collapsed>
 		<relation-collapsed>false</relation-collapsed>
 		<basic-collapsed>false</basic-collapsed>
@@ -16,8 +14,8 @@
 		<entity-name>baseDatos.hibernate.tablas.Persona</entity-name>
 		<entity-width>120</entity-width>
 		<entity-height>30</entity-height>
-		<entity-X-Coordinate>30</entity-X-Coordinate>
-		<entity-Y-Coordinate>250</entity-Y-Coordinate>
+		<entity-X-Coordinate>13</entity-X-Coordinate>
+		<entity-Y-Coordinate>246</entity-Y-Coordinate>
 		<primary-collapsed>false</primary-collapsed>
 		<relation-collapsed>false</relation-collapsed>
 		<basic-collapsed>false</basic-collapsed>
@@ -27,8 +25,8 @@
 		<entity-name>baseDatos.hibernate.tablas.UnidadesDeMedida</entity-name>
 		<entity-width>120</entity-width>
 		<entity-height>30</entity-height>
-		<entity-X-Coordinate>326</entity-X-Coordinate>
-		<entity-Y-Coordinate>20</entity-Y-Coordinate>
+		<entity-X-Coordinate>333</entity-X-Coordinate>
+		<entity-Y-Coordinate>14</entity-Y-Coordinate>
 		<primary-collapsed>false</primary-collapsed>
 		<relation-collapsed>false</relation-collapsed>
 		<basic-collapsed>false</basic-collapsed>
@@ -38,8 +36,8 @@
 		<entity-name>baseDatos.hibernate.tablas.Grafico</entity-name>
 		<entity-width>120</entity-width>
 		<entity-height>30</entity-height>
-		<entity-X-Coordinate>21</entity-X-Coordinate>
-		<entity-Y-Coordinate>90</entity-Y-Coordinate>
+		<entity-X-Coordinate>22</entity-X-Coordinate>
+		<entity-Y-Coordinate>146</entity-Y-Coordinate>
 		<primary-collapsed>false</primary-collapsed>
 		<relation-collapsed>false</relation-collapsed>
 		<basic-collapsed>false</basic-collapsed>
@@ -49,8 +47,8 @@
 		<entity-name>baseDatos.hibernate.tablas.UmbralesXEstadosXIndicador</entity-name>
 		<entity-width>120</entity-width>
 		<entity-height>30</entity-height>
-		<entity-X-Coordinate>530</entity-X-Coordinate>
-		<entity-Y-Coordinate>37</entity-Y-Coordinate>
+		<entity-X-Coordinate>534</entity-X-Coordinate>
+		<entity-Y-Coordinate>20</entity-Y-Coordinate>
 		<primary-collapsed>false</primary-collapsed>
 		<relation-collapsed>false</relation-collapsed>
 		<basic-collapsed>false</basic-collapsed>
@@ -60,8 +58,8 @@
 		<entity-name>baseDatos.hibernate.tablas.Tablero</entity-name>
 		<entity-width>120</entity-width>
 		<entity-height>30</entity-height>
-		<entity-X-Coordinate>30</entity-X-Coordinate>
-		<entity-Y-Coordinate>370</entity-Y-Coordinate>
+		<entity-X-Coordinate>13</entity-X-Coordinate>
+		<entity-Y-Coordinate>434</entity-Y-Coordinate>
 		<primary-collapsed>false</primary-collapsed>
 		<relation-collapsed>false</relation-collapsed>
 		<basic-collapsed>false</basic-collapsed>
@@ -71,8 +69,8 @@
 		<entity-name>baseDatos.hibernate.tablas.TipoIndicador</entity-name>
 		<entity-width>120</entity-width>
 		<entity-height>30</entity-height>
-		<entity-X-Coordinate>636</entity-X-Coordinate>
-		<entity-Y-Coordinate>380</entity-Y-Coordinate>
+		<entity-X-Coordinate>674</entity-X-Coordinate>
+		<entity-Y-Coordinate>461</entity-Y-Coordinate>
 		<primary-collapsed>false</primary-collapsed>
 		<relation-collapsed>false</relation-collapsed>
 		<basic-collapsed>false</basic-collapsed>
@@ -82,8 +80,8 @@
 		<entity-name>baseDatos.hibernate.tablas.Indicador</entity-name>
 		<entity-width>120</entity-width>
 		<entity-height>30</entity-height>
-		<entity-X-Coordinate>326</entity-X-Coordinate>
-		<entity-Y-Coordinate>180</entity-Y-Coordinate>
+		<entity-X-Coordinate>358</entity-X-Coordinate>
+		<entity-Y-Coordinate>175</entity-Y-Coordinate>
 		<primary-collapsed>false</primary-collapsed>
 		<relation-collapsed>false</relation-collapsed>
 		<basic-collapsed>false</basic-collapsed>
@@ -93,8 +91,8 @@
 		<entity-name>baseDatos.hibernate.tablas.EstadosXTipoIndicador</entity-name>
 		<entity-width>120</entity-width>
 		<entity-height>30</entity-height>
-		<entity-X-Coordinate>708</entity-X-Coordinate>
-		<entity-Y-Coordinate>119</entity-Y-Coordinate>
+		<entity-X-Coordinate>700</entity-X-Coordinate>
+		<entity-Y-Coordinate>161</entity-Y-Coordinate>
 		<primary-collapsed>false</primary-collapsed>
 		<relation-collapsed>false</relation-collapsed>
 		<basic-collapsed>false</basic-collapsed>

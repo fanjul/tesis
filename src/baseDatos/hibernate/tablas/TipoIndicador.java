@@ -33,6 +33,7 @@ public class TipoIndicador implements Serializable {
 	private Collection<UmbralesXEstadosXIndicador> umbralesXEstadosXIndicador;
 	@OneToMany(mappedBy = "tipoIndicador")
 	private Collection<HSTumbralesXEstadosXIndicador> hSTumbralesXEstadosXIndicador;
+
 	public Integer getId() {
 		return id;
 	}
@@ -58,35 +59,35 @@ public class TipoIndicador implements Serializable {
 	}
 
 	public Collection<EstadosXTipoIndicador> getEstadosXTipoIndicador() {
-	    return estadosXTipoIndicador;
+		return estadosXTipoIndicador;
 	}
 
 	public void setEstadosXTipoIndicador(Collection<EstadosXTipoIndicador> param) {
-	    this.estadosXTipoIndicador = param;
+		this.estadosXTipoIndicador = param;
 	}
 
 	public Collection<Indicador> getIndicador() {
-	    return indicador;
+		return indicador;
 	}
 
 	public void setIndicador(Collection<Indicador> param) {
-	    this.indicador = param;
+		this.indicador = param;
 	}
 
 	public Collection<UmbralesXEstadosXIndicador> getUmbralesXEstadosXIndicador() {
-	    return umbralesXEstadosXIndicador;
+		return umbralesXEstadosXIndicador;
 	}
 
 	public void setUmbralesXEstadosXIndicador(Collection<UmbralesXEstadosXIndicador> param) {
-	    this.umbralesXEstadosXIndicador = param;
+		this.umbralesXEstadosXIndicador = param;
 	}
 
 	public Collection<HSTumbralesXEstadosXIndicador> getHSTumbralesXEstadosXIndicador() {
-	    return hSTumbralesXEstadosXIndicador;
+		return hSTumbralesXEstadosXIndicador;
 	}
 
 	public void setHSTumbralesXEstadosXIndicador(Collection<HSTumbralesXEstadosXIndicador> param) {
-	    this.hSTumbralesXEstadosXIndicador = param;
+		this.hSTumbralesXEstadosXIndicador = param;
 	}
 
 }

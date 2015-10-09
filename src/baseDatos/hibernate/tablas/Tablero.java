@@ -22,10 +22,10 @@ public class Tablero implements Serializable {
 	private Integer idIndicador;
 	private Integer idResponsable;
 	private Timestamp fechaUltimaActualizacion;
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "idIndicador", referencedColumnName = "id", insertable = false, updatable = false, nullable = false)
 	private Indicador indicador;
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "idResponsable", referencedColumnName = "id", insertable = false, updatable = false, nullable = false)
 	private Persona persona;
 
@@ -70,19 +70,19 @@ public class Tablero implements Serializable {
 	}
 
 	public Indicador getIndicador() {
-	    return indicador;
+		return indicador;
 	}
 
 	public void setIndicador(Indicador param) {
-	    this.indicador = param;
+		this.indicador = param;
 	}
 
 	public Persona getPersona() {
-	    return persona;
+		return persona;
 	}
 
 	public void setPersona(Persona param) {
-	    this.persona = param;
+		this.persona = param;
 	}
 
 }

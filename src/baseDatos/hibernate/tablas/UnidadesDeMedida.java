@@ -46,11 +46,11 @@ public class UnidadesDeMedida implements Serializable {
 	}
 
 	public Collection<Indicador> getIndicador() {
-	    return indicador;
+		return indicador;
 	}
 
 	public void setIndicador(Collection<Indicador> param) {
-	    this.indicador = param;
+		this.indicador = param;
 	}
 
 }

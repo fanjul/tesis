@@ -6,7 +6,6 @@ import org.apache.commons.io.FilenameUtils;
 
 import dialogos.Dialogo;
 import dialogos.DialogoEstaSeguroDeEliminar;
-import dialogos.DialogoGuardarArchivo;
 import dialogos.DialogoRenombrarArchivo;
 import dialogos.DialogoSeRenombroCorrectamente;
 import javafx.collections.FXCollections;
@@ -16,7 +15,6 @@ import javafx.event.EventHandler;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MenuItem;
-import javafx.scene.control.MultipleSelectionModel;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 
@@ -117,7 +115,6 @@ public class ListaMetodos extends ListView<String> {
 								System.out.println("El renombrado ha sido correcto");
 								dialogoRenombrarArchivo.cerrarDialogo();
 
-								@SuppressWarnings("unused")
 								Dialogo dialogoSeRenombroCorrectamente = new DialogoSeRenombroCorrectamente();
 								dialogoSeRenombroCorrectamente.crearDialogo();
 								dialogoSeRenombroCorrectamente.mostrarDialogo();

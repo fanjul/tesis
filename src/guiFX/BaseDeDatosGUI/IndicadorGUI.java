@@ -1,6 +1,5 @@
 package guiFX.BaseDeDatosGUI;
 
-import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.List;
@@ -21,8 +20,10 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DragEvent;
@@ -37,7 +38,7 @@ import javafx.stage.Stage;
 public class IndicadorGUI extends TableView<Indicador>implements AbstractBaseDeDatosGUI {
 
 	private TableView<Indicador> tablaIndicador;
-	private TableColumn<Indicador, BigDecimal> columnaId;
+	private TableColumn<Indicador, Integer> columnaId;
 	private TableColumn<Indicador, String> columnaCodigo;
 	private TableColumn<Indicador, String> columnaNombre;
 	private TableColumn<Indicador, Integer> columnaIdUnidadDeMedida;
@@ -63,12 +64,29 @@ public class IndicadorGUI extends TableView<Indicador>implements AbstractBaseDeD
 	@SuppressWarnings("unchecked")
 	public void mostrarTabla() {
 		tablaIndicador = new TableView<Indicador>();
-
-		columnaId = new TableColumn<Indicador, BigDecimal>("Id");
-		columnaId.setCellValueFactory(new PropertyValueFactory<Indicador, BigDecimal>("id"));
-
+		tablaIndicador.setEditable(true);
+		
+		columnaId = new TableColumn<Indicador, Integer>("Id");
+		columnaId.setCellValueFactory(new PropertyValueFactory<Indicador, Integer>("id"));
+	
+		
+		
 		columnaCodigo = new TableColumn<Indicador, String>("Codigo");
 		columnaCodigo.setCellValueFactory(new PropertyValueFactory<Indicador, String>("codigo"));
+		columnaCodigo.setCellFactory(TextFieldTableCell.forTableColumn());
+		columnaCodigo.setOnEditCommit(new EventHandler<CellEditEvent<Indicador, String>>() {
+			@Override
+			public void handle(CellEditEvent<Indicador, String> t) {
+				Indicador indicador= new Indicador();
+				indicador = (Indicador) t.getTableView().getItems().get(t.getTablePosition().getRow());
+
+				indicador.setCodigo(t.getNewValue());
+				IndicadorDAO indicadorDAO = new IndicadorDAO();
+				indicadorDAO.actualizar(indicador);
+
+			}
+
+		});
 
 		columnaNombre = new TableColumn<Indicador, String>("Nombre");
 		columnaNombre.setCellValueFactory(new PropertyValueFactory<Indicador, String>("nombre"));
@@ -121,7 +139,7 @@ public class IndicadorGUI extends TableView<Indicador>implements AbstractBaseDeD
 		return tablaIndicador;
 	}
 
-	public TableColumn<Indicador, BigDecimal> getColumnaId() {
+	public TableColumn<Indicador, Integer> getColumnaId() {
 		return columnaId;
 	}
 

@@ -10,7 +10,6 @@ import org.hibernate.persister.entity.AbstractEntityPersister;
 
 import baseDatos.hibernate.tablas.TipoIndicador;
 
-
 public class TipoIndicadorDAO extends DAO {
 
 	public void guardar(TipoIndicador tipoIndicador) {
@@ -24,7 +23,7 @@ public class TipoIndicadorDAO extends DAO {
 		} finally {
 			sesion.close();
 		}
-		
+
 	}
 
 	public void actualizar(TipoIndicador tipoIndicador) {
@@ -39,7 +38,7 @@ public class TipoIndicadorDAO extends DAO {
 			sesion.close();
 		}
 	}
-	
+
 	public void eliminar(TipoIndicador tipoIndicador) {
 		try {
 			iniciaOperacion();
@@ -52,7 +51,7 @@ public class TipoIndicadorDAO extends DAO {
 			sesion.close();
 		}
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public List<TipoIndicador> getTodos() {
 		try {
@@ -68,7 +67,7 @@ public class TipoIndicadorDAO extends DAO {
 			sesion.close();
 		}
 	}
-	
+
 	public List<String> getColumnas() {
 		try {
 			this.iniciaOperacion();
