@@ -8,6 +8,7 @@ import baseDatos.hibernate.tablas.Grafico;
 import baseDatos.hibernate.tablas.HSTumbralesXEstadosXIndicador;
 import baseDatos.hibernate.tablas.Indicador;
 import baseDatos.hibernate.tablas.Persona;
+import baseDatos.hibernate.tablas.Tablero;
 import baseDatos.hibernate.tablas.TipoIndicador;
 import baseDatos.hibernate.tablas.UmbralesXEstadosXIndicador;
 import baseDatos.hibernate.tablas.UnidadesDeMedida;
@@ -35,6 +36,8 @@ public class FactoryConsultas {
 			return new GraficoDAO();
 		} else if ("EstadosXTipoIndicador".equalsIgnoreCase(nombre)) {
 			return new EstadosXTipoIndicadorDAO();
+		} else if ("Tablero".equalsIgnoreCase(nombre)) {
+			return new TableroDAO();
 		} else
 			return null;
 	}
@@ -58,6 +61,8 @@ public class FactoryConsultas {
 			return new ArrayList<Grafico>();
 		} else if ("EstadosXTipoIndicador".equalsIgnoreCase(nombre)) {
 			return new ArrayList<EstadosXTipoIndicador>();
+		} else if ("Tablero".equalsIgnoreCase(nombre)) {
+			return new ArrayList<Tablero>();
 		} else
 			return null;
 	}

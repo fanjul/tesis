@@ -94,19 +94,19 @@ public class Persona implements Serializable {
 	}
 
 	public Collection<Indicador> getIndicador() {
-	    return indicador;
+		return indicador;
 	}
 
 	public void setIndicador(Collection<Indicador> param) {
-	    this.indicador = param;
+		this.indicador = param;
 	}
 
 	public Collection<Tablero> getTablero() {
-	    return tablero;
+		return tablero;
 	}
 
 	public void setTablero(Collection<Tablero> param) {
-	    this.tablero = param;
+		this.tablero = param;
 	}
 
 }

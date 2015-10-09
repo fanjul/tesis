@@ -20,8 +20,10 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DragEvent;
@@ -32,6 +34,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.util.converter.DoubleStringConverter;
+import javafx.util.converter.IntegerStringConverter;
 
 public class ValorIndicadorGUI extends TableView<ValorIndicador>implements AbstractBaseDeDatosGUI {
 
@@ -54,6 +58,7 @@ public class ValorIndicadorGUI extends TableView<ValorIndicador>implements Abstr
 	@SuppressWarnings({ "unchecked" })
 	public void mostrarTabla() {
 		tablaValorIndicador = new TableView<ValorIndicador>();
+		tablaValorIndicador.setEditable(true);
 
 		columnaIdIndicador = new TableColumn<ValorIndicador, Integer>("Id Indicador");
 		columnaIdIndicador.setCellValueFactory(new PropertyValueFactory<ValorIndicador, Integer>("idIndicador"));
@@ -63,18 +68,91 @@ public class ValorIndicadorGUI extends TableView<ValorIndicador>implements Abstr
 
 		columnaValor = new TableColumn<ValorIndicador, Double>("Valor");
 		columnaValor.setCellValueFactory(new PropertyValueFactory<ValorIndicador, Double>("valor"));
+		columnaValor.setCellFactory(
+				TextFieldTableCell.<ValorIndicador, Double> forTableColumn(new DoubleStringConverter()));
+		columnaValor.setOnEditCommit(new EventHandler<CellEditEvent<ValorIndicador, Double>>() {
+			@Override
+			public void handle(CellEditEvent<ValorIndicador, Double> t) {
+				ValorIndicador valorIndicador = new ValorIndicador();
+				valorIndicador = (ValorIndicador) t.getTableView().getItems().get(t.getTablePosition().getRow());
+
+				valorIndicador.setValor(t.getNewValue());
+				ValorIndicadorDAO valorIndicadorDAO = new ValorIndicadorDAO();
+				valorIndicadorDAO.actualizar(valorIndicador);
+
+			}
+
+		});
 
 		columnaEstado = new TableColumn<ValorIndicador, String>("Estado");
 		columnaEstado.setCellValueFactory(new PropertyValueFactory<ValorIndicador, String>("estado"));
+		columnaEstado.setCellFactory(TextFieldTableCell.forTableColumn());
+		columnaEstado.setOnEditCommit(new EventHandler<CellEditEvent<ValorIndicador, String>>() {
+			@Override
+			public void handle(CellEditEvent<ValorIndicador, String> t) {
+				ValorIndicador valorIndicador = new ValorIndicador();
+				valorIndicador = (ValorIndicador) t.getTableView().getItems().get(t.getTablePosition().getRow());
+
+				valorIndicador.setEstado(t.getNewValue());
+				ValorIndicadorDAO valorIndicadorDAO = new ValorIndicadorDAO();
+				valorIndicadorDAO.actualizar(valorIndicador);
+
+			}
+
+		});
 
 		columnaVariacion = new TableColumn<ValorIndicador, Double>("Variacion");
 		columnaVariacion.setCellValueFactory(new PropertyValueFactory<ValorIndicador, Double>("variacion"));
+		columnaVariacion.setCellFactory(
+				TextFieldTableCell.<ValorIndicador, Double> forTableColumn(new DoubleStringConverter()));
+		columnaVariacion.setOnEditCommit(new EventHandler<CellEditEvent<ValorIndicador, Double>>() {
+			@Override
+			public void handle(CellEditEvent<ValorIndicador, Double> t) {
+				ValorIndicador valorIndicador = new ValorIndicador();
+				valorIndicador = (ValorIndicador) t.getTableView().getItems().get(t.getTablePosition().getRow());
+
+				valorIndicador.setVariacion(t.getNewValue());
+				ValorIndicadorDAO valorIndicadorDAO = new ValorIndicadorDAO();
+				valorIndicadorDAO.actualizar(valorIndicador);
+
+			}
+
+		});
 
 		columnaSignoVariacion = new TableColumn<ValorIndicador, Integer>("Signo Variacion");
 		columnaSignoVariacion.setCellValueFactory(new PropertyValueFactory<ValorIndicador, Integer>("signoVariacion"));
+		columnaSignoVariacion.setCellFactory(
+				TextFieldTableCell.<ValorIndicador, Integer> forTableColumn(new IntegerStringConverter()));
+		columnaSignoVariacion.setOnEditCommit(new EventHandler<CellEditEvent<ValorIndicador, Integer>>() {
+			@Override
+			public void handle(CellEditEvent<ValorIndicador, Integer> t) {
+				ValorIndicador valorIndicador = new ValorIndicador();
+				valorIndicador = (ValorIndicador) t.getTableView().getItems().get(t.getTablePosition().getRow());
+
+				valorIndicador.setSignoVariacion(t.getNewValue());
+				ValorIndicadorDAO valorIndicadorDAO = new ValorIndicadorDAO();
+				valorIndicadorDAO.actualizar(valorIndicador);
+
+			}
+
+		});
 
 		columnaObservaciones = new TableColumn<ValorIndicador, String>("Observaciones");
 		columnaObservaciones.setCellValueFactory(new PropertyValueFactory<ValorIndicador, String>("observaciones"));
+		columnaObservaciones.setCellFactory(TextFieldTableCell.forTableColumn());
+		columnaObservaciones.setOnEditCommit(new EventHandler<CellEditEvent<ValorIndicador, String>>() {
+			@Override
+			public void handle(CellEditEvent<ValorIndicador, String> t) {
+				ValorIndicador valorIndicador = new ValorIndicador();
+				valorIndicador = (ValorIndicador) t.getTableView().getItems().get(t.getTablePosition().getRow());
+
+				valorIndicador.setObservaciones(t.getNewValue());
+				ValorIndicadorDAO valorIndicadorDAO = new ValorIndicadorDAO();
+				valorIndicadorDAO.actualizar(valorIndicador);
+
+			}
+
+		});
 
 		tablaValorIndicador.getColumns().addAll(columnaIdIndicador, columnaFecha, columnaValor, columnaEstado,
 				columnaVariacion, columnaSignoVariacion, columnaObservaciones);
@@ -272,8 +350,7 @@ public class ValorIndicadorGUI extends TableView<ValorIndicador>implements Abstr
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public void mostrarTabla(Object consulta, FactoryConsultas factoryConsultasDAO,
-			AnchorPane centroTabla) {
+	public void mostrarTabla(Object consulta, FactoryConsultas factoryConsultasDAO, AnchorPane centroTabla) {
 
 		this.setData(FXCollections.observableArrayList());
 		if (!centroTabla.getChildren().isEmpty()) {
@@ -290,7 +367,7 @@ public class ValorIndicadorGUI extends TableView<ValorIndicador>implements Abstr
 		tablaValorIndicador.setMaxSize(centroTabla.getMaxWidth(), centroTabla.getMaxHeight());
 		tablaValorIndicador.setMinSize(centroTabla.getMinWidth(), centroTabla.getMinHeight());
 		centroTabla.getChildren().add(0, this.getTablaValorIndicador());
-		
+
 	}
 
 	public void nuevaStage(Runnable callback) {

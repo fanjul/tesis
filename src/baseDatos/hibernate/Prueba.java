@@ -55,20 +55,26 @@ public class Prueba {
 		grafico.setObservaciones("asd");
 		graficoDao.guardar(grafico);
 		
-		indicador.setCodigo("asd");
-		indicador.setId(1);
-		indicador.setGrafico(grafico);
-		indicador2.setCodigo("asdf2");
-		indicador2.setId(5);
-		
-		indicadorDao.guardar(indicador);
-		indicadorDao.guardar(indicador2);
-
-
-//		estados.setIdTipoIndicador(4);
-//		estados.setIdEstado(3);
+		grafico.setId(2);
+		graficoDao.actualizar(grafico);
 //		
-//		estadosDao.guardar(estados);
+//		indicador.setCodigo("asd");
+//		indicador.setId(1);
+//		indicador.setGrafico(grafico);
+//		indicador2.setCodigo("asdf2");
+//		indicador2.setId(5);
+//		
+//		indicadorDao.guardar(indicador);
+//		indicadorDao.guardar(indicador2);
+
+//		tipoIndicador.setId(2);
+//		tipoIndicador.setObservaciones("el corvi no entiende nada. Fanjul menos... Guille Z");
+//		tipoIndicador.setTipo("De la vida");
+//		tipoIndicadorDao.guardar(tipoIndicador);
+//
+//		estados.setIdEstado(2);
+//		estados.setIdTipoIndicador(2);
+//	estadosDao.guardar(estados);
 //
 //		
 	//	umbral.setFinUmbral(new Timestamp(0));
@@ -101,9 +107,7 @@ public class Prueba {
 //
 //		persona.setApellido("Corvi");
 //
-//		tipoIndicador.setId(2);
-//		tipoIndicador.setObservaciones("el corvi no entiende nada. Fanjul menos... Guille Z");
-//		tipoIndicador.setTipo("De la vida");
+
 //
 //		
 //
@@ -129,7 +133,7 @@ public class Prueba {
 
 		//ELIMINAR
 //		estadosDao.eliminar(estados);
-		graficoDao.eliminar(grafico);
+//		graficoDao.eliminar(grafico);
 //		hstDao.eliminar(hst);	
 //		indicadorDao.eliminar(indicador);
 //		personaDao.eliminar(persona);

@@ -35,14 +35,13 @@ public class UmbralesXEstadosXIndicador implements Serializable {
 	private Double valorUmbralSuperior;
 	private Double valorUmbralInferior;
 	private String observaciones;
-	@ManyToOne(fetch=FetchType.LAZY)
-	@Id
-	@JoinColumn(name = "idIndicador", referencedColumnName = "id",insertable = false, updatable = false, nullable = false)
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "idIndicador", referencedColumnName = "id", insertable = false, updatable = false, nullable = false)
 	private Indicador indicador;
-	@ManyToOne(fetch=FetchType.LAZY)
-	@Id
-	@JoinColumn(name = "idEstadoTipoIndicador", referencedColumnName = "id",insertable = false, updatable = false, nullable = false)
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "idEstadoTipoIndicador", referencedColumnName = "id", insertable = false, updatable = false, nullable = false)
 	private TipoIndicador tipoIndicador;
+
 	public Integer getIdIndicador() {
 		return idIndicador;
 	}
@@ -116,19 +115,19 @@ public class UmbralesXEstadosXIndicador implements Serializable {
 	}
 
 	public Indicador getIndicador() {
-	    return indicador;
+		return indicador;
 	}
 
 	public void setIndicador(Indicador param) {
-	    this.indicador = param;
+		this.indicador = param;
 	}
 
 	public TipoIndicador getTipoIndicador() {
-	    return tipoIndicador;
+		return tipoIndicador;
 	}
 
 	public void setTipoIndicador(TipoIndicador param) {
-	    this.tipoIndicador = param;
+		this.tipoIndicador = param;
 	}
 
 }

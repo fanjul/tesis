@@ -30,9 +30,9 @@ public class EstadosXTipoIndicador implements Serializable {
 	private String estado;
 	private String observaciones;
 	@ManyToOne(fetch = FetchType.LAZY)
-	@Id
 	@JoinColumn(name = "idTipoIndicador", referencedColumnName = "id", insertable = false, updatable = false, nullable = false)
 	private TipoIndicador tipoIndicador;
+
 	public Integer getIdTipoIndicador() {
 		return idTipoIndicador;
 	}
@@ -74,11 +74,11 @@ public class EstadosXTipoIndicador implements Serializable {
 	}
 
 	public TipoIndicador getTipoIndicador() {
-	    return tipoIndicador;
+		return tipoIndicador;
 	}
 
 	public void setTipoIndicador(TipoIndicador param) {
-	    this.tipoIndicador = param;
+		this.tipoIndicador = param;
 	}
 
 }

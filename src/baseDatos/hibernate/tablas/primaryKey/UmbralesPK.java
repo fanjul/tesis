@@ -2,8 +2,6 @@ package baseDatos.hibernate.tablas.primaryKey;
 
 import java.io.Serializable;
 
-import javax.persistence.Basic;
-
 import baseDatos.hibernate.tablas.UmbralesXEstadosXIndicador;
 
 public class UmbralesPK implements Serializable {
@@ -11,10 +9,7 @@ public class UmbralesPK implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Integer idIndicador;
 	private Integer idEstadoTipoIndicador;
-	@Basic
-	private Integer indicador;
-	@Basic
-	private Integer tipoIndicador;
+
 	public Integer getIdIndicador() {
 		return idIndicador;
 	}
@@ -41,22 +36,6 @@ public class UmbralesPK implements Serializable {
 	@Override
 	public int hashCode() {
 		return super.hashCode();
-	}
-
-	public Integer getIndicador() {
-	    return indicador;
-	}
-
-	public void setIndicador(Integer param) {
-	    this.indicador = param;
-	}
-
-	public Integer getTipoIndicador() {
-	    return tipoIndicador;
-	}
-
-	public void setTipoIndicador(Integer param) {
-	    this.tipoIndicador = param;
 	}
 
 }

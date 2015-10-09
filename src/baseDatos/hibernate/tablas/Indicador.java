@@ -38,7 +38,7 @@ public class Indicador implements Serializable {
 	private Integer idTipoIndicador;
 	private String observaciones;
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "idTipoIndicador", referencedColumnName = "id",insertable = false, updatable = false, nullable = false)
+	@JoinColumn(name = "idTipoIndicador", referencedColumnName = "id", insertable = false, updatable = false, nullable = false)
 	private TipoIndicador tipoIndicador;
 	@OneToMany(mappedBy = "indicador")
 	private Collection<UmbralesXEstadosXIndicador> umbralesXEstadosXIndicador;
@@ -57,6 +57,7 @@ public class Indicador implements Serializable {
 	private Grafico grafico;
 	@OneToMany(mappedBy = "indicador")
 	private Collection<ValorIndicador> valorIndicador;
+
 	public Integer getId() {
 		return id;
 	}
@@ -170,68 +171,67 @@ public class Indicador implements Serializable {
 	}
 
 	public TipoIndicador getTipoIndicador() {
-	    return tipoIndicador;
+		return tipoIndicador;
 	}
 
 	public void setTipoIndicador(TipoIndicador param) {
-	    this.tipoIndicador = param;
+		this.tipoIndicador = param;
 	}
 
 	public Collection<UmbralesXEstadosXIndicador> getUmbralesXEstadosXIndicador() {
-	    return umbralesXEstadosXIndicador;
+		return umbralesXEstadosXIndicador;
 	}
 
 	public void setUmbralesXEstadosXIndicador(Collection<UmbralesXEstadosXIndicador> param) {
-	    this.umbralesXEstadosXIndicador = param;
+		this.umbralesXEstadosXIndicador = param;
 	}
 
 	public Collection<HSTumbralesXEstadosXIndicador> getHSTumbralesXEstadosXIndicador() {
-	    return hSTumbralesXEstadosXIndicador;
+		return hSTumbralesXEstadosXIndicador;
 	}
 
 	public void setHSTumbralesXEstadosXIndicador(Collection<HSTumbralesXEstadosXIndicador> param) {
-	    this.hSTumbralesXEstadosXIndicador = param;
+		this.hSTumbralesXEstadosXIndicador = param;
 	}
 
 	public Collection<Tablero> getTablero() {
-	    return tablero;
+		return tablero;
 	}
 
 	public void setTablero(Collection<Tablero> param) {
-	    this.tablero = param;
+		this.tablero = param;
 	}
 
 	public UnidadesDeMedida getUnidadesDeMedida() {
-	    return unidadesDeMedida;
+		return unidadesDeMedida;
 	}
 
 	public void setUnidadesDeMedida(UnidadesDeMedida param) {
-	    this.unidadesDeMedida = param;
+		this.unidadesDeMedida = param;
 	}
 
 	public Persona getPersona() {
-	    return persona;
+		return persona;
 	}
 
 	public void setPersona(Persona param) {
-	    this.persona = param;
+		this.persona = param;
 	}
 
 	public Grafico getGrafico() {
-	    return grafico;
+		return grafico;
 	}
 
 	public void setGrafico(Grafico param) {
-	    this.grafico = param;
+		this.grafico = param;
 	}
 
 	public Collection<ValorIndicador> getValorIndicador() {
-	    return valorIndicador;
+		return valorIndicador;
 	}
 
 	public void setValorIndicador(Collection<ValorIndicador> param) {
-	    this.valorIndicador = param;
+		this.valorIndicador = param;
 	}
-
 
 }

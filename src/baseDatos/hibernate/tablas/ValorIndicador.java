@@ -33,9 +33,9 @@ public class ValorIndicador implements Serializable {
 	private Integer signoVariacion;
 	private String observaciones;
 	@ManyToOne
-	@Id
 	@JoinColumn(name = "idIndicador", referencedColumnName = "id", insertable = false, updatable = false, nullable = false)
 	private Indicador indicador;
+
 	public Integer getIdIndicador() {
 		return idIndicador;
 	}
@@ -93,11 +93,11 @@ public class ValorIndicador implements Serializable {
 	}
 
 	public Indicador getIndicador() {
-	    return indicador;
+		return indicador;
 	}
 
 	public void setIndicador(Indicador param) {
-	    this.indicador = param;
+		this.indicador = param;
 	}
 
 }
