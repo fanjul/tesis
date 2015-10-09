@@ -6,6 +6,7 @@ import guiFX.BaseDeDatosGUI.GraficoGUI;
 import guiFX.BaseDeDatosGUI.HSTumbralesXEstadosXIndicadorGUI;
 import guiFX.BaseDeDatosGUI.IndicadorGUI;
 import guiFX.BaseDeDatosGUI.PersonaGUI;
+import guiFX.BaseDeDatosGUI.TableroGUI;
 import guiFX.BaseDeDatosGUI.TipoIndicadorGUI;
 import guiFX.BaseDeDatosGUI.UmbralesXEstadosXIndicadorGUI;
 import guiFX.BaseDeDatosGUI.UnidadesDeMedidaGUI;
@@ -33,7 +34,9 @@ public class FactoryBaseDeDatosGUI {
 			return new GraficoGUI();
 		} else if ("EstadosXTipoIndicador".equalsIgnoreCase(tabla)) {
 			return new EstadosXTipoIndicadorGUI();
-		} else
+		} else if ("Tablero".equalsIgnoreCase(tabla)) {
+			return new TableroGUI();
+		} else 
 			return null;
 	}
 }

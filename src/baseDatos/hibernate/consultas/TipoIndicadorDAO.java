@@ -7,6 +7,7 @@ import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.persister.entity.AbstractEntityPersister;
+import org.hibernate.persister.walking.spi.AttributeDefinition;
 
 import baseDatos.hibernate.tablas.TipoIndicador;
 
@@ -73,19 +74,19 @@ public class TipoIndicadorDAO extends DAO {
 			this.iniciaOperacion();
 			AbstractEntityPersister aep = ((AbstractEntityPersister) sesion.getSessionFactory()
 					.getClassMetadata(TipoIndicador.class.getName()));
-			String[] properties = aep.getPropertyNames();
 			List<String> columnNames = new ArrayList<String>();
 			for (String[] arrayS : aep.getContraintOrderedTableKeyColumnClosure()) {
 				columnNames.addAll(Arrays.asList(arrayS));
 
 			}
-
-			for (int nameIndex = 0; nameIndex != properties.length; nameIndex++) {
-				String[] columns = aep.getPropertyColumnNames(nameIndex);
-				for (int columnIndex = 0; columnIndex != columns.length; columnIndex++) {
-					columnNames.add(columns[columnIndex]);
+			
+			for(AttributeDefinition element : aep.getAttributes() ){
+				if(!element.getType().isAssociationType() && !element.getType().isComponentType()){
+					columnNames.add(element.getName());
 				}
+				
 			}
+			
 			return columnNames;
 
 		} catch (HibernateException he) {
