@@ -2,18 +2,15 @@ package cadenaResponsabilidades;
 
 import java.io.File;
 import java.util.Arrays;
-import java.util.List;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.util.Callback;
 
@@ -45,7 +42,7 @@ public class TipoArregloDouble extends TipoObjeto {
 	            tc.setCellValueFactory(new Callback<CellDataFeatures<double[], String>, ObservableValue<String>>() {
 					@Override
 					public ObservableValue<String> call(CellDataFeatures<double[], String> param) {
-						// TODO Auto-generated method stub
+					
 						return  new SimpleStringProperty(Double.toString(param.getValue()[colNo]));
 					}
 	            });

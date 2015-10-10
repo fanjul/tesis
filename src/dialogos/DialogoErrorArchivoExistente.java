@@ -7,7 +7,7 @@ import javafx.scene.image.ImageView;
 public class DialogoErrorArchivoExistente extends Dialogo{
 
 
-	ImageView imagen;
+	private ImageView imagen;
 	private Label label;
 	private Button botonAceptar;
 	

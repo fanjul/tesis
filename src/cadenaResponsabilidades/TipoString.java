@@ -1,18 +1,15 @@
 package cadenaResponsabilidades;
 
 import java.io.File;
-import java.util.Arrays;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.util.Callback;
 
@@ -34,7 +31,7 @@ public class TipoString extends TipoObjeto {
 
 				@Override
 				public ObservableValue<String> call(CellDataFeatures<String, String> p) {
-					// TODO Auto-generated method stub
+					
 					return new SimpleStringProperty(p.getValue());
 				}
 			});

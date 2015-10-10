@@ -1,20 +1,13 @@
 package graficosFX;
 
-import java.util.ArrayList;
-
-import com.mysql.fabric.xmlrpc.base.Array;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.PieChart;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.stage.Stage;
 
 public class GraficoBarras extends Grafico {
 
@@ -25,7 +18,7 @@ public class GraficoBarras extends Grafico {
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public void graficar(TableView tablaResultado) {
-		// TODO Auto-generated method stub
+	
 		super.getVentana().setScene(new Scene(super.getRoot()));
 		CategoryAxis xAxis = new CategoryAxis();
 	

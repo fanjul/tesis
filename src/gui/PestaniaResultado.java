@@ -76,7 +76,7 @@ public class PestaniaResultado extends Pestania {
 				.getResource("/imagenes/comparar.png")));
 		btnCompararResultados.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				// TODO
+		
 			}
 		});
 		GridBagConstraints gbc_btnCompararResultados = new GridBagConstraints();

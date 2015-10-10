@@ -22,11 +22,11 @@ public class DBManager {
 				conexion = DriverManager.getConnection(pManager
 						.getProperty(Parameters.DB_NAME.toString()));
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 			}
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 	}
@@ -51,7 +51,7 @@ public class DBManager {
 			statement = conexion.createStatement();
 			result = statement.executeQuery(query);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 		return result;
@@ -63,7 +63,7 @@ public class DBManager {
 			statement = conexion.createStatement();
 			statement.executeUpdate(updateStatement);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 	}
@@ -74,7 +74,7 @@ public class DBManager {
 			statement = conexion.createStatement();
 			statement.execute(insertStatement);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 	}
@@ -87,7 +87,7 @@ public class DBManager {
 				dbManager = null;
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 	}

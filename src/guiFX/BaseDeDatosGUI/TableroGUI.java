@@ -6,8 +6,14 @@ import java.util.List;
 import java.util.Set;
 
 import baseDatos.hibernate.consultas.FactoryConsultas;
+import baseDatos.hibernate.consultas.IndicadorDAO;
+import baseDatos.hibernate.consultas.PersonaDAO;
 import baseDatos.hibernate.consultas.TableroDAO;
+import baseDatos.hibernate.tablas.Indicador;
+import baseDatos.hibernate.tablas.Persona;
 import baseDatos.hibernate.tablas.Tablero;
+import dialogos.Dialogo;
+import dialogos.DialogoErrorFK;
 import guiFX.PanelDerecho;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -86,11 +92,36 @@ public class TableroGUI extends TableView<Tablero>implements AbstractBaseDeDatos
 				Tablero tablero = new Tablero();
 				tablero = (Tablero) t.getTableView().getItems().get(t.getTablePosition().getRow());
 
-				tablero.setIdIndicador(t.getNewValue());
-				TableroDAO tableroDAO = new TableroDAO();
-				tableroDAO.actualizar(tablero);
+				IndicadorDAO indicador = new IndicadorDAO();
+				List<Indicador> lista = indicador.getTodos();
 
-				// TODO MOSTRAR MENSAJE ERROR SI NO EXITE EL INDICADOR
+				boolean esta = false;
+				int i = 0;
+				while (i < lista.size() && !esta) {
+					if (lista.get(i).getId().equals(t.getNewValue())) {
+						esta = true;
+					}
+					i++;
+				}
+
+				if (!esta) {
+					Dialogo dialogoErrorFK = new DialogoErrorFK("indicador");
+					dialogoErrorFK.crearDialogo();
+					dialogoErrorFK.mostrarDialogo();
+					((DialogoErrorFK) dialogoErrorFK).getBotonAceptar().setOnAction(new EventHandler<ActionEvent>() {
+						@Override
+						public void handle(ActionEvent arg0) {
+							dialogoErrorFK.cerrarDialogo();
+						}
+					});
+
+					t.getTableView().getItems().set(t.getTablePosition().getRow(), tablero);
+
+				} else {
+					tablero.setIdIndicador(t.getNewValue());
+					TableroDAO tableroDAO = new TableroDAO();
+					tableroDAO.actualizar(tablero);
+				}
 
 			}
 
@@ -106,11 +137,34 @@ public class TableroGUI extends TableView<Tablero>implements AbstractBaseDeDatos
 				Tablero tablero = new Tablero();
 				tablero = (Tablero) t.getTableView().getItems().get(t.getTablePosition().getRow());
 
-				tablero.setIdResponsable(t.getNewValue());
-				TableroDAO tableroDAO = new TableroDAO();
-				tableroDAO.actualizar(tablero);
+				List<Persona> lista = new PersonaDAO().getTodos();
+				boolean esta = false;
+				int i = 0;
+				while (i < lista.size() && !esta) {
+					if (lista.get(i).getId().equals(t.getNewValue())) {
+						esta = true;
+					}
+					i++;
+				}
 
-				// TODO MOSTRAR MENSAJE ERROR SI NO EXITE LA PERSONA
+				if (!esta) {
+					Dialogo dialogoErrorFK = new DialogoErrorFK("persona");
+					dialogoErrorFK.crearDialogo();
+					dialogoErrorFK.mostrarDialogo();
+					((DialogoErrorFK) dialogoErrorFK).getBotonAceptar().setOnAction(new EventHandler<ActionEvent>() {
+						@Override
+						public void handle(ActionEvent arg0) {
+							dialogoErrorFK.cerrarDialogo();
+						}
+					});
+
+					t.getTableView().getItems().set(t.getTablePosition().getRow(), tablero);
+
+				} else {
+					tablero.setIdResponsable(t.getNewValue());
+					TableroDAO tableroDAO = new TableroDAO();
+					tableroDAO.actualizar(tablero);
+				}
 
 			}
 
