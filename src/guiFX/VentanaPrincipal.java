@@ -15,6 +15,7 @@ import cadenaResponsabilidades.TipoArregloDouble;
 import cadenaResponsabilidades.TipoObjeto;
 import cadenaResponsabilidades.TipoString;
 import dialogos.Dialogo;
+import dialogos.DialogoDeseaGuardar;
 import dialogos.DialogoEjecutar;
 import dialogos.DialogoErrorArchivoExistente;
 import dialogos.DialogoGuardarArchivo;
@@ -48,7 +49,7 @@ public class VentanaPrincipal extends BorderPane {
 	private VBox panelDerecho;
 	private BorderPane borderPaneMenuOpciones;
 	private HBox hBoxMenuOpcionesVentana;
-	
+
 	private BotonImagen botonCrearNuevoMetodo;
 	private BotonImagen botonEjecutar;
 	private BotonImagen botonGuardar;
@@ -61,8 +62,11 @@ public class VentanaPrincipal extends BorderPane {
 	private ListaBotonesGrafico listaBotonesSuperior;
 	private ListaBotonesGrafico listaBotonesInferior;
 
-	private TableView<String> tablaResultado;
+	// private TextArea areaResultado;
+	@SuppressWarnings("rawtypes")
+	private TableView tablaResultado;
 
+	private String ultimoTextoEnEditor;
 
 	static final String RUTA_METODOS = System.getProperty("user.dir") + "\\" + "Metodos Matematicos";
 	static final String EXTENSION_ARCHIVOS = "met";
@@ -99,23 +103,53 @@ public class VentanaPrincipal extends BorderPane {
 
 		// Configuracion de la parte derecha del borderPane (VentanaPrincipal)
 		barraMenu.inicializarListaMetodosMatematicos(getMetodosMatematicosYaCreados());
-	
-		
+
 		// Para copiar el contenido del archivo en el editor de texto
 		barraMenu.getListaMetodos().getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
 			@Override
 			public void changed(ObservableValue arg0, Object old_val, Object new_val) {
 				if (barraMenu.getListaMetodos().getSelectionModel().getSelectedItem() != null) {
-					((PanelDerecho) panelDerecho).getEditorTexto().setText((String) new_val);
+					if (!botonGuardar.isDisable()) {
+
+						Dialogo dialogoDeseaGuardar = new DialogoDeseaGuardar();
+						dialogoDeseaGuardar.crearDialogo();
+
+						((DialogoDeseaGuardar) dialogoDeseaGuardar).getBotonNo()
+								.setOnAction(new EventHandler<ActionEvent>() {
+							@Override
+							public void handle(ActionEvent arg0) {
+								dialogoDeseaGuardar.cerrarDialogo();
+							}
+						});
+
+						((DialogoDeseaGuardar) dialogoDeseaGuardar).getBotonSi()
+								.setOnAction(new EventHandler<ActionEvent>() {
+							@Override
+							public void handle(ActionEvent arg0) {
+
+								System.out.println("se guardo: " + RUTA_METODOS);
+
+								File carpetaDefecto = new File(RUTA_METODOS);
+								carpetaDefecto.mkdir();
+
+								File archivo = new File(
+										carpetaDefecto.getPath() + "\\" + (String) old_val + "." + EXTENSION_ARCHIVOS);
+
+								guardar(archivo, ultimoTextoEnEditor);
+								dialogoDeseaGuardar.cerrarDialogo();
+							}
+						});
+
+						dialogoDeseaGuardar.mostrarDialogo();
+					}
 					copiarContenidoArchivoEnEditorTexto();
-			
-				System.out.println("aaaaaaaaaaaaaa");
-				
 				}
 			}
 		});
 
 		panelDerecho = PanelDerecho.getInstance();
+
+		ultimoTextoEnEditor = ((PanelDerecho) panelDerecho).getEditorTexto().getText();
 
 		crearGraficoTorta();
 		crearGraficoBarras();
@@ -135,20 +169,13 @@ public class VentanaPrincipal extends BorderPane {
 		((PanelDerecho) panelDerecho).agregarElemento(listaBotonesInferior);
 		panelDerecho.setSpacing(10);
 		this.setRight(panelDerecho);
-		
-		
-		
-		
+
 		hBoxAbajo = new HBox();
 		// Configuracion de la parte de abajo del borderPane (VentanaPrincipal)
 		crearBotonNuevoMetodo();
 		crearBotonEjecutar();
 		crearBotonGuardar();
-		
-		
-		
-	
-		
+
 		hBoxAbajo.getChildren().addAll(/* listaMetodos, */ botonCrearNuevoMetodo, botonGuardar, botonEjecutar);
 		hBoxAbajo.setSpacing(120);
 		hBoxAbajo.setMaxHeight(75);
@@ -157,11 +184,9 @@ public class VentanaPrincipal extends BorderPane {
 		hBoxAbajo.setMinWidth(1365);
 		hBoxAbajo.setAlignment(Pos.CENTER);
 		this.setBottom(hBoxAbajo);
-		
-		
-		
-		
-		///////////////////// Para disablear/enablear el boton ejecutar
+
+		///////////////////// Para disablear/enablear el editor(si no hay nada
+		///////////////////// seleccionado)
 		BooleanBinding bb = new BooleanBinding() {
 			{
 				super.bind(((PanelDerecho) panelDerecho).getEditorTexto().textProperty());
@@ -174,41 +199,10 @@ public class VentanaPrincipal extends BorderPane {
 		};
 		((PanelDerecho) panelDerecho).getEditorTexto().disableProperty().bind(bb);
 		/////////////////////////
-		
-		
 
 	}
 
-	
-	
-	
-	
-	
-	
-	/*private String getContenidoArchivo(File archivo) {
-
-		String contenido = "";
-		try {
-			// TODO arreglar que si no es un txt no se rompa y tirar error nuevo
-			// TODO arreglar, el file tira error porque no existe al guardar uno
-			// nuevo (creo q ya esta)
-
-			FileInputStream fisTargetFile = new FileInputStream(archivo);
-			contenido = IOUtils.toString(fisTargetFile, "UTF-8");
-			
-		} catch (Exception ex) {
-//			ex.printStackTrace();
-//			JOptionPane.showMessageDialog(null, ex.getMessage());
-		} 
-		return contenido;
-
-	}*/
-	
-
-	
-	
-	
-	private String getContenidoArchivo(File archivo){
+	private String getContenidoArchivo(File archivo) {
 		try {
 			return FileUtils.readFileToString(archivo);
 		} catch (IOException e) {
@@ -216,10 +210,9 @@ public class VentanaPrincipal extends BorderPane {
 			e.printStackTrace();
 		}
 		return null;
-		
+
 	}
-	
-	
+
 	private void copiarContenidoArchivoEnEditorTexto() {
 		File archivo;
 		try {
@@ -230,30 +223,22 @@ public class VentanaPrincipal extends BorderPane {
 
 			((PanelDerecho) panelDerecho).getEditorTexto().clear();
 			((PanelDerecho) panelDerecho).getEditorTexto().setText(getContenidoArchivo(archivo));
-			
-			
-			
-			
+
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			JOptionPane.showMessageDialog(null, ex.getMessage());
-		} 
+		}
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+	private boolean cambioEditorRespectoArchivo(File archivo, String contenidoEditor) {
+		return (!contenidoEditor.equals(getContenidoArchivo(archivo)));
+	}
+
 	private void crearBotonGuardar() {
 
 		botonGuardar = new BotonImagen("/imagenesFX/Guardar4.png", "Guardar");
+		botonGuardar.setDisable(true);
 
-		
 		((PanelDerecho) panelDerecho).getEditorTexto().textProperty().addListener(new ChangeListener<String>() {
 			@Override
 			public void changed(final ObservableValue<? extends String> observable, final String oldValue,
@@ -265,16 +250,22 @@ public class VentanaPrincipal extends BorderPane {
 						+ barraMenu.getListaMetodos().getSelectionModel().getSelectedItem().toString() + "."
 						+ EXTENSION_ARCHIVOS);
 
-				if (newValue.equals(getContenidoArchivo(archivo2))) {
+				// if (newValue.equals(getContenidoArchivo(archivo2))) {
+				// botonGuardar.setDisable(true);
+				// } else {
+				// botonGuardar.setDisable(false);
+				// }
+
+				if (!cambioEditorRespectoArchivo(archivo2, newValue)) {
 					botonGuardar.setDisable(true);
 				} else {
 					botonGuardar.setDisable(false);
+					ultimoTextoEnEditor = oldValue;
 				}
+
 			}
 		});
-		
-		
-		
+
 		botonGuardar.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
@@ -285,40 +276,43 @@ public class VentanaPrincipal extends BorderPane {
 				File carpetaDefecto = new File(RUTA_METODOS);
 				carpetaDefecto.mkdir();
 
-				FileWriter fw = null;
-				BufferedWriter bw = null;
-
 				File archivo = new File(carpetaDefecto.getPath() + "\\"
 						+ barraMenu.getListaMetodos().getSelectionModel().getSelectedItem().toString() + "."
 						+ EXTENSION_ARCHIVOS);
-				
-				try {
 
-					fw = new FileWriter(archivo, false);
-					bw = new BufferedWriter(fw);
-
-					if (archivo.exists()) {
-						bw.write("");
-					}
-
-					String texto = ((PanelDerecho) panelDerecho).getEditorTexto().getText();
-					bw.write(texto, 0, texto.length());
-
-					if (bw != null) {
-						bw.close();
-					}
-
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+				guardar(archivo, ((PanelDerecho) panelDerecho).getEditorTexto().getText());
 
 			}
 		});
 
 	}
-	
-	
-	
+
+	private void guardar(File archivo, String texto) {
+		try {
+			FileWriter fw = null;
+			BufferedWriter bw = null;
+
+			fw = new FileWriter(archivo, false);
+			bw = new BufferedWriter(fw);
+
+			if (archivo.exists()) {
+				bw.write("");
+			}
+
+			// String texto = ((PanelDerecho)
+			// panelDerecho).getEditorTexto().getText();
+
+			bw.write(texto, 0, texto.length());
+
+			if (bw != null) {
+				bw.close();
+			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
 	private void seleccionarNuevoMetodo(Dialogo dialogoGuardarMetodo) {
 		String ultimoMetodoCreado = ((DialogoGuardarArchivo) dialogoGuardarMetodo).getTextFieldNombreArchivo()
 				.getText();
@@ -329,11 +323,9 @@ public class VentanaPrincipal extends BorderPane {
 		}
 		barraMenu.getListaMetodos().getSelectionModel().select(pos);
 	}
-	
-	
-	
+
 	private void crearBotonNuevoMetodo() {
-		
+
 		botonCrearNuevoMetodo = new BotonImagen("/imagenesFX/NuevoMetodo.png", "Guardar Metodo");
 
 		botonCrearNuevoMetodo.setOnAction(new EventHandler<ActionEvent>() {
@@ -352,7 +344,8 @@ public class VentanaPrincipal extends BorderPane {
 
 						guardarNuevoMetodoMatematicoLugarPorDefecto(((DialogoGuardarArchivo) dialogoGuardarMetodo));
 
-						// Actualiza el ComboBox con el nuevo Metodo Matematico agregado
+						// Actualiza el ComboBox con el nuevo Metodo Matematico
+						// agregado
 						barraMenu.getListaMetodos().setItems(getMetodosMatematicosYaCreados());
 
 						seleccionarNuevoMetodo(dialogoGuardarMetodo);
@@ -375,8 +368,6 @@ public class VentanaPrincipal extends BorderPane {
 		});
 
 	}
-	
-	
 
 	private void crearBotonEjecutar() {
 		// TODO hacer para que se ejecute cuando aprieta enter
@@ -648,7 +639,6 @@ public class VentanaPrincipal extends BorderPane {
 		return path;
 	}
 
-
 	private ObservableList<String> getMetodosMatematicosYaCreados() {
 		File carpetaDefecto = new File(RUTA_METODOS);
 		ObservableList<String> listaMetodos = FXCollections.observableArrayList();
@@ -693,16 +683,13 @@ public class VentanaPrincipal extends BorderPane {
 						});
 
 			} else {
-				
+
 				System.out.println("se creo archivo.met en: " + RUTA_METODOS);
-				
-				
+
 				String texto = "";
-				
-				
+
 				fw = new FileWriter(archivo, false);
 				bw = new BufferedWriter(fw);
-				
 
 				bw.write(texto, 0, texto.length());
 
