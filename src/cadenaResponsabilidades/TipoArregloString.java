@@ -17,7 +17,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.util.Callback;
 
-public class TipoArregloDouble extends TipoObjeto {
+public class TipoArregloString extends TipoObjeto {
 
 	
 
@@ -30,22 +30,22 @@ public class TipoArregloDouble extends TipoObjeto {
 	@Override
 	public void ejecutarMetodo(Object obj, File archivo, ListView listaMetodos, TextField textFieldNombreFuncion, TableView tablaResultado) {
 		
-		if (obj instanceof double[]) {
+		if (obj instanceof String[]) {
 			
-			double[] arr = null;
+			String[] arr = null;
 			if (!textFieldNombreFuncion.getText().isEmpty()) {
-				arr = (double[]) obj;
+				arr = (String[]) obj;
 			}
 
-			ObservableList<double[]> datos = FXCollections.observableArrayList(); 
-			datos.addAll(Arrays.asList(arr));
+			ObservableList<String[]> datos = FXCollections.observableArrayList(); 
+			datos.add(arr);
 			for (int i = 0; i < arr.length; i++) {
 	            TableColumn tc = new TableColumn(String.valueOf(i));
 	            final int colNo = i;
-	            tc.setCellValueFactory(new Callback<CellDataFeatures<double[], String>, ObservableValue<String>>() {
+	            tc.setCellValueFactory(new Callback<CellDataFeatures<String[], String>, ObservableValue<String>>() {
 					@Override
-					public ObservableValue<String> call(CellDataFeatures<double[], String> param) {
-						return  new SimpleStringProperty(Double.toString(param.getValue()[colNo]));
+					public ObservableValue<String> call(CellDataFeatures<String[], String> param) {
+						return  new SimpleStringProperty(param.getValue()[colNo]);
 					}
 	            });
 	            tc.setPrefWidth(90);
