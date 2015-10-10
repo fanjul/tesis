@@ -22,7 +22,7 @@ public class Tablero implements Serializable {
 	private Integer idIndicador;
 	private Integer idResponsable;
 	private Timestamp fechaUltimaActualizacion;
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "idIndicador", referencedColumnName = "id", insertable = false, updatable = false, nullable = false)
 	private Indicador indicador;
 	@ManyToOne(fetch = FetchType.LAZY)

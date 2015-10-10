@@ -3,7 +3,6 @@ package dialogos;
 import guiFX.EffectUtilities;
 import javafx.application.Platform;
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;

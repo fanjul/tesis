@@ -26,7 +26,7 @@ public class DBIndicador {
 //				result.add(rs.getString("Nombre"));
 //			}
 //		} catch (SQLException e) {
-//			// TODO Auto-generated catch block
+//			
 //			e.printStackTrace();
 //		}
 //		return result.toArray();
@@ -41,7 +41,7 @@ public class DBIndicador {
 				result.add(new Item(rs.getString("Codigo"),rs.getString("Nombre")));
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 		return result.toArray();
@@ -57,7 +57,7 @@ public class DBIndicador {
 			rs.next();
 			result = rs.getInt("Id");
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 		return result;
@@ -73,7 +73,7 @@ public class DBIndicador {
 			rs.next();
 			result = rs.getString("Periodo");
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+		
 			e.printStackTrace();
 		}
 		return result;
@@ -90,7 +90,7 @@ public class DBIndicador {
 			rs.next();
 			result = rs.getInt("Direccion");
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 		return result;

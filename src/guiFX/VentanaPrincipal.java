@@ -62,9 +62,7 @@ public class VentanaPrincipal extends BorderPane {
 	private ListaBotonesGrafico listaBotonesSuperior;
 	private ListaBotonesGrafico listaBotonesInferior;
 
-	// private TextArea areaResultado;
-	@SuppressWarnings("rawtypes")
-	private TableView tablaResultado;
+	private TableView<String> tablaResultado;
 
 	private String ultimoTextoEnEditor;
 
@@ -87,7 +85,7 @@ public class VentanaPrincipal extends BorderPane {
 
 		// areaResultado = new TextArea();
 		// areaResultado.setEditable(false);
-		tablaResultado = new TableView();
+		tablaResultado = new TableView<String>();
 		tablaResultado.setEditable(false);
 
 		// Configuracion de la parte de arriba del borderPane (VentanaPrincipal)
@@ -206,7 +204,6 @@ public class VentanaPrincipal extends BorderPane {
 		try {
 			return FileUtils.readFileToString(archivo);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
@@ -702,7 +699,6 @@ public class VentanaPrincipal extends BorderPane {
 
 							@Override
 							public void handle(ActionEvent arg0) {
-								// TODO Auto-generated method stub
 								dialogoSeGuardoCorrectamente.cerrarDialogo();
 							}
 

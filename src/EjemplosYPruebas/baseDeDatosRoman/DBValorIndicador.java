@@ -36,7 +36,7 @@ public class DBValorIndicador {
 					res.getDate());
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 
@@ -55,7 +55,7 @@ public class DBValorIndicador {
 			result = new LocalDate(res.getYear() + 1900, res.getMonth() + 1,
 					res.getDate());
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 
@@ -76,7 +76,7 @@ public class DBValorIndicador {
 					res.getDate());
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 
@@ -96,7 +96,7 @@ public class DBValorIndicador {
 			result = new LocalDate(res.getYear() + 1900, res.getMonth() + 1,
 					res.getDate());
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 
@@ -120,7 +120,7 @@ public class DBValorIndicador {
 				result.add(entry);
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 		return result;
@@ -152,7 +152,7 @@ public class DBValorIndicador {
 				result.add(entry);
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 		return result;
