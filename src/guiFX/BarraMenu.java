@@ -2,8 +2,8 @@ package guiFX;
 
 import java.util.List;
 
-import baseDatos.hibernate.consultas.DAO;
 import baseDatos.hibernate.consultas.FactoryConsultas;
+import baseDatos.hibernate.consultas.IndicadorDAO;
 import guiFX.BaseDeDatosGUI.AbstractBaseDeDatosGUI;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -115,7 +115,7 @@ public class BarraMenu extends VBox {
 
 		ObservableList<String> data = FXCollections.observableArrayList();
 
-		List<String> listaTodasTablas = new DAO().getAllTables();
+		List<String> listaTodasTablas = new IndicadorDAO().getAllTables(); // VER
 		for (String s : listaTodasTablas) {
 			data.add(s);
 
