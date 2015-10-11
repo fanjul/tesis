@@ -12,6 +12,7 @@ import org.apache.commons.io.FilenameUtils;
 import org.rosuda.JRI.Rengine;
 
 import cadenaResponsabilidades.TipoArregloDouble;
+import cadenaResponsabilidades.TipoArregloString;
 import cadenaResponsabilidades.TipoObjeto;
 import cadenaResponsabilidades.TipoString;
 import dialogos.Dialogo;
@@ -412,6 +413,8 @@ public class VentanaPrincipal extends BorderPane {
 
 						tablaResultado.getColumns().clear();
 
+						
+						
 						TipoObjeto tipoArregloDouble = new TipoArregloDouble();
 						tipoArregloDouble.ejecutarMetodo(
 								re.eval(((DialogoEjecutar) dialogoEjecutar).getTextFieldNombreDondeDevuelve().getText())
@@ -427,7 +430,19 @@ public class VentanaPrincipal extends BorderPane {
 								archivo, barraMenu.getListaMetodos(),
 								((DialogoEjecutar) dialogoEjecutar).getTextFieldNombreDondeDevuelve(),
 								tablaResultado/* areaResultado */);
+						
+						TipoObjeto tipoArregloString = new TipoArregloString();
+						tipoArregloString.ejecutarMetodo(
+								re.eval(((DialogoEjecutar) dialogoEjecutar).getTextFieldNombreDondeDevuelve().getText())
+										.getContent(),
+								archivo, barraMenu.getListaMetodos(),
+								((DialogoEjecutar) dialogoEjecutar).getTextFieldNombreDondeDevuelve(),
+								tablaResultado/* areaResultado */);
+						
+						
+						
 						dialogoEjecutar.cerrarDialogo();
+						
 
 					}
 				});

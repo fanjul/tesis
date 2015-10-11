@@ -15,6 +15,7 @@ import javafx.util.Callback;
 
 public class TipoString extends TipoObjeto {
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public void ejecutarMetodo(Object obj, File archivo, ListView listaMetodos, TextField textFieldNombreFuncion,
 			TableView tablaResultado) {
@@ -26,12 +27,10 @@ public class TipoString extends TipoObjeto {
 			ObservableList<String> datos = FXCollections.observableArrayList();
 			datos.add((String) obj);
 			TableColumn columna = new TableColumn("Imprime");
-			final int colNo = 0;
+			//final int colNo = 0;
 			columna.setCellValueFactory(new Callback<CellDataFeatures<String, String>, ObservableValue<String>>() {
-
 				@Override
 				public ObservableValue<String> call(CellDataFeatures<String, String> p) {
-					
 					return new SimpleStringProperty(p.getValue());
 				}
 			});
