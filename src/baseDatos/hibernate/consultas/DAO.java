@@ -14,7 +14,7 @@ import org.hibernate.persister.entity.AbstractEntityPersister;
 
 import baseDatos.hibernate.configuracion.HibernateUtil;
 
-public class DAO {
+public abstract class DAO {
 	protected Session sesion;
 	protected Transaction tx;
 
@@ -45,5 +45,7 @@ public class DAO {
 	    }
 	    return tableNames;
 	}
+	
+	public abstract List<String> getColumnas();
 	
 }

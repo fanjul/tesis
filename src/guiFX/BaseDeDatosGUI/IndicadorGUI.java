@@ -18,16 +18,12 @@ import baseDatos.hibernate.tablas.TipoIndicador;
 import baseDatos.hibernate.tablas.UnidadesDeMedida;
 import dialogos.Dialogo;
 import dialogos.DialogoErrorFK;
+import dialogos.DialogoSeleccionColumnaBD;
 import guiFX.PanelDerecho;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.Pos;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellEditEvent;
@@ -41,9 +37,6 @@ import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 import javafx.util.converter.IntegerStringConverter;
 
 public class IndicadorGUI extends TableView<Indicador>implements AbstractBaseDeDatosGUI {
@@ -688,7 +681,28 @@ public class IndicadorGUI extends TableView<Indicador>implements AbstractBaseDeD
 	}
 
 	public void nuevaStage(Runnable callback) {
-		Stage nuevoStage = new Stage();
+		
+		Dialogo dialogoColumna = new DialogoSeleccionColumnaBD();
+		((DialogoSeleccionColumnaBD)dialogoColumna).crearDialogo(consulta);
+		dialogoColumna.mostrarDialogo();
+		
+		((DialogoSeleccionColumnaBD) dialogoColumna).getBotonAceptar().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				IndicadorGUI.this.setTexto(((DialogoSeleccionColumnaBD) dialogoColumna).getComboBoxColumna().getValue());
+				callback.run();
+				dialogoColumna.cerrarDialogo();
+			}
+		});
+
+		((DialogoSeleccionColumnaBD) dialogoColumna).getBotonCancelar().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				dialogoColumna.cerrarDialogo();
+			}
+		});
+
+		/*Stage nuevoStage = new Stage();
 
 		HBox ventana = new HBox();
 		Label labelColumna = new Label("Seleccione Columna: ");
@@ -733,7 +747,7 @@ public class IndicadorGUI extends TableView<Indicador>implements AbstractBaseDeD
 
 		nuevoStage.setScene(escena);
 		nuevoStage.show();
-
+*/
 	}
 
 }
