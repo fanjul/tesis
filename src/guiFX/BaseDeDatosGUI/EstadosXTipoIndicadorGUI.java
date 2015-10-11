@@ -7,16 +7,13 @@ import java.util.Set;
 import baseDatos.hibernate.consultas.EstadosXTipoIndicadorDAO;
 import baseDatos.hibernate.consultas.FactoryConsultas;
 import baseDatos.hibernate.tablas.EstadosXTipoIndicador;
+import dialogos.Dialogo;
+import dialogos.DialogoSeleccionColumnaBD;
 import guiFX.PanelDerecho;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.Pos;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellEditEvent;
@@ -30,9 +27,6 @@ import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 
 public class EstadosXTipoIndicadorGUI extends TableView<EstadosXTipoIndicador>implements AbstractBaseDeDatosGUI {
 
@@ -310,50 +304,28 @@ public class EstadosXTipoIndicadorGUI extends TableView<EstadosXTipoIndicador>im
 	}
 
 	public void nuevaStage(Runnable callback) {
-		Stage nuevoStage = new Stage();
+		Dialogo dialogoColumna = new DialogoSeleccionColumnaBD();
+		((DialogoSeleccionColumnaBD) dialogoColumna).crearDialogo(consulta);
+		dialogoColumna.mostrarDialogo();
 
-		HBox ventana = new HBox();
-		Label labelColumna = new Label("Seleccione Columna: ");
-		ComboBox<String> comboColumna = new ComboBox<String>();
-		Button botonAceptar = new Button("Aceptar");
-		Button botonCancelar = new Button("Cancelar");
-		HBox botones = new HBox();
-		VBox todo = new VBox();
+		((DialogoSeleccionColumnaBD) dialogoColumna).getBotonAceptar().addEventHandler(ActionEvent.ACTION,
+				new EventHandler<ActionEvent>() {
+					@Override
+					public void handle(ActionEvent event) {
+						EstadosXTipoIndicadorGUI.this
+								.setTexto(((DialogoSeleccionColumnaBD) dialogoColumna).getComboBoxColumna().getValue());
+						callback.run();
+						dialogoColumna.cerrarDialogo();
+					}
+				});
 
-		botones.setSpacing(50);
-		ventana.getChildren().addAll(labelColumna, comboColumna);
-		ventana.setSpacing(50);
-		ventana.setAlignment(Pos.CENTER);
-
-		ObservableList<String> listaColumnas = FXCollections.observableArrayList();
-		List<String> listaTodasTablas = consulta.getColumnas();
-		for (String s : listaTodasTablas) {
-			listaColumnas.add(s);
-		}
-		comboColumna.setItems(listaColumnas);
-		botonAceptar.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent event) {
-				EstadosXTipoIndicadorGUI.this.setTexto(comboColumna.getValue());
-				callback.run();
-				nuevoStage.close();
-			}
-		});
-
-		botonCancelar.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent event) {
-				nuevoStage.close();
-			}
-		});
-
-		botones.getChildren().addAll(botonAceptar, botonCancelar);
-		todo.getChildren().addAll(ventana, botones);
-		todo.setSpacing(100);
-		Scene escena = new Scene(todo);
-
-		nuevoStage.setScene(escena);
-		nuevoStage.show();
+		((DialogoSeleccionColumnaBD) dialogoColumna).getBotonCancelar().addEventHandler(ActionEvent.ACTION,
+				new EventHandler<ActionEvent>() {
+					@Override
+					public void handle(ActionEvent event) {
+						dialogoColumna.cerrarDialogo();
+					}
+				});
 
 	}
 }

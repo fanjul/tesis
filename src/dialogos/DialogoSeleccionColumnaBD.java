@@ -35,6 +35,7 @@ public class DialogoSeleccionColumnaBD extends Dialogo {
 	
 	@Override
 	public void crearDialogo() {
+		super.getDialogo().setWidth(400);
 		ObservableList<String> listaColumnas = FXCollections.observableArrayList();
 		List<String> listaTodasTablas = consulta.getColumnas();
 		for (String s : listaTodasTablas) {
@@ -43,8 +44,7 @@ public class DialogoSeleccionColumnaBD extends Dialogo {
 		comboBoxColumna.setItems(listaColumnas);
 		
 		super.gethBoxAbajo().getChildren().addAll(botonAceptar,botonCancelar);
-		super.gethBoxArriba().getChildren().addAll(labelColumna,comboBoxColumna);
-		super.getvBoxContenedor().getChildren().addAll(gethBoxArriba(),gethBoxAbajo());
+		super.gethBoxArriba().getChildren().addAll(imagen,labelColumna,comboBoxColumna);
 	}
 
 	public ImageView getImagen() {

@@ -474,6 +474,7 @@ public class IndicadorGUI extends TableView<Indicador>implements AbstractBaseDeD
 	@Override
 	public void crearTablaBaseDeDatos() {
 		this.mostrarTabla();
+
 	}
 
 	@SuppressWarnings("unchecked")
@@ -681,73 +682,30 @@ public class IndicadorGUI extends TableView<Indicador>implements AbstractBaseDeD
 	}
 
 	public void nuevaStage(Runnable callback) {
-		
+
 		Dialogo dialogoColumna = new DialogoSeleccionColumnaBD();
-		((DialogoSeleccionColumnaBD)dialogoColumna).crearDialogo(consulta);
+		((DialogoSeleccionColumnaBD) dialogoColumna).crearDialogo(consulta);
 		dialogoColumna.mostrarDialogo();
-		
-		((DialogoSeleccionColumnaBD) dialogoColumna).getBotonAceptar().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent event) {
-				IndicadorGUI.this.setTexto(((DialogoSeleccionColumnaBD) dialogoColumna).getComboBoxColumna().getValue());
-				callback.run();
-				dialogoColumna.cerrarDialogo();
-			}
-		});
 
-		((DialogoSeleccionColumnaBD) dialogoColumna).getBotonCancelar().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent event) {
-				dialogoColumna.cerrarDialogo();
-			}
-		});
+		((DialogoSeleccionColumnaBD) dialogoColumna).getBotonAceptar().addEventHandler(ActionEvent.ACTION,
+				new EventHandler<ActionEvent>() {
+					@Override
+					public void handle(ActionEvent event) {
+						IndicadorGUI.this
+								.setTexto(((DialogoSeleccionColumnaBD) dialogoColumna).getComboBoxColumna().getValue());
+						callback.run();
+						dialogoColumna.cerrarDialogo();
+					}
+				});
 
-		/*Stage nuevoStage = new Stage();
+		((DialogoSeleccionColumnaBD) dialogoColumna).getBotonCancelar().addEventHandler(ActionEvent.ACTION,
+				new EventHandler<ActionEvent>() {
+					@Override
+					public void handle(ActionEvent event) {
+						dialogoColumna.cerrarDialogo();
+					}
+				});
 
-		HBox ventana = new HBox();
-		Label labelColumna = new Label("Seleccione Columna: ");
-		ComboBox<String> comboColumna = new ComboBox<String>();
-		Button botonAceptar = new Button("Aceptar");
-		Button botonCancelar = new Button("Cancelar");
-		HBox botones = new HBox();
-		VBox todo = new VBox();
-
-		botones.setSpacing(50);
-		ventana.getChildren().addAll(labelColumna, comboColumna);
-		ventana.setSpacing(50);
-		ventana.setAlignment(Pos.CENTER);
-
-		ObservableList<String> listaColumnas = FXCollections.observableArrayList();
-		List<String> listaTodasTablas = consulta.getColumnas();
-		for (String s : listaTodasTablas) {
-			listaColumnas.add(s);
-		}
-		comboColumna.setItems(listaColumnas);
-
-		botonAceptar.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent event) {
-				IndicadorGUI.this.setTexto(comboColumna.getValue());
-				callback.run();
-				nuevoStage.close();
-			}
-		});
-
-		botonCancelar.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent event) {
-				nuevoStage.close();
-			}
-		});
-
-		botones.getChildren().addAll(botonAceptar, botonCancelar);
-		todo.getChildren().addAll(ventana, botones);
-		todo.setSpacing(100);
-		Scene escena = new Scene(todo);
-
-		nuevoStage.setScene(escena);
-		nuevoStage.show();
-*/
 	}
 
 }
