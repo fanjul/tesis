@@ -13,6 +13,7 @@ import org.rosuda.JRI.Rengine;
 
 import cadenaResponsabilidades.TipoArregloDouble;
 import cadenaResponsabilidades.TipoArregloString;
+import cadenaResponsabilidades.TipoMatrizDouble;
 import cadenaResponsabilidades.TipoObjeto;
 import cadenaResponsabilidades.TipoString;
 import dialogos.Dialogo;
@@ -454,6 +455,14 @@ public class VentanaPrincipal extends BorderPane {
 				((DialogoEjecutar) dialogoEjecutar).getTextFieldNombreDondeDevuelve(),
 				tablaResultado/* areaResultado */);
 
+		TipoObjeto tipoMatrizDouble = new TipoMatrizDouble();
+		tipoMatrizDouble.ejecutarMetodo(
+				re.eval(((DialogoEjecutar) dialogoEjecutar).getTextFieldNombreDondeDevuelve().getText())
+						.asMatrix(),
+				archivo, barraMenu.getListaMetodos(),
+				((DialogoEjecutar) dialogoEjecutar).getTextFieldNombreDondeDevuelve(),
+				tablaResultado/* areaResultado */);
+		
 		TipoObjeto tipoString = new TipoString();
 		tipoString.ejecutarMetodo(
 				re.eval(((DialogoEjecutar) dialogoEjecutar).getTextFieldNombreDondeDevuelve().getText())
