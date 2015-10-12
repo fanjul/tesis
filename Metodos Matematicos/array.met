@@ -1,0 +1,2 @@
+e <- c("amarillo","rojo", "verde")
+s <- c("amarillo", "verde", "amarillo", "verde", "amarillo", "rojo", "rojo", "amarillo", "amarillo", "amarillo","rojo", "rojo", "verde", "verde", "verde", "rojo", "amarillo") #VAlORES DE LA BASE DE DATOS
