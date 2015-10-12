@@ -37,6 +37,8 @@ import javafx.geometry.Pos;
 import javafx.scene.control.TableView;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.Tooltip;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -368,7 +370,7 @@ public class VentanaPrincipal extends BorderPane {
 	}
 
 	private void crearBotonEjecutar() {
-		// TODO hacer para que se ejecute cuando aprieta enter
+		
 		botonEjecutar = new BotonImagen("/imagenesFX/Ejecutar1.png", "Ejecutar");
 
 		///////////////////// Para disablear/enablear el boton ejecutar
@@ -397,54 +399,18 @@ public class VentanaPrincipal extends BorderPane {
 
 					@Override
 					public void handle(ActionEvent event) {
-						// TODO se rompe cuando no guardas el metodo porque no
-						// esta en la carpeta defecto
-						File archivo = new File(RUTA_METODOS + "\\"
-								+ barraMenu.getListaMetodos().getSelectionModel().getSelectedItem().toString() + "."
-								+ EXTENSION_ARCHIVOS);
-						// ejecutar(archivo);
-
-						Rengine re = Rengine.getMainEngine();
-						if (re == null)
-							re = new Rengine(new String[] { "--vanilla" }, false, null);
-
-						String dir = agregarCuatroSparadores(archivo.getAbsolutePath());
-						re.eval("source(\"" + dir + "\")");
-
-						tablaResultado.getColumns().clear();
-
-						
-						
-						TipoObjeto tipoArregloDouble = new TipoArregloDouble();
-						tipoArregloDouble.ejecutarMetodo(
-								re.eval(((DialogoEjecutar) dialogoEjecutar).getTextFieldNombreDondeDevuelve().getText())
-										.getContent(),
-								archivo, barraMenu.getListaMetodos(),
-								((DialogoEjecutar) dialogoEjecutar).getTextFieldNombreDondeDevuelve(),
-								tablaResultado/* areaResultado */);
-
-						TipoObjeto tipoString = new TipoString();
-						tipoString.ejecutarMetodo(
-								re.eval(((DialogoEjecutar) dialogoEjecutar).getTextFieldNombreDondeDevuelve().getText())
-										.getContent(),
-								archivo, barraMenu.getListaMetodos(),
-								((DialogoEjecutar) dialogoEjecutar).getTextFieldNombreDondeDevuelve(),
-								tablaResultado/* areaResultado */);
-						
-						TipoObjeto tipoArregloString = new TipoArregloString();
-						tipoArregloString.ejecutarMetodo(
-								re.eval(((DialogoEjecutar) dialogoEjecutar).getTextFieldNombreDondeDevuelve().getText())
-										.getContent(),
-								archivo, barraMenu.getListaMetodos(),
-								((DialogoEjecutar) dialogoEjecutar).getTextFieldNombreDondeDevuelve(),
-								tablaResultado/* areaResultado */);
-						
-						
-						
-						dialogoEjecutar.cerrarDialogo();
-						
-
+						VentanaPrincipal.this.ejecutarR(dialogoEjecutar);
 					}
+				});
+				
+				//evento para cuando se toca enter ejecute
+				((DialogoEjecutar) dialogoEjecutar).getTextFieldNombreDondeDevuelve().setOnKeyPressed(new EventHandler<KeyEvent>() {
+				    @Override
+				    public void handle(KeyEvent keyEvent) {
+				        if (keyEvent.getCode() == KeyCode.ENTER)  {
+							VentanaPrincipal.this.ejecutarR(dialogoEjecutar);
+				        }
+				    }
 				});
 
 				((DialogoEjecutar) dialogoEjecutar).getBotonCancelar().setOnAction(new EventHandler<ActionEvent>() {
@@ -458,6 +424,58 @@ public class VentanaPrincipal extends BorderPane {
 			}
 		});
 
+	}
+	
+	private void ejecutarR(Dialogo dialogoEjecutar){
+
+		// TODO se rompe cuando no guardas el metodo porque no
+		// esta en la carpeta defecto
+		File archivo = new File(RUTA_METODOS + "\\"
+				+ barraMenu.getListaMetodos().getSelectionModel().getSelectedItem().toString() + "."
+				+ EXTENSION_ARCHIVOS);
+		// ejecutar(archivo);
+
+		Rengine re = Rengine.getMainEngine();
+		if (re == null)
+			re = new Rengine(new String[] { "--vanilla" }, false, null);
+
+		String dir = agregarCuatroSparadores(archivo.getAbsolutePath());
+		re.eval("source(\"" + dir + "\")");
+
+		tablaResultado.getColumns().clear();
+
+		
+		
+		TipoObjeto tipoArregloDouble = new TipoArregloDouble();
+		tipoArregloDouble.ejecutarMetodo(
+				re.eval(((DialogoEjecutar) dialogoEjecutar).getTextFieldNombreDondeDevuelve().getText())
+						.getContent(),
+				archivo, barraMenu.getListaMetodos(),
+				((DialogoEjecutar) dialogoEjecutar).getTextFieldNombreDondeDevuelve(),
+				tablaResultado/* areaResultado */);
+
+		TipoObjeto tipoString = new TipoString();
+		tipoString.ejecutarMetodo(
+				re.eval(((DialogoEjecutar) dialogoEjecutar).getTextFieldNombreDondeDevuelve().getText())
+						.getContent(),
+				archivo, barraMenu.getListaMetodos(),
+				((DialogoEjecutar) dialogoEjecutar).getTextFieldNombreDondeDevuelve(),
+				tablaResultado/* areaResultado */);
+		
+		TipoObjeto tipoArregloString = new TipoArregloString();
+		tipoArregloString.ejecutarMetodo(
+				re.eval(((DialogoEjecutar) dialogoEjecutar).getTextFieldNombreDondeDevuelve().getText())
+						.getContent(),
+				archivo, barraMenu.getListaMetodos(),
+				((DialogoEjecutar) dialogoEjecutar).getTextFieldNombreDondeDevuelve(),
+				tablaResultado/* areaResultado */);
+		
+		
+		
+		dialogoEjecutar.cerrarDialogo();
+		
+
+	
 	}
 
 	private void agregarMenuVentana(Stage primaryStage) {
