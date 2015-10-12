@@ -6,12 +6,14 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.stage.WindowEvent;
 
 public class MainFx extends Application {
 	private static final String HERRAMIENTA_TESIS = "HerramientaTesis";
@@ -53,6 +55,14 @@ public class MainFx extends Application {
 			}
 		});
 
+		primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent t) {
+                Platform.exit();
+                System.exit(0);
+            }
+        });
+		
 		cuadroPrincipal.getChildren().add(ventana);
 
 		Scene escenaPrincipal = new Scene(cuadroPrincipal);
