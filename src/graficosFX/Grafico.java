@@ -14,7 +14,7 @@ public abstract class Grafico {
 		root = new Group();
 	}
 
-	public abstract void graficar(TableView tablaResultado);
+	public abstract void graficar(TableView<String> tablaResultado);
 
 	public Stage getVentana() {
 		return ventana;
