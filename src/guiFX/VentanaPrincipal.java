@@ -45,13 +45,14 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 public class VentanaPrincipal extends BorderPane {
 
 	private BarraMenu barraMenu;
 	private HBox hBoxAbajo;
-	private VBox panelDerecho;
+	private PanelDerecho panelDerecho;
 	private BorderPane borderPaneMenuOpciones;
 	private HBox hBoxMenuOpcionesVentana;
 
@@ -78,14 +79,17 @@ public class VentanaPrincipal extends BorderPane {
 	public VentanaPrincipal(Stage primaryStage) {
 		super();
 
+		panelDerecho = PanelDerecho.getInstance();
 		// Configuracion de la parte izquierda del borderPane (VentanaPrincipal)
-		barraMenu = new BarraMenu(this);
+		barraMenu = new BarraMenu(this, panelDerecho, primaryStage);
 		barraMenu.setMaxHeight(543);
 		barraMenu.setMinHeight(543);
 		barraMenu.setMaxWidth(120);
 		barraMenu.setMinWidth(0);
 
 		barraMenu.setSpacing(10);
+		// configuarBotonAbrirArchivo();
+
 		this.setLeft(((BarraMenu) barraMenu).getBarraDeslizable());
 
 		// areaResultado = new TextArea();
@@ -150,9 +154,7 @@ public class VentanaPrincipal extends BorderPane {
 			}
 		});
 
-		panelDerecho = PanelDerecho.getInstance();
-
-		ultimoTextoEnEditor = ((PanelDerecho) panelDerecho).getEditorTexto().getText();
+		ultimoTextoEnEditor = panelDerecho.getEditorTexto().getText();
 
 		crearGraficoTorta();
 		crearGraficoBarras();
@@ -168,8 +170,8 @@ public class VentanaPrincipal extends BorderPane {
 
 		listaBotonesInferior.agregarNodo(tablaResultado/* areaResultado */);
 
-		((PanelDerecho) panelDerecho).agregarElemento(listaBotonesSuperior);
-		((PanelDerecho) panelDerecho).agregarElemento(listaBotonesInferior);
+		panelDerecho.agregarElemento(listaBotonesSuperior);
+		panelDerecho.agregarElemento(listaBotonesInferior);
 		panelDerecho.setSpacing(10);
 		this.setRight(panelDerecho);
 
@@ -192,7 +194,7 @@ public class VentanaPrincipal extends BorderPane {
 		///////////////////// seleccionado)
 		BooleanBinding bb = new BooleanBinding() {
 			{
-				super.bind(((PanelDerecho) panelDerecho).getEditorTexto().textProperty());
+				super.bind(panelDerecho.getEditorTexto().textProperty());
 			}
 
 			@Override
@@ -200,10 +202,54 @@ public class VentanaPrincipal extends BorderPane {
 				return (barraMenu.getListaMetodos().getSelectionModel().isEmpty());
 			}
 		};
-		((PanelDerecho) panelDerecho).getEditorTexto().disableProperty().bind(bb);
+		panelDerecho.getEditorTexto().disableProperty().bind(bb);
 		/////////////////////////
 
 	}
+
+	// private void configuarBotonAbrirArchivo(){
+	//
+	//
+	// barraMenu.getBotonAbrirArchivo().addEventHandler(MouseEvent.MOUSE_CLICKED,
+	// new EventHandler<MouseEvent>() {
+	// @Override
+	// public void handle(MouseEvent event) {
+	// // TODO hacer para que te deje elegir archivo a abrir
+	// // abrirArchivo.onMousePressedProperty();
+	//
+	//
+	// FileChooser fileChooser = new FileChooser();
+	// File file = fileChooser.showOpenDialog(primaryStage);
+	// if(file!=null){
+	// FileReader fr = null;
+	// BufferedReader br = null;
+	// String texto = "";
+	// try {
+	// fr = new FileReader(file);
+	// br = new BufferedReader(fr);
+	// String st = br.readLine();
+	// while (st != null) {
+	// texto = texto + st + "\n";
+	// st = br.readLine();
+	// }
+	// } catch (Exception e) {
+	// textArea.appendText(e.toString());
+	// } finally {
+	// try {
+	// fr.close();
+	// } catch (Exception e2) {
+	// textArea.appendText(e2.toString());
+	// }
+	// }
+	// textArea.appendText(texto);
+	// }
+	//
+	//
+	//
+	//
+	// }
+	// });
+	// }
 
 	private String getContenidoArchivo(File archivo) {
 		try {
@@ -223,8 +269,8 @@ public class VentanaPrincipal extends BorderPane {
 					RUTA_METODOS + "\\" + barraMenu.getListaMetodos().getSelectionModel().getSelectedItem().toString()
 							+ "." + EXTENSION_ARCHIVOS);
 
-			((PanelDerecho) panelDerecho).getEditorTexto().clear();
-			((PanelDerecho) panelDerecho).getEditorTexto().setText(getContenidoArchivo(archivo));
+			panelDerecho.getEditorTexto().clear();
+			panelDerecho.getEditorTexto().setText(getContenidoArchivo(archivo));
 
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -241,7 +287,7 @@ public class VentanaPrincipal extends BorderPane {
 		botonGuardar = new BotonImagen("/imagenesFX/Guardar4.png", "Guardar");
 		botonGuardar.setDisable(true);
 
-		((PanelDerecho) panelDerecho).getEditorTexto().textProperty().addListener(new ChangeListener<String>() {
+		panelDerecho.getEditorTexto().textProperty().addListener(new ChangeListener<String>() {
 			@Override
 			public void changed(final ObservableValue<? extends String> observable, final String oldValue,
 					final String newValue) {
@@ -282,7 +328,7 @@ public class VentanaPrincipal extends BorderPane {
 						+ barraMenu.getListaMetodos().getSelectionModel().getSelectedItem().toString() + "."
 						+ EXTENSION_ARCHIVOS);
 
-				guardar(archivo, ((PanelDerecho) panelDerecho).getEditorTexto().getText());
+				guardar(archivo, panelDerecho.getEditorTexto().getText());
 
 			}
 		});
@@ -378,12 +424,12 @@ public class VentanaPrincipal extends BorderPane {
 		///////////////////// Para disablear/enablear el boton ejecutar
 		BooleanBinding bb = new BooleanBinding() {
 			{
-				super.bind(((PanelDerecho) panelDerecho).getEditorTexto().textProperty());
+				super.bind(panelDerecho.getEditorTexto().textProperty());
 			}
 
 			@Override
 			protected boolean computeValue() {
-				return (((PanelDerecho) panelDerecho).getEditorTexto().getText().isEmpty());
+				return (panelDerecho.getEditorTexto().getText().isEmpty());
 			}
 		};
 		botonEjecutar.disableProperty().bind(bb);
@@ -430,7 +476,7 @@ public class VentanaPrincipal extends BorderPane {
 	}
 
 	private void ejecutarR(Dialogo dialogoEjecutar) {
-		
+
 		// TODO guardar automaticamente cuando entra aca
 		File archivo = new File(
 				RUTA_METODOS + "\\" + barraMenu.getListaMetodos().getSelectionModel().getSelectedItem().toString() + "."
@@ -480,8 +526,7 @@ public class VentanaPrincipal extends BorderPane {
 					archivo, barraMenu.getListaMetodos(),
 					((DialogoEjecutar) dialogoEjecutar).getTextFieldNombreDondeDevuelve(),
 					tablaResultado/* areaResultado */);
-			
-			
+
 		} catch (Exception E) {
 			Dialogo dialogoError = new DialogoErrorDevolucion();
 			dialogoError.crearDialogo();
@@ -492,8 +537,7 @@ public class VentanaPrincipal extends BorderPane {
 					dialogoError.cerrarDialogo();
 				}
 			});
-			
-			
+
 		} finally {
 			dialogoEjecutar.cerrarDialogo();
 		}
