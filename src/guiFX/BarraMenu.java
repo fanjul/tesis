@@ -99,9 +99,9 @@ public class BarraMenu extends VBox {
 				// Show save file dialog
 				File archivo = fileChooser.showOpenDialog(stage);
 				if (archivo != null) {
-					guardarNuevoMetodoMatematicoLugarPorDefecto(archivo.getName());
+					guardarNuevoMetodoMatematicoLugarPorDefecto(archivo.getName().substring(0, archivo.getName().lastIndexOf(".")));
 					actualizarListaMetodos();
-					seleccionarNuevoMetodo(archivo.getName());
+					seleccionarNuevoMetodo(archivo.getName().substring(0, archivo.getName().lastIndexOf(".")));
 
 					copiarContenidoArchivoEnEditorTexto(archivo);
 				}
