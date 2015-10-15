@@ -45,7 +45,8 @@ public class BarraMenu extends VBox {
 
 	private void agregarMenuBaseDeDatos() {
 
-		BotonImagen botonAbrirBaseDatos = new BotonImagen("/imagenesFX/ConectarBaseDatos.png", "Conectar Base de Datos");
+		BotonImagen botonAbrirBaseDatos = new BotonImagen("/imagenesFX/ConectarBaseDatos.png",
+				"Conectar Base de Datos");
 		botonAbrirBaseDatos.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
@@ -62,7 +63,6 @@ public class BarraMenu extends VBox {
 			@Override
 			public void handle(MouseEvent event) {
 				// TODO hacer para que te deje elegir archivo a abrir
-				// abrirArchivo.onMousePressedProperty();
 			}
 		});
 		// Agrego el boton abrir archivo
@@ -79,12 +79,10 @@ public class BarraMenu extends VBox {
 		this.getChildren().add(listaMetodos);
 	}
 
-	// private static void configurarElegirArchivo(final FileChooser
-	// fileChooser) {
-	// fileChooser.setTitle("View Pictures");
-	// fileChooser.setInitialDirectory(new
-	// File(System.getProperty("user.home")));
-	// }
+//	private static void configurarElegirArchivo(final FileChooser fileChooser) {
+//		fileChooser.setTitle("View Pictures");
+//		fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
+//	}
 
 	public ListView<String> getListaMetodos() {
 		return listaMetodos;
@@ -132,7 +130,7 @@ public class BarraMenu extends VBox {
 
 		centroCentro.setMaxWidth(645);
 		centroCentro.setMinWidth(645);
-			
+
 		comboBoxTablas.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
 			@Override
 			public void changed(ObservableValue arg0, Object old_val, Object new_val) {

@@ -431,12 +431,13 @@ public class VentanaPrincipal extends BorderPane {
 
 	private void ejecutarR(Dialogo dialogoEjecutar) {
 		
-		// TODO guardar automaticamente cuando entra aca
 		File archivo = new File(
 				RUTA_METODOS + "\\" + barraMenu.getListaMetodos().getSelectionModel().getSelectedItem().toString() + "."
 						+ EXTENSION_ARCHIVOS);
-		// ejecutar(archivo);
-
+		
+		this.guardar(archivo,((PanelDerecho) panelDerecho).getEditorTexto().getText());
+		
+		//ejecutar archivo
 		Rengine re = Rengine.getMainEngine();
 		if (re == null)
 			re = new Rengine(new String[] { "--vanilla" }, false, null);
@@ -735,8 +736,6 @@ public class VentanaPrincipal extends BorderPane {
 
 			} else {
 
-				System.out.println("se creo archivo.met en: " + RUTA_METODOS);
-
 				String texto = "";
 
 				fw = new FileWriter(archivo, false);
@@ -768,21 +767,5 @@ public class VentanaPrincipal extends BorderPane {
 		}
 
 	}
-
-	/*
-	 * METODO PARA GUARDAR DONDE QUIERA private void
-	 * guardarMetodoMatematicoDondeQuiero(Stage primaryStage) { // TODO agregar
-	 * por defecto la extension del archivo FileChooser fileChooser = new
-	 * FileChooser(); File file = fileChooser.showSaveDialog(primaryStage); if
-	 * (file != null) { FileWriter fw = null; BufferedWriter bw = null; try { //
-	 * EL segundo parametro es un boolean // En true escribe al final // En
-	 * false escribe al inicio fw = new FileWriter(file, false); bw = new
-	 * BufferedWriter(fw);
-	 * 
-	 * String texto = editorTexto.getText(); bw.write(texto, 0, texto.length());
-	 * } catch (Exception e) { editorTexto.appendText(e.toString()); } finally {
-	 * try { bw.close(); } catch (Exception e2) {
-	 * editorTexto.appendText(e2.toString()); } } } }
-	 */
 
 }
