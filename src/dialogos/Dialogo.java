@@ -13,11 +13,11 @@ import javafx.stage.StageStyle;
 
 public abstract class Dialogo {
 
-	private Stage dialogo;
-	private Scene escena; 
-	private VBox vBoxContenedor;
-	private HBox hBoxAbajo;
-	private HBox hBoxArriba ;
+	protected Stage dialogo;
+	protected Scene escena; 
+	protected VBox vBoxContenedor;
+	protected HBox hBoxAbajo;
+	protected HBox hBoxArriba ;
 	
 	public Dialogo(){
 		this.dialogo = new Stage();
