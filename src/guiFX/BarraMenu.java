@@ -4,6 +4,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
@@ -20,7 +21,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.event.EventHandler;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.control.ComboBox;
@@ -32,10 +32,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 import javafx.stage.Stage;
 
 public class BarraMenu extends VBox {
@@ -72,6 +69,7 @@ public class BarraMenu extends VBox {
 	private void agregarMenuBaseDeDatos() {
 
 		botonAbrirBaseDatos = new BotonImagen("/imagenesFX/ConectarBaseDatos.png", "Conectar Base de Datos");
+
 		botonAbrirBaseDatos.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
@@ -87,14 +85,15 @@ public class BarraMenu extends VBox {
 		botonAbrirArchivo.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
-				// TODO hacer para que te deje elegir archivo a abrir
-				// abrirArchivo.onMousePressedProperty();
-
+				
 				FileChooser fileChooser = new FileChooser();
 
 				// Set extension filter
-				FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
-				fileChooser.getExtensionFilters().add(extFilter);
+				List<String> filter = new ArrayList<String>();
+				filter.add( "*.met");
+				filter.add("*.txt");
+				FileChooser.ExtensionFilter fileFilter = new FileChooser.ExtensionFilter("TXT files (*.txt), MET files (*.met) ",filter);
+				fileChooser.getExtensionFilters().add(fileFilter);
 
 				// Show save file dialog
 				File archivo = fileChooser.showOpenDialog(stage);
@@ -230,12 +229,10 @@ public class BarraMenu extends VBox {
 		this.getChildren().add(listaMetodos);
 	}
 
-	// private static void configurarElegirArchivo(final FileChooser
-	// fileChooser) {
-	// fileChooser.setTitle("View Pictures");
-	// fileChooser.setInitialDirectory(new
-	// File(System.getProperty("user.home")));
-	// }
+//	private static void configurarElegirArchivo(final FileChooser fileChooser) {
+//		fileChooser.setTitle("View Pictures");
+//		fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
+//	}
 
 	public ListView<String> getListaMetodos() {
 		return listaMetodos;

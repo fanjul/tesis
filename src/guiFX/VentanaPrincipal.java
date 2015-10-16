@@ -44,8 +44,6 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 public class VentanaPrincipal extends BorderPane {
@@ -206,50 +204,6 @@ public class VentanaPrincipal extends BorderPane {
 		/////////////////////////
 
 	}
-
-	// private void configuarBotonAbrirArchivo(){
-	//
-	//
-	// barraMenu.getBotonAbrirArchivo().addEventHandler(MouseEvent.MOUSE_CLICKED,
-	// new EventHandler<MouseEvent>() {
-	// @Override
-	// public void handle(MouseEvent event) {
-	// // TODO hacer para que te deje elegir archivo a abrir
-	// // abrirArchivo.onMousePressedProperty();
-	//
-	//
-	// FileChooser fileChooser = new FileChooser();
-	// File file = fileChooser.showOpenDialog(primaryStage);
-	// if(file!=null){
-	// FileReader fr = null;
-	// BufferedReader br = null;
-	// String texto = "";
-	// try {
-	// fr = new FileReader(file);
-	// br = new BufferedReader(fr);
-	// String st = br.readLine();
-	// while (st != null) {
-	// texto = texto + st + "\n";
-	// st = br.readLine();
-	// }
-	// } catch (Exception e) {
-	// textArea.appendText(e.toString());
-	// } finally {
-	// try {
-	// fr.close();
-	// } catch (Exception e2) {
-	// textArea.appendText(e2.toString());
-	// }
-	// }
-	// textArea.appendText(texto);
-	// }
-	//
-	//
-	//
-	//
-	// }
-	// });
-	// }
 
 	private String getContenidoArchivo(File archivo) {
 		try {
@@ -477,12 +431,13 @@ public class VentanaPrincipal extends BorderPane {
 
 	private void ejecutarR(Dialogo dialogoEjecutar) {
 
-		// TODO guardar automaticamente cuando entra aca
 		File archivo = new File(
 				RUTA_METODOS + "\\" + barraMenu.getListaMetodos().getSelectionModel().getSelectedItem().toString() + "."
 						+ EXTENSION_ARCHIVOS);
-		// ejecutar(archivo);
 
+		this.guardar(archivo, ((PanelDerecho) panelDerecho).getEditorTexto().getText());
+
+		// ejecutar archivo
 		Rengine re = Rengine.getMainEngine();
 		if (re == null)
 			re = new Rengine(new String[] { "--vanilla" }, false, null);
@@ -779,8 +734,6 @@ public class VentanaPrincipal extends BorderPane {
 
 			} else {
 
-				System.out.println("se creo archivo.met en: " + RUTA_METODOS);
-
 				String texto = "";
 
 				fw = new FileWriter(archivo, false);
@@ -812,21 +765,5 @@ public class VentanaPrincipal extends BorderPane {
 		}
 
 	}
-
-	/*
-	 * METODO PARA GUARDAR DONDE QUIERA private void
-	 * guardarMetodoMatematicoDondeQuiero(Stage primaryStage) { // TODO agregar
-	 * por defecto la extension del archivo FileChooser fileChooser = new
-	 * FileChooser(); File file = fileChooser.showSaveDialog(primaryStage); if
-	 * (file != null) { FileWriter fw = null; BufferedWriter bw = null; try { //
-	 * EL segundo parametro es un boolean // En true escribe al final // En
-	 * false escribe al inicio fw = new FileWriter(file, false); bw = new
-	 * BufferedWriter(fw);
-	 * 
-	 * String texto = editorTexto.getText(); bw.write(texto, 0, texto.length());
-	 * } catch (Exception e) { editorTexto.appendText(e.toString()); } finally {
-	 * try { bw.close(); } catch (Exception e2) {
-	 * editorTexto.appendText(e2.toString()); } } } }
-	 */
 
 }
