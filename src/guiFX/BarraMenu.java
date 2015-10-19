@@ -296,7 +296,7 @@ public class BarraMenu extends VBox {
 		centroSuperior.getChildren().add(comboBoxTablas);
 		centroSuperior.setAlignment(Pos.CENTER);
 
-		// contiene resultado R
+		// contiene nada por ahora
 		centroInferior.setMinHeight(246);
 		centroInferior.setMaxHeight(246);
 		centroInferior.setMinWidth(645);

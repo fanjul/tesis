@@ -5,6 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.DragEvent;
@@ -29,8 +30,9 @@ public class PanelDerecho extends VBox {
 		this.getChildren().add(editorTexto);
 		editorTexto.setMaxHeight(350);
 		editorTexto.setMinHeight(350);
-		editorTexto.setMinWidth(600);
-		editorTexto.setMaxWidth(600);
+		editorTexto.setMinWidth(550);
+		editorTexto.setMaxWidth(550);
+		setAlignment(Pos.CENTER);
 
 	}
 

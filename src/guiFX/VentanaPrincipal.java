@@ -24,9 +24,7 @@ import dialogos.DialogoErrorDevolucion;
 import dialogos.DialogoGuardarArchivo;
 import dialogos.DialogoSeGuardoCorrectamente;
 import graficosFX.Grafico;
-import graficosFX.GraficoArea;
 import graficosFX.GraficoBarras;
-import graficosFX.GraficoLinea;
 import graficosFX.GraficoTorta;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.value.ChangeListener;
@@ -60,8 +58,8 @@ public class VentanaPrincipal extends BorderPane {
 
 	private BotonImagen botonGraficoTorta;
 	private BotonImagen botonGraficoBarras;
-	private BotonImagen botonGraficoLinea;
-	private BotonImagen botonGraficoArea;
+//	private BotonImagen botonGraficoLinea;
+//	private BotonImagen botonGraficoArea;
 
 	private ListaBotonesGrafico listaBotonesSuperior;
 	private ListaBotonesGrafico listaBotonesInferior;
@@ -156,18 +154,19 @@ public class VentanaPrincipal extends BorderPane {
 
 		crearGraficoTorta();
 		crearGraficoBarras();
-		crearGraficoLinea();
-		crearGraficoArea();
+//		crearGraficoLinea();
+//		crearGraficoArea();
 
 		listaBotonesSuperior = new ListaBotonesGrafico();
 		listaBotonesInferior = new ListaBotonesGrafico();
 		listaBotonesSuperior.agregarNodo(botonGraficoTorta);
 		listaBotonesSuperior.agregarNodo(botonGraficoBarras);
-		listaBotonesSuperior.agregarNodo(botonGraficoLinea);
-		listaBotonesSuperior.agregarNodo(botonGraficoArea);
-
+//		listaBotonesSuperior.agregarNodo(botonGraficoLinea);
+//		listaBotonesSuperior.agregarNodo(botonGraficoArea);
+		listaBotonesSuperior.setAlignment(Pos.CENTER);
+		
 		listaBotonesInferior.agregarNodo(tablaResultado/* areaResultado */);
-
+		listaBotonesInferior.setAlignment(Pos.CENTER);
 		panelDerecho.agregarElemento(listaBotonesSuperior);
 		panelDerecho.agregarElemento(listaBotonesInferior);
 		panelDerecho.setSpacing(10);
@@ -616,6 +615,7 @@ public class VentanaPrincipal extends BorderPane {
 		});
 	}
 
+	/*
 	private void crearGraficoLinea() {
 		botonGraficoLinea = new BotonImagen("/imagenesFX/GraficoLinea.png", "Grafico de Linea");
 
@@ -673,6 +673,7 @@ public class VentanaPrincipal extends BorderPane {
 		});
 
 	}
+	*/
 
 	private String agregarCuatroSparadores(String dir) {
 
