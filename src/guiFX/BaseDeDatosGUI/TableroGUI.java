@@ -6,14 +6,9 @@ import java.util.List;
 import java.util.Set;
 
 import baseDatos.hibernate.consultas.FactoryConsultas;
-import baseDatos.hibernate.consultas.IndicadorDAO;
-import baseDatos.hibernate.consultas.PersonaDAO;
 import baseDatos.hibernate.consultas.TableroDAO;
-import baseDatos.hibernate.tablas.Indicador;
-import baseDatos.hibernate.tablas.Persona;
 import baseDatos.hibernate.tablas.Tablero;
 import dialogos.Dialogo;
-import dialogos.DialogoErrorFK;
 import dialogos.DialogoSeleccionColumnaBD;
 import guiFX.PanelDerecho;
 import javafx.collections.FXCollections;
@@ -22,10 +17,8 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DragEvent;
@@ -33,7 +26,6 @@ import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
-import javafx.util.converter.IntegerStringConverter;
 
 public class TableroGUI extends TableView<Tablero>implements AbstractBaseDeDatosGUI {
 
@@ -54,114 +46,18 @@ public class TableroGUI extends TableView<Tablero>implements AbstractBaseDeDatos
 	@SuppressWarnings({ "unchecked" })
 	public void mostrarTabla() {
 		tablaTablero = new TableView<Tablero>();
-		tablaTablero.setEditable(true);
 
 		columnaId = new TableColumn<Tablero, Integer>("Id");
 		columnaId.setCellValueFactory(new PropertyValueFactory<Tablero, Integer>("id"));
 
 		columnaNombre = new TableColumn<Tablero, String>("Nombre");
 		columnaNombre.setCellValueFactory(new PropertyValueFactory<Tablero, String>("nombre"));
-		columnaNombre.setCellFactory(TextFieldTableCell.forTableColumn());
-		columnaNombre.setOnEditCommit(new EventHandler<CellEditEvent<Tablero, String>>() {
-			@Override
-			public void handle(CellEditEvent<Tablero, String> t) {
-				Tablero tablero = new Tablero();
-				tablero = (Tablero) t.getTableView().getItems().get(t.getTablePosition().getRow());
-
-				tablero.setNombre(t.getNewValue());
-				TableroDAO valorIndicadorDAO = new TableroDAO();
-				valorIndicadorDAO.actualizar(tablero);
-
-			}
-		});
 
 		columnaIdIndicador = new TableColumn<Tablero, Integer>("Id Indicador");
 		columnaIdIndicador.setCellValueFactory(new PropertyValueFactory<Tablero, Integer>("idIndicador"));
-		columnaIdIndicador
-				.setCellFactory(TextFieldTableCell.<Tablero, Integer> forTableColumn(new IntegerStringConverter()));
-		columnaIdIndicador.setOnEditCommit(new EventHandler<CellEditEvent<Tablero, Integer>>() {
-			@Override
-			public void handle(CellEditEvent<Tablero, Integer> t) {
-				Tablero tablero = new Tablero();
-				tablero = (Tablero) t.getTableView().getItems().get(t.getTablePosition().getRow());
-
-				IndicadorDAO indicador = new IndicadorDAO();
-				List<Indicador> lista = indicador.getTodos();
-
-				boolean esta = false;
-				int i = 0;
-				while (i < lista.size() && !esta) {
-					if (lista.get(i).getId().equals(t.getNewValue())) {
-						esta = true;
-					}
-					i++;
-				}
-
-				if (!esta) {
-					Dialogo dialogoErrorFK = new DialogoErrorFK("indicador");
-					dialogoErrorFK.crearDialogo();
-					dialogoErrorFK.mostrarDialogo();
-					((DialogoErrorFK) dialogoErrorFK).getBotonAceptar().setOnAction(new EventHandler<ActionEvent>() {
-						@Override
-						public void handle(ActionEvent arg0) {
-							dialogoErrorFK.cerrarDialogo();
-						}
-					});
-
-					t.getTableView().getItems().set(t.getTablePosition().getRow(), tablero);
-
-				} else {
-					tablero.setIdIndicador(t.getNewValue());
-					TableroDAO tableroDAO = new TableroDAO();
-					tableroDAO.actualizar(tablero);
-				}
-
-			}
-
-		});
 
 		columnaIdResponsable = new TableColumn<Tablero, Integer>("Id Responsable");
 		columnaIdResponsable.setCellValueFactory(new PropertyValueFactory<Tablero, Integer>("idResponsable"));
-		columnaIdResponsable
-				.setCellFactory(TextFieldTableCell.<Tablero, Integer> forTableColumn(new IntegerStringConverter()));
-		columnaIdResponsable.setOnEditCommit(new EventHandler<CellEditEvent<Tablero, Integer>>() {
-			@Override
-			public void handle(CellEditEvent<Tablero, Integer> t) {
-				Tablero tablero = new Tablero();
-				tablero = (Tablero) t.getTableView().getItems().get(t.getTablePosition().getRow());
-
-				List<Persona> lista = new PersonaDAO().getTodos();
-				boolean esta = false;
-				int i = 0;
-				while (i < lista.size() && !esta) {
-					if (lista.get(i).getId().equals(t.getNewValue())) {
-						esta = true;
-					}
-					i++;
-				}
-
-				if (!esta) {
-					Dialogo dialogoErrorFK = new DialogoErrorFK("persona");
-					dialogoErrorFK.crearDialogo();
-					dialogoErrorFK.mostrarDialogo();
-					((DialogoErrorFK) dialogoErrorFK).getBotonAceptar().setOnAction(new EventHandler<ActionEvent>() {
-						@Override
-						public void handle(ActionEvent arg0) {
-							dialogoErrorFK.cerrarDialogo();
-						}
-					});
-
-					t.getTableView().getItems().set(t.getTablePosition().getRow(), tablero);
-
-				} else {
-					tablero.setIdResponsable(t.getNewValue());
-					TableroDAO tableroDAO = new TableroDAO();
-					tableroDAO.actualizar(tablero);
-				}
-
-			}
-
-		});
 
 		columnaFechaUltimaActualizacion = new TableColumn<Tablero, Timestamp>("Fecha Ultima Actualizacion");
 		columnaFechaUltimaActualizacion

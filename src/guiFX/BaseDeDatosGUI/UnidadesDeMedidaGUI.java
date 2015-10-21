@@ -16,10 +16,8 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DragEvent;
@@ -45,43 +43,16 @@ public class UnidadesDeMedidaGUI extends TableView<UnidadesDeMedida>implements A
 	@SuppressWarnings("unchecked")
 	public void mostrarTabla() {
 		tablaUnidadesdDeMedida = new TableView<UnidadesDeMedida>();
-		tablaUnidadesdDeMedida.setEditable(true);
+
 		columnaId = new TableColumn<UnidadesDeMedida, Integer>("Id");
 		columnaId.setCellValueFactory(new PropertyValueFactory<UnidadesDeMedida, Integer>("id"));
 
 		columnaUnidadDeMedida = new TableColumn<UnidadesDeMedida, String>("Unidad de Medida");
 		columnaUnidadDeMedida.setCellValueFactory(new PropertyValueFactory<UnidadesDeMedida, String>("unidadDeMedida"));
-		columnaUnidadDeMedida.setCellFactory(TextFieldTableCell.forTableColumn());
-		columnaUnidadDeMedida.setOnEditCommit(new EventHandler<CellEditEvent<UnidadesDeMedida, String>>() {
-			@Override
-			public void handle(CellEditEvent<UnidadesDeMedida, String> t) {
-				UnidadesDeMedida unidadesDeMedida = new UnidadesDeMedida();
-				unidadesDeMedida = (UnidadesDeMedida) t.getTableView().getItems().get(t.getTablePosition().getRow());
-
-				unidadesDeMedida.setUnidadDeMedida(t.getNewValue());
-				UnidadesDeMedidaDAO unidadesDeMedidaDAO = new UnidadesDeMedidaDAO();
-				unidadesDeMedidaDAO.actualizar(unidadesDeMedida);
-
-			}
-
-		});
-
+		
 		columnaObservaciones = new TableColumn<UnidadesDeMedida, String>("Observaciones");
 		columnaObservaciones.setCellValueFactory(new PropertyValueFactory<UnidadesDeMedida, String>("observaciones"));
-		columnaObservaciones.setCellFactory(TextFieldTableCell.forTableColumn());
-		columnaObservaciones.setOnEditCommit(new EventHandler<CellEditEvent<UnidadesDeMedida, String>>() {
-			@Override
-			public void handle(CellEditEvent<UnidadesDeMedida, String> t) {
-				UnidadesDeMedida unidadesDeMedida = new UnidadesDeMedida();
-				unidadesDeMedida = (UnidadesDeMedida) t.getTableView().getItems().get(t.getTablePosition().getRow());
-
-				unidadesDeMedida.setObservaciones(t.getNewValue());
-				UnidadesDeMedidaDAO unidadesDeMedidaDAO = new UnidadesDeMedidaDAO();
-				unidadesDeMedidaDAO.actualizar(unidadesDeMedida);
-
-			}
-
-		});
+		
 		tablaUnidadesdDeMedida.getColumns().addAll(columnaId, columnaUnidadDeMedida, columnaObservaciones);
 
 		tablaUnidadesdDeMedida.getStyleClass().add("tablas");

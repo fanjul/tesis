@@ -16,10 +16,8 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DragEvent;
@@ -52,37 +50,10 @@ public class GraficoGUI extends TableView<Grafico>implements AbstractBaseDeDatos
 
 		columnaTipoGrafico = new TableColumn<Grafico, String>("Tipo Grafico");
 		columnaTipoGrafico.setCellValueFactory(new PropertyValueFactory<Grafico, String>("tipoGrafico"));
-		columnaTipoGrafico.setCellFactory(TextFieldTableCell.forTableColumn());
-		columnaTipoGrafico.setOnEditCommit(new EventHandler<CellEditEvent<Grafico, String>>() {
-			@Override
-			public void handle(CellEditEvent<Grafico, String> t) {
-				Grafico grafico = new Grafico();
-				grafico = (Grafico) t.getTableView().getItems().get(t.getTablePosition().getRow());
-
-				grafico.setTipoGrafico(t.getNewValue());
-				GraficoDAO graficoDAO = new GraficoDAO();
-				graficoDAO.actualizar(grafico);
-
-			}
-
-		});
+		
 		columnaObservaciones = new TableColumn<Grafico, String>("Observaciones");
 		columnaObservaciones.setCellValueFactory(new PropertyValueFactory<Grafico, String>("observaciones"));
-		columnaObservaciones.setCellFactory(TextFieldTableCell.forTableColumn());
-		columnaObservaciones.setOnEditCommit(new EventHandler<CellEditEvent<Grafico, String>>() {
-			@Override
-			public void handle(CellEditEvent<Grafico, String> t) {
-				Grafico grafico = new Grafico();
-				grafico = (Grafico) t.getTableView().getItems().get(t.getTablePosition().getRow());
-
-				grafico.setObservaciones(t.getNewValue());
-				GraficoDAO graficoDAO = new GraficoDAO();
-				graficoDAO.actualizar(grafico);
-
-			}
-
-		});
-
+		
 		tablaGrafico.getColumns().addAll(columnaId, columnaTipoGrafico, columnaObservaciones);
 
 		tablaGrafico.getStyleClass().add("tablas");

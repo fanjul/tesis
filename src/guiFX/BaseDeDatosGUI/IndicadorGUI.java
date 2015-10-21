@@ -6,18 +6,9 @@ import java.util.List;
 import java.util.Set;
 
 import baseDatos.hibernate.consultas.FactoryConsultas;
-import baseDatos.hibernate.consultas.GraficoDAO;
 import baseDatos.hibernate.consultas.IndicadorDAO;
-import baseDatos.hibernate.consultas.PersonaDAO;
-import baseDatos.hibernate.consultas.TipoIndicadorDAO;
-import baseDatos.hibernate.consultas.UnidadesDeMedidaDAO;
-import baseDatos.hibernate.tablas.Grafico;
 import baseDatos.hibernate.tablas.Indicador;
-import baseDatos.hibernate.tablas.Persona;
-import baseDatos.hibernate.tablas.TipoIndicador;
-import baseDatos.hibernate.tablas.UnidadesDeMedida;
 import dialogos.Dialogo;
-import dialogos.DialogoErrorFK;
 import dialogos.DialogoSeleccionColumnaBD;
 import guiFX.PanelDerecho;
 import javafx.collections.FXCollections;
@@ -26,10 +17,8 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DragEvent;
@@ -37,7 +26,6 @@ import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
-import javafx.util.converter.IntegerStringConverter;
 
 public class IndicadorGUI extends TableView<Indicador>implements AbstractBaseDeDatosGUI {
 
@@ -75,316 +63,43 @@ public class IndicadorGUI extends TableView<Indicador>implements AbstractBaseDeD
 
 		columnaCodigo = new TableColumn<Indicador, String>("Codigo");
 		columnaCodigo.setCellValueFactory(new PropertyValueFactory<Indicador, String>("codigo"));
-		columnaCodigo.setCellFactory(TextFieldTableCell.forTableColumn());
-		columnaCodigo.setOnEditCommit(new EventHandler<CellEditEvent<Indicador, String>>() {
-			@Override
-			public void handle(CellEditEvent<Indicador, String> t) {
-				Indicador indicador = new Indicador();
-				indicador = (Indicador) t.getTableView().getItems().get(t.getTablePosition().getRow());
-
-				indicador.setCodigo(t.getNewValue());
-				IndicadorDAO indicadorDAO = new IndicadorDAO();
-				indicadorDAO.actualizar(indicador);
-
-			}
-
-		});
-
+	
 		columnaNombre = new TableColumn<Indicador, String>("Nombre");
 		columnaNombre.setCellValueFactory(new PropertyValueFactory<Indicador, String>("nombre"));
-		columnaNombre.setCellFactory(TextFieldTableCell.forTableColumn());
-		columnaNombre.setOnEditCommit(new EventHandler<CellEditEvent<Indicador, String>>() {
-			@Override
-			public void handle(CellEditEvent<Indicador, String> t) {
-				Indicador indicador = new Indicador();
-				indicador = (Indicador) t.getTableView().getItems().get(t.getTablePosition().getRow());
-
-				indicador.setNombre(t.getNewValue());
-				IndicadorDAO indicadorDAO = new IndicadorDAO();
-				indicadorDAO.actualizar(indicador);
-
-			}
-
-		});
-
+	
 		columnaIdGrafico = new TableColumn<Indicador, Integer>("Id Grafico");
-		columnaIdGrafico.setCellValueFactory(new PropertyValueFactory<Indicador, Integer>("idGrafico"));
-		columnaIdGrafico
-				.setCellFactory(TextFieldTableCell.<Indicador, Integer> forTableColumn(new IntegerStringConverter()));
-		columnaIdGrafico.setOnEditCommit(new EventHandler<CellEditEvent<Indicador, Integer>>() {
-			@Override
-			public void handle(CellEditEvent<Indicador, Integer> t) {
-				Indicador indicador = new Indicador();
-				indicador = (Indicador) t.getTableView().getItems().get(t.getTablePosition().getRow());
-
-				List<Grafico> lista = new GraficoDAO().getTodos();
-				boolean esta = false;
-				int i = 0;
-				while (i < lista.size() && !esta) {
-					if (lista.get(i).getId().equals(t.getNewValue())) {
-						esta = true;
-					}
-					i++;
-				}
-
-				if (!esta) {
-					Dialogo dialogoErrorFK = new DialogoErrorFK("grafico");
-					dialogoErrorFK.crearDialogo();
-					dialogoErrorFK.mostrarDialogo();
-					((DialogoErrorFK) dialogoErrorFK).getBotonAceptar().setOnAction(new EventHandler<ActionEvent>() {
-						@Override
-						public void handle(ActionEvent arg0) {
-							dialogoErrorFK.cerrarDialogo();
-						}
-					});
-
-					t.getTableView().getItems().set(t.getTablePosition().getRow(), indicador);
-
-				} else {
-
-					indicador.setIdGrafico(t.getNewValue());
-					IndicadorDAO indicadorDAO = new IndicadorDAO();
-					indicadorDAO.actualizar(indicador);
-				}
-			}
-
-		});
-
+	
 		columnaIdUnidadDeMedida = new TableColumn<Indicador, Integer>("Id Unidad de Medida");
 		columnaIdUnidadDeMedida.setCellValueFactory(new PropertyValueFactory<Indicador, Integer>("idUnidadDeMedida"));
-		columnaIdUnidadDeMedida
-				.setCellFactory(TextFieldTableCell.<Indicador, Integer> forTableColumn(new IntegerStringConverter()));
-		columnaIdUnidadDeMedida.setOnEditCommit(new EventHandler<CellEditEvent<Indicador, Integer>>() {
-			@Override
-			public void handle(CellEditEvent<Indicador, Integer> t) {
-				Indicador indicador = new Indicador();
-				indicador = (Indicador) t.getTableView().getItems().get(t.getTablePosition().getRow());
-
-				List<UnidadesDeMedida> lista = new UnidadesDeMedidaDAO().getTodos();
-				boolean esta = false;
-				int i = 0;
-				while (i < lista.size() && !esta) {
-					if (lista.get(i).getId().equals(t.getNewValue())) {
-						esta = true;
-					}
-					i++;
-				}
-
-				if (!esta) {
-					Dialogo dialogoErrorFK = new DialogoErrorFK("unidad de medida");
-					dialogoErrorFK.crearDialogo();
-					dialogoErrorFK.mostrarDialogo();
-					((DialogoErrorFK) dialogoErrorFK).getBotonAceptar().setOnAction(new EventHandler<ActionEvent>() {
-						@Override
-						public void handle(ActionEvent arg0) {
-							dialogoErrorFK.cerrarDialogo();
-						}
-					});
-
-					t.getTableView().getItems().set(t.getTablePosition().getRow(), indicador);
-
-				} else {
-
-					indicador.setIdUnidadDeMedida(t.getNewValue());
-					IndicadorDAO indicadorDAO = new IndicadorDAO();
-					indicadorDAO.actualizar(indicador);
-				}
-			}
-
-		});
-
+	
 		columnaDireccion = new TableColumn<Indicador, Integer>("Direccion");
 		columnaDireccion.setCellValueFactory(new PropertyValueFactory<Indicador, Integer>("direccion"));
-		columnaDireccion
-				.setCellFactory(TextFieldTableCell.<Indicador, Integer> forTableColumn(new IntegerStringConverter()));
-		columnaDireccion.setOnEditCommit(new EventHandler<CellEditEvent<Indicador, Integer>>() {
-			@Override
-			public void handle(CellEditEvent<Indicador, Integer> t) {
-				Indicador indicador = new Indicador();
-				indicador = (Indicador) t.getTableView().getItems().get(t.getTablePosition().getRow());
-
-				indicador.setDireccion(t.getNewValue());
-				IndicadorDAO indicadorDAO = new IndicadorDAO();
-				indicadorDAO.actualizar(indicador);
-			}
-
-		});
-
+	
 		columnaFormula = new TableColumn<Indicador, String>("formula");
 		columnaFormula.setCellValueFactory(new PropertyValueFactory<Indicador, String>("formula"));
-		columnaFormula.setCellFactory(TextFieldTableCell.forTableColumn());
-		columnaFormula.setOnEditCommit(new EventHandler<CellEditEvent<Indicador, String>>() {
-			@Override
-			public void handle(CellEditEvent<Indicador, String> t) {
-				Indicador indicador = new Indicador();
-				indicador = (Indicador) t.getTableView().getItems().get(t.getTablePosition().getRow());
-
-				indicador.setFormula(t.getNewValue());
-				IndicadorDAO indicadorDAO = new IndicadorDAO();
-				indicadorDAO.actualizar(indicador);
-
-			}
-
-		});
-
+	
 		columnaFichaMetodologica = new TableColumn<Indicador, String>("Ficha Metodologica");
 		columnaFichaMetodologica.setCellValueFactory(new PropertyValueFactory<Indicador, String>("fichaMetodologica"));
-		columnaFichaMetodologica.setCellFactory(TextFieldTableCell.forTableColumn());
-		columnaFichaMetodologica.setOnEditCommit(new EventHandler<CellEditEvent<Indicador, String>>() {
-			@Override
-			public void handle(CellEditEvent<Indicador, String> t) {
-				Indicador indicador = new Indicador();
-				indicador = (Indicador) t.getTableView().getItems().get(t.getTablePosition().getRow());
-
-				indicador.setFichaMetodologica(t.getNewValue());
-				IndicadorDAO indicadorDAO = new IndicadorDAO();
-				indicadorDAO.actualizar(indicador);
-
-			}
-
-		});
-
+	
 		columnaIdResponsable = new TableColumn<Indicador, Integer>("Id Responsable");
 		columnaIdResponsable.setCellValueFactory(new PropertyValueFactory<Indicador, Integer>("idResponsable"));
-		columnaIdResponsable
-				.setCellFactory(TextFieldTableCell.<Indicador, Integer> forTableColumn(new IntegerStringConverter()));
-		columnaIdResponsable.setOnEditCommit(new EventHandler<CellEditEvent<Indicador, Integer>>() {
-			@Override
-			public void handle(CellEditEvent<Indicador, Integer> t) {
-				Indicador indicador = new Indicador();
-				indicador = (Indicador) t.getTableView().getItems().get(t.getTablePosition().getRow());
-
-				List<Persona> lista = new PersonaDAO().getTodos();
-				boolean esta = false;
-				int i = 0;
-				while (i < lista.size() && !esta) {
-					if (lista.get(i).getId().equals(t.getNewValue())) {
-						esta = true;
-					}
-					i++;
-				}
-
-				if (!esta) {
-					Dialogo dialogoErrorFK = new DialogoErrorFK("persona");
-					dialogoErrorFK.crearDialogo();
-					dialogoErrorFK.mostrarDialogo();
-					((DialogoErrorFK) dialogoErrorFK).getBotonAceptar().setOnAction(new EventHandler<ActionEvent>() {
-						@Override
-						public void handle(ActionEvent arg0) {
-							dialogoErrorFK.cerrarDialogo();
-						}
-					});
-
-					t.getTableView().getItems().set(t.getTablePosition().getRow(), indicador);
-
-				} else {
-
-					indicador.setIdResponsable(t.getNewValue());
-					IndicadorDAO indicadorDAO = new IndicadorDAO();
-					indicadorDAO.actualizar(indicador);
-				}
-			}
-
-		});
-
+	
 		columnaFrecuencia = new TableColumn<Indicador, String>("Frecuencia");
 		columnaFrecuencia.setCellValueFactory(new PropertyValueFactory<Indicador, String>("frecuencia"));
-		columnaFrecuencia.setCellFactory(TextFieldTableCell.forTableColumn());
-		columnaFrecuencia.setOnEditCommit(new EventHandler<CellEditEvent<Indicador, String>>() {
-			@Override
-			public void handle(CellEditEvent<Indicador, String> t) {
-				Indicador indicador = new Indicador();
-				indicador = (Indicador) t.getTableView().getItems().get(t.getTablePosition().getRow());
-
-				indicador.setFrecuencia(t.getNewValue());
-				IndicadorDAO indicadorDAO = new IndicadorDAO();
-				indicadorDAO.actualizar(indicador);
-
-			}
-
-		});
-
+	
 		columnaPeriodo = new TableColumn<Indicador, String>("Periodo");
 		columnaPeriodo.setCellValueFactory(new PropertyValueFactory<Indicador, String>("periodo"));
-		columnaPeriodo.setCellFactory(TextFieldTableCell.forTableColumn());
-		columnaPeriodo.setOnEditCommit(new EventHandler<CellEditEvent<Indicador, String>>() {
-			@Override
-			public void handle(CellEditEvent<Indicador, String> t) {
-				Indicador indicador = new Indicador();
-				indicador = (Indicador) t.getTableView().getItems().get(t.getTablePosition().getRow());
-
-				indicador.setPeriodo(t.getNewValue());
-				IndicadorDAO indicadorDAO = new IndicadorDAO();
-				indicadorDAO.actualizar(indicador);
-
-			}
-
-		});
-
+	
 		columnaFechaUltimaActualizacion = new TableColumn<Indicador, Timestamp>("Fecha Ultima Actualizacion");
 		columnaFechaUltimaActualizacion
 				.setCellValueFactory(new PropertyValueFactory<Indicador, Timestamp>("fechaUltimaActualizacion"));
 
 		columnaIdTipoIndicador = new TableColumn<Indicador, Integer>("Id Tipo Indicador");
 		columnaIdTipoIndicador.setCellValueFactory(new PropertyValueFactory<Indicador, Integer>("idTipoIndicador"));
-		columnaIdTipoIndicador
-				.setCellFactory(TextFieldTableCell.<Indicador, Integer> forTableColumn(new IntegerStringConverter()));
-		columnaIdTipoIndicador.setOnEditCommit(new EventHandler<CellEditEvent<Indicador, Integer>>() {
-			@Override
-			public void handle(CellEditEvent<Indicador, Integer> t) {
-				Indicador indicador = new Indicador();
-				indicador = (Indicador) t.getTableView().getItems().get(t.getTablePosition().getRow());
-
-				List<TipoIndicador> lista = new TipoIndicadorDAO().getTodos();
-				boolean esta = false;
-				int i = 0;
-				while (i < lista.size() && !esta) {
-					if (lista.get(i).getId().equals(t.getNewValue())) {
-						esta = true;
-					}
-					i++;
-				}
-
-				if (!esta) {
-					Dialogo dialogoErrorFK = new DialogoErrorFK("tipo indicador");
-					dialogoErrorFK.crearDialogo();
-					dialogoErrorFK.mostrarDialogo();
-					((DialogoErrorFK) dialogoErrorFK).getBotonAceptar().setOnAction(new EventHandler<ActionEvent>() {
-						@Override
-						public void handle(ActionEvent arg0) {
-							dialogoErrorFK.cerrarDialogo();
-						}
-					});
-
-					t.getTableView().getItems().set(t.getTablePosition().getRow(), indicador);
-
-				} else {
-
-					indicador.setIdTipoIndicador(t.getNewValue());
-					IndicadorDAO indicadorDAO = new IndicadorDAO();
-					indicadorDAO.actualizar(indicador);
-				}
-			}
-
-		});
-
+		
 		columnaObservaciones = new TableColumn<Indicador, String>("Observaciones");
 		columnaObservaciones.setCellValueFactory(new PropertyValueFactory<Indicador, String>("observaciones"));
-		columnaObservaciones.setCellFactory(TextFieldTableCell.forTableColumn());
-		columnaObservaciones.setOnEditCommit(new EventHandler<CellEditEvent<Indicador, String>>() {
-			@Override
-			public void handle(CellEditEvent<Indicador, String> t) {
-				Indicador indicador = new Indicador();
-				indicador = (Indicador) t.getTableView().getItems().get(t.getTablePosition().getRow());
-
-				indicador.setObservaciones(t.getNewValue());
-				IndicadorDAO indicadorDAO = new IndicadorDAO();
-				indicadorDAO.actualizar(indicador);
-
-			}
-
-		});
-
+		
 		tablaIndicador.getColumns().addAll(columnaId, columnaCodigo, columnaNombre, columnaIdUnidadDeMedida,
 				columnaDireccion, columnaFormula, columnaFichaMetodologica, columnaIdGrafico, columnaIdResponsable,
 				columnaFrecuencia, columnaPeriodo, columnaFechaUltimaActualizacion, columnaIdTipoIndicador,
