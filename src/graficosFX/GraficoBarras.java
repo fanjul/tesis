@@ -97,7 +97,7 @@ public class GraficoBarras extends Grafico {
 
 		);
 */
-		BarChart chart = new BarChart(xAxis, yAxis, datos, 25.0d);
+		this.chart = new BarChart(xAxis, yAxis, datos, 25.0d);
 
 		super.getRoot().getChildren().add(chart);
 

@@ -17,8 +17,8 @@ import javafx.stage.WindowEvent;
 
 public class MainFx extends Application {
 	
-	
-	
+	//TODO cambiar el string de como ejecutar R, illescas lo veia confuso
+	//TODO cambiar el CSS de los graficos
 	//TODO guardar los datos que se hicieron drag and drop si es de fecha e indicador para despues mostrar
 	//en los graficos nuestros
 	//TODO predefinir una "variable" para R, para mostra en el grafico un parrafo informativo que arme el usuario

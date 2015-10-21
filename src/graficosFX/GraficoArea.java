@@ -76,7 +76,7 @@ public class GraficoArea extends Grafico {
 
 	        );
 
-	        AreaChart chart = new AreaChart(xAxis, yAxis, areaChartData);
+	        this.chart = new AreaChart(xAxis, yAxis, areaChartData);
 
 		super.getRoot().getChildren().add(chart);
 

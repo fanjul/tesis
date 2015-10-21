@@ -14,7 +14,7 @@ public class DialogoSeGuardoCorrectamente extends Dialogo{
 		super();
 		imagen = new ImageView("/imagenesFX/GuardoCorrectamente.png");
 		botonAceptar = new Button("Aceptar");
-		label = new Label("El método se guardó correctamente");
+		label = new Label("Se guardó correctamente");
 	}
 	
 	@Override
