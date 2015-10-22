@@ -2,7 +2,6 @@ package graficosFX;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
@@ -19,14 +18,10 @@ public class GraficoBarras extends Grafico {
 	@Override
 	public void graficar(TableView tablaResultado) {
 	
-		super.getVentana().setScene(new Scene(super.getRoot()));
 		CategoryAxis xAxis = new CategoryAxis();
 	
 		ObservableList<BarChart.Series> datos = FXCollections.observableArrayList();
-		
-		
-	
-		
+			
 		String[] arrNombreColumnas = null;
 		double max = 0;
 		
@@ -57,46 +52,7 @@ public class GraficoBarras extends Grafico {
 		NumberAxis yAxis = new NumberAxis("Units Sold", 0.0d, max, max/10);
 		
 		xAxis.setCategories(FXCollections.<String> observableArrayList(arrNombreColumnas));
-///////////////////////////////////////////////
-		
-		/*
-		
-		
-		
-		ObservableList<BarChart.Series> barChartData = FXCollections.observableArrayList(
 
-		new BarChart.Series("Apples", FXCollections.observableArrayList(
-
-		new BarChart.Data(years[0], 567d),
-
-		new BarChart.Data(years[1], 1292d),
-
-		new BarChart.Data(years[2], 1292d)
-
-		)),
-
-		new BarChart.Series("Lemons", FXCollections.observableArrayList(
-
-		new BarChart.Data(years[0], 956),
-
-		new BarChart.Data(years[1], 1665),
-
-		new BarChart.Data(years[2], 2559)
-
-		)),
-
-		new BarChart.Series("Oranges", FXCollections.observableArrayList(
-
-		new BarChart.Data(years[0], 1154),
-
-		new BarChart.Data(years[1], 1927),
-
-		new BarChart.Data(years[2], 2774)
-
-		))
-
-		);
-*/
 		this.chart = new BarChart(xAxis, yAxis, datos, 25.0d);
 
 		super.getRoot().getChildren().add(chart);
