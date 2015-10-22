@@ -17,10 +17,8 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DragEvent;
@@ -28,7 +26,6 @@ import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
-import javafx.util.converter.DoubleStringConverter;
 
 public class HSTumbralesXEstadosXIndicadorGUI extends TableView<HSTumbralesXEstadosXIndicador>
 		implements AbstractBaseDeDatosGUI {
@@ -55,7 +52,6 @@ public class HSTumbralesXEstadosXIndicadorGUI extends TableView<HSTumbralesXEsta
 	@SuppressWarnings("unchecked")
 	public void mostrarTabla() {
 		tablaHSTUmbrales = new TableView<HSTumbralesXEstadosXIndicador>();
-		tablaHSTUmbrales.setEditable(true);
 
 		columnaIdIndicador = new TableColumn<HSTumbralesXEstadosXIndicador, Integer>("Id Indicador");
 		columnaIdIndicador
@@ -78,103 +74,23 @@ public class HSTumbralesXEstadosXIndicadorGUI extends TableView<HSTumbralesXEsta
 				"Operador Umbral Superior");
 		columnaOperadorUmbralSuperior.setCellValueFactory(
 				new PropertyValueFactory<HSTumbralesXEstadosXIndicador, String>("operadorUmbralSuperior"));
-		columnaOperadorUmbralSuperior.setCellFactory(TextFieldTableCell.forTableColumn());
-		columnaOperadorUmbralSuperior
-				.setOnEditCommit(new EventHandler<CellEditEvent<HSTumbralesXEstadosXIndicador, String>>() {
-					@Override
-					public void handle(CellEditEvent<HSTumbralesXEstadosXIndicador, String> t) {
-						HSTumbralesXEstadosXIndicador hst = new HSTumbralesXEstadosXIndicador();
-						hst = (HSTumbralesXEstadosXIndicador) t.getTableView().getItems()
-								.get(t.getTablePosition().getRow());
-
-						hst.setOperadorUmbralSuperior(t.getNewValue());
-						HSTumbralesXEstadosXIndicadorDAO hstDAO = new HSTumbralesXEstadosXIndicadorDAO();
-						hstDAO.actualizar(hst);
-
-					}
-
-				});
 
 		columnaOperadorUmbralInferior = new TableColumn<HSTumbralesXEstadosXIndicador, String>(
 				"Operador Umbral Inferior");
 		columnaOperadorUmbralInferior.setCellValueFactory(
 				new PropertyValueFactory<HSTumbralesXEstadosXIndicador, String>("operadorUmbralInferior"));
-		columnaOperadorUmbralInferior.setCellFactory(TextFieldTableCell.forTableColumn());
-		columnaOperadorUmbralInferior
-				.setOnEditCommit(new EventHandler<CellEditEvent<HSTumbralesXEstadosXIndicador, String>>() {
-					@Override
-					public void handle(CellEditEvent<HSTumbralesXEstadosXIndicador, String> t) {
-						HSTumbralesXEstadosXIndicador hst = new HSTumbralesXEstadosXIndicador();
-						hst = (HSTumbralesXEstadosXIndicador) t.getTableView().getItems()
-								.get(t.getTablePosition().getRow());
-
-						hst.setOperadorUmbralInferior(t.getNewValue());
-						HSTumbralesXEstadosXIndicadorDAO hstDAO = new HSTumbralesXEstadosXIndicadorDAO();
-						hstDAO.actualizar(hst);
-
-					}
-
-				});
 
 		columnaValorUmbralSuperior = new TableColumn<HSTumbralesXEstadosXIndicador, Double>("Valor Umbral Superior");
 		columnaValorUmbralSuperior.setCellValueFactory(
 				new PropertyValueFactory<HSTumbralesXEstadosXIndicador, Double>("valorUmbralSuperior"));
-		columnaValorUmbralSuperior.setCellFactory(
-				TextFieldTableCell.<HSTumbralesXEstadosXIndicador, Double> forTableColumn(new DoubleStringConverter()));
-		columnaValorUmbralSuperior
-				.setOnEditCommit(new EventHandler<CellEditEvent<HSTumbralesXEstadosXIndicador, Double>>() {
-					@Override
-					public void handle(CellEditEvent<HSTumbralesXEstadosXIndicador, Double> t) {
-						HSTumbralesXEstadosXIndicador hst = new HSTumbralesXEstadosXIndicador();
-						hst = (HSTumbralesXEstadosXIndicador) t.getTableView().getItems()
-								.get(t.getTablePosition().getRow());
-
-						hst.setValorUmbralSuperior(t.getNewValue());
-						HSTumbralesXEstadosXIndicadorDAO hstDAO = new HSTumbralesXEstadosXIndicadorDAO();
-						hstDAO.actualizar(hst);
-
-					}
-
-				});
 
 		columnaValorUmbralInferior = new TableColumn<HSTumbralesXEstadosXIndicador, Double>("Valor Umbral Inferior");
 		columnaValorUmbralInferior.setCellValueFactory(
 				new PropertyValueFactory<HSTumbralesXEstadosXIndicador, Double>("valorUmbralInferior"));
-		columnaValorUmbralInferior.setCellFactory(
-				TextFieldTableCell.<HSTumbralesXEstadosXIndicador, Double> forTableColumn(new DoubleStringConverter()));
-		columnaValorUmbralInferior
-				.setOnEditCommit(new EventHandler<CellEditEvent<HSTumbralesXEstadosXIndicador, Double>>() {
-					@Override
-					public void handle(CellEditEvent<HSTumbralesXEstadosXIndicador, Double> t) {
-						HSTumbralesXEstadosXIndicador hst = new HSTumbralesXEstadosXIndicador();
-						hst = (HSTumbralesXEstadosXIndicador) t.getTableView().getItems()
-								.get(t.getTablePosition().getRow());
-
-						hst.setValorUmbralInferior(t.getNewValue());
-						HSTumbralesXEstadosXIndicadorDAO hstDAO = new HSTumbralesXEstadosXIndicadorDAO();
-						hstDAO.actualizar(hst);
-
-					}
-
-				});
 
 		columnaObservaciones = new TableColumn<HSTumbralesXEstadosXIndicador, String>("Observaciones");
 		columnaObservaciones
 				.setCellValueFactory(new PropertyValueFactory<HSTumbralesXEstadosXIndicador, String>("observaciones"));
-		columnaObservaciones.setCellFactory(TextFieldTableCell.forTableColumn());
-		columnaObservaciones.setOnEditCommit(new EventHandler<CellEditEvent<HSTumbralesXEstadosXIndicador, String>>() {
-			@Override
-			public void handle(CellEditEvent<HSTumbralesXEstadosXIndicador, String> t) {
-				HSTumbralesXEstadosXIndicador hst = new HSTumbralesXEstadosXIndicador();
-				hst = (HSTumbralesXEstadosXIndicador) t.getTableView().getItems().get(t.getTablePosition().getRow());
-
-				hst.setObservaciones(t.getNewValue());
-				HSTumbralesXEstadosXIndicadorDAO hstDAO = new HSTumbralesXEstadosXIndicadorDAO();
-				hstDAO.actualizar(hst);
-
-			}
-
-		});
 
 		tablaHSTUmbrales.getColumns().addAll(columnaIdIndicador, columnaIdEstadoTipoIndicador, columnaInicioUmbral,
 				columnaFinUmbral, columnaOperadorUmbralSuperior, columnaOperadorUmbralInferior,

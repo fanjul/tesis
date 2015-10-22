@@ -2,7 +2,6 @@ package graficosFX;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.Scene;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -16,10 +15,7 @@ public class GraficoTorta extends Grafico {
 	@SuppressWarnings("rawtypes")
 	public void graficar(TableView tablaResultado) {
 
-		super.getVentana().setScene(new Scene(super.getRoot()));
-
 		ObservableList<PieChart.Data> datos = FXCollections.observableArrayList();
-
 		for (int i = 0; i < tablaResultado.getItems().size(); i++) {
 			//TODO poner excepcion por si lo que esta en la tabla resultados es un string
 			if (tablaResultado.getItems().get(i) instanceof double[]) {
@@ -31,12 +27,9 @@ public class GraficoTorta extends Grafico {
 			}
 		}
 
-		PieChart chart = new PieChart(datos);
-
-		chart.setClockwise(false);
-
+		this.chart = new PieChart(datos);
+		((PieChart) chart).setClockwise(false);
 		super.getRoot().getChildren().add(chart);
-
 		super.getVentana().show();
 
 	}
