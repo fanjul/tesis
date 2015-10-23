@@ -30,6 +30,8 @@ public class MainFx extends Application {
 	// ahora para mejorar la interfaz
 
 	private static final String HERRAMIENTA_TESIS = "HerramientaTesis";
+	public static Double WIDTH;
+	public static Double HEIGTH;
 
 	public static void main(String[] args) {
 		Application.launch(args);
@@ -48,14 +50,14 @@ public class MainFx extends Application {
 		primaryStage.setY(primaryScreenBounds.getMinY());
 		primaryStage.setWidth(primaryScreenBounds.getWidth());
 		primaryStage.setHeight(primaryScreenBounds.getHeight());
-
+		
+		WIDTH = primaryStage.getWidth();
+		HEIGTH = primaryStage.getHeight();
+		
 		BorderPane ventana = new VentanaPrincipal(primaryStage);
-		// mismos layout para que no se agrande de mas la ventana principal.
 
-		ventana.setMinHeight(primaryStage.getMinHeight());// minimo alto de la pantalla
-		ventana.setMaxHeight(primaryStage.getMaxHeight());
-		ventana.setMinWidth(primaryStage.getMinWidth());// minimo ancho de la pantalla
-		ventana.setMaxWidth(primaryStage.getMaxWidth());
+		ventana.setPrefHeight(HEIGTH);// minimo alto de la pantalla
+		ventana.setPrefWidth(WIDTH);// minimo ancho de la pantalla
 
 		AnchorPane cuadroPrincipal = new AnchorPane();
 		cuadroPrincipal.setTopAnchor(ventana, 0.0);
@@ -102,12 +104,6 @@ public class MainFx extends Application {
 
 		primaryStage.setScene(escenaPrincipal);
 		primaryStage.show();
-		System.out.println(primaryStage.getMinHeight());
-		System.out.println(primaryStage.getHeight());
-		System.out.println(primaryStage.getMaxHeight());
-		System.out.println(primaryStage.getMinWidth());
-		System.out.println(primaryStage.getWidth());
-		System.out.println(primaryStage.getMaxWidth());
 	}
 
 }

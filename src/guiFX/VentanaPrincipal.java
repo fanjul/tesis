@@ -58,8 +58,6 @@ public class VentanaPrincipal extends BorderPane {
 
 	private BotonImagen botonGraficoTorta;
 	private BotonImagen botonGraficoBarras;
-//	private BotonImagen botonGraficoLinea;
-//	private BotonImagen botonGraficoArea;
 
 	private ListaBotonesGrafico listaBotonesSuperior;
 	private ListaBotonesGrafico listaBotonesInferior;
@@ -84,12 +82,8 @@ public class VentanaPrincipal extends BorderPane {
 		barraMenu.setMinWidth(0);
 
 		barraMenu.setSpacing(10);
-		// configuarBotonAbrirArchivo();
 
 		this.setLeft(((BarraMenu) barraMenu).getBarraDeslizable());
-
-		// areaResultado = new TextArea();
-		// areaResultado.setEditable(false);
 		tablaResultado = new TableView<String>();
 		tablaResultado.setEditable(false);
 
@@ -98,10 +92,6 @@ public class VentanaPrincipal extends BorderPane {
 		borderPaneMenuOpciones = new BorderPane();
 		borderPaneMenuOpciones.setLeft(((BarraMenu) barraMenu).getBarraDeslizable().getBotonMenu());
 		borderPaneMenuOpciones.setRight(hBoxMenuOpcionesVentana);
-		// borderPaneMenuOpciones.setMaxHeight(110);
-		// borderPaneMenuOpciones.setMinHeight(110);
-		// borderPaneMenuOpciones.setMaxWidth(1365);
-		// borderPaneMenuOpciones.setMinWidth(1365);
 		this.setTop(borderPaneMenuOpciones);
 
 		// Configuracion de la parte derecha del borderPane (VentanaPrincipal)
@@ -154,18 +144,15 @@ public class VentanaPrincipal extends BorderPane {
 
 		crearGraficoTorta();
 		crearGraficoBarras();
-//		crearGraficoLinea();
-//		crearGraficoArea();
+
 
 		listaBotonesSuperior = new ListaBotonesGrafico();
 		listaBotonesInferior = new ListaBotonesGrafico();
 		listaBotonesSuperior.agregarNodo(botonGraficoTorta);
 		listaBotonesSuperior.agregarNodo(botonGraficoBarras);
-//		listaBotonesSuperior.agregarNodo(botonGraficoLinea);
-//		listaBotonesSuperior.agregarNodo(botonGraficoArea);
 		listaBotonesSuperior.setAlignment(Pos.CENTER);
 		
-		listaBotonesInferior.agregarNodo(tablaResultado/* areaResultado */);
+		listaBotonesInferior.agregarNodo(tablaResultado);
 		listaBotonesInferior.setAlignment(Pos.CENTER);
 		panelDerecho.agregarElemento(listaBotonesSuperior);
 		panelDerecho.agregarElemento(listaBotonesInferior);
@@ -299,9 +286,6 @@ public class VentanaPrincipal extends BorderPane {
 			if (archivo.exists()) {
 				bw.write("");
 			}
-
-			// String texto = ((PanelDerecho)
-			// panelDerecho).getEditorTexto().getText();
 
 			bw.write(texto, 0, texto.length());
 
@@ -566,14 +550,6 @@ public class VentanaPrincipal extends BorderPane {
 			}
 		});
 		/////////////////////////
-
-		/*
-		 * if (tablaResultado.getColumns().size() == 0) {
-		 * botonGraficoTorta.setDisable(true); }
-		 */
-
-		// botonGraficoTortaPRUEBA = new
-		// BotonImagen("/imagenesFX/GraficoTorta.png", "Grafico de Torta");
 		botonGraficoTorta.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
@@ -614,66 +590,6 @@ public class VentanaPrincipal extends BorderPane {
 			}
 		});
 	}
-
-	/*
-	private void crearGraficoLinea() {
-		botonGraficoLinea = new BotonImagen("/imagenesFX/GraficoLinea.png", "Grafico de Linea");
-
-		///////////////////// Para disablear/enablear el boton grafico torta
-		botonGraficoLinea.disableProperty().bind(new BooleanBinding() {
-			{
-				bind(tablaResultado.getColumns());
-			}
-
-			@Override
-			protected boolean computeValue() {
-				return tablaResultado.getColumns().size() == 0;
-			}
-		});
-		/////////////////////////
-
-		// botonGraficoTortaPRUEBA = new
-		// BotonImagen("/imagenesFX/GraficoTorta.png", "Grafico de Torta");
-		botonGraficoLinea.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-			@Override
-			public void handle(MouseEvent event) {
-				Grafico graficoLinea = new GraficoLinea();
-				graficoLinea.graficar(tablaResultado);
-
-			}
-		});
-
-	}
-
-	private void crearGraficoArea() {
-		botonGraficoArea = new BotonImagen("/imagenesFX/GraficoArea.png", "Grafico de Area");
-
-		///////////////////// Para disablear/enablear el boton grafico torta
-		botonGraficoArea.disableProperty().bind(new BooleanBinding() {
-			{
-				bind(tablaResultado.getColumns());
-			}
-
-			@Override
-			protected boolean computeValue() {
-				return tablaResultado.getColumns().size() == 0;
-			}
-		});
-		/////////////////////////
-
-		// botonGraficoTortaPRUEBA = new
-		// BotonImagen("/imagenesFX/GraficoTorta.png", "Grafico de Torta");
-		botonGraficoArea.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-			@Override
-			public void handle(MouseEvent event) {
-				Grafico graficoArea = new GraficoArea();
-				graficoArea.graficar(tablaResultado);
-
-			}
-		});
-
-	}
-	*/
 
 	private String agregarCuatroSparadores(String dir) {
 

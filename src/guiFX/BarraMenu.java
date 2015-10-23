@@ -63,7 +63,6 @@ public class BarraMenu extends VBox {
 		VBox.setVgrow(this, Priority.ALWAYS);
 		this.agregarMenuAbrirArchivo();
 		this.agregarMenuBaseDeDatos();
-		// this.agregarMenuListaMetodosMatematicos();
 	}
 
 	private void agregarMenuBaseDeDatos() {
@@ -229,11 +228,6 @@ public class BarraMenu extends VBox {
 		this.getChildren().add(listaMetodos);
 	}
 
-//	private static void configurarElegirArchivo(final FileChooser fileChooser) {
-//		fileChooser.setTitle("View Pictures");
-//		fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
-//	}
-
 	public ListView<String> getListaMetodos() {
 		return listaMetodos;
 	}
@@ -248,18 +242,16 @@ public class BarraMenu extends VBox {
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private void configurarPanelCentro() {
-		HBox centroSuperior = new HBox();
+		HBox nombreTablas = new HBox();
 		SplitPane centroSplit = new SplitPane();
-		AnchorPane centroCentro = new AnchorPane();
-		AnchorPane centroInferior = new AnchorPane();
-		SplitPane dividirCentro = new SplitPane();
+		AnchorPane tabla = new AnchorPane();
 
 		// contiene nombre de las tablas
-		centroSuperior.setSpacing(50);
-		centroSuperior.setMaxHeight(50);
-		centroSuperior.setMinHeight(50);
-		centroSuperior.setMaxWidth(765);
-		centroSuperior.setMinWidth(645);
+		nombreTablas.setSpacing(50);
+		nombreTablas.setMaxHeight(50);
+		nombreTablas.setMinHeight(50);
+		nombreTablas.setMaxWidth(765);
+		nombreTablas.setMinWidth(645);
 
 		ObservableList<String> data = FXCollections.observableArrayList();
 
@@ -270,16 +262,16 @@ public class BarraMenu extends VBox {
 		}
 
 		Label labelTabla = new Label("Tabla");
-		centroSuperior.getChildren().add(labelTabla);
+		nombreTablas.getChildren().add(labelTabla);
 		comboBoxTablas = new ComboBox<String>();
 		comboBoxTablas.setItems(data);
 
 		// contiene la tabla
-		centroCentro.setMinHeight(247);
-		centroCentro.setMaxHeight(247);
+		tabla.setMinHeight(450);
+		tabla.setMaxHeight(450);
 
-		centroCentro.setMaxWidth(645);
-		centroCentro.setMinWidth(645);
+		tabla.setMaxWidth(645);
+		tabla.setMinWidth(645);
 
 		comboBoxTablas.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
 			@Override
@@ -289,30 +281,23 @@ public class BarraMenu extends VBox {
 				baseDeDatos = factoryBaseDeDatos.getBaseDeDatos((String) new_val);
 				baseDeDatos.crearTablaBaseDeDatos();
 				consultasDAO = factoryConsultasDAO.getConsultaDAO((String) new_val);
-				baseDeDatos.mostrarTabla(consultasDAO, factoryConsultasDAO, centroCentro);
+				baseDeDatos.mostrarTabla(consultasDAO, factoryConsultasDAO, tabla);
 			}
 		});
 
-		centroSuperior.getChildren().add(comboBoxTablas);
-		centroSuperior.setAlignment(Pos.CENTER);
+		nombreTablas.getChildren().add(comboBoxTablas);
+		nombreTablas.setAlignment(Pos.CENTER);
 
-		// contiene nada por ahora
-		centroInferior.setMinHeight(246);
-		centroInferior.setMaxHeight(246);
-		centroInferior.setMinWidth(645);
-		centroInferior.setMaxWidth(765);
-
-		// SplitPane, una para tablas y la otra resultados R
 		centroSplit.setOrientation(Orientation.VERTICAL);
 		centroSplit.setMaxHeight(493);
 		centroSplit.setMinHeight(493);
 		centroSplit.setMaxWidth(765);
 		centroSplit.setMinWidth(645);
 
-		centroSplit.getItems().add(centroCentro);
-		centroSplit.getItems().add(centroInferior);
-		centroSplit.getItems().set(0, centroCentro);
-		centroSplit.getItems().set(1, centroInferior);
+		centroSplit.getItems().add(tabla);
+		centroSplit.getItems().add(nombreTablas);
+		centroSplit.getItems().set(0, nombreTablas);
+		centroSplit.getItems().set(1, tabla);
 
 		ObservableList<SplitPane.Divider> dividers = centroSplit.getDividers();
 		for (int i = 0; i < dividers.size(); i++) {
@@ -320,26 +305,9 @@ public class BarraMenu extends VBox {
 
 		}
 
-		// SplitPane, uno con comboBox de las tablas y otro con el splitPane de
-		// Tabla con resultados R
-		dividirCentro.setMaxHeight(543);
-		dividirCentro.setMinHeight(543);
-		dividirCentro.setMaxWidth(765);
-		dividirCentro.setMinWidth(645);
 
-		dividirCentro.setOrientation(Orientation.VERTICAL);
-		dividirCentro.getItems().add(centroSuperior);
-		dividirCentro.getItems().add(centroSplit);
-		dividirCentro.getItems().set(0, centroSuperior);
-		dividirCentro.getItems().set(1, centroSplit);
 
-		ObservableList<SplitPane.Divider> dividers2 = dividirCentro.getDividers();
-		for (int i = 0; i < dividers2.size(); i++) {
-			dividers2.get(i).setPosition((i + 1.3) / 10);
-
-		}
-
-		ventana.setCenter(dividirCentro);
+		ventana.setCenter(centroSplit);
 
 	}
 
