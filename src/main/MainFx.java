@@ -7,24 +7,28 @@ import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
 
 public class MainFx extends Application {
-	
-	//TODO cambiar el string de como ejecutar R, illescas lo veia confuso
-	//TODO cambiar el CSS de los graficos
-	//TODO guardar los datos que se hicieron drag and drop si es de fecha e indicador para despues mostrar
-	//en los graficos nuestros
-	//TODO predefinir una "variable" para R, para mostra en el grafico un parrafo informativo que arme el usuario
-	//TODO ver de agarrar el layout maximo de cada pc y no harcodeado como esta ahora para mejorar la interfaz
-	
-	
+
+	// TODO cambiar el string de como ejecutar R, illescas lo veia confuso
+	// TODO cambiar el CSS de los graficos
+	// TODO guardar los datos que se hicieron drag and drop si es de fecha e
+	// indicador para despues mostrar
+	// en los graficos nuestros
+	// TODO predefinir una "variable" para R, para mostra en el grafico un
+	// parrafo informativo que arme el usuario
+	// TODO ver de agarrar el layout maximo de cada pc y no harcodeado como esta
+	// ahora para mejorar la interfaz
+
 	private static final String HERRAMIENTA_TESIS = "HerramientaTesis";
 
 	public static void main(String[] args) {
@@ -38,12 +42,20 @@ public class MainFx extends Application {
 		primaryStage.setResizable(false);
 		primaryStage.setMaximized(false);
 
+		Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
+
+		primaryStage.setX(primaryScreenBounds.getMinX());
+		primaryStage.setY(primaryScreenBounds.getMinY());
+		primaryStage.setWidth(primaryScreenBounds.getWidth());
+		primaryStage.setHeight(primaryScreenBounds.getHeight());
+
 		BorderPane ventana = new VentanaPrincipal(primaryStage);
-		//mismos layout para que no se agrande de mas la ventana principal.
-		ventana.setMinHeight(728);//minimo alto de la pantalla
-		ventana.setMinWidth(1365);//minimo ancho de la pantalla
-		ventana.setMaxHeight(728);
-		ventana.setMaxWidth(1365);
+		// mismos layout para que no se agrande de mas la ventana principal.
+
+		ventana.setMinHeight(primaryStage.getMinHeight());// minimo alto de la pantalla
+		ventana.setMaxHeight(primaryStage.getMaxHeight());
+		ventana.setMinWidth(primaryStage.getMinWidth());// minimo ancho de la pantalla
+		ventana.setMaxWidth(primaryStage.getMaxWidth());
 
 		AnchorPane cuadroPrincipal = new AnchorPane();
 		cuadroPrincipal.setTopAnchor(ventana, 0.0);
@@ -65,13 +77,13 @@ public class MainFx extends Application {
 		});
 
 		primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-            @Override
-            public void handle(WindowEvent t) {
-                Platform.exit();
-                System.exit(0);
-            }
-        });
-		
+			@Override
+			public void handle(WindowEvent t) {
+				Platform.exit();
+				System.exit(0);
+			}
+		});
+
 		cuadroPrincipal.getChildren().add(ventana);
 
 		Scene escenaPrincipal = new Scene(cuadroPrincipal);
@@ -79,9 +91,7 @@ public class MainFx extends Application {
 		// Transparent scene and stage
 		escenaPrincipal.setFill(Color.rgb(34, 44, 44, 0.5));
 		primaryStage.initStyle(StageStyle.TRANSPARENT);
-		primaryStage.alwaysOnTopProperty();
 		Platform.setImplicitExit(true);
-
 
 		EffectUtilities.makeDraggable(primaryStage, cuadroPrincipal);
 
@@ -92,7 +102,12 @@ public class MainFx extends Application {
 
 		primaryStage.setScene(escenaPrincipal);
 		primaryStage.show();
-
+		System.out.println(primaryStage.getMinHeight());
+		System.out.println(primaryStage.getHeight());
+		System.out.println(primaryStage.getMaxHeight());
+		System.out.println(primaryStage.getMinWidth());
+		System.out.println(primaryStage.getWidth());
+		System.out.println(primaryStage.getMaxWidth());
 	}
 
 }
