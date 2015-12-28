@@ -203,7 +203,7 @@ public class EstadosXTipoIndicadorGUI extends TableView<EstadosXTipoIndicador>im
 							case "idtipoindicador":
 								if (((EstadosXTipoIndicador) arr[i]).getIdTipoIndicador() != null) {
 									selected += ((EstadosXTipoIndicador) arr[i]).getIdTipoIndicador().toString();
-									selected += " ";
+									selected += ", ";
 								} else
 									selected += "";
 								break;

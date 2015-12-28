@@ -43,6 +43,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+import main.MainFx;
 
 public class VentanaPrincipal extends BorderPane {
 
@@ -76,9 +77,9 @@ public class VentanaPrincipal extends BorderPane {
 		panelDerecho = PanelDerecho.getInstance();
 		// Configuracion de la parte izquierda del borderPane (VentanaPrincipal)
 		barraMenu = new BarraMenu(this, panelDerecho, primaryStage);
-		barraMenu.setMaxHeight(543);
-		barraMenu.setMinHeight(543);
-		barraMenu.setMaxWidth(120);
+		barraMenu.setMaxHeight(MainFx.HEIGHT * 2/3);
+		barraMenu.setMinHeight(MainFx.HEIGHT * 2/3);
+		barraMenu.setMaxWidth(MainFx.WIDTH * 1/4); //un cuarto de la pantalla
 		barraMenu.setMinWidth(0);
 
 		barraMenu.setSpacing(10);
@@ -94,7 +95,7 @@ public class VentanaPrincipal extends BorderPane {
 		borderPaneMenuOpciones.setRight(hBoxMenuOpcionesVentana);
 		this.setTop(borderPaneMenuOpciones);
 
-		// Configuracion de la parte derecha del borderPane (VentanaPrincipal)
+		// Configuracion de la parte izquierda del borderPane (VentanaPrincipal)
 		barraMenu.inicializarListaMetodosMatematicos(getMetodosMatematicosYaCreados());
 
 		// Para copiar el contenido del archivo en el editor de texto
@@ -167,10 +168,10 @@ public class VentanaPrincipal extends BorderPane {
 
 		hBoxAbajo.getChildren().addAll(/* listaMetodos, */ botonCrearNuevoMetodo, botonGuardar, botonEjecutar);
 		hBoxAbajo.setSpacing(120);
-		hBoxAbajo.setMaxHeight(75);
-		hBoxAbajo.setMinHeight(75);
-		hBoxAbajo.setMaxWidth(1365);
-		hBoxAbajo.setMinWidth(1365);
+		hBoxAbajo.setMaxHeight(MainFx.HEIGHT/6);
+		hBoxAbajo.setMinHeight(MainFx.HEIGHT/6);
+		hBoxAbajo.setMaxWidth(MainFx.WIDTH);
+		hBoxAbajo.setMinWidth(MainFx.WIDTH);
 		hBoxAbajo.setAlignment(Pos.CENTER);
 		this.setBottom(hBoxAbajo);
 
@@ -522,7 +523,7 @@ public class VentanaPrincipal extends BorderPane {
 				if (!primaryStage.isMaximized()) {
 					botonMaximizarVentana.setTooltip(new Tooltip("Maximizar"));
 				} else {
-					botonMaximizarVentana.setTooltip(new Tooltip("Minimizar tamanño"));
+					botonMaximizarVentana.setTooltip(new Tooltip("Minimizar tamaño"));
 				}
 			}
 		});
