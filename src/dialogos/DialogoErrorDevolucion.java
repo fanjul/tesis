@@ -14,8 +14,8 @@ public class DialogoErrorDevolucion extends Dialogo {
 		super();
 		imagen = new ImageView("/imagenesFX/preocupado.png");
 		botonAceptar = new Button("Aceptar");
-		label = new Label("Variable o funcion donde se devuelve no es existe");
-		this.dialogo.setWidth(400);
+		label = new Label("Variable o funcion donde se devuelve no es existe o error de compilacion");
+		this.dialogo.setWidth(500);
 	}
 	
 	@Override

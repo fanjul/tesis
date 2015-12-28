@@ -14,10 +14,11 @@ public class DialogoEjecutar extends Dialogo {
 
 	public DialogoEjecutar() {
 		super();
-		labelNombreDondeDevuelve = new Label("¿Dónde devuelve? ");
+		labelNombreDondeDevuelve = new Label("Variable o Funcion a ejecutar ");
 		textFieldNombreDondeDevuelve = new TextField();
 		botonEjecutar = new Button("Ejecutar");
 		botonCancelar = new Button("Cancelar");
+		this.dialogo.setWidth(400);
 	}
 
 	@Override

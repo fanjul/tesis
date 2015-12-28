@@ -182,26 +182,27 @@ public class TipoIndicadorGUI extends TableView<TipoIndicador>implements Abstrac
 							case "id":
 								if (((TipoIndicador) arr[i]).getId() != null) {
 									selected += ((TipoIndicador) arr[i]).getId().toString();
-									selected += " ";
+									selected += ", ";
 								} else
 									selected += "";
 								break;
 							case "tipo":
 								if (((TipoIndicador) arr[i]).getTipo() != null) {
 									selected += ((TipoIndicador) arr[i]).getTipo();
-									selected += " ";
+									selected += ", ";
 								} else
 									selected += "";
 								break;
 							case "observaciones":
 								if (((TipoIndicador) arr[i]).getObservaciones() != null) {
 									selected += ((TipoIndicador) arr[i]).getObservaciones();
-									selected += " ";
+									selected += ", ";
 								} else
 									selected += "";
 								break;
 							}
 						}
+						selected = selected.substring(0,selected.length()-2); //eliminar la ultima coma
 						content.putString(selected);
 
 						clipboard.setContent(content);

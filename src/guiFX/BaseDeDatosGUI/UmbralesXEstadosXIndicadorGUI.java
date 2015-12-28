@@ -244,7 +244,7 @@ public class UmbralesXEstadosXIndicadorGUI extends TableView<UmbralesXEstadosXIn
 							case "idindicador":
 								if (((UmbralesXEstadosXIndicador) arr[i]).getIdIndicador() != null) {
 									selected += ((UmbralesXEstadosXIndicador) arr[i]).getIdIndicador().toString();
-									selected += " ";
+									selected += ", ";
 								} else
 									selected += "";
 								break;
@@ -252,61 +252,62 @@ public class UmbralesXEstadosXIndicadorGUI extends TableView<UmbralesXEstadosXIn
 								if (((UmbralesXEstadosXIndicador) arr[i]).getIdEstadoTipoIndicador() != null) {
 									selected += ((UmbralesXEstadosXIndicador) arr[i]).getIdEstadoTipoIndicador()
 											.toString();
-									selected += " ";
+									selected += ", ";
 								} else
 									selected += "";
 								break;
 							case "inicioumbral":
 								if (((UmbralesXEstadosXIndicador) arr[i]).getInicioUmbral() != null) {
 									selected += ((UmbralesXEstadosXIndicador) arr[i]).getInicioUmbral().toString();
-									selected += " ";
+									selected += ", ";
 								} else
 									selected += "";
 								break;
 							case "finumbral":
 								if (((UmbralesXEstadosXIndicador) arr[i]).getFinUmbral() != null) {
 									selected += ((UmbralesXEstadosXIndicador) arr[i]).getFinUmbral().toString();
-									selected += " ";
+									selected += ", ";
 								} else
 									selected += "";
 								break;
 							case "operadorumbralsuperior":
 								if (((UmbralesXEstadosXIndicador) arr[i]).getOperadorUmbralSuperior() != null) {
 									selected += ((UmbralesXEstadosXIndicador) arr[i]).getOperadorUmbralSuperior();
-									selected += " ";
+									selected += ", ";
 								} else
 									selected += "";
 								break;
 							case "operadorumbralinferior":
 								if (((UmbralesXEstadosXIndicador) arr[i]).getOperadorUmbralInferior() != null) {
 									selected += ((UmbralesXEstadosXIndicador) arr[i]).getOperadorUmbralInferior();
-									selected += " ";
+									selected += ", ";
 								} else
 									selected += "";
 								break;
 							case "valorumbralsuperior":
 								if (((UmbralesXEstadosXIndicador) arr[i]).getValorUmbralSuperior() != null) {
 									selected += ((UmbralesXEstadosXIndicador) arr[i]).getValorUmbralSuperior();
-									selected += " ";
+									selected += ", ";
 								} else
 									selected += "";
 								break;
 							case "valorumbralinferior":
 								if (((UmbralesXEstadosXIndicador) arr[i]).getValorUmbralInferior() != null) {
 									selected += ((UmbralesXEstadosXIndicador) arr[i]).getValorUmbralInferior();
-									selected += " ";
+									selected += ", ";
 								} else
 									selected += "";
 								break;
 							case "observaciones":
 								if (((UmbralesXEstadosXIndicador) arr[i]).getObservaciones() != null) {
 									selected += ((UmbralesXEstadosXIndicador) arr[i]).getObservaciones();
-									selected += " ";
+									selected += ", ";
 								} else
 									selected += "";
 								break;
 							}
 						}
+						selected = selected.substring(0,selected.length()-2); //eliminar la ultima coma
 						content.putString(selected);
 
 						clipboard.setContent(content);

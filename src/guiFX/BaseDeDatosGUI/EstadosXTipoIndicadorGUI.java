@@ -210,34 +210,35 @@ public class EstadosXTipoIndicadorGUI extends TableView<EstadosXTipoIndicador>im
 							case "observaciones":
 								if (((EstadosXTipoIndicador) arr[i]).getObservaciones() != null) {
 									selected += ((EstadosXTipoIndicador) arr[i]).getObservaciones();
-									selected += " ";
+									selected += ", ";
 								} else
 									selected += "";
 								break;
 							case "idestado":
 								if (((EstadosXTipoIndicador) arr[i]).getIdEstado() != null) {
 									selected += ((EstadosXTipoIndicador) arr[i]).getIdEstado().toString();
-									selected += " ";
+									selected += ", ";
 								} else
 									selected += "";
 								break;
 							case "estado":
 								if (((EstadosXTipoIndicador) arr[i]).getEstado() != null) {
 									selected += ((EstadosXTipoIndicador) arr[i]).getEstado();
-									selected += " ";
+									selected += ", ";
 								} else
 									selected += "";
 								break;
 							case "representacioncromatica":
 								if (((EstadosXTipoIndicador) arr[i]).getRepresentacionCromatica() != null) {
 									selected += ((EstadosXTipoIndicador) arr[i]).getRepresentacionCromatica();
-									selected += " ";
+									selected += ", ";
 								} else
 									selected += "";
 								break;
 							}
 
 						}
+						selected = selected.substring(0,selected.length()-2); //eliminar la ultima coma
 						content.putString(selected);
 
 						clipboard.setContent(content);

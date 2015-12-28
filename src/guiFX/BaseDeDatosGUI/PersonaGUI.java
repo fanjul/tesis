@@ -223,61 +223,62 @@ public class PersonaGUI extends TableView<Persona>implements AbstractBaseDeDatos
 							case "id":
 								if (((Persona) arr[i]).getId() != null) {
 									selected += ((Persona) arr[i]).getId().toString();
-									selected += " ";
+									selected += ", ";
 								} else
 									selected += "";
 								break;
 							case "nombre":
 								if (((Persona) arr[i]).getNombre() != null) {
 									selected += ((Persona) arr[i]).getNombre();
-									selected += " ";
+									selected += ", ";
 								} else
 									selected += "";
 								break;
 							case "apellido":
 								if (((Persona) arr[i]).getApellido() != null) {
 									selected += ((Persona) arr[i]).getApellido();
-									selected += " ";
+									selected += ", ";
 								} else
 									selected += "";
 								break;
 							case "email":
 								if (((Persona) arr[i]).getEmail() != null) {
 									selected += ((Persona) arr[i]).getEmail();
-									selected += " ";
+									selected += ", ";
 								} else
 									selected += "";
 								break;
 							case "tipodocumento":
 								if (((Persona) arr[i]).getTipoDocumento() != null) {
 									selected += ((Persona) arr[i]).getTipoDocumento();
-									selected += " ";
+									selected += ", ";
 								} else
 									selected += "";
 								break;
 							case "nrodocumento":
 								if (((Persona) arr[i]).getNroDocumento() != null) {
 									selected += ((Persona) arr[i]).getNroDocumento();
-									selected += " ";
+									selected += ", ";
 								} else
 									selected += "";
 								break;
 							case "cargo":
 								if (((Persona) arr[i]).getCargo() != null) {
 									selected += ((Persona) arr[i]).getCargo();
-									selected += " ";
+									selected += ", ";
 								} else
 									selected += "";
 								break;
 							case "observaciones":
 								if (((Persona) arr[i]).getObservaciones() != null) {
 									selected += ((Persona) arr[i]).getObservaciones();
-									selected += " ";
+									selected += ", ";
 								} else
 									selected += "";
 								break;
 							}
 						}
+						selected = selected.substring(0,selected.length()-2); //eliminar la ultima coma
 						content.putString(selected);
 
 						clipboard.setContent(content);

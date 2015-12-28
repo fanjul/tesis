@@ -280,104 +280,105 @@ public class IndicadorGUI extends TableView<Indicador>implements AbstractBaseDeD
 							case "id":
 								if (((Indicador) arr[i]).getId() != null) {
 									selected += ((Indicador) arr[i]).getId().toString();
-									selected += " ";
+									selected += ", ";
 								} else
 									selected += "";
 								break;
 							case "observaciones":
 								if (((Indicador) arr[i]).getObservaciones() != null) {
 									selected += ((Indicador) arr[i]).getObservaciones();
-									selected += " ";
+									selected += ", ";
 								} else
 									selected += "";
 								break;
 							case "codigo":
 								if (((Indicador) arr[i]).getCodigo() != null) {
 									selected += ((Indicador) arr[i]).getCodigo();
-									selected += " ";
+									selected += ", ";
 								} else
 									selected += "";
 								break;
 							case "nombre":
 								if (((Indicador) arr[i]).getNombre() != null) {
 									selected += ((Indicador) arr[i]).getNombre();
-									selected += " ";
+									selected += ", ";
 								} else
 									selected += "";
 								break;
 							case "idunidaddemedida":
 								if (((Indicador) arr[i]).getIdUnidadDeMedida() != null) {
 									selected += ((Indicador) arr[i]).getIdUnidadDeMedida().toString();
-									selected += " ";
+									selected += ", ";
 								} else
 									selected += "";
 								break;
 							case "direccion":
 								if (((Indicador) arr[i]).getDireccion() != null) {
 									selected += ((Indicador) arr[i]).getDireccion().toString();
-									selected += " ";
+									selected += ", ";
 								} else
 									selected += "";
 								break;
 							case "formula":
 								if (((Indicador) arr[i]).getFormula() != null) {
 									selected += ((Indicador) arr[i]).getFormula();
-									selected += " ";
+									selected += ", ";
 								} else
 									selected += "";
 								break;
 							case "fichametodologica":
 								if (((Indicador) arr[i]).getFichaMetodologica() != null) {
 									selected += ((Indicador) arr[i]).getFichaMetodologica();
-									selected += " ";
+									selected += ", ";
 								} else
 									selected += "";
 								break;
 							case "idgrafico":
 								if (((Indicador) arr[i]).getIdGrafico() != null) {
 									selected += ((Indicador) arr[i]).getIdGrafico().toString();
-									selected += " ";
+									selected += ", ";
 								} else
 									selected += "";
 								break;
 							case "idresponsable":
 								if (((Indicador) arr[i]).getIdResponsable() != null) {
 									selected += ((Indicador) arr[i]).getIdResponsable().toString();
-									selected += " ";
+									selected += ", ";
 								} else
 									selected += "";
 								break;
 							case "frecuencia":
 								if (((Indicador) arr[i]).getFrecuencia() != null) {
 									selected += ((Indicador) arr[i]).getFrecuencia();
-									selected += " ";
+									selected += ", ";
 								} else
 									selected += "";
 								break;
 							case "periodo":
 								if (((Indicador) arr[i]).getPeriodo() != null) {
 									selected += ((Indicador) arr[i]).getPeriodo();
-									selected += " ";
+									selected += ", ";
 								} else
 									selected += "";
 								break;
 							case "fechaultimaactualizacion":
 								if (((Indicador) arr[i]).getFechaUltimaActualizacion() != null) {
 									selected += ((Indicador) arr[i]).getFechaUltimaActualizacion().toString();
-									selected += " ";
+									selected += ", ";
 								} else
 									selected += "";
 								break;
 							case "idtipoindicador":
 								if (((Indicador) arr[i]).getIdTipoIndicador() != null) {
 									selected += ((Indicador) arr[i]).getIdTipoIndicador().toString();
-									selected += " ";
+									selected += ", ";
 								} else
 									selected += "";
 								break;
 
 							}
 						}
+						selected = selected.substring(0,selected.length()-2); //eliminar la ultima coma
 						content.putString(selected);
 
 						clipboard.setContent(content);
