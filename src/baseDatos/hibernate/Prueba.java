@@ -1,3 +1,4 @@
+
 package baseDatos.hibernate;
 
 import baseDatos.hibernate.consultas.EstadosXTipoIndicadorDAO;
@@ -50,13 +51,13 @@ public class Prueba {
 		ValorIndicadorDAO valorDao = new ValorIndicadorDAO();
 		TableroDAO tableroDao = new TableroDAO();
 
-		//setear datos en las tablas
-		grafico.setId(1);
-		grafico.setObservaciones("asd");
-		graficoDao.guardar(grafico);
-		
-		grafico.setId(2);
-		graficoDao.actualizar(grafico);
+//		//setear datos en las tablas
+//		grafico.setId(1);
+//		grafico.setObservaciones("asd");
+//		graficoDao.guardar(grafico);
+//		
+//		grafico.setId(2);
+//		graficoDao.actualizar(grafico);
 //		
 //		indicador.setCodigo("asd");
 //		indicador.setId(1);

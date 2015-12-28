@@ -28,10 +28,11 @@ public class MainFx extends Application {
 	// parrafo informativo que arme el usuario
 	// TODO ver de agarrar el layout maximo de cada pc y no harcodeado como esta
 	// ahora para mejorar la interfaz
-
+	//TODO agregar comas al drag and drop como esta en EstadosXTipoIndicador 
+	
 	private static final String HERRAMIENTA_TESIS = "HerramientaTesis";
 	public static Double WIDTH;
-	public static Double HEIGTH;
+	public static Double HEIGHT;
 
 	public static void main(String[] args) {
 		Application.launch(args);
@@ -42,21 +43,22 @@ public class MainFx extends Application {
 	public void start(Stage primaryStage) {
 		primaryStage.setTitle(HERRAMIENTA_TESIS);
 		primaryStage.setResizable(false);
-		primaryStage.setMaximized(false);
 
 		Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
-
+	
 		primaryStage.setX(primaryScreenBounds.getMinX());
 		primaryStage.setY(primaryScreenBounds.getMinY());
 		primaryStage.setWidth(primaryScreenBounds.getWidth());
 		primaryStage.setHeight(primaryScreenBounds.getHeight());
 		
+
+		
 		WIDTH = primaryStage.getWidth();
-		HEIGTH = primaryStage.getHeight();
+		HEIGHT = primaryStage.getHeight();
 		
 		BorderPane ventana = new VentanaPrincipal(primaryStage);
 
-		ventana.setPrefHeight(HEIGTH);// minimo alto de la pantalla
+		ventana.setPrefHeight(HEIGHT);// minimo alto de la pantalla
 		ventana.setPrefWidth(WIDTH);// minimo ancho de la pantalla
 
 		AnchorPane cuadroPrincipal = new AnchorPane();

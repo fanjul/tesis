@@ -192,55 +192,56 @@ public class ValorIndicadorGUI extends TableView<ValorIndicador>implements Abstr
 							case "idindicador":
 								if (((ValorIndicador) arr[i]).getIdIndicador() != null) {
 									selected += ((ValorIndicador) arr[i]).getIdIndicador().toString();
-									selected += " ";
+									selected += ", ";
 								} else
 									selected += "";
 								break;
 							case "fecha":
 								if (((ValorIndicador) arr[i]).getFecha() != null) {
 									selected += ((ValorIndicador) arr[i]).getFecha().toString();
-									selected += " ";
+									selected += ", ";
 								} else
 									selected += "";
 								break;
 							case "valor":
 								if (((ValorIndicador) arr[i]).getValor() != null) {
 									selected += ((ValorIndicador) arr[i]).getValor().toString();
-									selected += " ";
+									selected += ", ";
 								} else
 									selected += "";
 								break;
 							case "estado":
 								if (((ValorIndicador) arr[i]).getEstado() != null) {
 									selected += ((ValorIndicador) arr[i]).getEstado();
-									selected += " ";
+									selected += ", ";
 								} else
 									selected += "";
 								break;
 							case "variacion":
 								if (((ValorIndicador) arr[i]).getVariacion() != null) {
 									selected += ((ValorIndicador) arr[i]).getVariacion().toString();
-									selected += " ";
+									selected += ", ";
 								} else
 									selected += "";
 								break;
 							case "signovariacion":
 								if (((ValorIndicador) arr[i]).getSignoVariacion() != null) {
 									selected += ((ValorIndicador) arr[i]).getSignoVariacion().toString();
-									selected += " ";
+									selected += ", ";
 								} else
 									selected += "";
 								break;
 							case "observaciones":
 								if (((ValorIndicador) arr[i]).getObservaciones() != null) {
 									selected += ((ValorIndicador) arr[i]).getObservaciones();
-									selected += " ";
+									selected += ", ";
 								} else
 									selected += "";
 								break;
 
 							}
 						}
+						selected = selected.substring(0,selected.length()-2); //eliminar la ultima coma
 						content.putString(selected);
 
 						clipboard.setContent(content);

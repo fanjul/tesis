@@ -2,15 +2,16 @@ package guiFX;
 
 import javafx.scene.Node;
 import javafx.scene.layout.HBox;
+import main.MainFx;
 
 public class ListaBotonesGrafico extends HBox {
 	
 	public ListaBotonesGrafico(){
 		super();
-		this.setMaxHeight(81.5);
-		this.setMinHeight(81.5);
-		this.setMaxWidth(600);
-		this.setMinWidth(600);
+		this.setMaxHeight(((MainFx.HEIGHT * 2/3) *1/4 ));
+		this.setMinHeight(((MainFx.HEIGHT * 2/3) *1/4 ));
+		this.setMaxWidth(((3*MainFx.WIDTH)/8) - 10);
+		this.setMinWidth(((3*MainFx.WIDTH)/8) - 10);
 		this.setSpacing(30);
 	}
 	
