@@ -175,28 +175,28 @@ public class TableroGUI extends TableView<Tablero>implements AbstractBaseDeDatos
 							case "id":
 								if (((Tablero) arr[i]).getId() != null) {
 									selected += ((Tablero) arr[i]).getId().toString();
-									selected += " ";
+									selected += ", ";
 								} else
 									selected += "";
 								break;
 							case "nombre":
 								if (((Tablero) arr[i]).getNombre() != null) {
 									selected += ((Tablero) arr[i]).getNombre();
-									selected += " ";
+									selected += ", ";
 								} else
 									selected += "";
 								break;
 							case "idindicador":
 								if (((Tablero) arr[i]).getIdIndicador() != null) {
 									selected += ((Tablero) arr[i]).getIdIndicador().toString();
-									selected += " ";
+									selected += ", ";
 								} else
 									selected += "";
 								break;
 							case "idresponsable":
 								if (((Tablero) arr[i]).getIdResponsable() != null) {
 									selected += ((Tablero) arr[i]).getIdResponsable().toString();
-									selected += " ";
+									selected += ", ";
 								} else
 									selected += "";
 								break;
@@ -204,13 +204,14 @@ public class TableroGUI extends TableView<Tablero>implements AbstractBaseDeDatos
 							case "fechaultimaactualizacion":
 								if (((Tablero) arr[i]).getFechaUltimaActualizacion() != null) {
 									selected += ((Tablero) arr[i]).getFechaUltimaActualizacion().toString();
-									selected += " ";
+									selected += ", ";
 								} else
 									selected += "";
 								break;
 
 							}
 						}
+						selected = selected.substring(0,selected.length()-2); //eliminar la ultima coma
 						content.putString(selected);
 
 						clipboard.setContent(content);

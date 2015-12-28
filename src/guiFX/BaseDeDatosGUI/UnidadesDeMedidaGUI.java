@@ -186,27 +186,28 @@ public class UnidadesDeMedidaGUI extends TableView<UnidadesDeMedida>implements A
 							case "id":
 								if (((UnidadesDeMedida) arr[i]).getId() != null) {
 									selected += ((UnidadesDeMedida) arr[i]).getId().toString();
-									selected += " ";
+									selected += ", ";
 								} else
 									selected += "";
 								break;
 							case "unidaddemedida":
 								if (((UnidadesDeMedida) arr[i]).getUnidadDeMedida() != null) {
 									selected += ((UnidadesDeMedida) arr[i]).getUnidadDeMedida();
-									selected += " ";
+									selected += ", ";
 								} else
 									selected += "";
 								break;
 							case "observaciones":
 								if (((UnidadesDeMedida) arr[i]).getObservaciones() != null) {
 									selected += ((UnidadesDeMedida) arr[i]).getObservaciones();
-									selected += " ";
+									selected += ", ";
 								} else
 									selected += "";
 								break;
 
 							}
 						}
+						selected = selected.substring(0,selected.length()-2); //eliminar la ultima coma
 						content.putString(selected);
 
 						clipboard.setContent(content);

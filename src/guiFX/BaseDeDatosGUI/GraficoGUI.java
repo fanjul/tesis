@@ -187,27 +187,28 @@ public class GraficoGUI extends TableView<Grafico>implements AbstractBaseDeDatos
 							case "id":
 								if (((Grafico) arr[i]).getId() != null) {
 									selected += ((Grafico) arr[i]).getId().toString();
-									selected += " ";
+									selected += ", ";
 								} else
 									selected += "";
 								break;
 							case "observaciones":
 								if (((Grafico) arr[i]).getObservaciones() != null) {
 									selected += ((Grafico) arr[i]).getObservaciones();
-									selected += " ";
+									selected += ", ";
 								} else
 									selected += "";
 								break;
 							case "tipografico":
 								if (((Grafico) arr[i]).getTipoGrafico() != null) {
 									selected += ((Grafico) arr[i]).getTipoGrafico();
-									selected += " ";
+									selected += ", ";
 								} else
 									selected += "";
 								break;
 
 							}
 						}
+						selected = selected.substring(0,selected.length()-2); //eliminar la ultima coma
 						content.putString(selected);
 
 						clipboard.setContent(content);

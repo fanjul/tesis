@@ -252,14 +252,14 @@ public class HSTumbralesXEstadosXIndicadorGUI extends TableView<HSTumbralesXEsta
 							case "idindicador":
 								if (((HSTumbralesXEstadosXIndicador) arr[i]).getIdIndicador() != null) {
 									selected += ((HSTumbralesXEstadosXIndicador) arr[i]).getIdIndicador().toString();
-									selected += " ";
+									selected += ", ";
 								} else
 									selected += "";
 								break;
 							case "observaciones":
 								if (((HSTumbralesXEstadosXIndicador) arr[i]).getObservaciones() != null) {
 									selected += ((HSTumbralesXEstadosXIndicador) arr[i]).getObservaciones();
-									selected += " ";
+									selected += ", ";
 								} else
 									selected += "";
 								break;
@@ -267,55 +267,56 @@ public class HSTumbralesXEstadosXIndicadorGUI extends TableView<HSTumbralesXEsta
 								if (((HSTumbralesXEstadosXIndicador) arr[i]).getIdEstadoTipoIndicador() != null) {
 									selected += ((HSTumbralesXEstadosXIndicador) arr[i]).getIdEstadoTipoIndicador()
 											.toString();
-									selected += " ";
+									selected += ", ";
 								} else
 									selected += "";
 								break;
 							case "inicioumbral":
 								if (((HSTumbralesXEstadosXIndicador) arr[i]).getInicioUmbral() != null) {
 									selected += ((HSTumbralesXEstadosXIndicador) arr[i]).getInicioUmbral().toString();
-									selected += " ";
+									selected += ", ";
 								} else
 									selected += "";
 								break;
 							case "finumbral":
 								if (((HSTumbralesXEstadosXIndicador) arr[i]).getFinUmbral() != null) {
 									selected += ((HSTumbralesXEstadosXIndicador) arr[i]).getFinUmbral().toString();
-									selected += " ";
+									selected += ", ";
 								} else
 									selected += "";
 								break;
 							case "operadorumbralsuperior":
 								if (((HSTumbralesXEstadosXIndicador) arr[i]).getOperadorUmbralSuperior() != null) {
 									selected += ((HSTumbralesXEstadosXIndicador) arr[i]).getOperadorUmbralSuperior();
-									selected += " ";
+									selected += ", ";
 								} else
 									selected += "";
 								break;
 							case "operadorumbralinferior":
 								if (((HSTumbralesXEstadosXIndicador) arr[i]).getOperadorUmbralInferior() != null) {
 									selected += ((HSTumbralesXEstadosXIndicador) arr[i]).getOperadorUmbralInferior();
-									selected += " ";
+									selected += ", ";
 								} else
 									selected += "";
 								break;
 							case "valorumbralsuperior":
 								if (((HSTumbralesXEstadosXIndicador) arr[i]).getValorUmbralSuperior() != null) {
 									selected += ((HSTumbralesXEstadosXIndicador) arr[i]).getValorUmbralSuperior();
-									selected += " ";
+									selected += ", ";
 								} else
 									selected += "";
 								break;
 							case "valorumbralinferior":
 								if (((HSTumbralesXEstadosXIndicador) arr[i]).getValorUmbralInferior() != null) {
 									selected += ((HSTumbralesXEstadosXIndicador) arr[i]).getValorUmbralInferior();
-									selected += " ";
+									selected += ", ";
 								} else
 									selected += "";
 								break;
 							}
 
-						}
+						}					
+						selected = selected.substring(0,selected.length()-2); //eliminar la ultima coma
 						content.putString(selected);
 
 						clipboard.setContent(content);
