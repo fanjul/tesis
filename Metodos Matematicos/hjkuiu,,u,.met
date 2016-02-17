@@ -1,5 +1,0 @@
-hola <- function() {
-
-    sprintf( "Hello, %s", "Capooo" );
-
-}

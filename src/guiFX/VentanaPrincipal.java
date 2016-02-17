@@ -43,7 +43,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
-import main.MainFx;
+import main.Main;
 
 public class VentanaPrincipal extends BorderPane {
 
@@ -77,9 +77,9 @@ public class VentanaPrincipal extends BorderPane {
 		panelDerecho = PanelDerecho.getInstance();
 		// Configuracion de la parte izquierda del borderPane (VentanaPrincipal)
 		barraMenu = new BarraMenu(this, panelDerecho, primaryStage);
-		barraMenu.setMaxHeight(MainFx.HEIGHT * 2/3);
-		barraMenu.setMinHeight(MainFx.HEIGHT * 2/3);
-		barraMenu.setMaxWidth(MainFx.WIDTH * 1/4); //un cuarto de la pantalla
+		barraMenu.setMaxHeight(Main.HEIGHT * 2/3);
+		barraMenu.setMinHeight(Main.HEIGHT * 2/3);
+		barraMenu.setMaxWidth(Main.WIDTH * 1/4); //un cuarto de la pantalla
 		barraMenu.setMinWidth(0);
 
 		barraMenu.setSpacing(10);
@@ -168,10 +168,10 @@ public class VentanaPrincipal extends BorderPane {
 
 		hBoxAbajo.getChildren().addAll(/* listaMetodos, */ botonCrearNuevoMetodo, botonGuardar, botonEjecutar);
 		hBoxAbajo.setSpacing(120);
-		hBoxAbajo.setMaxHeight(MainFx.HEIGHT/6);
-		hBoxAbajo.setMinHeight(MainFx.HEIGHT/6);
-		hBoxAbajo.setMaxWidth(MainFx.WIDTH);
-		hBoxAbajo.setMinWidth(MainFx.WIDTH);
+		hBoxAbajo.setMaxHeight(Main.HEIGHT/6);
+		hBoxAbajo.setMinHeight(Main.HEIGHT/6);
+		hBoxAbajo.setMaxWidth(Main.WIDTH);
+		hBoxAbajo.setMinWidth(Main.WIDTH);
 		hBoxAbajo.setAlignment(Pos.CENTER);
 		this.setBottom(hBoxAbajo);
 
