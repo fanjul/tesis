@@ -12,7 +12,7 @@ import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.VBox;
-import main.MainFx;
+import main.Main;
 
 public class PanelDerecho extends VBox {
 
@@ -21,18 +21,18 @@ public class PanelDerecho extends VBox {
 
 	private PanelDerecho() {
 		super();
-		this.setMaxHeight(MainFx.HEIGHT * 2/3);
-		this.setMinHeight(MainFx.HEIGHT * 2/3);
-		this.setMaxWidth((3*MainFx.WIDTH)* 1/8);
-		this.setMinWidth((3*MainFx.WIDTH)* 1/8);
+		this.setMaxHeight(Main.HEIGHT * 2/3);
+		this.setMinHeight(Main.HEIGHT * 2/3);
+		this.setMaxWidth((3*Main.WIDTH)* 1/8);
+		this.setMinWidth((3*Main.WIDTH)* 1/8);
 
 		editorTexto = new TextArea();
 		configuracionEditorTexto();
 		this.getChildren().add(editorTexto);
-		editorTexto.setMaxHeight((MainFx.HEIGHT * 2/3) *1/2 );
-		editorTexto.setMinHeight((MainFx.HEIGHT * 2/3) *1/2 );
-		editorTexto.setMinWidth(((3*MainFx.WIDTH)* 1/8) - 10);
-		editorTexto.setMaxWidth(((3*MainFx.WIDTH)* 1/8) - 10);
+		editorTexto.setMaxHeight((Main.HEIGHT * 2/3) *1/2 );
+		editorTexto.setMinHeight((Main.HEIGHT * 2/3) *1/2 );
+		editorTexto.setMinWidth(((3*Main.WIDTH)* 1/8) - 10);
+		editorTexto.setMaxWidth(((3*Main.WIDTH)* 1/8) - 10);
 		setAlignment(Pos.CENTER);
 
 	}

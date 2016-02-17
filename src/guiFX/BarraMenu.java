@@ -34,7 +34,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import main.MainFx;
+import main.Main;
 
 public class BarraMenu extends VBox {
 
@@ -221,9 +221,9 @@ public class BarraMenu extends VBox {
 
 	public void inicializarListaMetodosMatematicos(ObservableList<String> lista) {
 		listaMetodos = new ListaMetodos(lista);
-		listaMetodos.setMaxHeight(((MainFx.HEIGHT * 2/3) *1/2 ));
+		listaMetodos.setMaxHeight(((Main.HEIGHT * 2/3) *1/2 ));
 		listaMetodos.setMinHeight(0);
-		listaMetodos.setMaxWidth(MainFx.WIDTH/4);
+		listaMetodos.setMaxWidth(Main.WIDTH/4);
 		listaMetodos.setMinWidth(0);
 
 		this.getChildren().add(listaMetodos);
@@ -251,8 +251,8 @@ public class BarraMenu extends VBox {
 		nombreTablas.setSpacing(50);
 		nombreTablas.setMaxHeight(50);
 		nombreTablas.setMinHeight(50);
-		nombreTablas.setMaxWidth(((3*MainFx.WIDTH)/8) );
-		nombreTablas.setMinWidth(((3*MainFx.WIDTH)/8) );
+		nombreTablas.setMaxWidth(((3*Main.WIDTH)/8) );
+		nombreTablas.setMinWidth(((3*Main.WIDTH)/8) );
 
 		ObservableList<String> data = FXCollections.observableArrayList();
 
@@ -268,11 +268,11 @@ public class BarraMenu extends VBox {
 		comboBoxTablas.setItems(data);
 
 		// contiene la tabla
-		tabla.setMinHeight((MainFx.HEIGHT * 2/3));
-		tabla.setMaxHeight((MainFx.HEIGHT * 2/3));
+		tabla.setMinHeight((Main.HEIGHT * 2/3));
+		tabla.setMaxHeight((Main.HEIGHT * 2/3));
 
-		tabla.setMaxWidth(((3*MainFx.WIDTH)/8));
-		tabla.setMinWidth(((3*MainFx.WIDTH)/8));
+		tabla.setMaxWidth(((3*Main.WIDTH)/8));
+		tabla.setMinWidth(((3*Main.WIDTH)/8));
 		
 
 		comboBoxTablas.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
@@ -291,10 +291,10 @@ public class BarraMenu extends VBox {
 		nombreTablas.setAlignment(Pos.CENTER);
 
 		centroSplit.setOrientation(Orientation.VERTICAL);
-		centroSplit.setMaxHeight((MainFx.HEIGHT * 2/3)+50);
-		centroSplit.setMinHeight((MainFx.HEIGHT * 2/3)+50);
-		centroSplit.setMaxWidth(((3*MainFx.WIDTH)/8));
-		centroSplit.setMinWidth(((3*MainFx.WIDTH)/8));
+		centroSplit.setMaxHeight((Main.HEIGHT * 2/3)+50);
+		centroSplit.setMinHeight((Main.HEIGHT * 2/3)+50);
+		centroSplit.setMaxWidth(((3*Main.WIDTH)/8));
+		centroSplit.setMinWidth(((3*Main.WIDTH)/8));
 
 		centroSplit.getItems().add(tabla);
 		centroSplit.getItems().add(nombreTablas);

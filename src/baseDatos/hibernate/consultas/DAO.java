@@ -35,7 +35,7 @@ public abstract class DAO {
 	
 	public List<String> getAllTables() {
 		this.iniciaOperacion();
-	    List<String> tableNames = new ArrayList<>();
+	    List<String> tableNames = new ArrayList<String>();
 	    SessionFactory sessionFactory = sesion.getSessionFactory();
 	    Map<String, ClassMetadata>  map = (Map<String, ClassMetadata>) sessionFactory.getAllClassMetadata();
 	    for(String entityName : map.keySet()){

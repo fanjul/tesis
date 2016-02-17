@@ -1,20 +1,9 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>HerramientaTesis</groupId>
+	<groupId>org.apache.maven.plugins</groupId>
 	<artifactId>HerramientaTesis</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-
-	<!-- para cuando este para generar el JAR poner esto y en goal package -->
-	<!-- <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-jar-plugin</artifactId> 
-		<configuration> <archive> <manifest> <mainClass>com.luchitoscompany.tesis.MainClass</mainClass> 
-		CLASE MAIN del proyecto </manifest> </archive> </configuration> </plugin> -->
-
-	<!-- para que saque las libs afuera del jar, asi pesa menos y queda solo 
-		el codigo <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-jar-plugin</artifactId> 
-		<configuration> <archive> <manifest> <addClasspath>true</addClasspath> <classpathPrefix>lib/</classpathPrefix> 
-		<mainClass>edu.pereyralomagno.tesis.wizard.CodeMapperWizard</mainClass> </manifest> 
-		</archive> </configuration> </plugin> -->
 
 	<!-- Te falto esto, que indica a que compilarlo(jar o war) -->
 	<packaging>jar</packaging>
@@ -132,17 +121,36 @@
 			</resource>
 		</resources>
 		<plugins>
-			<plugin>
-				<!-- Esto no estoy seguro si sera parte del problema, pero por las dudas -->
-				<groupId>org.apache.maven.plugins</groupId>
+			<!-- para cuando este para generar el JAR poner esto y en goal package -->
 
+			<!-- Specify JRE version -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<!-- Por las dudas no le pongas la version, al no poner nada usa la ultima -->
-				<!-- <version>3.1</version> -->
 				<configuration>
 					<source>1.8</source>
 					<target>1.8</target>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+						<configuration>
+							<transformers>
+								<transformer
+									implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+									<mainClass>main.Main</mainClass>
+								</transformer>
+							</transformers>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
