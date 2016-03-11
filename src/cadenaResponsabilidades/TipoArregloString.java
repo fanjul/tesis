@@ -1,6 +1,9 @@
 package cadenaResponsabilidades;
 
 import java.io.File;
+import java.util.List;
+
+import org.rosuda.JRI.REXP;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
@@ -24,10 +27,20 @@ public class TipoArregloString extends TipoObjeto {
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
-	public void ejecutarMetodo(Object obj, File archivo, ListView listaMetodos, TextField textFieldNombreFuncion, TableView tablaResultado) {
+	public void ejecutarMetodo(Object obj, File archivo, ListView<String> listaMetodos,
+			TextField textFieldNombreFuncion, TableView tablaResultado, boolean recursivo,
+			List<String> resultado) {
 		
-		if (obj instanceof String[]) {
+		setSiguiente(new TipoString());
+		if(obj instanceof String[] || obj instanceof REXP){ 
 			
+			if( obj instanceof REXP && ((REXP) obj).getContent() instanceof String[]){
+				obj = ((REXP) obj).getContent();
+			}
+			else if (obj instanceof REXP && super.siguiente() != null) {
+					super.siguiente().ejecutarMetodo(obj, archivo, listaMetodos, textFieldNombreFuncion, tablaResultado,recursivo,resultado);
+					return;
+			}
 			String[] arr = null;
 			if (!textFieldNombreFuncion.getText().isEmpty()) {
 				arr = (String[]) obj;
@@ -51,10 +64,10 @@ public class TipoArregloString extends TipoObjeto {
 			tablaResultado.setItems(datos);
 			} 
 			
-		if (super.siguiente() != null){
-			super.siguiente().ejecutarMetodo(obj, archivo, listaMetodos,
-					textFieldNombreFuncion,tablaResultado);
-		}
+		else if (super.siguiente() != null) {
+			super.siguiente().ejecutarMetodo(obj, archivo, listaMetodos, textFieldNombreFuncion, tablaResultado,recursivo,resultado);
+		}	
 
 	}
+
 }

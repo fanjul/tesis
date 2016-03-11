@@ -4,6 +4,8 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JOptionPane;
 
@@ -13,6 +15,8 @@ import org.rosuda.JRI.Rengine;
 
 import cadenaResponsabilidades.TipoArregloDouble;
 import cadenaResponsabilidades.TipoArregloString;
+import cadenaResponsabilidades.TipoFactor;
+import cadenaResponsabilidades.TipoList;
 import cadenaResponsabilidades.TipoMatrizDouble;
 import cadenaResponsabilidades.TipoObjeto;
 import cadenaResponsabilidades.TipoString;
@@ -34,6 +38,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TableView;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.Tooltip;
@@ -77,9 +82,9 @@ public class VentanaPrincipal extends BorderPane {
 		panelDerecho = PanelDerecho.getInstance();
 		// Configuracion de la parte izquierda del borderPane (VentanaPrincipal)
 		barraMenu = new BarraMenu(this, panelDerecho, primaryStage);
-		barraMenu.setMaxHeight(Main.HEIGHT * 2/3);
-		barraMenu.setMinHeight(Main.HEIGHT * 2/3);
-		barraMenu.setMaxWidth(Main.WIDTH * 1/4); //un cuarto de la pantalla
+		barraMenu.setMaxHeight(Main.HEIGHT * 2 / 3);
+		barraMenu.setMinHeight(Main.HEIGHT * 2 / 3);
+		barraMenu.setMaxWidth(Main.WIDTH * 1 / 4); // un cuarto de la pantalla
 		barraMenu.setMinWidth(0);
 
 		barraMenu.setSpacing(10);
@@ -146,13 +151,12 @@ public class VentanaPrincipal extends BorderPane {
 		crearGraficoTorta();
 		crearGraficoBarras();
 
-
 		listaBotonesSuperior = new ListaBotonesGrafico();
 		listaBotonesInferior = new ListaBotonesGrafico();
 		listaBotonesSuperior.agregarNodo(botonGraficoTorta);
 		listaBotonesSuperior.agregarNodo(botonGraficoBarras);
 		listaBotonesSuperior.setAlignment(Pos.CENTER);
-		
+
 		listaBotonesInferior.agregarNodo(tablaResultado);
 		listaBotonesInferior.setAlignment(Pos.CENTER);
 		panelDerecho.agregarElemento(listaBotonesSuperior);
@@ -168,8 +172,8 @@ public class VentanaPrincipal extends BorderPane {
 
 		hBoxAbajo.getChildren().addAll(/* listaMetodos, */ botonCrearNuevoMetodo, botonGuardar, botonEjecutar);
 		hBoxAbajo.setSpacing(120);
-		hBoxAbajo.setMaxHeight(Main.HEIGHT/6);
-		hBoxAbajo.setMinHeight(Main.HEIGHT/6);
+		hBoxAbajo.setMaxHeight(Main.HEIGHT / 6);
+		hBoxAbajo.setMinHeight(Main.HEIGHT / 6);
 		hBoxAbajo.setMaxWidth(Main.WIDTH);
 		hBoxAbajo.setMinWidth(Main.WIDTH);
 		hBoxAbajo.setAlignment(Pos.CENTER);
@@ -432,39 +436,8 @@ public class VentanaPrincipal extends BorderPane {
 		tablaResultado.getColumns().clear();
 
 		try {
-			TipoObjeto tipoMatrizDouble = new TipoMatrizDouble();
-			tipoMatrizDouble.ejecutarMetodo(
-					re.eval(((DialogoEjecutar) dialogoEjecutar).getTextFieldNombreDondeDevuelve().getText()).asMatrix(),
-					archivo, barraMenu.getListaMetodos(),
-					((DialogoEjecutar) dialogoEjecutar).getTextFieldNombreDondeDevuelve(),
-					tablaResultado/* areaResultado */);
 
-			if (tablaResultado.getColumns().isEmpty()) {
-
-				TipoObjeto tipoArregloDouble = new TipoArregloDouble();
-				tipoArregloDouble.ejecutarMetodo(
-						re.eval(((DialogoEjecutar) dialogoEjecutar).getTextFieldNombreDondeDevuelve().getText())
-								.getContent(),
-						archivo, barraMenu.getListaMetodos(),
-						((DialogoEjecutar) dialogoEjecutar).getTextFieldNombreDondeDevuelve(),
-						tablaResultado/* areaResultado */);
-			}
-
-			TipoObjeto tipoArregloString = new TipoArregloString();
-			tipoArregloString.ejecutarMetodo(
-					re.eval(((DialogoEjecutar) dialogoEjecutar).getTextFieldNombreDondeDevuelve().getText())
-							.getContent(),
-					archivo, barraMenu.getListaMetodos(),
-					((DialogoEjecutar) dialogoEjecutar).getTextFieldNombreDondeDevuelve(),
-					tablaResultado/* areaResultado */);
-
-			TipoObjeto tipoString = new TipoString();
-			tipoString.ejecutarMetodo(
-					re.eval(((DialogoEjecutar) dialogoEjecutar).getTextFieldNombreDondeDevuelve().getText())
-							.getContent(),
-					archivo, barraMenu.getListaMetodos(),
-					((DialogoEjecutar) dialogoEjecutar).getTextFieldNombreDondeDevuelve(),
-					tablaResultado/* areaResultado */);
+			obtenerResultado(re, dialogoEjecutar, archivo);
 
 		} catch (Exception E) {
 			Dialogo dialogoError = new DialogoErrorDevolucion();
@@ -480,6 +453,17 @@ public class VentanaPrincipal extends BorderPane {
 		} finally {
 			dialogoEjecutar.cerrarDialogo();
 		}
+	}
+
+	private void obtenerResultado(Rengine re, Dialogo dialogoEjecutar, File archivo) {
+		List<String> resultado = new ArrayList<String>();
+
+		TipoObjeto tipoFactor = new TipoFactor();
+		tipoFactor.ejecutarMetodo(
+				re.eval(((DialogoEjecutar) dialogoEjecutar).getTextFieldNombreDondeDevuelve().getText()), archivo,
+				barraMenu.getListaMetodos(), ((DialogoEjecutar) dialogoEjecutar).getTextFieldNombreDondeDevuelve(),
+				tablaResultado, false, resultado);
+
 	}
 
 	private void agregarMenuVentana(Stage primaryStage) {
