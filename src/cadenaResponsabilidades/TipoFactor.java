@@ -20,14 +20,14 @@ public class TipoFactor extends TipoObjeto {
 			TextField textFieldNombreFuncion, TableView tablaResultado, boolean recursivo,
 			List<String> resultado) {
 		
-		setSiguiente(new TipoList());
+		setSiguiente(new TipoMatrizDouble());
 		if (((REXP) obj).asFactor() != null) {
 			obj = ((REXP) obj).asFactor();
-			RFactor lista = (RFactor) obj;
+			RFactor factor = (RFactor) obj;
 			
-			for(int i = 0; i < lista.size(); i++){
+			for(int i = 0; i < factor.size(); i++){
 				
-				lista.at(i);	
+				factor.at(i);	
 			}
 		}
 		

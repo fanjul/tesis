@@ -19,12 +19,11 @@ public class TipoList extends TipoObjeto {
 			TextField textFieldNombreFuncion, TableView tablaResultado, boolean recursivo,
 			List<String> resultado) {
 
-		setSiguiente(new TipoMatrizDouble());
+		setSiguiente(new TipoVector());
 		if (((REXP) obj).asList() != null) {
-			obj = ((REXP) obj).asList();
 			String[] strings = new String[100];
 			int i = 0;
-			RList lista = (RList) obj;
+			RList lista = ((REXP) obj).asList();
 			String[] keys = lista.keys();
 			TipoObjeto objeto = null;
 			// la lista tiene keys
@@ -49,15 +48,17 @@ public class TipoList extends TipoObjeto {
 						objeto = new TipoList();
 						objeto.ejecutarMetodo(lista.at(key), archivo, listaMetodos, textFieldNombreFuncion,
 								tablaResultado,true,resultado);
+					}else{
+						//supongo que lo que viene es un Vector que lo instancio mal en List
+						objeto = new TipoVector();
+						objeto.ejecutarMetodo(obj, archivo, listaMetodos, textFieldNombreFuncion, tablaResultado, recursivo, resultado);
+						return;
 					}
 
 				}
 				// la lista tiene solo informacion
 			} else {
 				while (lista.at(i) != null) {
-					if (lista.at(i).asVector() != null) {
-						//TODO clase tipo vector... sucede cuadno tenes lista de lista
-					}
 					if (lista.at(i).asString() != null) {
 						strings[i] = lista.at(i).asString();
 						i++;
@@ -89,7 +90,7 @@ public class TipoList extends TipoObjeto {
 			super.siguiente().ejecutarMetodo(obj, archivo, listaMetodos, textFieldNombreFuncion, tablaResultado,recursivo,resultado);
 		}	
 	}
-
+	
 	private String[] pasarContenido(String[] s, String[] strings) {
 		int i = 0;
 		while (i < strings.length && strings[i] != null) {
