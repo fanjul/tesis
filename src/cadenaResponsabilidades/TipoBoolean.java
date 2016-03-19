@@ -5,10 +5,14 @@ import java.io.File;
 import org.rosuda.JRI.RBool;
 import org.rosuda.JRI.REXP;
 
+import dialogos.Dialogo;
+import dialogos.DialogoErrorDevolucion;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
@@ -24,7 +28,7 @@ public class TipoBoolean extends TipoObjeto {
 			TextField textFieldNombreFuncion, TableView tablaResultado) {
 
 		setSiguiente(null);
-		if(((REXP) obj).asBool() != null){
+		if (((REXP) obj).asBool() != null) {
 			RBool bool = ((REXP) obj).asBool();
 			ObservableList<Boolean> datos = FXCollections.observableArrayList();
 			datos.add((Boolean) bool.isTRUE());
@@ -40,10 +44,16 @@ public class TipoBoolean extends TipoObjeto {
 			tablaResultado.getColumns().add(columna);
 			tablaResultado.setItems(datos);
 
-			
-		}
-		else if (super.siguiente() != null) {
-			super.siguiente().ejecutarMetodo(obj, archivo, listaMetodos, textFieldNombreFuncion, tablaResultado);
+		} else if (super.siguiente() == null) {
+			Dialogo dialogoError = new DialogoErrorDevolucion();
+			dialogoError.crearDialogo();
+			dialogoError.mostrarDialogo();
+			((DialogoErrorDevolucion) dialogoError).getBotonAceptar().setOnAction(new EventHandler<ActionEvent>() {
+				@Override
+				public void handle(ActionEvent arg0) {
+					dialogoError.cerrarDialogo();
+				}
+			});
 		}
 	}
 

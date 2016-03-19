@@ -44,4 +44,22 @@ public abstract class TipoObjeto {
 		return s;
 	}
 
+	protected int getSize(String[][] tabla) {
+		int size = 0;
+	
+		int j;
+		for (int i = 0; i < tabla.length; i++) {
+			for (j = 0; j < tabla[i].length; j++) {
+				if (tabla[i][j] == null) {
+					break;
+				}
+			}
+			if (size < j) {
+				size = j;
+			}
+		}
+	
+		return size;
+	}
+
 }

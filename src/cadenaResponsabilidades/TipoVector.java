@@ -30,7 +30,7 @@ public class TipoVector extends TipoObjeto {
 				REXP element = (REXP) vector.get(indexVector);
 				if (element.asFactor() != null) {
 					objeto = new TipoFactor();
-					objeto.ejecutarMetodo(element, archivo, listaMetodos, textFieldNombreFuncion, tablaResultado);
+					strings[indexRow] = ((TipoFactor) objeto).getLista(element);
 				} else if (element.asString() != null) {
 					strings[indexRow][indexCol] = ((REXP) element).asString();
 					indexCol++;
@@ -48,23 +48,47 @@ public class TipoVector extends TipoObjeto {
 					}
 				} else if(element.asVector() != null){
 					objeto = new TipoVector();
-					objeto.ejecutarMetodo(element, archivo, listaMetodos, textFieldNombreFuncion, tablaResultado);
+					strings[indexRow] = ((TipoVector) objeto).getString(element);
 				}else if (element.asList() != null) {
 					objeto = new TipoList();
-					objeto.ejecutarMetodo(element, archivo, listaMetodos, textFieldNombreFuncion, tablaResultado);
+					strings[indexRow] = ((TipoList) objeto).getString(element);
 				}
 				indexVector++;
 				indexRow++;
 			}
-			String[][] s = new String[indexCol][indexRow];
+			int size = getSize(strings);
+			String[][] s = new String[size][indexRow];
 			s = pasarContenido(s, strings);
-			objeto = new TipoMatrizArreglo();
+			objeto = new TipoMatrizString();
 			objeto.ejecutarMetodo(s, archivo, listaMetodos, textFieldNombreFuncion, tablaResultado);
 		}
 
 		else if (super.siguiente() != null) {
 			super.siguiente().ejecutarMetodo(obj, archivo, listaMetodos, textFieldNombreFuncion, tablaResultado);
 		}
+	}
+	
+	public String[] getString(REXP vector) {
+		String[] result = new String[100];
+		RVector vec = ((REXP) vector).asVector();
+		int i = 0;
+		while (vec.at(i) != null) {
+			if (vec.at(i).asString() != null) {
+				result[i] = vec.at(i).asString();
+			} else if (vec.at(i).getContent() instanceof double[]) {
+				double[] dou = (double[]) vec.at(i).getContent();
+				for (int j = 0; j < dou.length; j++) {
+					result[i] = Double.toString(dou[j]);
+				}
+			} else if (vec.at(i).asVector() != null) {
+				TipoVector objeto = new TipoVector();
+				result = objeto.getString(vec.at(i));
+
+			}
+			i++;
+		}
+
+		return result;
 	}
 
 }

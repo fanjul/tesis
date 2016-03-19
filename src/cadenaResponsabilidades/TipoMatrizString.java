@@ -14,7 +14,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.util.Callback;
 
-public class TipoMatrizArreglo extends TipoObjeto{
+public class TipoMatrizString extends TipoObjeto{
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override

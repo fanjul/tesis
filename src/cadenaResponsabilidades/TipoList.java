@@ -87,7 +87,7 @@ public class TipoList extends TipoObjeto {
 			int size = getSize(tabla);
 			String[][] t = new String[size][indexRow];
 			t = pasarContenido(t, tabla);
-			objeto = new TipoMatrizArreglo();
+			objeto = new TipoMatrizString();
 			objeto.ejecutarMetodo(t, archivo, listaMetodos, textFieldNombreFuncion, tablaResultado);
 
 		}
@@ -95,24 +95,6 @@ public class TipoList extends TipoObjeto {
 		else if (super.siguiente() != null) {
 			super.siguiente().ejecutarMetodo(obj, archivo, listaMetodos, textFieldNombreFuncion, tablaResultado);
 		}
-	}
-
-	private int getSize(String[][] tabla) {
-		int size = 0;
-
-		int j;
-		for (int i = 0; i < tabla.length; i++) {
-			for (j = 0; j < tabla[i].length; j++) {
-				if (tabla[i][j] == null) {
-					break;
-				}
-			}
-			if (size < j) {
-				size = j;
-			}
-		}
-
-		return size;
 	}
 
 	public String[] getString(REXP list) {
