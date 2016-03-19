@@ -4,8 +4,6 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.JOptionPane;
 
@@ -13,13 +11,8 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.rosuda.JRI.Rengine;
 
-import cadenaResponsabilidades.TipoArregloDouble;
-import cadenaResponsabilidades.TipoArregloString;
-import cadenaResponsabilidades.TipoFactor;
 import cadenaResponsabilidades.TipoList;
-import cadenaResponsabilidades.TipoMatrizDouble;
 import cadenaResponsabilidades.TipoObjeto;
-import cadenaResponsabilidades.TipoString;
 import dialogos.Dialogo;
 import dialogos.DialogoDeseaGuardar;
 import dialogos.DialogoEjecutar;
@@ -38,7 +31,6 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
-import javafx.scene.control.ListView;
 import javafx.scene.control.TableView;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.Tooltip;
@@ -456,13 +448,12 @@ public class VentanaPrincipal extends BorderPane {
 	}
 
 	private void obtenerResultado(Rengine re, Dialogo dialogoEjecutar, File archivo) {
-		List<String> resultado = new ArrayList<String>();
 
-		TipoObjeto tipoFactor = new TipoFactor();
-		tipoFactor.ejecutarMetodo(
+		TipoObjeto tipoLista = new TipoList();
+		tipoLista.ejecutarMetodo(
 				re.eval(((DialogoEjecutar) dialogoEjecutar).getTextFieldNombreDondeDevuelve().getText()), archivo,
 				barraMenu.getListaMetodos(), ((DialogoEjecutar) dialogoEjecutar).getTextFieldNombreDondeDevuelve(),
-				tablaResultado, false, resultado);
+				tablaResultado);
 
 	}
 

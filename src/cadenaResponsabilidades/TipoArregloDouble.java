@@ -2,7 +2,6 @@ package cadenaResponsabilidades;
 
 import java.io.File;
 import java.util.Arrays;
-import java.util.List;
 
 import org.rosuda.JRI.REXP;
 
@@ -23,8 +22,7 @@ public class TipoArregloDouble extends TipoObjeto {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public void ejecutarMetodo(Object obj, File archivo, ListView<String> listaMetodos,
-			TextField textFieldNombreFuncion, TableView tablaResultado, boolean recursivo,
-			List<String> resultado) {
+			TextField textFieldNombreFuncion, TableView tablaResultado) {
 		
 		setSiguiente(new TipoArregloString());
 		if (((REXP) obj).getContent() instanceof double[]) {
@@ -53,7 +51,7 @@ public class TipoArregloDouble extends TipoObjeto {
 			} 
 			
 		else if (super.siguiente() != null) {
-			super.siguiente().ejecutarMetodo(obj, archivo, listaMetodos, textFieldNombreFuncion, tablaResultado,recursivo,resultado);
+			super.siguiente().ejecutarMetodo(obj, archivo, listaMetodos, textFieldNombreFuncion, tablaResultado);
 		}	
 
 	}

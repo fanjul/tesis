@@ -212,7 +212,7 @@ public class ValorIndicadorGUI extends TableView<ValorIndicador>implements Abstr
 								break;
 							case "estado":
 								if (((ValorIndicador) arr[i]).getEstado() != null) {
-									selected += ((ValorIndicador) arr[i]).getEstado();
+									selected += "\""+((ValorIndicador) arr[i]).getEstado()+"\"";
 									selected += ", ";
 								} else
 									selected += "";

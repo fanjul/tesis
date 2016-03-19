@@ -2,7 +2,6 @@ package cadenaResponsabilidades;
 
 import java.io.File;
 import java.util.Arrays;
-import java.util.List;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
@@ -10,9 +9,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.util.Callback;
 
 public class TipoMatrizArreglo extends TipoObjeto{
@@ -20,7 +19,7 @@ public class TipoMatrizArreglo extends TipoObjeto{
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public void ejecutarMetodo(Object obj, File archivo, ListView<String> listaMetodos,
-			TextField textFieldNombreFuncion, TableView tablaResultado, boolean recursivo, List<String> resultado) {
+			TextField textFieldNombreFuncion, TableView tablaResultado) {
 
 		
 		if(obj instanceof String[][]){

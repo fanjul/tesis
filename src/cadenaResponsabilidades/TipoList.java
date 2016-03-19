@@ -1,8 +1,6 @@
 package cadenaResponsabilidades;
 
 import java.io.File;
-import java.util.Arrays;
-import java.util.List;
 
 import org.rosuda.JRI.REXP;
 import org.rosuda.JRI.RList;
@@ -13,16 +11,17 @@ import javafx.scene.control.TextField;
 
 public class TipoList extends TipoObjeto {
 
-	@SuppressWarnings({ "rawtypes"})
+	@SuppressWarnings({ "rawtypes" })
 	@Override
 	public void ejecutarMetodo(Object obj, File archivo, ListView<String> listaMetodos,
-			TextField textFieldNombreFuncion, TableView tablaResultado, boolean recursivo,
-			List<String> resultado) {
+			TextField textFieldNombreFuncion, TableView tablaResultado) {
 
 		setSiguiente(new TipoVector());
 		if (((REXP) obj).asList() != null) {
 			String[] strings = new String[100];
+			String[][] tabla = new String[100][100];
 			int i = 0;
+			int indexRow = 0;
 			RList lista = ((REXP) obj).asList();
 			String[] keys = lista.keys();
 			TipoObjeto objeto = null;
@@ -33,25 +32,29 @@ public class TipoList extends TipoObjeto {
 					// por si es una tabla dentro de una lista
 					if (lista.at(key).asFactor() != null) {
 						objeto = new TipoFactor();
-						objeto.ejecutarMetodo(lista.at(key), archivo, listaMetodos, textFieldNombreFuncion,
-								tablaResultado,true,resultado);
+						tabla[indexRow] = ((TipoFactor) objeto).getLista(lista.at(key));
+						indexRow++;
 					} else if (lista.at(key).asString() != null) {
-						strings[i] = lista.at(key).asString();
-						i++;
+						tabla[indexRow][i] = lista.at(key).asString();
+						indexRow++;
 					} else if (lista.at(key).getContent() instanceof double[]) {
 						double[] dou = (double[]) lista.at(key).getContent();
 						for (int j = 0; j < dou.length; j++) {
-							strings[i] = Double.toString(dou[j]);
-							i++;
+							strings[j] = Double.toString(dou[j]);
+
 						}
+						tabla[indexRow] = strings;
+						indexRow++;
+						strings = new String[100];
 					} else if (lista.at(key).asList() != null) {
 						objeto = new TipoList();
-						objeto.ejecutarMetodo(lista.at(key), archivo, listaMetodos, textFieldNombreFuncion,
-								tablaResultado,true,resultado);
-					}else{
-						//supongo que lo que viene es un Vector que lo instancio mal en List
+						tabla[indexRow] = ((TipoList) objeto).getString(lista.at(key));
+						indexRow++;
+					} else {
+						// supongo que lo que viene es un Vector que lo
+						// instancio mal en List
 						objeto = new TipoVector();
-						objeto.ejecutarMetodo(obj, archivo, listaMetodos, textFieldNombreFuncion, tablaResultado, recursivo, resultado);
+						objeto.ejecutarMetodo(obj, archivo, listaMetodos, textFieldNombreFuncion, tablaResultado);
 						return;
 					}
 
@@ -60,51 +63,79 @@ public class TipoList extends TipoObjeto {
 			} else {
 				while (lista.at(i) != null) {
 					if (lista.at(i).asString() != null) {
-						strings[i] = lista.at(i).asString();
-						i++;
+						tabla[indexRow][0] = lista.at(i).asString();
+						indexRow++;
 					} else if (lista.at(i).getContent() instanceof double[]) {
 						double[] dou = (double[]) lista.at(i).getContent();
 						for (int j = 0; j < dou.length; j++) {
-							strings[i] = Double.toString(dou[j]);
-							i++;
+							strings[j] = Double.toString(dou[j]);
 						}
+						tabla[indexRow] = strings;
+						indexRow++;
+						strings = new String[100];
 					}
-
+					if (lista.at(i).asList() != null) {
+						objeto = new TipoList();
+						tabla[indexRow] = ((TipoList) objeto).getString(lista.at(i));
+						indexRow++;
+					}
+					i++;
 				}
 
 			}
-			String[] s = new String[i];
-			s = pasarContenido(s, strings);
-			if(recursivo){
-				resultado.addAll(Arrays.asList(s));
-				return;
-			}
-			if(!resultado.isEmpty()){
-				s = pasarContenido(resultado);
-			}
-			objeto = new TipoArregloString();
-			objeto.ejecutarMetodo(s, archivo, listaMetodos, textFieldNombreFuncion, tablaResultado,false,resultado);
+
+			int size = getSize(tabla);
+			String[][] t = new String[size][indexRow];
+			t = pasarContenido(t, tabla);
+			objeto = new TipoMatrizArreglo();
+			objeto.ejecutarMetodo(t, archivo, listaMetodos, textFieldNombreFuncion, tablaResultado);
+
 		}
 
-	else if (super.siguiente() != null) {
-			super.siguiente().ejecutarMetodo(obj, archivo, listaMetodos, textFieldNombreFuncion, tablaResultado,recursivo,resultado);
-		}	
+		else if (super.siguiente() != null) {
+			super.siguiente().ejecutarMetodo(obj, archivo, listaMetodos, textFieldNombreFuncion, tablaResultado);
+		}
 	}
-	
-	private String[] pasarContenido(String[] s, String[] strings) {
+
+	private int getSize(String[][] tabla) {
+		int size = 0;
+
+		int j;
+		for (int i = 0; i < tabla.length; i++) {
+			for (j = 0; j < tabla[i].length; j++) {
+				if (tabla[i][j] == null) {
+					break;
+				}
+			}
+			if (size < j) {
+				size = j;
+			}
+		}
+
+		return size;
+	}
+
+	public String[] getString(REXP list) {
+		String[] result = new String[100];
+		RList lista = ((REXP) list).asList();
 		int i = 0;
-		while (i < strings.length && strings[i] != null) {
-			s[i] = strings[i];
+		while (lista.at(i) != null) {
+			if (lista.at(i).asString() != null) {
+				result[i] = lista.at(i).asString();
+			} else if (lista.at(i).getContent() instanceof double[]) {
+				double[] dou = (double[]) lista.at(i).getContent();
+				for (int j = 0; j < dou.length; j++) {
+					result[i] = Double.toString(dou[j]);
+				}
+			} else if (lista.at(i).asList() != null) {
+				TipoList objeto = new TipoList();
+				result = objeto.getString(lista.at(i));
+
+			}
 			i++;
 		}
-		return s;
+
+		return result;
 	}
-	
-	private String[] pasarContenido(List<String> strings) {
-		String[] s = new String[strings.size()];
-		for(int i = 0; i < strings.size(); i++) {
-			s[i] = strings.get(i);
-		}
-		return s;
-	}
+
 }
