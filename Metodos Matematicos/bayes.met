@@ -1,0 +1,5 @@
+library(e1071)
+datos_hist <- read.csv("C:\\Users\\Mariel\\Downloads\\documents-export-2016-03-19\\Archivos\\Datos_Historicos.csv") # tabla de entrenamiento
+nuevos_clientes <- read.csv("C:\\Users\\Mariel\\Downloads\\documents-export-2016-03-19\\Archivos\\Nuevos_Clientes.csv") # tabla de test
+prob <- naiveBayes(Compra ~., data =datos_hist[-1])  # crea tabla Probabilidades
+prediccion <- predict(prob,nuevos_clientes[,-6]) # crea prediccion a datos nuevos

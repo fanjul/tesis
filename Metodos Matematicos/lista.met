@@ -1,0 +1,16 @@
+e <- c(8,5,9,0,1,0,8)
+s <- c("amarillo", "verde", "amarillo", "verde", "amarillo", "rojo", "rojo", "amarillo", "amarillo", "amarillo","rojo", "rojo", "verde", "verde", "verde", "rojo", "amarillo") #VAlORES DE LA BASE DE DATOS
+t= data.frame (cbind(e,s))
+
+x <- list(name="studytrails",website="www.studytrails.com",number=3 )
+y<- list(1,2,3,4,5)
+o <- list(list(list(1,2,3)))
+z <- list(a=list(1,2,3),b=list(142,3))
+a <- "hola" 
+
+q <- data.frame(c(1:3),c(2:4),c(6:8))
+w <- data.frame(data.frame(c(1:3),c(2:4)),data.frame(c(-1:-3),c(-2:-4)))
+u<- 1==2
+
+days <- c('Monday','Tuesday','Wednesday','Thursday','Friday','Monday','Tuesday')
+p <- factor(days)

@@ -2,6 +2,8 @@ package cadenaResponsabilidades;
 
 import java.io.File;
 
+import org.rosuda.JRI.REXP;
+
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -17,13 +19,12 @@ public class TipoString extends TipoObjeto {
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
-	public void ejecutarMetodo(Object obj, File archivo, ListView listaMetodos, TextField textFieldNombreFuncion,
-			TableView tablaResultado) {
+	public void ejecutarMetodo(Object obj, File archivo, ListView<String> listaMetodos,
+			TextField textFieldNombreFuncion, TableView tablaResultado) { 
 
-		if (obj instanceof String) {
-			System.out.println("impprimiendo resultado:   " + obj.toString());
-			// areaResultado.setText(obj.toString());
-
+		setSiguiente(new TipoBoolean());
+		if (((REXP) obj).getContent() instanceof String) {
+			obj = ((REXP) obj).getContent();
 			ObservableList<String> datos = FXCollections.observableArrayList();
 			datos.add((String) obj);
 			TableColumn columna = new TableColumn("Imprime");
@@ -41,7 +42,7 @@ public class TipoString extends TipoObjeto {
 
 		}
 
-		if (super.siguiente() != null) {
+		else if (super.siguiente() != null) {
 			super.siguiente().ejecutarMetodo(obj, archivo, listaMetodos, textFieldNombreFuncion, tablaResultado);
 		}
 

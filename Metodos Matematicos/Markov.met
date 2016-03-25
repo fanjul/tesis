@@ -5,18 +5,18 @@
 #	r   2/5   1/5   2/5
 
 library("markovchain")
-estados <- c("amarillo","rojo", "verde")
-sequence <- c("amarillo", "verde", "amarillo", "verde", "amarillo", "rojo", "rojo", "amarillo", "amarillo", "amarillo","rojo", "rojo", "verde", "verde", "verde", "rojo", "amarillo") #VAlORES DE LA BASE DE DATOS
+estados <- c("AMARILLO","ROJO", "VERDE")
+sequence <- c("VERDE", "AMARILLO", "AMARILLO", "AMARILLO", "VERDE", "ROJO", "ROJO", "AMARILLO", "ROJO", "AMARILLO", "AMARILLO", "AMARILLO", "AMARILLO", "VERDE", "VERDE", "VERDE", "AMARILLO", "VERDE", "AMARILLO", "ROJO", "AMARILLO", "ROJO", "VERDE", "AMARILLO", "AMARILLO", "AMARILLO", "AMARILLO", "VERDE", "AMARILLO", "VERDE", "VERDE", "VERDE", "ROJO", "VERDE", "ROJO", "ROJO", "VERDE", "AMARILLO", "ROJO", "ROJO", "AMARILLO", "ROJO", "VERDE", "ROJO", "AMARILLO", "AMARILLO", "AMARILLO", "AMARILLO", "VERDE", "ROJO", "AMARILLO", "ROJO", "ROJO", "AMARILLO", "AMARILLO", "AMARILLO", "AMARILLO", "AMARILLO", "AMARILLO", "AMARILLO") #VAlORES DE LA BASE DE DATOS
 
 
 getColor <- function(color){
-	if(color == "amarillo"){
+	if(color == "AMARILLO"){
 		return (1)
 	}else { 
-		if (color == "verde"){
+		if (color == "VERDE"){
 			return (2)
 		}
-		else if(color == "rojo"){
+		else if(color == "ROJO"){
 			return (3)
 		}
 	}

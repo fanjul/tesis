@@ -3,6 +3,8 @@ package cadenaResponsabilidades;
 import java.io.File;
 import java.util.Arrays;
 
+import org.rosuda.JRI.REXP;
+
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -16,19 +18,15 @@ import javafx.util.Callback;
 
 public class TipoArregloDouble extends TipoObjeto {
 
-	
-
-	/*@Override
-	public TipoObjeto siguiente() {
-		return sig;
-	}*/
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
-	public void ejecutarMetodo(Object obj, File archivo, ListView listaMetodos, TextField textFieldNombreFuncion, TableView tablaResultado) {
+	public void ejecutarMetodo(Object obj, File archivo, ListView<String> listaMetodos,
+			TextField textFieldNombreFuncion, TableView tablaResultado) {
 		
-		if (obj instanceof double[]) {
-			
+		setSiguiente(new TipoArregloString());
+		if (((REXP) obj).getContent() instanceof double[]) {
+			obj = ((REXP) obj).getContent();
 			double[] arr = null;
 			if (!textFieldNombreFuncion.getText().isEmpty()) {
 				arr = (double[]) obj;
@@ -52,10 +50,9 @@ public class TipoArregloDouble extends TipoObjeto {
 			tablaResultado.setItems(datos);
 			} 
 			
-		if (super.siguiente() != null){
-			super.siguiente().ejecutarMetodo(obj, archivo, listaMetodos,
-					textFieldNombreFuncion,tablaResultado);
-		}
+		else if (super.siguiente() != null) {
+			super.siguiente().ejecutarMetodo(obj, archivo, listaMetodos, textFieldNombreFuncion, tablaResultado);
+		}	
 
 	}
 }

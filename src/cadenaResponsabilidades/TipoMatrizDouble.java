@@ -3,6 +3,8 @@ package cadenaResponsabilidades;
 import java.io.File;
 import java.util.Arrays;
 
+import org.rosuda.JRI.REXP;
+
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -22,38 +24,40 @@ public class TipoMatrizDouble extends TipoObjeto {
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
-	public void ejecutarMetodo(Object obj, File archivo, ListView listaMetodos, TextField textFieldNombreFuncion,
-			TableView tablaResultado) {
+	public void ejecutarMetodo(Object obj, File archivo, ListView<String> listaMetodos,
+			TextField textFieldNombreFuncion, TableView tablaResultado) {
 
-		if (obj instanceof double[][]) {
+		setSiguiente(new TipoArregloDouble());
+		if (((REXP) obj).asMatrix() != null) {
+			obj = ((REXP) obj).asMatrix();
+			if (obj instanceof double[][]) {
+				double[][] matriz = null;
+				if (!textFieldNombreFuncion.getText().isEmpty()) {
+					matriz = (double[][]) obj;
+				}
 
-			double[][] matriz = null;
-			if (!textFieldNombreFuncion.getText().isEmpty()) {
-				matriz = (double[][]) obj;
+				ObservableList<double[]> datos = FXCollections.observableArrayList();
+				datos.addAll(Arrays.asList(matriz));
+				for (int i = 0; i < matriz[0].length; i++) {
+
+					TableColumn tc = new TableColumn(String.valueOf(i));
+
+					final int colNo = i;
+					tc.setCellValueFactory(new Callback<CellDataFeatures<double[], String>, ObservableValue<String>>() {
+						@Override
+						public ObservableValue<String> call(CellDataFeatures<double[], String> param) {
+							return new SimpleStringProperty(Double.toString(param.getValue()[colNo]));
+						}
+					});
+					tc.setPrefWidth(90);
+					tablaResultado.getColumns().add(tc);
+
+				}
+
+				tablaResultado.setItems(datos);
 			}
-
-			ObservableList<double[]> datos = FXCollections.observableArrayList();
-			datos.addAll(Arrays.asList(matriz));
-			for (int i = 0; i < matriz[0].length; i++) {
-
-				TableColumn tc = new TableColumn(String.valueOf(i));
-
-				final int colNo = i;
-				tc.setCellValueFactory(new Callback<CellDataFeatures<double[], String>, ObservableValue<String>>() {
-					@Override
-					public ObservableValue<String> call(CellDataFeatures<double[], String> param) {
-						return new SimpleStringProperty(Double.toString(param.getValue()[colNo]));
-					}
-				});
-				tc.setPrefWidth(90);
-				tablaResultado.getColumns().add(tc);
-
-			}
-
-			tablaResultado.setItems(datos);
 		}
-
-		if (super.siguiente() != null) {
+		else if (super.siguiente() != null) {
 			super.siguiente().ejecutarMetodo(obj, archivo, listaMetodos, textFieldNombreFuncion, tablaResultado);
 		}
 
