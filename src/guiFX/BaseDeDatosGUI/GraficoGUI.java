@@ -1,6 +1,6 @@
 package guiFX.BaseDeDatosGUI;
 
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -178,7 +178,7 @@ public class GraficoGUI extends TableView<Grafico>implements AbstractBaseDeDatos
 						ClipboardContent content = new ClipboardContent();
 
 						String selected = "";
-						Set<Grafico> selec = new HashSet<Grafico>(tablaGrafico.getSelectionModel().getSelectedItems());
+						Set<Grafico> selec = new LinkedHashSet<Grafico>(tablaGrafico.getSelectionModel().getSelectedItems());
 						Object[] arr = selec.toArray();
 
 						String columnaSeleccionada = getTexto();

@@ -1,7 +1,7 @@
 package guiFX.BaseDeDatosGUI;
 
 import java.sql.Timestamp;
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -181,68 +181,67 @@ public class ValorIndicadorGUI extends TableView<ValorIndicador>implements Abstr
 						Clipboard clipboard = Clipboard.getSystemClipboard();
 						ClipboardContent content = new ClipboardContent();
 
-						String selected = "";
-						Set<ValorIndicador> selec = new HashSet<ValorIndicador>(
+						StringBuilder selected = new StringBuilder();
+						Set<ValorIndicador> selec = new LinkedHashSet<ValorIndicador>(
 								tablaValorIndicador.getSelectionModel().getSelectedItems());
 						Object[] arr = selec.toArray();
-
 						String columnaSeleccionada = getTexto();
 						for (int i = 0; i < arr.length; i++) {
 							switch (columnaSeleccionada.toLowerCase()) {
 							case "idindicador":
 								if (((ValorIndicador) arr[i]).getIdIndicador() != null) {
-									selected += ((ValorIndicador) arr[i]).getIdIndicador().toString();
-									selected += ", ";
+									selected.append(((ValorIndicador) arr[i]).getIdIndicador().toString());
+									selected.append(", ");
 								} else
-									selected += "";
+									selected.append("");
 								break;
 							case "fecha":
 								if (((ValorIndicador) arr[i]).getFecha() != null) {
-									selected += ((ValorIndicador) arr[i]).getFecha().toString();
-									selected += ", ";
+									selected.append(((ValorIndicador) arr[i]).getFecha().toString());
+									selected.append(", ");
 								} else
-									selected += "";
+									selected.append("");
 								break;
 							case "valor":
 								if (((ValorIndicador) arr[i]).getValor() != null) {
-									selected += ((ValorIndicador) arr[i]).getValor().toString();
-									selected += ", ";
+									selected.append(((ValorIndicador) arr[i]).getValor().toString());
+									selected.append(", ");
 								} else
-									selected += "";
+									selected.append( "");
 								break;
 							case "estado":
 								if (((ValorIndicador) arr[i]).getEstado() != null) {
-									selected += "\""+((ValorIndicador) arr[i]).getEstado()+"\"";
-									selected += ", ";
+									selected.append("\""+((ValorIndicador) arr[i]).getEstado()+"\"");
+									selected.append(", ");
 								} else
-									selected += "";
+									selected.append("");
 								break;
 							case "variacion":
 								if (((ValorIndicador) arr[i]).getVariacion() != null) {
-									selected += ((ValorIndicador) arr[i]).getVariacion().toString();
-									selected += ", ";
+									selected.append(((ValorIndicador) arr[i]).getVariacion().toString());
+									selected.append(", ");
 								} else
-									selected += "";
+									selected.append("");
 								break;
 							case "signovariacion":
 								if (((ValorIndicador) arr[i]).getSignoVariacion() != null) {
-									selected += ((ValorIndicador) arr[i]).getSignoVariacion().toString();
-									selected += ", ";
+									selected.append(((ValorIndicador) arr[i]).getSignoVariacion().toString());
+									selected.append(", ");
 								} else
-									selected += "";
+									selected.append("");
 								break;
 							case "observaciones":
 								if (((ValorIndicador) arr[i]).getObservaciones() != null) {
-									selected += ((ValorIndicador) arr[i]).getObservaciones();
-									selected += ", ";
+									selected.append(((ValorIndicador) arr[i]).getObservaciones());
+									selected.append(", ");
 								} else
-									selected += "";
+									selected.append("");
 								break;
 
 							}
 						}
-						selected = selected.substring(0,selected.length()-2); //eliminar la ultima coma
-						content.putString(selected);
+						selected.replace(0,selected.length(), selected.substring(0, selected.length()-2));
+						content.putString(selected.toString());
 
 						clipboard.setContent(content);
 

@@ -1,7 +1,7 @@
 package guiFX.BaseDeDatosGUI;
 
 import java.sql.Timestamp;
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -242,7 +242,7 @@ public class HSTumbralesXEstadosXIndicadorGUI extends TableView<HSTumbralesXEsta
 						ClipboardContent content = new ClipboardContent();
 
 						String selected = "";
-						Set<HSTumbralesXEstadosXIndicador> selec = new HashSet<HSTumbralesXEstadosXIndicador>(
+						Set<HSTumbralesXEstadosXIndicador> selec = new LinkedHashSet<HSTumbralesXEstadosXIndicador>(
 								tablaHSTUmbrales.getSelectionModel().getSelectedItems());
 						Object[] arr = selec.toArray();
 
