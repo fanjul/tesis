@@ -1,6 +1,6 @@
 package guiFX.BaseDeDatosGUI;
 
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -172,7 +172,7 @@ public class TipoIndicadorGUI extends TableView<TipoIndicador>implements Abstrac
 						ClipboardContent content = new ClipboardContent();
 
 						String selected = "";
-						Set<TipoIndicador> selec = new HashSet<TipoIndicador>(
+						Set<TipoIndicador> selec = new LinkedHashSet<TipoIndicador>(
 								tablaTipoIndicador.getSelectionModel().getSelectedItems());
 						Object[] arr = selec.toArray();
 

@@ -4,6 +4,9 @@ names(grasas)
 regresion <- lm(grasas~ edad, data = grasas)
 plot(grasas$edad, grasas$grasas, xlab =" Edad" , ylab="Grasas" )
 mcm<-abline(regresion)
+a<- cor(grasas)
 
+nu <- data.frame(edad = seq(30,31))
+b<-predict(regresion, nu)
 
 #https://www.uam.es/personal_pdi/ciencias/joser/paginaR/regresion.html

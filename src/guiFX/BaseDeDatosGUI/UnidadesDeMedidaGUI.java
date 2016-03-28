@@ -1,6 +1,6 @@
 package guiFX.BaseDeDatosGUI;
 
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -176,7 +176,7 @@ public class UnidadesDeMedidaGUI extends TableView<UnidadesDeMedida>implements A
 						ClipboardContent content = new ClipboardContent();
 
 						String selected = "";
-						Set<UnidadesDeMedida> selec = new HashSet<UnidadesDeMedida>(
+						Set<UnidadesDeMedida> selec = new LinkedHashSet<UnidadesDeMedida>(
 								tablaUnidadesdDeMedida.getSelectionModel().getSelectedItems());
 						Object[] arr = selec.toArray();
 

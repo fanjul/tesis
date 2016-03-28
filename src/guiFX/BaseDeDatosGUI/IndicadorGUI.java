@@ -1,7 +1,7 @@
 package guiFX.BaseDeDatosGUI;
 
 import java.sql.Timestamp;
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -270,7 +270,7 @@ public class IndicadorGUI extends TableView<Indicador>implements AbstractBaseDeD
 						ClipboardContent content = new ClipboardContent();
 
 						String selected = "";
-						Set<Indicador> selec = new HashSet<Indicador>(
+						Set<Indicador> selec = new LinkedHashSet<Indicador>(
 								tablaIndicador.getSelectionModel().getSelectedItems());
 						Object[] arr = selec.toArray();
 

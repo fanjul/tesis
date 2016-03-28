@@ -1,6 +1,6 @@
 package guiFX.BaseDeDatosGUI;
 
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -193,7 +193,7 @@ public class EstadosXTipoIndicadorGUI extends TableView<EstadosXTipoIndicador>im
 						ClipboardContent content = new ClipboardContent();
 
 						String selected = "";
-						Set<EstadosXTipoIndicador> selec = new HashSet<EstadosXTipoIndicador>(
+						Set<EstadosXTipoIndicador> selec = new LinkedHashSet<EstadosXTipoIndicador>(
 								tablaEstadosXTipoIndicador.getSelectionModel().getSelectedItems());
 						Object[] arr = selec.toArray();
 

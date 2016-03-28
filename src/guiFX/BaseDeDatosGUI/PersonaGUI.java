@@ -1,6 +1,6 @@
 package guiFX.BaseDeDatosGUI;
 
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -214,7 +214,7 @@ public class PersonaGUI extends TableView<Persona>implements AbstractBaseDeDatos
 						ClipboardContent content = new ClipboardContent();
 
 						String selected = "";
-						Set<Persona> selec = new HashSet<Persona>(tablaPersona.getSelectionModel().getSelectedItems());
+						Set<Persona> selec = new LinkedHashSet<Persona>(tablaPersona.getSelectionModel().getSelectedItems());
 						Object[] arr = selec.toArray();
 
 						String columnaSeleccionada = getTexto();

@@ -1,7 +1,7 @@
 package guiFX.BaseDeDatosGUI;
 
 import java.sql.Timestamp;
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -166,7 +166,7 @@ public class TableroGUI extends TableView<Tablero>implements AbstractBaseDeDatos
 						ClipboardContent content = new ClipboardContent();
 
 						String selected = "";
-						Set<Tablero> selec = new HashSet<Tablero>(tablaTablero.getSelectionModel().getSelectedItems());
+						Set<Tablero> selec = new LinkedHashSet<Tablero>(tablaTablero.getSelectionModel().getSelectedItems());
 						Object[] arr = selec.toArray();
 
 						String columnaSeleccionada = getTexto();
