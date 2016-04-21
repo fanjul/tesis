@@ -258,7 +258,11 @@ public class BarraMenu extends VBox {
 
 		List<String> listaTodasTablas = new IndicadorDAO().getAllTables(); // VER
 		for (String s : listaTodasTablas) {
-			data.add(s);
+			//VERSION PARA ILLESCAS SOLO CON ESTAS TABLAS
+			if("indicador".equalsIgnoreCase(s) || "valorindicador".equalsIgnoreCase(s) ||
+					"umbralesxestadosxindicador".equalsIgnoreCase(s)){
+				data.add(s);
+			}
 
 		}
 
